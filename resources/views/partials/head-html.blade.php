@@ -24,3 +24,6 @@
 <link href="{{asset('css/libs.css')}}" rel="stylesheet">
 <link href="{{asset('css/layout_admin.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
+
+@yield('styles')
+@yield('scripts_header')

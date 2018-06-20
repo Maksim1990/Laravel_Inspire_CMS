@@ -73,14 +73,6 @@
 <script src="{{asset('js/popover-custom.js')}}"></script>
 {{--<!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57add4a572776064"></script>--}}
 
-
-<script>
-    new Noty({
-        type: 'warning',
-        layout: 'topRight',
-        text: 'Test'
-    }).show();
-</script>
 <script>
 
     var token = '{{\Illuminate\Support\Facades\Session::token()}}';
@@ -139,6 +131,6 @@
     }
 </script>
 <script src="{{asset('js/app.js')}}"></script>
-
+@yield('scripts')
 
 
