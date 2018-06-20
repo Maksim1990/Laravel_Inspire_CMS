@@ -20,7 +20,7 @@
     </div>
     <div class="w3-col s1 m1"><p></p></div>
 </footer>
-
+</div>
 <div id="posts_all" class="hide" style="width:3000px;">
     <p> <a href="#">All Posts</a></p>
     <p> <a href="#">Create Post</a></p>

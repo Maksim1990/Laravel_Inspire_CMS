@@ -28,6 +28,6 @@
             </div>
             @include('partials.tabs')
         </div>
-    </div>
 
-</div>
+
+
