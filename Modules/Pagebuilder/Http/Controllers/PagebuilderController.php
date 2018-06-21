@@ -83,4 +83,20 @@ class PagebuilderController extends Controller
 
         return view('pagebuilder::editor.index', compact('arrTabs', 'active'));
     }
+
+    public function editorUploadImage(Request $request)
+    {
+        $file = $request->file('file');
+        $filename = time() . "_" . $file->getClientOriginalName();
+
+//        $request->file("file")->move('/images', $filename);
+        $imgpath = request()->file('file')->store('upload', 'public');
+
+        $fullPath='/images/'.$filename;
+
+        return json_encode(['location' => asset('storage/'.$imgpath)]);
+
+
+
+    }
 }

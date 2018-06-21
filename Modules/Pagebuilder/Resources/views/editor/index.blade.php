@@ -41,16 +41,59 @@
             'insertdatetime media table contextmenu paste'
         ],
         toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        // we override default upload handler to simulate successful upload
+        images_upload_handler: function (blobInfo, success, failure) {
+
+ console.log(blobInfo.filename());
+ console.log(blobInfo.blob());
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '{{route("editor_upload_image")}}');
+            xhr.setRequestHeader("X-CSRF-Token", "{{ csrf_token() }}");
+
+            xhr.onload = function() {
+                var json;
+
+                if (xhr.status != 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
+                }
+
+                json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+
+
+                success(json.location);
+            };
+
+            formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+            xhr.send(formData);
+        },
+
+
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tinymce.com/css/codepen.min.css']
     });
+    // tinymce.activeEditor.uploadImages(function(success) {
+    //     $.post('ajax/post.php', tinymce.activeEditor.getContent()).done(function() {
+    //         console.log("Uploaded images and posted content as an ajax request.");
+    //     });
+    // });
 </script>
 @stop
 @section('General')
 
     <h2 class="editable">Editable header</h2>
-<div class="col-sm-6">
+    {{--<img src="{{asset("storage/upload/12.jpeg")}}" >--}}
+
+    <div class="col-sm-6">
 
 
     <div class="editable" id="block1">
