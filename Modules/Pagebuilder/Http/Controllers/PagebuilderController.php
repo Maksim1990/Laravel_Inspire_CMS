@@ -73,4 +73,14 @@ class PagebuilderController extends Controller
     public function destroy()
     {
     }
+
+
+    public function editor()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        return view('pagebuilder::editor.index', compact('arrTabs', 'active'));
+    }
 }
