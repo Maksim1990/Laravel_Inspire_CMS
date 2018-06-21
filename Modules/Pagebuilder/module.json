@@ -1,0 +1,16 @@
+{
+    "name": "Pagebuilder",
+    "alias": "pagebuilder",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Pagebuilder\\Providers\\PagebuilderServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
