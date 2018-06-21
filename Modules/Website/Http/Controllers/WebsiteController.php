@@ -69,4 +69,13 @@ class WebsiteController extends Controller
     public function destroy()
     {
     }
+
+
+
+    public function pageNotFound()
+    {
+        return view('errors.404_g');
+    }
+
+
 }

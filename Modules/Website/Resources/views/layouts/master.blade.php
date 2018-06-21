@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Website</title>
+<html>
+@include('website::partials.header_html')
+<body>
+@yield('content')
+@include('website::partials.footer')
 
-       <!-- Laravel Mix - CSS File -->
-       {{--<!-- <link rel="stylesheet" href="{{ mix('css/website.css') }}"> -->--}}
 
-    </head>
-    <body>
-        @yield('content')
 
-        <!-- Laravel Mix - JS File -->
-        {{--<!-- <script src="{{ mix('js/website.js') }}"></script> -->--}}
-    </body>
+</body>
 </html>
+
+

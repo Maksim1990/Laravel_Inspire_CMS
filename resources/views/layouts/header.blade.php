@@ -39,16 +39,16 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Edit profile</a></li>
+                            <li><a href="{{route("label")}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Labels management</a></li>
                             <li><a href="#"><i class="material-icons" style="font-size:20px;margin-right:10px;">edit</i>Change password</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#"><i class="fa fa-info-circle" style="font-size:20px;margin-right:10px;"></i>About</a></li>
                             <li><a href="#"><i i class="material-icons" style="font-size:20px;margin-right:10px;">call</i>Contact Us</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{route("website")}}">Visit website</a></li>
+                    <li><a href="{{route("website")}}" target="_blank">Visit website</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right" id="user_block_menu">
