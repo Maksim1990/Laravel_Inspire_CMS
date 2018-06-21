@@ -4,9 +4,9 @@
     <style type="text/css">
         #pagebuilder h1 { font-size:16pt; }
         #pagebuilder h2 { font-size:13pt; }
-        #pagebuilder ul { width:350px; list-style-type: none; margin:0px; padding:0px; }
-        #pagebuilder li { float:left; padding:5px; width:100px; height:100px; }
-        #pagebuilder li div { width:90px; height:50px; border:solid 1px black; background-color:#E0E0E0; text-align:center; padding-top:40px; }
+        #pagebuilder ul { width:100%; list-style-type: none; margin:0px; padding:0px; }
+        #pagebuilder li { float:left; padding:5px; width:100%; height:100px; }
+        #pagebuilder li div { width:80%; height:50px; border:solid 1px black; background-color:#E0E0E0; text-align:center; padding-top:40px; }
         #pagebuilder .placeHolder div { background-color:white!important; border:dashed 1px gray !important; }
     </style>
 @stop
