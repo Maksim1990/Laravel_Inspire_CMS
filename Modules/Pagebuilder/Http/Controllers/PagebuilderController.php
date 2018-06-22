@@ -5,6 +5,7 @@ namespace Modules\Pagebuilder\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PagebuilderController extends Controller
 {
@@ -87,14 +88,13 @@ class PagebuilderController extends Controller
     public function editorUploadImage(Request $request)
     {
         $file = $request->file('file');
-        $filename = time() . "_" . $file->getClientOriginalName();
+        $filename = Auth::id()."_".time() . "_" . $file->getClientOriginalName();
 
-//        $request->file("file")->move('/images', $filename);
-        $imgpath = request()->file('file')->store('upload', 'public');
+        request()->file('file')->storeAs(
+            'public/upload', $filename
+        );
 
-        $fullPath='/images/'.$filename;
-
-        return json_encode(['location' => asset('storage/'.$imgpath)]);
+        return json_encode(['location' => asset('storage/upload/'.$filename)]);
 
 
 
