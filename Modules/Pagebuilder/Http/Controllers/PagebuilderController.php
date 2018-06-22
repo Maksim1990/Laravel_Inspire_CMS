@@ -85,6 +85,15 @@ class PagebuilderController extends Controller
         return view('pagebuilder::editor.index', compact('arrTabs', 'active'));
     }
 
+    public function code_editor()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        return view('pagebuilder::codeeditor.index', compact('arrTabs', 'active'));
+    }
+
     public function editorUploadImage(Request $request)
     {
         $file = $request->file('file');
