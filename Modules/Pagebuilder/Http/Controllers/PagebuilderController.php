@@ -91,10 +91,10 @@ class PagebuilderController extends Controller
         $filename = Auth::id()."_".time() . "_" . $file->getClientOriginalName();
 
         request()->file('file')->storeAs(
-            'public/upload', $filename
+            'public/upload/'.Auth::id().'/', $filename
         );
 
-        return json_encode(['location' => asset('storage/upload/'.$filename)]);
+        return json_encode(['location' => asset('storage/upload/'.Auth::id().'/'.$filename)]);
 
 
 
