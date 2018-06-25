@@ -1,6 +1,4 @@
-@if(Auth::check())
-@include('website::partials.dev_navigation_bar')
-@endif
+
 <div class="w3-top" id="main_top_menu">
     <div class="w3-bar" id="myNavbar">
         <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">

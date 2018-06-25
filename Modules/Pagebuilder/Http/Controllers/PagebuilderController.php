@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Modules\Pagebuilder\Entities\Block;
 
 class PagebuilderController extends Controller
 {
@@ -17,9 +18,9 @@ class PagebuilderController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
+        $websiteBlocks=Block::where('user_id',Auth::id())->orderBy('sortorder','ASC')->get();
 
-
-        return view('pagebuilder::index', compact('arrTabs', 'active'));
+        return view('pagebuilder::index', compact('arrTabs', 'active','websiteBlocks'));
     }
 
     /**

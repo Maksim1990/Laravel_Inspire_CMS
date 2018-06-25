@@ -2,6 +2,30 @@
 
 @section('scripts_header')
 <script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
+
+@php
+
+    $arrBlocks = array();
+    $arrBlocksIds= array();
+@endphp
+@foreach($websiteBlocks as $blockMain)
+    @php
+        $arrBlocksIds[]="#".$blockMain->block_id;
+    $strBlocksIds=implode(",",$arrBlocksIds);
+    @endphp
+    @foreach($blockMain->content as $block)
+        @php
+            $arrBlocks[$block->id]["id"]=$block->id;
+            $arrBlocks[$block->id]["block_id"]=$blockMain->block_id;
+            $arrBlocks[$block->id]["content"]=$block->content;
+        @endphp
+    @endforeach
+@endforeach
+
+@php
+   // dd($strBlocksIds);
+@endphp
+@include('website::partials.header_html')
 <script>
     tinymce.init({
         selector: 'h2.editable',
@@ -11,7 +35,7 @@
     });
 
     tinymce.init({
-        selector: '#block1,#block2,#block3',
+        selector: '{{$strBlocksIds}}',
         inline: true,
         plugins: [
             'advlist autolink lists link image charmap print preview anchor',
@@ -95,38 +119,26 @@
     </style>
 @stop
 @section('General')
-    <div id="pagebuilder">
+
+    <div id="pagebuilder" class="col-sm-6 col-xs-12">
         <h3>Pagebuilder</h3>
 
 
-        <h2>Save list order with ajax:</h2>
-
         <ul id="gallery">
-            <?php
-            $list = array(
-                [
-                    'id' => 1,
-                    'content' => 'Some content'
-                ],
-                [
-                    'id' => 2,
-                    'content' => 'Some content'
-                ],
-                [
-                    'id' => 3,
-                    'content' => '<h2><img title="TinyMCE Logo" src="//www.tinymce.com/images/glyph-tinymce@2x.png" alt="TinyMCE Logo" width="110" height="97" style="float: right"/>TinyMCE Inline Mode</h2>
-        <div class="w3-row">
-            <div class="w3-col s4 w3-green w3-center"><p>s4</p></div>
-            <div class="w3-col s4 w3-dark-grey w3-center"><p>s4</p></div>
-            <div class="w3-col s4 w3-red w3-center"><p>s4</p></div>
-        </div>'
-                ]);
-            for ($idx = 0; $idx < count($list); $idx += 1) {
+
+            @php
+
+                //dd($list);
+            @endphp
+
+            @php
+
+            for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
                 echo "<li data-itemid='" . $idx . "'>";
-                echo "<div class='editable' id='block".$list[$idx]['id']."'>" . $list[$idx]['content'] . "<hr></div>";
+                echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $arrBlocks[$idx]['content'] . "<hr></div>";
                 echo "</li>";
             }
-            ?>
+            @endphp
         </ul>
         <div style="clear:both;"></div>
     </div>
