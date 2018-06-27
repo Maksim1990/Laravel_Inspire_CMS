@@ -16,22 +16,12 @@
 
 @stop
 @section('General')
-    <button id="submit" class="btn btn-info">Test</button>
+
     <article>
 
         <form>
             <textarea id="code" name="code" rows="10">
-
-
-     <h2><img title="TinyMCE Logo" src="//www.tinymce.com/images/glyph-tinymce@2x.png" alt="TinyMCE Logo" width="110"
-              height="97" style="float: right"/>TinyMCE Inline Mode</h2>
-        <div class="w3-row">
-            <div class="w3-col s4 w3-green w3-center"><p>s4</p></div>
-            <div class="w3-col s4 w3-dark-grey w3-center"><p>s4</p></div>
-            <div class="w3-col s4 w3-red w3-center"><p>s4</p></div>
-        </div>
-
-        <hr>
+{{$blockCode}}
 
         </textarea>
         </form>
@@ -56,12 +46,40 @@
             toggle full screen editing. <strong>Esc</strong> can also be used
             to <i>exit</i> full screen editing.</p>
     </article>
+    <a href="{{route("pagebuilder",Auth::id())}}" class="btn btn-warning">Back to pagebuilder</a>
+    <button id="submit" class="btn btn-success">Save</button>
 
 @stop
 @section('scripts')
     <script>
+        var token = '{{\Illuminate\Support\Facades\Session::token()}}';
+        var url = '{{ route('ajax_codeeditor_update') }}';
         $('#submit').click(function () {
-            console.log(editor.getValue());
+            var codeEditorContent=editor.getValue();
+            var block_id='{{$block_id}}';
+
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                data: {
+                    codeEditorContent: codeEditorContent,
+                    block_id: block_id,
+                    _token: token
+                },
+                success: function (data) {
+                    if (data['result'] === "success") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Code updated!'
+                        }).show();
+                    }
+                }
+            });
+
+
+
         });
     </script>
 @stop

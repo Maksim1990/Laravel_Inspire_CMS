@@ -16,7 +16,7 @@ class CreateBlocksTable extends Migration
         Schema::create('blocks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('block_id');
+            $table->string('block_id')->unique();
             $table->string('block_type');
             $table->integer('sortorder')->unsigned();
 
