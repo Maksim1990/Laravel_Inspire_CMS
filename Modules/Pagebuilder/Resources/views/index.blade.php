@@ -6,6 +6,7 @@
 @stop
 @section('scripts_header')
     <script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
+    @include('website::partials.header_html')
 @if(count($websiteBlocks)>0)
     @php
 
@@ -31,7 +32,7 @@
     @php
         //dd($arrBlocks);
     @endphp
-    @include('website::partials.header_html')
+
     <script>
         tinymce.init({
             selector: 'h2.editable',
