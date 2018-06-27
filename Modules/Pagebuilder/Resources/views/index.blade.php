@@ -6,7 +6,7 @@
 @stop
 @section('scripts_header')
     <script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
-
+@if(count($websiteBlocks)>0)
     @php
 
         $arrBlocks = array();
@@ -100,6 +100,7 @@
                 '//www.tinymce.com/css/codepen.min.css']
         });
     </script>
+    @endif
 @stop
 @section('styles')
     <style type="text/css">
@@ -173,6 +174,7 @@
         }
     </style>
     <div class="col-sm-12 col-xs-12">
+        @if(count($websiteBlocks)>0)
         <div id="pagebuilder" class="col-sm-6 col-xs-12" style="background-color: lightcyan;">
             <ul id="gallery">
 
@@ -212,6 +214,9 @@
 
 
     </div>
+  @else
+            <p>No data found for pagebuilder!</p>
+  @endif
     </div>
 @stop
 @section('scripts')
