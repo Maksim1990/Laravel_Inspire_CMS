@@ -1,5 +1,9 @@
 @extends('pagebuilder::layouts.master')
 
+@section('styles')
+
+
+@stop
 @section('scripts_header')
     <script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
 
@@ -84,7 +88,7 @@
                    // console.log(blockID);
 
                     $("#pagebuilder_menu_code_editor").data('blockid', blockID);
-                    $("#pagebuilder_menu_code_editor").attr('href', '{{route("code_editor")}}/'+blockID)
+                    $("#pagebuilder_menu_code_editor_"+blockID).attr('href', '{{route("code_editor")}}/'+blockID)
                     $("#pagebuilder_menu").css('display', 'block');
                     console.log($("#pagebuilder_menu_code_editor").data('blockid'));
                 });
@@ -135,9 +139,39 @@
             border: dashed 1px gray !important;
         }
     </style>
+
 @stop
 @section('General')
+    <style>
+        .tooltip_menu {
 
+        }
+
+        .tooltip_menu .tooltiptext {
+            visibility: hidden;
+            width: 40%;
+            background-color: darkgray;
+            opacity: 0.7;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: fixed;
+            z-index: 1;
+            top: 150px;
+            left: 45%;
+        }
+
+        .tooltip_menu:hover .tooltiptext {
+            visibility: visible;
+        }
+
+        .tooltip_link{
+            margin-bottom: 15px;
+        }
+    </style>
     <div class="col-sm-12 col-xs-12">
         <div id="pagebuilder" class="col-sm-6 col-xs-12" style="background-color: lightcyan;">
             <ul id="gallery">
@@ -150,8 +184,17 @@
                 @php
 
                     for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
-                        echo "<li data-itemid='" . $arrBlocks[$idx]['sortorder'] . "' id='block_".$arrBlocks[$idx]['id']."'>";
+                        echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['sortorder'] . "' id='block_".$arrBlocks[$idx]['id']."'>";
                         echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $arrBlocks[$idx]['content'] . "<hr></div>";
+                        echo "<span class=\"tooltiptext\">";
+                        //-- Code editor button
+                        echo "<a id='pagebuilder_menu_code_editor_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-info tooltip_link'>Go to code editor</a><br>";
+                        echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
+                        echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
+                        echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
+                        echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
+                        echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
+                        echo "</span>";
                         echo "</li>";
                     }
                 @endphp
@@ -159,13 +202,21 @@
             <div style="clear:both;"></div>
         </div>
 
-    <div id="pagebuilder_menu" class="col-sm-6 col-xs-12" style="display: none;position:fixed;top: 150px;left: 55%">
-        <a id="pagebuilder_menu_code_editor" data-blockid="" href="#" class="btn btn-info">Go to code editor</a>
+    <div  class="col-sm-6 col-xs-12">
+
+
+
+    </div>
+
+        <div id="pagebuilder_menu" class="col-sm-6 col-xs-12" style="display: none;position:fixed;top: 150px;left: 55%">
+
+
     </div>
     </div>
 @stop
 @section('scripts')
     <script src="{{asset('js/jquery.dragsort.js')}}" type="text/javascript"></script>
+
     <script type="text/javascript">
 
 
