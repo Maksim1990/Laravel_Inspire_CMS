@@ -24,4 +24,5 @@
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 @yield('styles')
+@include('website::partials.header_html')
 @yield('scripts_header')

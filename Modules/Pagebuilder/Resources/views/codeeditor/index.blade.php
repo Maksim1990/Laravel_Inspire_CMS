@@ -4,7 +4,6 @@
 
 @stop
 @section('scripts_header')
-    @include('website::partials.header_html')
     {{--<link rel=stylesheet href="{{asset('plugins/vendor/codemirror/doc/docs.css')}}">--}}
     <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/lib/codemirror.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/addon/display/fullscreen.css')}}">
