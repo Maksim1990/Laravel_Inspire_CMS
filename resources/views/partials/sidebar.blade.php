@@ -8,7 +8,7 @@
                     <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                <i class="fa fa-users"></i> Users<span class="fa arrow"></span>
+                                <i class="fa fa-users"></i> Medialibary<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -29,7 +29,7 @@
                     <div class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-bookmark"></i> Posts<span class="fa arrow"></span>
+                                <i class="fa fa-bookmark"></i> Pagebuilder<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="panel-heading" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-list"></i> Categories<span class="fa arrow"></span>
+                                <i class="fa fa-list"></i> Website settings<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -67,7 +67,7 @@
                     <div class="panel-heading" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-picture-o"></i> Media<span class="fa arrow"></span>
+                                <i class="fa fa-picture-o"></i> Modules<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>

@@ -1,4 +1,4 @@
-
+@include('partials.style_header')
 
 <header >
     <nav class="navbar navbar-default">
@@ -19,23 +19,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-
-                    <li><a href="#">Link</a></li>
-
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" ><i class="fa fa-group" style="font-size:20px;margin-right:10px;"></i>Community</a></li>
                             <li><a href="#" ><i class="fa fa-file-sound-o" style="font-size:20px;margin-right:10px;"></i>Advertisement</a></li>
                             <li><a href="#"><i class="fa fa-tasks" style="font-size:20px;margin-right:10px;"></i>Tasks management</a></li>
-                            <li><a href="#" ><i class="material-icons" style="font-size:20px;margin-right:10px;">work</i>Job offers</a></li>
-                            <li><a href="#" ><i class="material-icons" style="font-size:20px;margin-right:10px;">note</i>Notes</a></li>
-                            <li><a href="#" ><i class="material-icons" style="font-size:20px;margin-right:10px;">monetization_on</i>Currency converter</a></li>
-                            <li><a href="#" ><i class="fa fa-calendar" style="font-size:20px;margin-right:10px;"></i>Calendar</a></li>
-                            <li><a href="#" ><i class="fa fa-globe" style="font-size:20px;margin-right:10px;"></i>Country module</a></li>
-                            <li><a href="#" ><i class="fa fa-file-word-o" style="font-size:20px;margin-right:10px;"></i>Translator</a></li>
-                            <li><a href="#"><i class="material-icons" style="font-size:20px;margin-right:10px;">email</i>Check Email module</a></li>
                             <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="fa fa-tasks" style="font-size:20px;margin-right:10px;"></i>Tasks management</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -53,9 +44,13 @@
 
                 <ul class="nav navbar-nav navbar-right" id="user_block_menu">
                     <li id="loggedName">
-                        <p  data-placement="bottom" data-userid="{{Auth::id()}}" data-container="body" data-toggle="logged_user" data-placement="left" data-html="true" href="#">
+                        <p href="#" class="tooltip_header_menu">
                             <img data-imageid="{{Auth::user()->photo?Auth::user()->photo->id :'0'}}" data-imagepath="{{Auth::user()->photo ? Auth::user()->photo->path :"/images/noimage.png"}}" style="border-radius: 40px;" height="45" src="{{Auth::user()->photo ? Auth::user()->photo->path :"/images/includes/noimage.png"}}" alt="">
                             <span class="" style="color:white;display:inline;position: relative;top: 5px;"> Hello, {{ Auth::user()->name }} !</span>
+                            <span class="tooltiptext">
+                                <a href="#" >Profile</a><br>
+                                <a href="#" ></i>Logout</a>
+                            </span>
                         </p>
 
 
