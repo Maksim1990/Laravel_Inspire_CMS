@@ -114,6 +114,9 @@ class PagebuilderController extends Controller
         $websiteBlock=Block::where('id',$block_id)->first();
 
         $websiteBlockContent=$websiteBlock->content->first();
+
+        $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
+
         $websiteBlockContent->content=$codeEditorContent;
         if($websiteBlockContent->save()){
             $result = "success";
