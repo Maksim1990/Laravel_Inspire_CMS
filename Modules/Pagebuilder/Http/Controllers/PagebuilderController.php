@@ -125,6 +125,28 @@ class PagebuilderController extends Controller
         ));
 
     }
+
+
+    public function contentEditorUpdate(Request $request)
+    {
+        $codeEditorContent = $request['codeEditorContent'];
+        $block_id = $request['block_id'];
+        $result = "";
+
+        $websiteBlock=Block::where('block_id',$block_id)->first();
+
+        $websiteBlockContent=$websiteBlock->content->first();
+        $websiteBlockContent->content=$codeEditorContent;
+        if($websiteBlockContent->save()){
+            $result = "success";
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+
+    }
     public function editorUploadImage(Request $request)
     {
         $test = $request->test;

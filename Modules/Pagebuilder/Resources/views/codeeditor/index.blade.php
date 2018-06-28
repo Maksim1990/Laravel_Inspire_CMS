@@ -46,7 +46,7 @@
             toggle full screen editing. <strong>Esc</strong> can also be used
             to <i>exit</i> full screen editing.</p>
     </article>
-    <a href="{{route("pagebuilder",Auth::id())}}" class="btn btn-warning">Back to pagebuilder</a>
+    <a href="{{route("pagebuilder_index",Auth::id())}}" class="btn btn-warning">Back to pagebuilder</a>
     <button id="submit" class="btn btn-success">Save</button>
 
 @stop
