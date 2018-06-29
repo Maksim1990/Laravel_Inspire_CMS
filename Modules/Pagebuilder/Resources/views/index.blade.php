@@ -26,6 +26,8 @@
                         $arrBlocks[$block->id]["block_id"]=$blockMain->block_id;
                         $arrBlocks[$block->id]["id"]=$blockMain->id;
                         $arrBlocks[$block->id]["sortorder"]=$blockMain->sortorder;
+                        //TODO ADD option to choose between original label and converted label to text
+                        //$arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
                         $arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
                 @endphp
             @endforeach
@@ -117,6 +119,9 @@
 @stop
 @section('General')
     <style>
+        .tooltip_menu {
+            width:100%; overflow: auto;
+        }
         .tooltip_menu .tooltiptext {
             visibility: hidden;
             width: 40%;
@@ -168,14 +173,15 @@
             <div id="pagebuilder_menu" class="col-sm-6 col-xs-12">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#home">Editor settings</a></li>
-                    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-                    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+                    <li><a data-toggle="tab" href="#menu1">Website main settiings</a></li>
+                    <li><a data-toggle="tab" href="#menu2">Custom CSS</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
                         <h3>HOME</h3>
-                        <p>Some content.</p>
+                        <p>1. Pagebuilder background color</p>
+                        <p>2. How to display labels in text</p>
                     </div>
                     <div id="menu1" class="tab-pane fade">
                         <h3>Menu 1</h3>

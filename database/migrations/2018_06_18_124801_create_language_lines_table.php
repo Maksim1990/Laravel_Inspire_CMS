@@ -14,6 +14,7 @@ class CreateLanguageLinesTable extends Migration
     {
         Schema::create('language_lines', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('group');
             $table->index('group');
             $table->string('key');

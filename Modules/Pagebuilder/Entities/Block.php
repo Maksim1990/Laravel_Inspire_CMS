@@ -3,6 +3,9 @@
 namespace Modules\Pagebuilder\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Spatie\TranslationLoader\LanguageLine;
 
 class Block extends Model
 {
@@ -47,16 +50,23 @@ class Block extends Model
         }
         $arrReplacements = [];
         foreach ($arrLangOccurance as $intKey => $strTranslation) {
-            $text = substr($blockContent, $strTranslation["startPos"], ($strTranslation["endPos"] - $strTranslation["startPos"]));
-            preg_match('#\((.*?)\)#', $text, $match);
+            $strLabel = substr($blockContent, $strTranslation["startPos"], ($strTranslation["endPos"] - $strTranslation["startPos"]));
+            preg_match('#\((.*?)\)#', $strLabel, $match);
 
             //-- Remove additional double quotes from the match
             $match[1] = str_replace('"', "", $match[1]);
 
-            $arrReplacements[$intKey]['from'] = $text;
-            $arrReplacements[$intKey]['to'] = trans($match[1]);
+
+            $arrModuleLabel=explode(".",$match[1]);
+
+            $trans=LanguageLine::where("user_id",Auth::id())->where("group",$arrModuleLabel[0])->where("key",$arrModuleLabel[1])->first();
+
+            $arrReplacements[$intKey]['from'] = $strLabel;
+            //-- If appropriate translation was not found than display text itself
+            $arrReplacements[$intKey]['to'] = isset($trans->text)?$trans->text[App::getLocale()]:$match[1];
 
         }
+
         foreach ($arrReplacements as $arrIremReplace) {
             $blockContent = str_replace($arrIremReplace["from"], $arrIremReplace["to"], $blockContent);
         }
