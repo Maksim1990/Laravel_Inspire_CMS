@@ -2,6 +2,7 @@
 
 namespace Modules\Pagebuilder\Entities;
 
+use App\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -30,48 +31,8 @@ class Block extends Model
 
     public function filteredContent($blockContent)
     {
-
-        $lastPos = 0;
-        $positions = array();
-        $needle = '@lang';
-        while (($lastPos = strpos($blockContent, $needle, $lastPos)) !== false) {
-            $positions[] = $lastPos;
-            $lastPos = $lastPos + strlen($needle);
-        }
-
-        $arrLangOccurance = [];
-
-        foreach ($positions as $key => $intPos) {
-            $strTemp = substr($blockContent, $intPos);
-            $intEndPos = strpos($strTemp, ")");
-            $arrLangOccurance[$key]["startPos"] = $intPos;
-            $arrLangOccurance[$key]["endPos"] = ($intEndPos + $intPos) + 1;
-
-        }
-        $arrReplacements = [];
-        foreach ($arrLangOccurance as $intKey => $strTranslation) {
-            $strLabel = substr($blockContent, $strTranslation["startPos"], ($strTranslation["endPos"] - $strTranslation["startPos"]));
-            preg_match('#\((.*?)\)#', $strLabel, $match);
-
-            //-- Remove additional double quotes from the match
-            $match[1] = str_replace('"', "", $match[1]);
-
-
-            $arrModuleLabel=explode(".",$match[1]);
-
-            $trans=LanguageLine::where("user_id",Auth::id())->where("group",$arrModuleLabel[0])->where("key",$arrModuleLabel[1])->first();
-
-            $arrReplacements[$intKey]['from'] = $strLabel;
-            //-- If appropriate translation was not found than display text itself
-            $arrReplacements[$intKey]['to'] = isset($trans->text)?$trans->text[App::getLocale()]:$match[1];
-
-        }
-
-        foreach ($arrReplacements as $arrIremReplace) {
-            $blockContent = str_replace($arrIremReplace["from"], $arrIremReplace["to"], $blockContent);
-        }
-
-
+        //-- Call custom method for converting labels in block content
+        $blockContent = Helper::convertLabelsInBlockContent($blockContent);
         return $blockContent;
     }
 
