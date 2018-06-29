@@ -13,17 +13,20 @@
             $arrBlocksIds= array();
         @endphp
         @foreach($websiteBlocks as $blockMain)
+
             @php
+
                 $arrBlocksIds[]="#".$blockMain->block_id;
             $strBlocksIds=implode(",",$arrBlocksIds);
             @endphp
             @foreach($blockMain->content as $block)
                 @php
-                    $arrBlocks[$block->id]["block_content_id"]=$block->id;
-                    $arrBlocks[$block->id]["block_id"]=$blockMain->block_id;
-                    $arrBlocks[$block->id]["id"]=$blockMain->id;
-                    $arrBlocks[$block->id]["sortorder"]=$blockMain->sortorder;
-                    $arrBlocks[$block->id]["content"]=$block->content;
+
+                        $arrBlocks[$block->id]["block_content_id"]=$block->id;
+                        $arrBlocks[$block->id]["block_id"]=$blockMain->block_id;
+                        $arrBlocks[$block->id]["id"]=$blockMain->id;
+                        $arrBlocks[$block->id]["sortorder"]=$blockMain->sortorder;
+                        $arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
                 @endphp
             @endforeach
         @endforeach

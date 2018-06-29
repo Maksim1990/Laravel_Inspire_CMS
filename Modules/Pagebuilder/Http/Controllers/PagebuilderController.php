@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Mews\Purifier\Facades\Purifier;
 use Modules\Pagebuilder\Entities\Block;
 
 class PagebuilderController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -22,6 +24,13 @@ class PagebuilderController extends Controller
         $arrTabs = ['General'];
         $active = "active";
         $websiteBlocks=Block::where('user_id',$user->id)->orderBy('sortorder','ASC')->get();
+
+
+
+
+
+
+
 
         return view('pagebuilder::index', compact('arrTabs', 'active','websiteBlocks'));
     }
@@ -96,7 +105,6 @@ class PagebuilderController extends Controller
         $blockCode="";
         $arrTabs = ['General'];
         $active = "active";
-
         if(!empty($websiteBlock->content->first()->content)){
             $blockCode=$websiteBlock->content->first()->content;
         }
@@ -115,7 +123,17 @@ class PagebuilderController extends Controller
 
         $websiteBlockContent=$websiteBlock->content->first();
 
-        $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
+       // $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
+
+        //-- Prevent XSS JS injection
+        //-- Removing not allowed <script> tags
+        $codeEditorContent=Purifier::clean($codeEditorContent, array('Attr.EnableID' => true));
+
+
+
+
+
+
 
         $websiteBlockContent->content=$codeEditorContent;
         if($websiteBlockContent->save()){

@@ -6,16 +6,13 @@
     @endif
     @include('website::partials.header_menu')
 
-    @php
-       //dd($websiteBlocks);
-    @endphp
-    @foreach($websiteBlocks as $block)
-        @php
-            $template="website::blocks.".$block["block_id"]
-        @endphp
-        @include($template, ['content' => $block["content"][0]["content"]])
+    @foreach($websiteBlocks as $blockMain)
+        @foreach($blockMain->content as $block)
+            @php
+                $template="website::blocks.".$blockMain->block_id
+            @endphp
+            @include($template, ['content' => $blockMain->filteredContent($block->content)])
+        @endforeach
     @endforeach
-
-
 
 @stop

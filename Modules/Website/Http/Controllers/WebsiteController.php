@@ -18,7 +18,7 @@ class WebsiteController extends Controller
     public function index()
     {
 
-        $websiteBlocks=Block::where('user_id',Auth::id())->orderBy('sortorder','ASC')->get()->toArray();
+        $websiteBlocks=Block::where('user_id',Auth::id())->orderBy('sortorder','ASC')->get();
 
 //        $var1='<h2><img title="TinyMCE Logo" src="//www.tinymce.com/images/glyph-tinymce@2x.png" alt="TinyMCE Logo" width="110" height="97" style="float: right"/>TinyMCE Inline Mode</h2>
 //        <div class="w3-row">
