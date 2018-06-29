@@ -6,10 +6,11 @@ class Helper{
 
 
     /**
-     * Return price calculation result based on priority and filters
+     * Converting @lang() labels in block content that
+     * is being retrieved from DB content to appropriate label
+     * depending on the current locale value
      *
      * @param string $blockContent
-     *
      * @return string $blockContent
      */
     public static function convertLabelsInBlockContent($blockContent)
