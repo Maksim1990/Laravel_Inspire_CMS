@@ -26,3 +26,8 @@
 @yield('styles')
 @include('website::partials.header_html')
 @yield('scripts_header')
+<style>
+    .image_gallery img{
+        width:100%;
+    }
+</style>

@@ -46,7 +46,7 @@
     function myFunction() {
         var navbar = document.getElementById("myNavbar");
 
-        @if(Auth::check())
+                @if(Auth::check())
         var navbar_dev = document.getElementById("navbar");
         var sticky = navbar_dev.offsetTop;
 
@@ -58,25 +58,30 @@
         if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
             @else
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    @endif
-                navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+                @endif
+                    navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
 
-        } else {
-            navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+            } else {
+                navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
 
+            }
         }
-    }
 
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function toggleFunction() {
-        var x = document.getElementById("navDemo");
-        if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
+        // Used to toggle the menu on small screens when clicking on the menu button
+        function toggleFunction() {
+            var x = document.getElementById("navDemo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
         }
-    }
 
+</script>
+<script>
+    //-- Add onClick(this) event manually for all images in image_gallery class
+    //-- In order to escape any JS from code editor that are deleted by Purifier before saving in DB
+    $('.image_gallery img').attr('onclick', 'onClick(this)');
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBtG9lCya_s1zxvYtU9Ob1L2JbwZ67vNk&callback=myMap"></script>

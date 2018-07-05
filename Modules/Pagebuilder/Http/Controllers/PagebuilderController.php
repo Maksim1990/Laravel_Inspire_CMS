@@ -2,6 +2,7 @@
 
 namespace Modules\Pagebuilder\Http\Controllers;
 
+use App\Helper;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,19 +21,12 @@ class PagebuilderController extends Controller
     public function index($id)
     {
 
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
         $arrTabs = ['General'];
         $active = "active";
-        $websiteBlocks=Block::where('user_id',$user->id)->orderBy('sortorder','ASC')->get();
+        $websiteBlocks = Block::where('user_id', $user->id)->orderBy('sortorder', 'ASC')->get();
 
-
-
-
-
-
-
-
-        return view('pagebuilder::index', compact('arrTabs', 'active','websiteBlocks'));
+        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks'));
     }
 
     /**
@@ -101,16 +95,16 @@ class PagebuilderController extends Controller
     public function code_editor($block_id)
     {
 
-        $websiteBlock=Block::where('id',$block_id)->first();
-        $blockCode="";
+        $websiteBlock = Block::where('id', $block_id)->first();
+        $blockCode = "";
         $arrTabs = ['General'];
         $active = "active";
-        if(!empty($websiteBlock->content->first()->content)){
-            $blockCode=$websiteBlock->content->first()->content;
+        if (!empty($websiteBlock->content->first()->content)) {
+            $blockCode = $websiteBlock->content->first()->content;
         }
 
 
-        return view('pagebuilder::codeeditor.index', compact('arrTabs', 'active','blockCode','block_id'));
+        return view('pagebuilder::codeeditor.index', compact('arrTabs', 'active', 'blockCode', 'block_id'));
     }
 
     public function codeEditorUpdate(Request $request)
@@ -119,24 +113,19 @@ class PagebuilderController extends Controller
         $block_id = $request['block_id'];
         $result = "";
 
-        $websiteBlock=Block::where('id',$block_id)->first();
+        $websiteBlock = Block::where('id', $block_id)->first();
 
-        $websiteBlockContent=$websiteBlock->content->first();
+        $websiteBlockContent = $websiteBlock->content->first();
 
-       // $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
+        // $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
 
         //-- Prevent XSS JS injection
         //-- Removing not allowed <script> tags
-        $codeEditorContent=Purifier::clean($codeEditorContent, array('Attr.EnableID' => true));
+        $codeEditorContent = Purifier::clean($codeEditorContent, array('Attr.EnableID' => true));
 
 
-
-
-
-
-
-        $websiteBlockContent->content=$codeEditorContent;
-        if($websiteBlockContent->save()){
+        $websiteBlockContent->content = $codeEditorContent;
+        if ($websiteBlockContent->save()) {
             $result = "success";
         }
 
@@ -152,15 +141,19 @@ class PagebuilderController extends Controller
     {
         $codeEditorContent = $request['codeEditorContent'];
         $block_id = $request['block_id'];
+        $blockID = $request['blockID'];
         $result = "";
 
-        $websiteBlock=Block::where('block_id',$block_id)->first();
+        $websiteBlock = Block::where('block_id', $block_id)->first();
 
-        $websiteBlockContent=$websiteBlock->content->first();
-        $websiteBlockContent->content=$codeEditorContent;
-        if($websiteBlockContent->save()){
+        $websiteBlockContent = $websiteBlock->content->first();
+        $websiteBlockContent->content = $codeEditorContent;
+        if ($websiteBlockContent->save()) {
             $result = "success";
         }
+
+        //-- Check if necessary remove image from the server that is not anymore in the current block
+        Helper::CheckIfImageInBlock($codeEditorContent, $blockID);
 
         header('Content-Type: application/json');
         echo json_encode(array(
@@ -168,17 +161,18 @@ class PagebuilderController extends Controller
         ));
 
     }
+
     public function editorUploadImage(Request $request)
     {
-        $test = $request->test;
+        $blockID = $request->blockID;
         $file = $request->file('file');
-        $filename = Auth::id()."_".$test."_".time() . "_" . $file->getClientOriginalName();
+        $filename = Auth::id() . "_" . $blockID . "_" . time() . "_" . $file->getClientOriginalName();
 
         request()->file('file')->storeAs(
-            'public/upload/'.Auth::id().'/', $filename
+            'public/upload/' . Auth::id() . '/', $filename
         );
 
-        return json_encode(['location' => asset('storage/upload/'.Auth::id().'/'.$filename)]);
+        return json_encode(['location' => asset('storage/upload/' . Auth::id() . '/' . $filename)]);
 
     }
 }

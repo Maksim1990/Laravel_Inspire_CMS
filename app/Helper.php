@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Auth;
+
 class Helper{
 
 
@@ -60,4 +62,28 @@ class Helper{
 
         return $blockContent;
     }
+
+    /**
+     * Check if input image is still in the current block
+     * If image is not in the block than physically reove image from the server
+     *
+     * @param string $codeEditorContent
+     * @param string $blockID
+     * @return void
+     */
+    public static function CheckIfImageInBlock($codeEditorContent,$blockID)
+    {
+        //-- Get list of all images for this user and current block
+        $arrImagesList=glob(storage_path('/app/public/upload/'.Auth::id()."/".Auth::id()."_".$blockID."*.{jpg,png,gif}"), GLOB_BRACE);
+        foreach ($arrImagesList as $image) {
+            $imageName = str_replace(storage_path('/app/public/upload/' . Auth::id() . "/"), "", $image);
+            //-- Check if this image is still in the block
+            if (strpos($codeEditorContent, $imageName) == false) {
+                //-- If image already not in the block than remove it from the server
+                unlink($image);
+            }
+        }
+    }
+
+
 }

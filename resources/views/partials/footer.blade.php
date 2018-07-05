@@ -130,6 +130,11 @@
         document.getElementById("mainClick").style.display = "inline-block";
     }
 </script>
+
+<script>
+       $('.image_gallery img').attr('onclick','onClick(this)');
+</script>
+
 <script src="{{asset('js/app.js')}}"></script>
 @yield('scripts')
 

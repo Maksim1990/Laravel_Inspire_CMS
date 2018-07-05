@@ -79,7 +79,7 @@
                     };
                     formData = new FormData();
                     formData.append('file', blobInfo.blob(), blobInfo.filename());
-                    formData.append('test', test);
+                    formData.append('blockID', blockID);
 
                     xhr.send(formData);
                 },
@@ -89,7 +89,7 @@
                         console.log(e.target.closest("li").id);
                     });
                     editor.on('MouseOver', function (e) {
-                        var blockID = e.target.closest("li").id.replace("block_", "").trim();
+                        blockID = e.target.closest("li").id.replace("block_", "").trim();
                         var blockTextID = e.target.closest("li").dataset.blocktextid;
                         //console.log(blockTextID);
 
@@ -203,7 +203,7 @@
 
     <script type="text/javascript">
 
-
+//-- Code for draagging functionality
         $("#gallery").dragsort({
             dragSelector: "div",
             dragEnd: saveOrder,
@@ -224,7 +224,6 @@
 
         $('button[id^="pagebuilder_menu_save_"]').click(function () {
             var intBlockId = $(this).data('blockid');
-            //console.log(tinyMCE.get(intBlockId).getContent());
             var codeEditorContent = tinyMCE.get(intBlockId).getContent();
             $.ajax({
                 method: 'POST',
@@ -232,6 +231,7 @@
                 data: {
                     codeEditorContent: codeEditorContent,
                     block_id: intBlockId,
+                    blockID: blockID,
                     _token: token
                 },
                 success: function (data) {
