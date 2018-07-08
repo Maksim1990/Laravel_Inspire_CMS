@@ -106,7 +106,7 @@
         });
 
         function DeleteLabel(id) {
-           $('#label_'+id).hide();
+
             var url = '{{ route('ajax_delete_label') }}';
 
             var conf=confirm("Do you want to delete this label?");
@@ -120,6 +120,10 @@
                     },
                     success: function (data) {
                         if (data['result'] === "success") {
+
+                            //-- Hide label line from table
+                            $('#label_'+id).hide();
+
                             new Noty({
                                 type: 'success',
                                 layout: 'topRight',
