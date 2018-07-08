@@ -1,10 +1,11 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'admin/pagebuilder', 'namespace' => 'Modules\Pagebuilder\Http\Controllers'], function()
+Route::group(['middleware' => ['web','login'], 'prefix' => 'admin/pagebuilder', 'namespace' => 'Modules\Pagebuilder\Http\Controllers'], function()
 {
     Route::get('/{id}', 'PagebuilderController@index')->name("pagebuilder_index");
     Route::get('/content/editor', 'PagebuilderController@editor')->name("editor");
     Route::get('code_editor/{block_id?}', 'PagebuilderController@code_editor')->name("code_editor");
+    Route::get('/{id}/css', 'PagebuilderController@css')->name("css");
 
 
 

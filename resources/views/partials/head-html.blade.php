@@ -11,9 +11,12 @@
 @endif
 
 
-
+@include('website::partials.header_html')
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <link href="{{asset('lib/noty.css')}}" rel="stylesheet">
 <script src="{{asset('lib/noty.js')}}" type="text/javascript"></script>
 
@@ -24,7 +27,7 @@
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 @yield('styles')
-@include('website::partials.header_html')
+
 @yield('scripts_header')
 <style>
     .image_gallery img{

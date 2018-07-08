@@ -14,12 +14,6 @@ Auth::routes();
 
 Route::group(['middleware' => ['web', 'login']], function () {
 
-    Route::get('/admin', function () {
-        $arrTabs = ['General', 'Profile', 'Messages', 'Settings'];
-        $active = "active";
-        return view('admin.index', compact('arrTabs', 'active'));
-    })->name("admin");
-
     Route::post('show_left_sidebar/', 'SettingController@showSidebar')->name("show_left_sidebar");
 
     Route::get('/home', 'HomeController@index')->name('home');

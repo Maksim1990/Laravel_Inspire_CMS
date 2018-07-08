@@ -5,6 +5,7 @@ namespace Modules\Label\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Spatie\TranslationLoader\LanguageLine;
 
 class LabelController extends Controller
@@ -20,11 +21,13 @@ class LabelController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * @param integer $id
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        $arrTabs = ['General', 'Profile', 'Messages', 'Settings'];
+        $arrTabs = ['General'];
         $active = "active";
 
 
@@ -40,10 +43,12 @@ class LabelController extends Controller
 //        ]);
 
         $translations = LanguageLine::all();
+        $translationLast = LanguageLine::where('id','<>','0')->orderBy('id','DESC')->first();
+        $intLastLabelId=$translationLast->id;
 
         $arrOfActiveLanguages = $this->arrOfActiveLanguages;
 
-        return view('label::index', compact('arrTabs', 'active', 'translations', 'arrOfActiveLanguages'));
+        return view('label::index', compact('arrTabs', 'active', 'translations', 'arrOfActiveLanguages','intLastLabelId'));
     }
 
     /**
@@ -121,18 +126,22 @@ class LabelController extends Controller
                 $i = 0;
                 $arrNewTranslation = array();
                 foreach ($this->arrOfActiveLanguages as $strKey => $strLang) {
-                    if (isset($arrTranslations[$intId . "_" . strtolower($strKey)])) {
+                    //-- Check if key for current language is exist
+                    //-- Key with empty value is also allowed
+                    if (isset($arrTranslations[$intId . "_" . strtolower($strKey)]) || $arrTranslations[$intId . "_" . strtolower($strKey)]=="") {
 
                         try {
                             $translateItem = LanguageLine::findOrFail($intId);
 
                             $translateItem->key = $arrTranslationsKeys[$intId];
+                            $translateItem->user_id = Auth::id();
                             $arrTranslationUpdated = $translateItem->text;
                             foreach ($arrTranslationUpdated as $lang => $item) {
                                 if ($lang == strtolower($strKey)) {
                                     $arrTranslationUpdated[$lang] = $arrTranslations[$intId . "_" . strtolower($strKey)];
                                 }
                             }
+
                             $translateItem->text = $arrTranslationUpdated;
                             $translateItem->update();
                         } catch (\Exception $e) {
@@ -140,23 +149,17 @@ class LabelController extends Controller
                             $arrNewTranslation[strtolower($strKey)] = $arrTranslations[$intId . "_" . strtolower($strKey)];
                             if (++$i === count($this->arrOfActiveLanguages)) {
                                 LanguageLine::create([
+                                    'user_id' => Auth::id(),
                                     'group' => $strModule,
                                     'key' => $arrTranslationsKeys[$intId],
                                     'text' => $arrNewTranslation
                                 ]);
                             }
-
                         }
-
-
                     }
-
                 }
             }
-
-
         }
-
 
         $result = "success";
         header('Content-Type: application/json');

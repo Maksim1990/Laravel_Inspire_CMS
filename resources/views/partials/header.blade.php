@@ -32,11 +32,12 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{route("label")}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Labels management</a></li>
-                            <li><a href="#"><i class="material-icons" style="font-size:20px;margin-right:10px;">edit</i>Change password</a></li>
+                            <li><a href="{{route("label",['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Labels management</a></li>
+                            <li><a href="{{route('pagebuilder_index',['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Pagebuilder</a></li>
                             <li role="separator" class="divider"></li>
+                            <li><a href="{{route('css',['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Custom CSS</a></li>
                             <li><a href="#"><i class="fa fa-info-circle" style="font-size:20px;margin-right:10px;"></i>About</a></li>
-                            <li><a href="#"><i i class="material-icons" style="font-size:20px;margin-right:10px;">call</i>Contact Us</a></li>
+                            <li><a href="#"><i class="fas fa-phone" style="font-size:20px;margin-right:10px;"></i>Contact Us</a></li>
                         </ul>
                     </li>
                     <li><a href="{{route("website")}}" target="_blank">Visit website</a></li>
@@ -49,7 +50,11 @@
                             <span class="" style="color:white;display:inline;position: relative;top: 5px;"> Hello, {{ Auth::user()->name }} !</span>
                             <span class="tooltiptext">
                                 <a href="#" >Profile</a><br>
-                                <a href="#" ></i>Logout</a>
+                                 <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
                             </span>
                         </p>
 

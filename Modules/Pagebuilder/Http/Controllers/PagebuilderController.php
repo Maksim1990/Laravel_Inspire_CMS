@@ -175,4 +175,20 @@ class PagebuilderController extends Controller
         return json_encode(['location' => asset('storage/upload/' . Auth::id() . '/' . $filename)]);
 
     }
+
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function css($id)
+    {
+
+        $user = User::findOrFail($id);
+        $arrTabs = ['General'];
+        $active = "active";
+
+        return view('pagebuilder::css.index', compact('arrTabs', 'active'));
+    }
+
+
 }
