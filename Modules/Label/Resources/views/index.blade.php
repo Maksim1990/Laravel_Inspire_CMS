@@ -43,7 +43,7 @@
                                 @endif
                             </td>
                             @php
-                            $intLastId=$translate->id;
+                                $intLastId=$translate->id;
                             @endphp
                         @endforeach
                         <td>
@@ -87,17 +87,17 @@
 
 
         //-- Add new label functionality
-        var newLabelCount='{{$intLastLabelId}}';
+        var newLabelCount = '{{$intLastLabelId}}';
         $('#add').click(function () {
             newLabelCount++;
-            var keyField = "<td><input type=\"text\" class=\"form-control\" id='key_"+newLabelCount+"'></td>";
+            var keyField = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
-                langField += "<td><input type='text' id='"+newLabelCount+"_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
-            @endforeach
+                langField += "<td><input type='text' id='" + newLabelCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
+                    @endforeach
 
-            var deleteIcon = "<td><a href=\"#\" id='delete_"+newLabelCount+"'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
-            $('<tr id="label_'+newLabelCount+'">').html(keyField + langField + deleteIcon + "</tr>").appendTo('#labels_body');
+            var deleteIcon = "<td><a href=\"#\" id='delete_" + newLabelCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
+            $('<tr id="label_' + newLabelCount + '">').html(keyField + langField + deleteIcon + "</tr>").appendTo('#labels_body');
 
             $('[id^="delete_"]').click(function () {
                 DeleteLabel($(this).attr('id').replace('delete_', ""));
@@ -109,20 +109,25 @@
 
             var url = '{{ route('ajax_delete_label') }}';
 
-            var conf=confirm("Do you want to delete this label?");
-            if(conf) {
+            var conf = confirm("Do you want to delete this label?");
+            if (conf) {
                 $.ajax({
                     method: 'POST',
                     url: url,
                     data: {
                         id: id,
                         _token: token
+                    }, beforeSend: function () {
+                        //-- Show loading image while execution of ajax request
+                        $("div#divLoading").addClass('show');
                     },
                     success: function (data) {
                         if (data['result'] === "success") {
 
                             //-- Hide label line from table
-                            $('#label_'+id).hide();
+                            $('#label_' + id).hide();
+                            //-- Hide loading image
+                            $("div#divLoading").removeClass('show');
 
                             new Noty({
                                 type: 'success',
@@ -152,7 +157,7 @@
                     });
                 }
             });
-            console.log(arrTranslations);
+
             $.ajax({
                 method: 'POST',
                 url: url,
@@ -161,9 +166,16 @@
                     arrTranslationsKeys: arrTranslationsKeys,
                     module: "website",
                     _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
                 },
                 success: function (data) {
                     if (data['result'] === "success") {
+
+                        //-- Hide loading image
+                        $("div#divLoading").removeClass('show');
+
                         new Noty({
                             type: 'success',
                             layout: 'topRight',

@@ -33,4 +33,22 @@
     .image_gallery img{
         width:100%;
     }
+    #divLoading {
+        display: none;
+    }
+
+    #divLoading.show {
+        display: block;
+        position: fixed;
+        z-index: 100;
+        background-image: url({{ asset('images/includes/load.gif') }});
+        background-color: #666;
+        opacity: 0.4;
+        background-repeat: no-repeat;
+        background-position: center;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+    }
 </style>
