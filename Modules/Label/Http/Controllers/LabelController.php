@@ -171,7 +171,10 @@ class LabelController extends Controller
     public function ajaxDelete(Request $request)
     {
         $indId = $request['id'];
-        LanguageLine::findOrFail($indId)->delete();
+        $lable=LanguageLine::find($indId);
+        if($lable){
+            $lable->delete();
+        }
 
         $result = "success";
         header('Content-Type: application/json');
