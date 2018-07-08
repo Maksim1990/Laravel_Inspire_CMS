@@ -72,4 +72,19 @@ class DashboardController extends Controller
     public function destroy()
     {
     }
+
+    public function aboutUs()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        return view('dashboard::about',compact('arrTabs', 'active'));
+    }
+
+    public function contacts()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        return view('dashboard::contact_us',compact('arrTabs', 'active'));
+    }
+
 }

@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{route('admin',['id'=>Auth::id()])}}">
                     <img style="margin-top: -15px;"  height="50" src="/images/includes/logo_white.png" alt="">
                 </a>
             </div>
@@ -36,8 +36,8 @@
                             <li><a href="{{route('pagebuilder_index',['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Pagebuilder</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{route('css',['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Custom CSS</a></li>
-                            <li><a href="#"><i class="fa fa-info-circle" style="font-size:20px;margin-right:10px;"></i>About</a></li>
-                            <li><a href="#"><i class="fas fa-phone" style="font-size:20px;margin-right:10px;"></i>Contact Us</a></li>
+                            <li><a href="{{route('about_us')}}"><i class="fa fa-info-circle" style="font-size:20px;margin-right:10px;"></i>About</a></li>
+                            <li><a href="{{route('contacts')}}"><i class="fas fa-phone" style="font-size:20px;margin-right:10px;"></i>Contact Us</a></li>
                         </ul>
                     </li>
                     <li><a href="{{route("website")}}" target="_blank">Visit website</a></li>
