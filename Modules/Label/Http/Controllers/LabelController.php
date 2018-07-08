@@ -168,5 +168,17 @@ class LabelController extends Controller
         ));
     }
 
+    public function ajaxDelete(Request $request)
+    {
+        $indId = $request['id'];
+        LanguageLine::findOrFail($indId)->delete();
+
+        $result = "success";
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+    }
+
 
 }

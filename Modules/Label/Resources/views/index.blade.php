@@ -107,6 +107,29 @@
 
         function DeleteLabel(id) {
            $('#label_'+id).hide();
+            var url = '{{ route('ajax_delete_label') }}';
+
+            var conf=confirm("Do you want to delete this label?");
+            if(conf) {
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    data: {
+                        id: id,
+                        _token: token
+                    },
+                    success: function (data) {
+                        if (data['result'] === "success") {
+                            new Noty({
+                                type: 'success',
+                                layout: 'topRight',
+                                text: 'Labels deleted!'
+                            }).show();
+                        }
+                    }
+                });
+            }
+
         }
 
 
