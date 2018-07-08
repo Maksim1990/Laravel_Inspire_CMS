@@ -42,7 +42,7 @@ class LabelController extends Controller
 //            ],
 //        ]);
 
-        $translations = LanguageLine::all();
+        $translations = LanguageLine::where('user_id',Auth::id())->get();
         $translationLast = LanguageLine::where('id','<>','0')->orderBy('id','DESC')->first();
         $intLastLabelId=$translationLast->id;
 
