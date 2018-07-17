@@ -3,6 +3,7 @@
 namespace Modules\Pagebuilder\Http\Controllers;
 
 use App\Helper;
+use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -183,11 +184,47 @@ class PagebuilderController extends Controller
     public function css($id)
     {
 
-        $user = User::findOrFail($id);
         $arrTabs = ['General'];
         $active = "active";
+        $customSetting = Setting::where('user_id', $id)->first();
+        $blockCode = "";
+        $arrTabs = ['General'];
+        $active = "active";
+        $cssCode = "";
 
-        return view('pagebuilder::css.index', compact('arrTabs', 'active'));
+        return view('pagebuilder::css.index', compact('arrTabs', 'active', 'customSetting'));
+    }
+
+
+
+    public function customCssUpdate(Request $request)
+    {
+        $customCssContent = $request['customCssContent'];
+        $result = "";
+
+        $customSetting = Setting::where('user_id', Auth::id())->first();
+        // $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
+
+        //-- Prevent XSS JS injection
+        //-- Removing not allowed <script> tags
+        $customCssContent = Purifier::clean($customCssContent, array('Attr.EnableID' => true));
+
+        $customSetting->custom_css = $customCssContent;
+        if ($customSetting->save()) {
+            $result = "success";
+        }
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+    }
+
+
+    public function cssCodeeditorSetting($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        return view('pagebuilder::codeeditor.settings', compact('arrTabs', 'active'));
     }
 
 

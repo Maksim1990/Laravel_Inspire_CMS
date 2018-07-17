@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
                         <ul class="dropdown-menu">
                             <li><a href="#" ><i class="fa fa-group" style="font-size:20px;margin-right:10px;"></i>Community</a></li>
                             <li><a href="#" ><i class="fa fa-file-sound-o" style="font-size:20px;margin-right:10px;"></i>Advertisement</a></li>
@@ -30,7 +30,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route("label",['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Labels management</a></li>
                             <li><a href="{{route('pagebuilder_index',['id'=>Auth::id()])}}"><i class="fa fa-user-circle" style="font-size:20px;margin-right:10px;"></i>Pagebuilder</a></li>

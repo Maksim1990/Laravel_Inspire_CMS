@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->enum('active_left_sidebar', ['Y', 'N']);
+            $table->text('custom_css')->nullable();
             $table->timestamps();
         });
     }

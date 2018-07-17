@@ -8,7 +8,7 @@ header{background-color:black;
 }
 .navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {color:white;}
 #Sidebar,.panel-default > .panel-heading {
-    background-color: #5E5757;
+    background-color: #1a312e;
     color:white;
 }
 #Sidebar{
@@ -72,7 +72,7 @@ footer{
     display: none;
     position: fixed;
 }
-#mainClick .btnShowSidebar:hover{background-color: darkgray;}
+#mainClick .btnShowSidebar:hover{background-color: #061114;}
 .btnShowSidebar .w3-button:hover{background-color: transparent;}
 #mainClick .w3-button {padding:5px 0 0 5px;}
 .headMenu {line-height: 3.5em;}

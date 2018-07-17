@@ -8,12 +8,13 @@
     .tooltip_header_menu .tooltiptext {
         visibility: hidden;
         width: 120px;
-        background-color: white;
+        background-color: rgb(74, 74, 74);
         color: black;
         text-align: center;
         border-radius: 6px;
         border: 1px solid black;
         padding: 5px 0;
+
 
         /* Position the tooltip */
         position: absolute;
@@ -30,6 +31,67 @@
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;
-        border-color: transparent transparent white transparent;
+        border-color: transparent transparent rgb(74, 74, 74) transparent;
     }
+    .tooltip_header_menu .tooltiptext a{
+        display: block;
+        width: 100%;
+        color: white;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 50px;
+    }
+    .tooltip_header_menu .tooltiptext a:hover{
+        background-color: rgba(50, 166, 54, 0.55);
+    }
+
+
+    .tooltip_menu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip_menu .tooltiptext {
+        visibility: hidden;
+        width: 320px;
+        font-size: 20px;
+        background-color: #061114;
+        color: black;
+        text-align: center;
+        border-radius: 6px;
+        border: 1px solid darkgray;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        top:-10px;
+        left: 50px;
+        z-index: 2;
+    }
+    .tooltip_menu:hover .tooltiptext {
+        visibility: visible;
+    }
+    .tooltip_menu .tooltiptext::after {
+        content: " ";
+        position: absolute;
+        top: 20%;
+        right: 100%; /* To the left of the tooltip */
+        margin-top: -5px;
+        border-width: 15px;
+        border-style: solid;
+        border-color: transparent #061114 transparent transparent;
+        z-index:999;
+    }
+    .tooltip_menu .tooltiptext a{
+        display: block;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 50px;
+    }
+    .tooltip_menu .tooltiptext a:hover{
+        background-color: rgba(50, 166, 54, 0.55);
+    }
+
+
 </style>

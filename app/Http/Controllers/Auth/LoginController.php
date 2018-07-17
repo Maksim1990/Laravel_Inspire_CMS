@@ -30,7 +30,7 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        return '/admin/'.Auth::id();
+        return '/admin/'.Auth::id().'/dashboard';
     }
 
     /**

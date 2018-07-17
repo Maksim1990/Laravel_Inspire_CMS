@@ -6,6 +6,7 @@ Route::group(['middleware' => ['web','login'], 'prefix' => 'admin/pagebuilder', 
     Route::get('/content/editor', 'PagebuilderController@editor')->name("editor");
     Route::get('code_editor/{block_id?}', 'PagebuilderController@code_editor')->name("code_editor");
     Route::get('/{id}/css', 'PagebuilderController@css')->name("css");
+    Route::get('/{id}/codeeditor/setting', 'PagebuilderController@cssCodeeditorSetting')->name("css_codeeditor_setting");
 
 
 
@@ -15,5 +16,6 @@ Route::group(['middleware' => ['web','login'], 'prefix' => 'admin/pagebuilder', 
     Route::post('/editor_upload_image', 'PagebuilderController@editorUploadImage')->name("editor_upload_image");
     Route::post('/codeeditor_update', 'PagebuilderController@codeEditorUpdate')->name("ajax_codeeditor_update");
     Route::post('/content_editor_update', 'PagebuilderController@contentEditorUpdate')->name("ajax_content_editor_update");
+    Route::post('/custom_css_update', 'PagebuilderController@customCssUpdate')->name("ajax_custom_css_update");
 
 });

@@ -22,26 +22,6 @@
 </footer>
 </div>
 <div id="divLoading"></div>
-<div id="posts_all" class="hide" style="width:3000px;">
-    <p> <a href="#">All Posts</a></p>
-    <p> <a href="#">Create Post</a></p>
-</div>
-{{--<div id="users" class="hide" style="width:3000px;">--}}
-{{--<p> <a href="{{URL::to('users/'.Auth::user()->id)}}" >My profile</a></p>--}}
-{{--<p>  <a href="{{URL::to('users ')}}" >All Users</a></p>--}}
-{{--@if(Auth::user()->role_id=="1")--}}
-{{--<p>   <a href="{{URL::to('users/create ')}}">Create User</a></p>--}}
-{{--@endif--}}
-{{--</div>--}}
-{{--<div id="categories" class="hide" style="width:3000px;">--}}
-{{--<p>  <a href="{{URL::to('categories ')}}">All Categories</a></p>--}}
-{{--</div>--}}
-{{--<div id="logged_user" class="hide" style="width:3000px;">--}}
-{{--<p><a data-userid="{{Auth::user()->id}}" href="{{ URL::to('users/' . Auth::user()->id ) }}">My profile</a>--}}
-{{--</p>--}}
-{{--<p>  <a href="{{ route('logout') }}"onclick="event.preventDefault();--}}
-{{--document.getElementById('logout-form').submit();">Logout</a></p>--}}
-{{--</div>--}}
 
 <script>
     function emojiDir(emoji) {
@@ -71,7 +51,6 @@
         });
     });
 </script>
-<script src="{{asset('js/popover-custom.js')}}"></script>
 {{--<!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57add4a572776064"></script>--}}
 
 <script>

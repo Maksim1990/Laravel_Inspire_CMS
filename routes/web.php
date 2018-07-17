@@ -8,7 +8,11 @@ Route::get('/', function () {
 Route::get('/404', function () {
     return view('errors.404_g');
 });
-
+Route::get('/admin', function () {
+            $arrTabs = ['General', 'Profile', 'Messages', 'Settings'];
+            $active = "active";
+            return view('admin.index', compact('arrTabs', 'active'));
+   })->name("admins");
 
 Auth::routes();
 
