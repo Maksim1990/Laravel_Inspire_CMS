@@ -113,6 +113,16 @@
 
 <script>
        $('.image_gallery img').attr('onclick','onClick(this)');
+
+
+       //-- Funcrionality for adapt hover left sidebar submenus
+       //-- In order to display above all other content on the page
+       $('.tooltip_menu_side').on('mouseover',function () {
+           $('.mainside').css('z-index', -2);
+       });
+       $('.tooltip_menu_side').on('mouseout',function () {
+           $('.mainside').css('z-index', 2);
+       });
 </script>
 
 <script src="{{asset('js/app.js')}}"></script>

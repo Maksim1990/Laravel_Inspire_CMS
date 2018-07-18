@@ -41,7 +41,9 @@ footer{
     padding-left: 40px;
     margin: 0;
     float: left;
-    height: 90%;}
+    height: 90%;
+    position: absolute;
+}
 .maintabs{
 
     padding: 0 0 0 0;
