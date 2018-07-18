@@ -224,7 +224,16 @@ class PagebuilderController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('pagebuilder::codeeditor.settings', compact('arrTabs', 'active'));
+        $arrThemes=[];
+        $arrThemesFull=glob(public_path('/plugins/vendor/codemirror/theme/*.{css}'), GLOB_BRACE);
+        if(!empty($arrThemesFull)){
+            foreach ($arrThemesFull as $strTheme){
+                $arrThemes[]= basename($strTheme,'.css');
+            }
+        }
+       // dd($arrThemes);
+
+        return view('pagebuilder::codeeditor.settings', compact('arrTabs', 'active','arrThemes'));
     }
 
 

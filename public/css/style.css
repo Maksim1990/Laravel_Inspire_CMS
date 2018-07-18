@@ -3,6 +3,14 @@
     top: 150px;
     left: 60%;
 }
+.maintab{
+    padding-top: 30px;
+}
+.text{
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 
 
