@@ -1,9 +1,5 @@
 @extends('pagebuilder::layouts.master')
 
-@section('styles')
-
-
-@stop
 @section('scripts_header')
     <script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
     @if(count($websiteBlocks)>0)
