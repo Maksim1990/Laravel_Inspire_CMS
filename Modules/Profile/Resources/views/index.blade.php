@@ -1,4 +1,4 @@
-@extends('pagebuilder::layouts.master')
+@extends('profile::layouts.master')
 
 
 @section('scripts_header')

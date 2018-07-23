@@ -63,10 +63,8 @@
                 <ul class="nav navbar-nav navbar-right" id="user_block_menu">
                     <li id="loggedName">
                         <p href="#" class="tooltip_header_menu">
-                            <img data-imageid="{{Auth::user()->photo?Auth::user()->photo->id :'0'}}"
-                                 data-imagepath="{{Auth::user()->photo ? Auth::user()->photo->path :"/images/noimage.png"}}"
-                                 style="border-radius: 40px;" height="45"
-                                 src="{{Auth::user()->photo ? Auth::user()->photo->path :"/images/includes/noimage.png"}}"
+                            <img style="border-radius: 40px;" height="45"
+                                 src="{{Auth::user()->image ? Auth::user()->image->full_path :"/images/includes/noimage.png"}}"
                                  alt="">
                             <span class=""
                                   style="color:white;display:inline;position: relative;top: 5px;"> Hello, {{ Auth::user()->name }}

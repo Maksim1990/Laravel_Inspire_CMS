@@ -32,4 +32,8 @@ class User extends Authenticatable
         return $this->hasOne('App\Setting');
     }
 
+    public function image(){
+        return $this->hasOne('App\Image');
+    }
+
 }
