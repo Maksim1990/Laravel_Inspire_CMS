@@ -87,4 +87,11 @@ class DashboardController extends Controller
         return view('dashboard::contact_us',compact('arrTabs', 'active'));
     }
 
+    public function menu($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        return view('admin.menu',compact('arrTabs', 'active'));
+    }
+
 }
