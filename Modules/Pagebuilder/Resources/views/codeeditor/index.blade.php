@@ -4,10 +4,13 @@
 
 @stop
 @section('scripts_header')
-    {{--<link rel=stylesheet href="{{asset('plugins/vendor/codemirror/doc/docs.css')}}">--}}
     <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/lib/codemirror.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/addon/display/fullscreen.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/theme/darcula.css')}}">
+    @php
+        $strCodeeditorTheme=!empty(Auth::user()->setting->codeeditor_theme)? Auth::user()->setting->codeeditor_theme:'darcula';
+        $strCodeeditorFullTheme='plugins/vendor/codemirror/theme/'.$strCodeeditorTheme.'.css';
+    @endphp
+    <link rel="stylesheet" href="{{asset($strCodeeditorFullTheme)}}">
 
     <script src="{{asset('plugins/vendor/codemirror/lib/codemirror.js')}}"></script>
     <script src="{{asset('plugins/vendor/codemirror/mode/xml/xml.js')}}"></script>
@@ -25,7 +28,7 @@
                     <script>
                         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                             lineNumbers: true,
-                            theme: "darcula",
+                            theme: '{{$strCodeeditorTheme}}',
                             extraKeys: {
                                 "F11": function (cm) {
                                     cm.setOption("fullScreen", !cm.getOption("fullScreen"));
@@ -52,10 +55,10 @@
     <script>
         var token = '{{\Illuminate\Support\Facades\Session::token()}}';
         var url = '{{ route('ajax_codeeditor_update') }}';
+
         $('#submit').click(function () {
             var codeEditorContent = editor.getValue();
             var block_id = '{{$block_id}}';
-
 
             $.ajax({
                 method: 'POST',
@@ -75,8 +78,8 @@
                     }
                 }
             });
-
-
         });
     </script>
+
+
 @stop

@@ -15,6 +15,7 @@ Route::group(['middleware' => ['web','login'], 'prefix' => 'admin/pagebuilder', 
     //--- Ajax routes
     Route::post('/editor_upload_image', 'PagebuilderController@editorUploadImage')->name("editor_upload_image");
     Route::post('/codeeditor_update', 'PagebuilderController@codeEditorUpdate')->name("ajax_codeeditor_update");
+    Route::post('/codeeditor_theme_update', 'PagebuilderController@codeEditorThemeUpdate')->name("ajax_codeeditor_theme_update");
     Route::post('/content_editor_update', 'PagebuilderController@contentEditorUpdate')->name("ajax_content_editor_update");
     Route::post('/custom_css_update', 'PagebuilderController@customCssUpdate')->name("ajax_custom_css_update");
 

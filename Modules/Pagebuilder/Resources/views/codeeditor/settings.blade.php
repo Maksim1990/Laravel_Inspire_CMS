@@ -8,24 +8,34 @@
 
 @stop
 @section('General')
-
     <div class="row maintab">
         <div class="col-sm-12 col-lg-12 col-xs-12">
             <div class="col-sm-6 col-lg-6 col-xs-12">
-                <div class="col-sm-8">
-                    <p class="text">Choose fovorite stile of code editor</p>
+                <div class="col-sm-7">
+                    <p class="text">Choose favorite style of code editor</p>
 
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="form-group">
                         @if(count($arrThemes)>0)
                             <select id="editorCSS" class="custom-select" style="height: 40px;">
                                 @foreach($arrThemes as $strTheme)
-                                    <option value="{{$strTheme}}">{{$strTheme}}</option>
+                                    @php
+                                    $strStyle=!empty(Auth::user()->setting->codeeditor_theme)? Auth::user()->setting->codeeditor_theme:'darcula';
+                                    $strSelected="";
+                                    if($strStyle==$strTheme){
+                                    $strSelected='selected';
+                                    }
+
+                                    @endphp
+                                    <option value="{{$strTheme}}" {{$strSelected}}>{{$strTheme}}</option>
                                 @endforeach
                             </select>
                         @endif
                     </div>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-sm btn-success" style="margin-top: 5px;" id="save_codeeditor_theme">Save</button>
                 </div>
                 <div class="col-sm-12">
                     <hr>
@@ -37,6 +47,30 @@
 @stop
 @section('scripts')
     <script>
+        var token = '{{\Illuminate\Support\Facades\Session::token()}}';
+        var url = '{{ route('ajax_codeeditor_theme_update') }}';
+        $('#save_codeeditor_theme').click(function () {
+            var codeEditorTheme = $('#editorCSS').val();
+            $.ajax({
+                method: 'POST',
+                url: url,
+                data: {
+                    codeEditorTheme: codeEditorTheme,
+                    _token: token
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data['result'] === "success") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: 'Theme was successfully updated!'
+                        }).show();
+                    }
+                }
+            });
 
+
+        });
     </script>
 @stop

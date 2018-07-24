@@ -138,6 +138,26 @@ class PagebuilderController extends Controller
     }
 
 
+    public function codeEditorThemeUpdate(Request $request)
+    {
+        $result = "";
+        $codeEditorTheme=$request->codeEditorTheme;
+
+
+        $settings=Auth::user()->setting;
+        $settings->codeeditor_theme=$codeEditorTheme;
+        if ($settings->save()) {
+            $result = "success";
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+
+    }
+
+
     public function contentEditorUpdate(Request $request)
     {
         $codeEditorContent = $request['codeEditorContent'];
