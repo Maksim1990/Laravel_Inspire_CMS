@@ -12,8 +12,8 @@ Route::group(['middleware' => ['web','login'], 'prefix' => 'admin/profile', 'nam
         $arrTabs = ['General'];
         $active = "active";
         $user=\App\User::find($id);
-        return view ( 'profile::change_password', compact('arrTabs', 'active','user') );
-    });
+        return view ( 'profile::change_password', compact('arrTabs', 'active','user'));
+    })->name("change_password");
     Route::patch('/update_profile/{id}', 'ProfileController@updateProfile');
     Route::patch('/update_password/{id}', 'ProfileController@updatePassword');
     Route::delete('/delete_profile/{id}', 'ProfileController@deleteProfile');

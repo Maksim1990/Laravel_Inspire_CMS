@@ -108,9 +108,10 @@ class ProfileController extends Controller
         $input=$request->all();
         if($file=$request->file('photo_id')) {
             if (!($file->getClientSize() > 2100000)) {
-                if ($user->photo) {
-                    unlink(public_path() . $user->photo->path);
-                    $photo_user = Image::findOrFail($user->photo_id);
+                //dd('storage/upload/' . Auth::id() . '/profile/' . $user->image->path);
+                if ($user->image) {
+                    unlink(storage_path('/app/public/upload/' . Auth::id() . '/profile/' . $user->image->path));
+                    $photo_user = Image::findOrFail($user->image->id);
                     if($photo_user){
                         $photo_user->delete();
                     }
@@ -121,11 +122,11 @@ class ProfileController extends Controller
                 request()->file('photo_id')->storeAs(
                     'public/upload/' . Auth::id() . '/profile/', $name
                 );
-                $photo = Image::create(['path' => $name,'user_id'=>$id]);
+                Image::create(['path' => $name,'user_id'=>$id]);
 
             } else {
                 Session::flash('user_change', 'Image size should not exceed 2 MB');
-                return redirect('admin/profile/' . $id . '/upload');
+                return redirect('admin/profile/' . $id . '/settings');
             }
         }
 

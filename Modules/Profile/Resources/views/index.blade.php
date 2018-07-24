@@ -14,3 +14,15 @@
         This view is loaded from module: {!! config('profile.name') !!}
     </p>
 @stop
+@section ('scripts')
+    <script>
+        @if(Session::has('user_change'))
+        new Noty({
+            type: 'success',
+            layout: 'topRight',
+            text: '{{session('user_change')}}'
+
+        }).show();
+        @endif
+    </script>
+@endsection

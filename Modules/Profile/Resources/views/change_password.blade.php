@@ -16,6 +16,7 @@
             {!! Form::label('password','Repeat new password:') !!}
             {!! Form::password('password_2', ['class'=>'form-control']) !!}
         </div><br>
+        <a href="{{route('profile_settings',['id'=>Auth::id()])}}" class="btn btn-info">Back to profile settings</a>
         {!! Form::submit('Update password',['class'=>'btn btn-warning']) !!}
         {!! Form::close() !!}
 

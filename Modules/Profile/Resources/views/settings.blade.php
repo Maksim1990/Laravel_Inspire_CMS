@@ -8,10 +8,13 @@
 @section ('General')
     <div>
         <p >Edit User</p>
-        <div class="col-sm-3">
+        <div class="col-sm-5">
             <img height="200"  src="{{$user->image ? $user->image->full_path :"/images/includes/noimage.png"}}" class="image-responsive" alt="">
+            <div>
+                <a href="{{route('change_password',['id'=>Auth::id()])}}" class="link">Change password</a>
+            </div>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-7">
             {{ Form::model($user, ['method' =>'PATCH' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@updateProfile',$user->id],'files'=>true])}}
             <div class="group-form">
                 {!! Form::label('name','User name:') !!}
@@ -42,63 +45,6 @@
     </div>
 
 @stop
-@section ('Password')
-<div class="col-sm-6">
-{{ Form::model($user, ['method' =>'PATCH' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@updatePassword',$user->id],'files'=>true])}}
-
-<div class="group-form">
-{!! Form::label('password','Old password:') !!}
-{!! Form::password('old_password', ['class'=>'form-control']) !!}
-</div>
-<div class="group-form">
-{!! Form::label('password','New password:') !!}
-{!! Form::password('password', ['class'=>'form-control']) !!}
-</div>
-<div class="group-form">
-{!! Form::label('password','Repeat new password:') !!}
-{!! Form::password('password_2', ['class'=>'form-control']) !!}
-</div>
-<br>
-{!! Form::submit('Update password',['class'=>'btn btn-warning']) !!}
-{!! Form::close() !!}
-</div>
-@stop
-{{--@section ('Profile')--}}
-{{--<div class="col-sm-6">--}}
-{{--{{ Form::model($profile, ['method' =>'PATCH' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@update',$profile->id],'files'=>true])}}--}}
-{{--<div class="group-form">--}}
-{{--{!! Form::label('lastname','Lastname:') !!}--}}
-{{--{!! Form::text('lastname', null, ['class'=>'form-control']) !!}--}}
-{{--</div>--}}
-{{--<div class="group-form">--}}
-{{--{!! Form::label('birthdate','Birthdate:') !!}--}}
-{{--{!!  Form::text('birthdate', null, array('id' => 'datepicker')) !!}--}}
-{{--</div>--}}
-{{--<div class="group-form">--}}
-{{--{!! Form::label('Gender:') !!}--}}
-{{--<span>Male</span>--}}
-{{--{!! Form::radio('user_gender', 'M') !!}--}}
-{{--<span>Female</span>--}}
-{{--{!! Form::radio('user_gender', 'F') !!}--}}
-{{--</div>--}}
-{{--<div class="group-form">--}}
-{{--{!! Form::label('status','Status:') !!}--}}
-{{--{!! Form::text('status', null, ['class'=>'form-control']) !!}--}}
-{{--</div>--}}
-{{--<div class="group-form">--}}
-{{--{!! Form::label('country','Country:') !!}--}}
-{{--{!! Form::select('country',[""=>"Choose country"]+$countries ,null, ['class'=>'form-control']) !!}--}}
-{{--</div>--}}
-{{--<div class="group-form">--}}
-{{--{!! Form::label('city','City:') !!}--}}
-{{--{!! Form::text('city', null, ['class'=>'form-control']) !!}--}}
-{{--</div>--}}
-{{--<br>--}}
-{{--{!! Form::submit('Update User',['class'=>'btn btn-warning']) !!}--}}
-
-{{--{!! Form::close() !!}--}}
-{{--</div>--}}
-{{--@stop--}}
 @section ('scripts')
     <script>
         @if(Session::has('user_change'))
