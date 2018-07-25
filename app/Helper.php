@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Spatie\TranslationLoader\LanguageLine;
 
 class Helper{
 
@@ -48,6 +50,7 @@ class Helper{
             $match[1] = str_replace('"', "", $match[1]);
 
             $arrModuleLabel=explode(".",$match[1]);
+
             $trans=LanguageLine::where("user_id",Auth::id())->where("group",$arrModuleLabel[0])->where("key",$arrModuleLabel[1])->first();
 
             $arrReplacements[$intKey]['from'] = $strLabel;
@@ -56,8 +59,8 @@ class Helper{
 
         }
 
-        foreach ($arrReplacements as $arrIremReplace) {
-            $blockContent = str_replace($arrIremReplace["from"], $arrIremReplace["to"], $blockContent);
+        foreach ($arrReplacements as $arrItemReplace) {
+            $blockContent = str_replace($arrItemReplace["from"], $arrItemReplace["to"], $blockContent);
         }
 
         return $blockContent;

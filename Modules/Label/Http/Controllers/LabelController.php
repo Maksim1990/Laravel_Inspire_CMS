@@ -14,8 +14,8 @@ class LabelController extends Controller
     private $arrOfActiveLanguages = [
         "EN" => "English",
         "FR" => "French",
-        "DE" => "German",
-        "NL" => "Dutch"
+        "RU" => "Russian",
+        "TH" => "Thai"
     ];
 
 
@@ -31,20 +31,14 @@ class LabelController extends Controller
         $active = "active";
 
 
-//        LanguageLine::create([
-//            'group' => 'website',
-//            'key' => 'title',
-//            'text' => [
-//                'en' => 'This is a title',
-//                'nl' => 'Dit is title NL',
-//                'fr' => 'This is a title FR',
-//                'de' => 'This is a title DE'
-//            ],
-//        ]);
-
         $translations = LanguageLine::where('user_id',Auth::id())->get();
         $translationLast = LanguageLine::where('id','<>','0')->orderBy('id','DESC')->first();
-        $intLastLabelId=$translationLast->id;
+        if(!empty($translationLast)){
+            $intLastLabelId=$translationLast->id;
+        }else{
+            $intLastLabelId=0;
+        }
+
 
         $arrOfActiveLanguages = $this->arrOfActiveLanguages;
 
