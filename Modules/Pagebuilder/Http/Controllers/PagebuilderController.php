@@ -223,7 +223,7 @@ class PagebuilderController extends Controller
         $result = "";
 
         $customSetting = Setting::where('user_id', Auth::id())->first();
-        // $codeEditorContent=str_replace('@lang',"",$codeEditorContent);
+
 
         //-- Prevent XSS JS injection
         //-- Removing not allowed <script> tags
