@@ -5,9 +5,20 @@ namespace Modules\Dashboard\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Spatie\TranslationLoader\LanguageLine;
 
 class DashboardController extends Controller
 {
+
+    private $arrOfActiveLanguages = [
+        "EN" => "English",
+        "FR" => "French",
+        "RU" => "Russian",
+        "TH" => "Thai"
+    ];
+
+
     /**
      * Display a listing of the resource.
      * @param integer $id
@@ -91,7 +102,24 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('admin.menu',compact('arrTabs', 'active'));
+
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        $translations = LanguageLine::where('user_id',Auth::id())->get();
+        $translationLast = LanguageLine::where('id','<>','0')->orderBy('id','DESC')->first();
+        if(!empty($translationLast)){
+            $intLastLabelId=$translationLast->id;
+        }else{
+            $intLastLabelId=0;
+        }
+
+
+        $arrOfActiveLanguages = $this->arrOfActiveLanguages;
+
+
+        return view('admin.menu',compact('arrTabs', 'active', 'translations', 'arrOfActiveLanguages','intLastLabelId'));
     }
 
 }
