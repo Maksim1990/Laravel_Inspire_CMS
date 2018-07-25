@@ -7,4 +7,9 @@ Route::group(['middleware' => ['web','login'], 'prefix' => 'admin', 'namespace' 
     Route::get('/contacts', 'DashboardController@contacts')->name('contacts');
     Route::get('/{id}/menu', 'DashboardController@menu')->name('menu');
 
+
+    Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
+
+
+
 });

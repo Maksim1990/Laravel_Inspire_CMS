@@ -17,8 +17,10 @@ class CreateMenusTable extends Migration
             $table->increments('id');
             $table->enum('active', ['Y', 'N'])->default("Y");
             $table->integer('parent')->nullable();
-            $table->integer('module_id');
-            $table->string('icon');
+            $table->integer('module_id')->default(0);
+            $table->string('icon')->nullable();
+            $table->string('route')->nullable();
+            $table->integer('sortorder')->nullable();
             $table->timestamps();
         });
     }

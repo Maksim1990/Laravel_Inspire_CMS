@@ -23,6 +23,7 @@
                     @endforeach
                     <th>Parent</th>
                     <th>Active</th>
+                    <th>Sortorder</th>
                     <th></th>
                 </tr>
 
@@ -57,6 +58,9 @@
                                 <option value="N">N</option>
                             </select>
                         </td>
+                            <td>
+                                <input type="number" class="form-control" name="menu_sortorder" value="">
+                            </td>
                         <td>
                             @if($translate->user_id==Auth::id())
                                 <a href="#" id="delete_{{$translate->id}}">

@@ -2,6 +2,7 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+use App\Menu\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -98,11 +99,12 @@ class DashboardController extends Controller
         return view('dashboard::contact_us',compact('arrTabs', 'active'));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function menu($id)
     {
-        $arrTabs = ['General'];
-        $active = "active";
-
         $arrTabs = ['General'];
         $active = "active";
 
@@ -119,7 +121,24 @@ class DashboardController extends Controller
         $arrOfActiveLanguages = $this->arrOfActiveLanguages;
 
 
+
+        //TODO Building dynamic header menu
+        $user=Auth::user();
+        $userMenu=Menu::where('active','Y')->whereHas('menuActive', function ($query) {
+            $query->where('active', 'Y')->where('user_id',Auth::id());
+        })->get();
+        //dd($userMenu);
+
+
+
+
+
         return view('admin.menu',compact('arrTabs', 'active', 'translations', 'arrOfActiveLanguages','intLastLabelId'));
+    }
+
+
+    public function updateMenu(Request $request){
+
     }
 
 }

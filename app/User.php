@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Menu\Menu;
+use App\Menu\UserMenu;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,6 +36,19 @@ class User extends Authenticatable
 
     public function image(){
         return $this->hasOne('App\Image');
+    }
+
+
+
+    public function menu(){
+        return $this->hasManyThrough(
+            Menu::class,
+            UserMenu::class,
+            'user_id',
+            'id',
+            'id',
+            'menu_id'
+        );
     }
 
 }
