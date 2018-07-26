@@ -9,10 +9,11 @@
     </style>
 @stop
 @section('General')
+
     <h3>Menu settings</h3>
     <div>
         <p>Module: <b>Website</b></p>
-        @if(!empty($translations))
+        @if(!empty($userMenus))
 
             <table class="w3-table-all w3-hoverable ">
                 <thead>
@@ -29,23 +30,32 @@
 
                 </thead>
                 <tbody id="labels_body">
-                @foreach($translations as $translate)
-                    <tr id="label_{{$translate->id}}">
+                @foreach($userMenus as $menu)
+                    <tr id="label_{{$menu->id}}">
 
+                        {{--Loop through all active languages--}}
                         @foreach($arrOfActiveLanguages as $strKey=>$strLang)
                             <td>
-                                @if(isset($translate->text[strtolower($strKey)]) || $translate->text[strtolower($strKey)]=="")
-                                    <input type="text" class="form-control"
-                                           id="{{$translate->id}}_text_{{strtolower($strKey)}}"
-                                           value="{{$translate->text[strtolower($strKey)]}}">
-                                @else
-                                    <input type="text" class="form-control" name="" value="">
+                                @php
+                                    //-- Set default menu name for current language
+                                    $menuName="";
+                                @endphp
+                                @if(count($menu->langs)>0)
+                                    @foreach($menu->langs as $menuLang)
+                                        @if($menuLang->lang==$strKey)
+                                            @php
+                                                $menuName=$menuLang->name;
+                                            @endphp
+                                        @endif
+                                    @endforeach
                                 @endif
+
+                                <input type="text" class="form-control"
+                                       id="{{$menu->id}}_text_{{strtolower($strKey)}}"
+                                       value="{{$menuName}}">
                             </td>
-                            @php
-                                $intLastId=$translate->id;
-                            @endphp
                         @endforeach
+
                         <td>
                             <select class="form-control" name="menu_parent" id="menu_parent" style="height: 33px;">
                                 <option value="Y">Y</option>
@@ -58,17 +68,17 @@
                                 <option value="N">N</option>
                             </select>
                         </td>
-                            <td>
-                                <input type="number" class="form-control" name="menu_sortorder" value="">
-                            </td>
                         <td>
-                            @if($translate->user_id==Auth::id())
-                                <a href="#" id="delete_{{$translate->id}}">
+                            <input type="number" class="form-control" name="menu_sortorder" value="">
+                        </td>
+                        <td>
+
+                            <a href="#" id="delete_{{$menu->id}}">
                                 <span class="delete">
                                     <i class="fas fa-minus-circle"></i>
                                 </span>
-                                </a>
-                            @endif
+                            </a>
+
                         </td>
 
                     </tr>
@@ -102,17 +112,22 @@
 
 
         //-- Add new label functionality
-        var newLabelCount = '{{$intLastLabelId}}';
+        {{--var newLabelCount = '{{$intLastLabelId}}';--}}
+
+        //TODO
+        var newLabelCount = 0;
         $('#add').click(function () {
             newLabelCount++;
             var keyField = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
+            var keyField2 = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
+            var keyField3 = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
                 langField += "<td><input type='text' id='" + newLabelCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
                     @endforeach
 
             var deleteIcon = "<td><a href=\"#\" id='delete_" + newLabelCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
-            $('<tr id="label_' + newLabelCount + '">').html(keyField + langField + deleteIcon + "</tr>").appendTo('#labels_body');
+            $('<tr id="label_' + newLabelCount + '">').html(langField + keyField + keyField2 + keyField3 + deleteIcon + "</tr>").appendTo('#labels_body');
 
             $('[id^="delete_"]').click(function () {
                 DeleteLabel($(this).attr('id').replace('delete_', ""));

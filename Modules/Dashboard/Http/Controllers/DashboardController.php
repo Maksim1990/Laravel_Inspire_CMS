@@ -124,16 +124,16 @@ class DashboardController extends Controller
 
         //TODO Building dynamic header menu
         $user=Auth::user();
-        $userMenu=Menu::where('active','Y')->whereHas('menuActive', function ($query) {
+        $userMenus=Menu::where('active','Y')->whereHas('menuActive', function ($query) {
             $query->where('active', 'Y')->where('user_id',Auth::id());
         })->get();
-        //dd($userMenu);
+       // dd($userMenus);
 
 
 
 
 
-        return view('admin.menu',compact('arrTabs', 'active', 'translations', 'arrOfActiveLanguages','intLastLabelId'));
+        return view('admin.menu',compact('arrTabs', 'active', 'userMenus', 'arrOfActiveLanguages'));
     }
 
 
