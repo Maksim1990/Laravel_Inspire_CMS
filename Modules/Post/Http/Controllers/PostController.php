@@ -12,9 +12,12 @@ class PostController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        return view('post::index');
+        $arrTabs = ['General'];
+        $active = "active";
+
+        return view('post::index',compact('arrTabs', 'active'));
     }
 
     /**

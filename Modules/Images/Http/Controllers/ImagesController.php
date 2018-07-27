@@ -12,9 +12,12 @@ class ImagesController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        return view('images::index');
+        $arrTabs = ['General'];
+        $active = "active";
+
+        return view('images::index',compact('arrTabs', 'active'));
     }
 
     /**

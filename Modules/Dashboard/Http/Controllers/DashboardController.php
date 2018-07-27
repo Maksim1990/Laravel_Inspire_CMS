@@ -25,7 +25,7 @@ class DashboardController extends Controller
      */
     public function index($id)
     {
-        $arrTabs = ['General', 'Profile'];
+        $arrTabs = ['General'];
         $active = "active";
         return view('dashboard::index',compact('arrTabs', 'active'));
     }
@@ -154,7 +154,7 @@ class DashboardController extends Controller
 
 
         $config=ConfigLang::LANG_ARRAY;
-        dd($config);
+        //dd($config);
 
 
         return view('dashboard::languages',compact('arrTabs', 'active'));

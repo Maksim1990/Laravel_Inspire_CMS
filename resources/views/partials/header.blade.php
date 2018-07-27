@@ -58,6 +58,12 @@
                             <li><a href="{{route('languages',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
                                                                                                 style="font-size:20px;margin-right:10px;"></i>Language settings</a></li>
 
+                            <li><a href="{{route('posts',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
+                                                                                       style="font-size:20px;margin-right:10px;"></i>Posts module</a></li>
+
+                            <li><a href="{{route('images',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
+                                                                                   style="font-size:20px;margin-right:10px;"></i>Images module</a></li>
+
                             <li><a href="{{route('about_us')}}"><i class="fa fa-info-circle"
                                                                    style="font-size:20px;margin-right:10px;"></i>About</a>
                             </li>

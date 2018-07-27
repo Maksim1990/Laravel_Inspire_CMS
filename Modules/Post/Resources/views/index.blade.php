@@ -1,7 +1,7 @@
 @extends('post::layouts.master')
 
-@section('content')
-    <h1>Hello World</h1>
+@section('General')
+    <h1>Posts module</h1>
 
     <p>
         This view is loaded from module: {!! config('post.name') !!}
