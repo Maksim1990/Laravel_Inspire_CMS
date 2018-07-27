@@ -9,7 +9,7 @@
     <div>
         <p >Edit User</p>
         <div class="col-sm-5">
-            <img height="200"  src="{{$user->image ? $user->image->full_path :"/images/includes/noimage.png"}}" class="image-responsive" alt="">
+            <img height="200"  src="{{$user->image ? $user->image->full_path :custom_asset("images/includes/noimage.png")}}" class="image-responsive" alt="">
             <div>
                 <a href="{{route('change_password',['id'=>Auth::id()])}}" class="link">Change password</a>
             </div>

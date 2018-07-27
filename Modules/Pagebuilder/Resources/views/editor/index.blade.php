@@ -4,7 +4,7 @@
 
 @stop
 @section('scripts_header')
-<script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
+<script src="{{custom_asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
 <script>
     tinymce.init({
         selector: 'h2.editable',

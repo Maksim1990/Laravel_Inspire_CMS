@@ -125,7 +125,7 @@
        });
 </script>
 
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{custom_asset('js/app.js')}}"></script>
 @yield('scripts')
 
 

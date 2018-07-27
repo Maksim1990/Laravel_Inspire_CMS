@@ -157,6 +157,7 @@ class DashboardController extends Controller
         //dd($config);
 
 
+
         return view('dashboard::languages',compact('arrTabs', 'active'));
     }
 

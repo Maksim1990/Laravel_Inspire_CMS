@@ -23,19 +23,19 @@
 
     /* First image (Logo. Full height) */
     .bgimg-1 {
-        background-image: url('{{asset("storage/img/parallax1.jpg")}}');
+        background-image: url('{{custom_asset("storage/img/parallax1.jpg")}}');
         min-height: 100%;
     }
 
     /* Second image (Portfolio) */
     .bgimg-2 {
-        background-image: url('{{asset("storage/img/parallax2.jpg")}}');
+        background-image: url('{{custom_asset("storage/img/parallax2.jpg")}}');
         min-height: 400px;
     }
 
     /* Third image (Contact) */
     .bgimg-3 {
-        background-image: url('{{asset("storage/img/parallax3.jpg")}}');
+        background-image: url('{{custom_asset("storage/img/parallax3.jpg")}}');
         min-height: 400px;
     }
 

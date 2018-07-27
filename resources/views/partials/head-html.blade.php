@@ -16,15 +16,15 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link href="{{asset('css/app.css')}}" rel="stylesheet">
-<link href="{{asset('lib/noty.css')}}" rel="stylesheet">
-<script src="{{asset('lib/noty.js')}}" type="text/javascript"></script>
+<link href="{{custom_asset('css/app.css')}}" rel="stylesheet">
+<link href="{{custom_asset('lib/noty.css')}}" rel="stylesheet">
+<script src="{{custom_asset('lib/noty.js')}}" type="text/javascript"></script>
 
 
 
-<link href="{{asset('css/libs.css')}}" rel="stylesheet">
-<link href="{{asset('css/layout_admin.css')}}" rel="stylesheet">
-<link href="{{asset('css/style.css')}}" rel="stylesheet">
+<link href="{{custom_asset('css/libs.css')}}" rel="stylesheet">
+<link href="{{custom_asset('css/layout_admin.css')}}" rel="stylesheet">
+<link href="{{custom_asset('css/style.css')}}" rel="stylesheet">
 
 @yield('styles')
 
@@ -41,7 +41,7 @@
         display: block;
         position: fixed;
         z-index: 100;
-        background-image: url({{ asset('images/includes/load.gif') }});
+        background-image: url({{ custom_asset('images/includes/load.gif') }});
         background-color: #666;
         opacity: 0.4;
         background-repeat: no-repeat;

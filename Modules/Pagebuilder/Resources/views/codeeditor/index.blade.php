@@ -4,17 +4,17 @@
 
 @stop
 @section('scripts_header')
-    <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/lib/codemirror.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/vendor/codemirror/addon/display/fullscreen.css')}}">
+    <link rel="stylesheet" href="{{custom_asset('plugins/vendor/codemirror/lib/codemirror.css')}}">
+    <link rel="stylesheet" href="{{custom_asset('plugins/vendor/codemirror/addon/display/fullscreen.css')}}">
     @php
         $strCodeeditorTheme=!empty(Auth::user()->setting->codeeditor_theme)? Auth::user()->setting->codeeditor_theme:'darcula';
         $strCodeeditorFullTheme='plugins/vendor/codemirror/theme/'.$strCodeeditorTheme.'.css';
     @endphp
-    <link rel="stylesheet" href="{{asset($strCodeeditorFullTheme)}}">
+    <link rel="stylesheet" href="{{custom_asset($strCodeeditorFullTheme)}}">
 
-    <script src="{{asset('plugins/vendor/codemirror/lib/codemirror.js')}}"></script>
-    <script src="{{asset('plugins/vendor/codemirror/mode/xml/xml.js')}}"></script>
-    <script src="{{asset('plugins/vendor/codemirror/addon/display/fullscreen.js')}}"></script>
+    <script src="{{custom_asset('plugins/vendor/codemirror/lib/codemirror.js')}}"></script>
+    <script src="{{custom_asset('plugins/vendor/codemirror/mode/xml/xml.js')}}"></script>
+    <script src="{{custom_asset('plugins/vendor/codemirror/addon/display/fullscreen.js')}}"></script>
 
 @stop
 @section('General')

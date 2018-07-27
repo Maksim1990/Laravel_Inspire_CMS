@@ -1,7 +1,7 @@
 @extends('pagebuilder::layouts.master')
 
 @section('scripts_header')
-    <script src="{{asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
+    <script src="{{custom_asset('plugins/vendor/tinymce/js/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
     @if(count($websiteBlocks)>0)
         @php
 
@@ -149,8 +149,9 @@
                 <ul id="gallery">
                     @php
                         for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
+                            $strContent=str_replace('../../public/storage','../../../public/storage',$arrBlocks[$idx]['content']);
                             echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['sortorder'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
-                            echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $arrBlocks[$idx]['content'] . "<hr></div>";
+                            echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $strContent . "<hr></div>";
                             echo "<span class=\"tooltiptext\">";
                             //-- Code editor button
                             echo "<a id='pagebuilder_menu_code_editor_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-info tooltip_link'>Go to code editor</a><br>";
@@ -195,7 +196,7 @@
     </div>
 @stop
 @section('scripts')
-    <script src="{{asset('js/jquery.dragsort.js')}}" type="text/javascript"></script>
+    <script src="{{custom_asset('js/jquery.dragsort.js')}}" type="text/javascript"></script>
 
     <script type="text/javascript">
 

@@ -13,7 +13,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{route('admin',['id'=>Auth::id()])}}">
-                    <img style="margin-top: -15px;" height="50" src="/images/includes/logo_white.png" alt="">
+                    <img style="margin-top: -15px;" height="50" src="{{custom_asset('images/includes/logo_white.png')}}" alt="">
                 </a>
             </div>
 
@@ -79,7 +79,7 @@
                     <li id="loggedName">
                         <p href="#" class="tooltip_header_menu">
                             <img style="border-radius: 40px;" height="45"
-                                 src="{{Auth::user()->image ? Auth::user()->image->full_path :"/images/includes/noimage.png"}}"
+                                 src="{{Auth::user()->image ? Auth::user()->image->full_path : custom_asset("images/includes/noimage.png")}}"
                                  alt="">
                             <span class=""
                                   style="color:white;display:inline;position: relative;top: 5px;"> Hello, {{ Auth::user()->name }}

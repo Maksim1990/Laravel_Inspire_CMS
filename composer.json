@@ -33,7 +33,8 @@
             "Modules\\": "Modules/"
         },
         "files": [
-            "app/Helper.php"
+            "app/Helper.php",
+            "app/Config/CustomMethods.php"
         ]
     },
     "autoload-dev": {
