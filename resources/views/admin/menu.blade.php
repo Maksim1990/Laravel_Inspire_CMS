@@ -35,12 +35,12 @@
                 </tr>
 
                 </thead>
-                <tbody id="labels_body">
+                <tbody id="menus_body">
                 @foreach($userMenus as $menu)
                     @php
                     //dd();
                     @endphp
-                    <tr id="label_{{$menu->id}}">
+                    <tr id="menu_{{$menu->id}}">
 
                         {{--Loop through all active languages--}}
                         @foreach($arrOfActiveLanguages as $strKey=>$strLang)
@@ -92,7 +92,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="menu_active" id="menu_active" style="height: 33px;">
+                            <select class="form-control" name="menu_active" id="{{$menu->id}}_menu_active" style="height: 33px;">
                                 @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
                                     @php
                                         $strSelected="";
@@ -106,7 +106,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="menu_active" id="menu_active_admin" style="height: 33px;">
+                            <select class="form-control" name="menu_active_admin" id="{{$menu->id}}_menu_active_admin" style="height: 33px;">
                                 @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
                                     @php
                                         $strSelected="";
@@ -119,7 +119,7 @@
                             </select>
                         </td>
                         <td style="width:10%;">
-                            <input type="number" class="form-control" name="menu_sortorder" value="{{$menu->sortorder}}">
+                            <input type="number" class="form-control" name="menu_sortorder" id="{{$menu->id}}_menu_sortorder"  value="{{$menu->sortorder}}">
                         </td>
                         <td>
 
@@ -150,46 +150,48 @@
         var token = '{{\Illuminate\Support\Facades\Session::token()}}';
         var url = '{{ route('ajax_update_menu') }}';
 
-        //-- Functionality to update labels for current module
+        //-- Functionality to update menus
         $('#submit').click(function () {
-            SaveLabel();
+            SaveMenu();
         });
 
-        //-- Delete label functionality
+        //-- Delete menu functionality
         $('[id^="delete_"]').click(function () {
-            DeleteLabel($(this).attr('id').replace('delete_', ""));
+            DeleteMenu($(this).attr('id').replace('delete_', ""));
         });
 
 
-        //-- Add new label functionality
-        {{--var newLabelCount = '{{$intLastLabelId}}';--}}
+        //-- Add new menu functionality
+        var newMenuCount = '{{$intLastMenuId}}';
 
-        //TODO
-        var newLabelCount = 0;
         $('#add').click(function () {
-            newLabelCount++;
-            var keyField = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
-            var keyField2 = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
-            var keyField3 = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
+            newMenuCount++;
+            var keyFieldParent = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\""+newMenuCount+"menu_active_admin\" style=\"height: 33px;\">" +
+                "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
+            var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\""+newMenuCount+"_menu_active\" style=\"height: 33px;\">" +
+                "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
+            var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\""+newMenuCount+"menu_active_admin\" style=\"height: 33px;\">" +
+                "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
+            var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='key_" + newMenuCount + "'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
-                langField += "<td><input type='text' id='" + newLabelCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
+                langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
                     @endforeach
 
-            var deleteIcon = "<td><a href=\"#\" id='delete_" + newLabelCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
-            $('<tr id="label_' + newLabelCount + '">').html(langField + keyField + keyField2 + keyField3 + deleteIcon + "</tr>").appendTo('#labels_body');
+            var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
+            $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
 
             $('[id^="delete_"]').click(function () {
-                DeleteLabel($(this).attr('id').replace('delete_', ""));
+                DeleteMenu($(this).attr('id').replace('delete_', ""));
             });
 
         });
 
-        function DeleteLabel(id) {
+        function DeleteMenu(id) {
 
             var url = '{{ route('ajax_delete_label') }}';
 
-            var conf = confirm("Do you want to delete this label?");
+            var conf = confirm("Do you want to delete this menu?");
             if (conf) {
                 $.ajax({
                     method: 'POST',
@@ -205,14 +207,14 @@
                         if (data['result'] === "success") {
 
                             //-- Hide label line from table
-                            $('#label_' + id).hide();
+                            $('#menu_' + id).hide();
                             //-- Hide loading image
                             $("div#divLoading").removeClass('show');
 
                             new Noty({
                                 type: 'success',
                                 layout: 'topRight',
-                                text: 'Labels deleted!'
+                                text: 'Menu deleted!'
                             }).show();
                         }
                     }
@@ -222,7 +224,7 @@
         }
 
 
-        function SaveLabel() {
+        function SaveMenu() {
             var arrTranslationsKeys = {};
             var arrTranslations = {};
             $('input[id^="key_"]').each(function () {
@@ -259,7 +261,7 @@
                         new Noty({
                             type: 'success',
                             layout: 'topRight',
-                            text: 'Labels updated!'
+                            text: 'Menu updated!'
                         }).show();
                     }
                 }

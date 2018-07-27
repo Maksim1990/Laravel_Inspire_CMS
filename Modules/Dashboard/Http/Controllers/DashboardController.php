@@ -109,12 +109,11 @@ class DashboardController extends Controller
         $active = "active";
 
 
-        $translations = LanguageLine::where('user_id',Auth::id())->get();
-        $translationLast = LanguageLine::where('id','<>','0')->orderBy('id','DESC')->first();
-        if(!empty($translationLast)){
-            $intLastLabelId=$translationLast->id;
+        $menuList = Menu::where('id','<>','0')->orderBy('id','DESC')->first();
+        if(!empty($menuList)){
+            $intLastMenuId=$menuList->id;
         }else{
-            $intLastLabelId=0;
+            $intLastMenuId=0;
         }
 
 
@@ -139,7 +138,7 @@ class DashboardController extends Controller
 
 
 
-        return view('admin.menu',compact('arrTabs', 'active', 'userMenus', 'arrOfActiveLanguages'));
+        return view('admin.menu',compact('arrTabs', 'active', 'userMenus','intLastMenuId', 'arrOfActiveLanguages'));
     }
 
 
