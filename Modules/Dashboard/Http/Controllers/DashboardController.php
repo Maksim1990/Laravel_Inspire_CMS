@@ -2,6 +2,7 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+use App\Helper;
 use App\Menu\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,12 +13,7 @@ use Spatie\TranslationLoader\LanguageLine;
 class DashboardController extends Controller
 {
 
-    private $arrOfActiveLanguages = [
-        "EN" => "English",
-        "FR" => "French",
-        "RU" => "Russian",
-        "TH" => "Thai"
-    ];
+
 
 
     /**
@@ -117,7 +113,7 @@ class DashboardController extends Controller
         }
 
 
-        $arrOfActiveLanguages = $this->arrOfActiveLanguages;
+        $arrOfActiveLanguages = Helper::GetActiveLanguages();
 
 
 

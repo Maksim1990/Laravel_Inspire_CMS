@@ -145,10 +145,17 @@
         function SaveLabel() {
             var arrTranslationsKeys = {};
             var arrTranslations = {};
+
+            var blnAllowSubmit = true;
+
             $('input[id^="key_"]').each(function () {
                 if ($(this).attr('id')) {
                     var id = $(this).attr('id').replace("key_", "").trim();
+
                     arrTranslationsKeys[id] = $(this).val();
+                    if (arrTranslationsKeys[id] === "") {
+                        blnAllowSubmit = false;
+                    }
                     var pattern = id + "_text_";
 
                     $('input[id^=' + pattern + ']').each(function () {
@@ -157,33 +164,49 @@
                     });
                 }
             });
+            console.log(arrTranslations);
+            console.log(arrTranslationsKeys);
 
-            $.ajax({
-                method: 'POST',
-                url: url,
-                data: {
-                    arrTranslations: arrTranslations,
-                    arrTranslationsKeys: arrTranslationsKeys,
-                    module: "website",
-                    _token: token
-                }, beforeSend: function () {
-                    //-- Show loading image while execution of ajax request
-                    $("div#divLoading").addClass('show');
-                },
-                success: function (data) {
-                    if (data['result'] === "success") {
+
+            if (blnAllowSubmit) {
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    data: {
+                        arrTranslations: arrTranslations,
+                        arrTranslationsKeys: arrTranslationsKeys,
+                        module: "website",
+                        _token: token
+                    }, beforeSend: function () {
+                        //-- Show loading image while execution of ajax request
+                        $("div#divLoading").addClass('show');
+                    },
+                    success: function (data) {
+                        if (data['result'] === "success") {
+                            new Noty({
+                                type: 'success',
+                                layout: 'topRight',
+                                text: 'Labels updated!'
+                            }).show();
+                        }else{
+                            new Noty({
+                                type: 'error',
+                                layout: 'bottomLeft',
+                                text: data['error']
+                            }).show();
+                        }
 
                         //-- Hide loading image
                         $("div#divLoading").removeClass('show');
-
-                        new Noty({
-                            type: 'success',
-                            layout: 'topRight',
-                            text: 'Labels updated!'
-                        }).show();
                     }
-                }
-            });
+                });
+            } else {
+                new Noty({
+                    type: 'error',
+                    layout: 'bottomLeft',
+                    text: 'Label key can not be empty!'
+                }).show();
+            }
         }
     </script>
 @stop

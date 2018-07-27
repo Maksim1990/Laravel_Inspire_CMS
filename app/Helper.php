@@ -89,4 +89,20 @@ class Helper{
     }
 
 
+
+    public static function GetActiveLanguages()
+    {
+        $arrOfActiveLanguages = [
+        "EN" => "English",
+        "FR" => "French",
+        "RU" => "Russian",
+        "TH" => "Thai"
+    ];
+
+        return $arrOfActiveLanguages;
+
+
+    }
+
+
 }
