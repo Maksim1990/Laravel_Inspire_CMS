@@ -17,7 +17,7 @@ class Image extends Model
      */
     public function getFullPathAttribute()
     {
-        return asset('storage/upload/' . Auth::id() . '/profile/' . $this->path);
+        return asset('public/storage/upload/' . Auth::id() . '/profile/' . $this->path);
     }
 
 

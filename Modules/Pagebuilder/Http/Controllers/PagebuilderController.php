@@ -193,7 +193,7 @@ class PagebuilderController extends Controller
             'public/upload/' . Auth::id() . '/', $filename
         );
 
-        return json_encode(['location' => asset('storage/upload/' . Auth::id() . '/' . $filename)]);
+        return json_encode(['location' => asset('public/storage/upload/' . Auth::id() . '/' . $filename)]);
 
     }
 
