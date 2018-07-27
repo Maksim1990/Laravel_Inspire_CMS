@@ -9,7 +9,12 @@
     </style>
 @stop
 @section('General')
-
+    @php
+        $menuActiveOptions=[
+        'Y'=>'Y',
+        'N'=>'N'
+        ];
+    @endphp
     <h3>Menu settings</h3>
     <div>
         <p>Module: <b>Website</b></p>
@@ -24,6 +29,7 @@
                     @endforeach
                     <th>Parent</th>
                     <th>Active</th>
+                    <th>Admin <br>active</th>
                     <th>Sortorder</th>
                     <th></th>
                 </tr>
@@ -31,11 +37,14 @@
                 </thead>
                 <tbody id="labels_body">
                 @foreach($userMenus as $menu)
+                    @php
+                    //dd();
+                    @endphp
                     <tr id="label_{{$menu->id}}">
 
                         {{--Loop through all active languages--}}
                         @foreach($arrOfActiveLanguages as $strKey=>$strLang)
-                            <td>
+                            <td style="width:15%;">
                                 @php
                                     //-- Set default menu name for current language
                                     $menuName="";
@@ -58,18 +67,59 @@
 
                         <td>
                             <select class="form-control" name="menu_parent" id="menu_parent" style="height: 33px;">
-                                <option value="Y">Y</option>
-                                <option value="N">N</option>
+                                <option value='0'></option>
+                                @foreach($userMenus as $menuSelect)
+
+                                @if(count($menuSelect->langs)>0)
+                                    @foreach($menuSelect->langs as $menuLangSelect)
+
+                                            @php
+                                                $strSelected="";
+                                                if($menu->id==$menuSelect->id){
+                                                continue;
+                                                }
+
+                                                if($menu->parent==$menuSelect->id){
+                                                $strSelected="selected";
+                                                }
+                                            @endphp
+                                            @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale())
+                                            <option value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
+                                            @endif
+                                    @endforeach
+                                @endif
+                                @endforeach
                             </select>
                         </td>
                         <td>
                             <select class="form-control" name="menu_active" id="menu_active" style="height: 33px;">
-                                <option value="Y">Y</option>
-                                <option value="N">N</option>
+                                @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
+                                    @php
+                                        $strSelected="";
+                                          $menuActive=$menu->menuActive->where('user_id',Auth::id())->first();
+                                            if(isset($menuActive) && $menuActive->active==$strKey){
+                                        $strSelected="selected";
+                                        }
+                                    @endphp
+                                <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
+                                @endforeach
                             </select>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="menu_sortorder" value="">
+                            <select class="form-control" name="menu_active" id="menu_active_admin" style="height: 33px;">
+                                @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
+                                    @php
+                                        $strSelected="";
+                                        if($menu->active==$strKey){
+                                        $strSelected="selected";
+                                        }
+                                    @endphp
+                                    <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td style="width:10%;">
+                            <input type="number" class="form-control" name="menu_sortorder" value="{{$menu->sortorder}}">
                         </td>
                         <td>
 

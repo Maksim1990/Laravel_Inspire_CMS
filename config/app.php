@@ -165,6 +165,7 @@ return [
         m3assy\nationals\nationalsServiceProvider::class,
         App\Providers\HeaderServiceProvider::class,
 
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
     ],
 
     /*
@@ -216,6 +217,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Curl' => Ixudra\Curl\Facades\Curl::class,
+
+        'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
 
     ],
 
