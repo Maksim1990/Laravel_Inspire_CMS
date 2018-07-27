@@ -38,7 +38,7 @@
                 <tbody id="menus_body">
                 @foreach($userMenus as $menu)
                     @php
-                    //dd();
+                        //dd();
                     @endphp
                     <tr id="menu_{{$menu->id}}">
 
@@ -70,8 +70,8 @@
                                 <option value='0'></option>
                                 @foreach($userMenus as $menuSelect)
 
-                                @if(count($menuSelect->langs)>0)
-                                    @foreach($menuSelect->langs as $menuLangSelect)
+                                    @if(count($menuSelect->langs)>0)
+                                        @foreach($menuSelect->langs as $menuLangSelect)
 
                                             @php
                                                 $strSelected="";
@@ -79,20 +79,21 @@
                                                 continue;
                                                 }
 
-                                                if($menu->parent==$menuSelect->id){
+                                                if($menu->menuActive->where('user_id',Auth::id())->first()->parent==$menuSelect->id){
                                                 $strSelected="selected";
                                                 }
                                             @endphp
                                             @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale())
-                                            <option value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
+                                                <option value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
                                             @endif
-                                    @endforeach
-                                @endif
+                                        @endforeach
+                                    @endif
                                 @endforeach
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="menu_active" id="{{$menu->id}}_menu_active" style="height: 33px;">
+                            <select class="form-control" name="menu_active" id="{{$menu->id}}_menu_active"
+                                    style="height: 33px;">
                                 @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
                                     @php
                                         $strSelected="";
@@ -101,12 +102,13 @@
                                         $strSelected="selected";
                                         }
                                     @endphp
-                                <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
+                                    <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
                                 @endforeach
                             </select>
                         </td>
                         <td>
-                            <select class="form-control" name="menu_active_admin" id="{{$menu->id}}_menu_active_admin" style="height: 33px;">
+                            <select class="form-control" name="menu_active_admin" id="{{$menu->id}}_menu_active_admin"
+                                    style="height: 33px;">
                                 @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
                                     @php
                                         $strSelected="";
@@ -119,7 +121,9 @@
                             </select>
                         </td>
                         <td style="width:10%;">
-                            <input type="number" class="form-control" name="menu_sortorder" id="{{$menu->id}}_menu_sortorder"  value="{{$menu->sortorder}}">
+                            <input type="number" class="form-control" name="menu_sortorder"
+                                   id="{{$menu->id}}_menu_sortorder"
+                                   value="{{$menu->menuActive->where('user_id',Auth::id())->first()->sortorder}}">
                         </td>
                         <td>
 
@@ -166,11 +170,11 @@
 
         $('#add').click(function () {
             newMenuCount++;
-            var keyFieldParent = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\""+newMenuCount+"menu_active_admin\" style=\"height: 33px;\">" +
+            var keyFieldParent = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "menu_active_admin\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
-            var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\""+newMenuCount+"_menu_active\" style=\"height: 33px;\">" +
+            var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\"" + newMenuCount + "_menu_active\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
-            var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\""+newMenuCount+"menu_active_admin\" style=\"height: 33px;\">" +
+            var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "menu_active_admin\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
             var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='key_" + newMenuCount + "'></td>";
             var langField = "";

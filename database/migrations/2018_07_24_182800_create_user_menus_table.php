@@ -18,6 +18,8 @@ class CreateUserMenusTable extends Migration
             $table->integer('menu_id');
             $table->integer('user_id');
             $table->enum('active', ['Y', 'N'])->default("Y");
+            $table->integer('parent')->default(0);
+            $table->integer('sortorder')->default(0);
             $table->timestamps();
         });
     }

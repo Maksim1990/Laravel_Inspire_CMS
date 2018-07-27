@@ -6,7 +6,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/content/editor', 'PagebuilderController@editor')->name("editor");
         Route::get('code_editor/{block_id?}', 'PagebuilderController@code_editor')->name("code_editor");
         Route::get('/{id}/css', 'PagebuilderController@css')->name("css");
-        Route::get('/{id}/codeeditor/setting', 'PagebuilderController@cssCodeeditorSetting')->name("css_codeeditor_setting");
+        Route::get('/{id}/codeeditor/setting', 'PagebuilderController@codeeditorSetting')->name("codeeditor_setting");
 
 
         //--- Ajax routes

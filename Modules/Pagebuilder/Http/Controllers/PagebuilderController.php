@@ -240,7 +240,7 @@ class PagebuilderController extends Controller
     }
 
 
-    public function cssCodeeditorSetting($id)
+    public function codeeditorSetting($id)
     {
         $arrTabs = ['General'];
         $active = "active";

@@ -46,7 +46,7 @@
                         to <i>exit</i> full screen editing.</p>
                 </article>
                 <a href="{{route("pagebuilder_index",Auth::id())}}" class="btn btn-warning">Back to pagebuilder</a>
-                <a href="{{route("css_codeeditor_setting",Auth::id())}}" class="btn btn-info">Editor settings</a>
+                <a href="{{route("codeeditor_setting",Auth::id())}}" class="btn btn-info">Editor settings</a>
                 <button id="submit" class="btn btn-success">Save</button>
             </div>
         </div>
