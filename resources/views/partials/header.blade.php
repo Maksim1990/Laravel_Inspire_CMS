@@ -55,7 +55,9 @@
 
                             <li><a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
                                                                                  style="font-size:20px;margin-right:10px;"></i>Code editor settings</a></li>
-                            
+                            <li><a href="{{route('languages',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
+                                                                                                style="font-size:20px;margin-right:10px;"></i>Language settings</a></li>
+
                             <li><a href="{{route('about_us')}}"><i class="fa fa-info-circle"
                                                                    style="font-size:20px;margin-right:10px;"></i>About</a>
                             </li>

@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Spatie\TranslationLoader\LanguageLine;
 
-class Helper{
+class Helper
+{
 
 
     /**
@@ -49,13 +50,13 @@ class Helper{
             //-- Remove additional double quotes from the match
             $match[1] = str_replace('"', "", $match[1]);
 
-            $arrModuleLabel=explode(".",$match[1]);
+            $arrModuleLabel = explode(".", $match[1]);
 
-            $trans=LanguageLine::where("user_id",Auth::id())->where("group",$arrModuleLabel[0])->where("key",$arrModuleLabel[1])->first();
+            $trans = LanguageLine::where("user_id", Auth::id())->where("group", $arrModuleLabel[0])->where("key", $arrModuleLabel[1])->first();
 
             $arrReplacements[$intKey]['from'] = $strLabel;
             //-- If appropriate translation was not found than display text itself
-            $arrReplacements[$intKey]['to'] = isset($trans->text)?$trans->text[App::getLocale()]:$match[1];
+            $arrReplacements[$intKey]['to'] = isset($trans->text) ? $trans->text[App::getLocale()] : $match[1];
 
         }
 
@@ -74,10 +75,10 @@ class Helper{
      * @param string $blockID
      * @return void
      */
-    public static function CheckIfImageInBlock($codeEditorContent,$blockID)
+    public static function CheckIfImageInBlock($codeEditorContent, $blockID)
     {
         //-- Get list of all images for this user and current block
-        $arrImagesList=glob(storage_path('/app/public/upload/'.Auth::id()."/".Auth::id()."_".$blockID."*.{jpg,png,gif}"), GLOB_BRACE);
+        $arrImagesList = glob(storage_path('/app/public/upload/' . Auth::id() . "/" . Auth::id() . "_" . $blockID . "*.{jpg,png,gif}"), GLOB_BRACE);
         foreach ($arrImagesList as $image) {
             $imageName = str_replace(storage_path('/app/public/upload/' . Auth::id() . "/"), "", $image);
             //-- Check if this image is still in the block
@@ -90,19 +91,22 @@ class Helper{
 
 
 
+    /**
+     * Get array of currently active languages
+     *
+     * @return array
+     */
     public static function GetActiveLanguages()
     {
         $arrOfActiveLanguages = [
-        "EN" => "English",
-        "FR" => "French",
-        "RU" => "Russian",
-        "TH" => "Thai"
-    ];
+            "EN" => "English",
+            "FR" => "French",
+            "RU" => "Russian",
+            "TH" => "Thai"
+        ];
 
         return $arrOfActiveLanguages;
 
-
     }
-
 
 }

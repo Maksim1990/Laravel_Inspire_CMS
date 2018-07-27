@@ -2,6 +2,8 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+
+use App\Config\ConfigLang;
 use App\Helper;
 use App\Menu\Menu;
 use Illuminate\Http\Request;
@@ -140,6 +142,22 @@ class DashboardController extends Controller
 
     public function updateMenu(Request $request){
 
+    }
+
+
+
+
+    public function languages($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        $config=ConfigLang::LANG_ARRAY;
+        dd($config);
+
+
+        return view('dashboard::languages',compact('arrTabs', 'active'));
     }
 
 }
