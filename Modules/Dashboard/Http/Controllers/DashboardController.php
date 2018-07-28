@@ -6,6 +6,8 @@ namespace Modules\Dashboard\Http\Controllers;
 use App\Config\ConfigLang;
 use App\Helper;
 use App\Menu\Menu;
+use App\Menu\MenuLang;
+use App\Menu\UserMenu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -14,8 +16,6 @@ use Spatie\TranslationLoader\LanguageLine;
 
 class DashboardController extends Controller
 {
-
-
 
 
     /**
@@ -27,7 +27,7 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('dashboard::index',compact('arrTabs', 'active'));
+        return view('dashboard::index', compact('arrTabs', 'active'));
     }
 
     /**
@@ -87,14 +87,14 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('dashboard::about',compact('arrTabs', 'active'));
+        return view('dashboard::about', compact('arrTabs', 'active'));
     }
 
     public function contacts()
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('dashboard::contact_us',compact('arrTabs', 'active'));
+        return view('dashboard::contact_us', compact('arrTabs', 'active'));
     }
 
     /**
@@ -107,20 +107,18 @@ class DashboardController extends Controller
         $active = "active";
 
 
-        $menuList = Menu::where('id','<>','0')->orderBy('id','DESC')->first();
-        if(!empty($menuList)){
-            $intLastMenuId=$menuList->id;
-        }else{
-            $intLastMenuId=0;
+        $menuList = Menu::where('id', '<>', '0')->orderBy('id', 'DESC')->first();
+        if (!empty($menuList)) {
+            $intLastMenuId = $menuList->id;
+        } else {
+            $intLastMenuId = 0;
         }
 
 
         $arrOfActiveLanguages = Helper::GetActiveLanguages();
 
 
-
-
-        $user=Auth::user();
+        $user = Auth::user();
 
         //TODO For building menu list
 //        $userMenus=Menu::where('active','Y')->whereHas('menuActive', function ($query) {
@@ -129,22 +127,129 @@ class DashboardController extends Controller
 
 
         // dd($userMenus);
-        $userMenus=Menu::whereHas('menuActive', function ($query) {
-            $query->where('user_id',Auth::id());
+        $userMenus = Menu::whereHas('menuActive', function ($query) {
+            $query->where('user_id', Auth::id());
         })->get();
 
 
-
-
-        return view('admin.menu',compact('arrTabs', 'active', 'userMenus','intLastMenuId', 'arrOfActiveLanguages'));
+        return view('admin.menu', compact('arrTabs', 'active', 'userMenus', 'intLastMenuId', 'arrOfActiveLanguages'));
     }
 
 
-    public function updateMenu(Request $request){
+    public function updateMenu(Request $request)
+    {
+
+        $arrMenuIds = $request['arrMenuIds'];
+        $arrMenuKeys = $request['arrMenuKeys'];
+        $arrMenuLangs = $request['arrMenuLangs'];
+        $strError = "";
+        $result = "success";
+
+        //-- Get all active languages
+        $arrOfActiveLanguages = Helper::GetActiveLanguages();
+
+
+        if (count($arrMenuIds) > 0) {
+            foreach ($arrMenuIds as $intId) {
+                try {
+
+                    $menu = Menu::findOrFail($intId);
+
+                    $menu->active = $arrMenuKeys[$intId . "_menu_active_admin"];
+                    $menu->update();
+
+
+                } catch (\Exception $e) {
+                    Menu::create([
+                        'id' => $intId,
+                        'active' => $arrMenuKeys[$intId . "_menu_active_admin"]
+                    ]);
+                }
+
+
+                foreach ($arrOfActiveLanguages as $strKey => $strLang) {
+                    $menuLang = MenuLang::where('id', $intId)->where('user_id', Auth::id())->where('lang', strtoupper($strKey))->first();
+                    $strName = !empty($arrMenuLangs[$intId . "_" . strtolower($strKey)]) ? $arrMenuLangs[$intId . "_" . strtolower($strKey)] : "";
+                    if ($menuLang) {
+                        $menuLang->name = $strName;
+                        $menuLang->update();
+                    } else {
+                        if (!empty($strName)) {
+                            MenuLang::create([
+                                'id' => $intId,
+                                'user_id' => Auth::id(),
+                                'name' => $strName,
+                                'lang' => strtoupper($strKey)
+                            ]);
+                        }
+                    }
+                }
+
+                $userMenu = UserMenu::where('menu_id', $intId)->where('user_id', Auth::id())->first();
+                if ($userMenu) {
+                    $userMenu->active = $arrMenuKeys[$intId . "_menu_active"];
+                    $userMenu->parent = $arrMenuKeys[$intId . "_menu_parent"];
+                    $userMenu->sortorder = $arrMenuKeys[$intId . "_menu_sortorder"];
+                    $userMenu->update();
+                } else {
+                    UserMenu::create([
+                        'user_id' => Auth::id(),
+                        'menu_id' => $intId,
+                        'active' => $arrMenuKeys[$intId . "_menu_active"],
+                        'parent' => isset($arrMenuKeys[$intId . "_menu_parent"]) ? $arrMenuKeys[$intId . "_menu_parent"] : 0,
+                        'sortorder' => $arrMenuKeys[$intId . "_menu_sortorder"]
+                    ]);
+                }
+
+
+            }
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
 
     }
 
+    public function deleteMenu(Request $request)
+    {
 
+        $intId = $request['id'];
+        $strError = "";
+        $result = "success";
+
+        $user = Auth::user();
+
+
+        $deleteMenu = Menu::find($intId);
+
+
+        if ($deleteMenu->admin == "Y") {
+            if ($user->admin) {
+                $deleteMenu->delete();
+                MenuLang::where('id', $intId)->where('user_id', $user->id)->delete();
+                UserMenu::where('menu_id', $intId)->where('user_id', $user->id)->delete();
+            } else {
+                $result = "";
+                $strError = "This menu can be deleted only by admin!";
+            }
+        } else {
+            $deleteMenu->delete();
+            MenuLang::where('id', $intId)->where('user_id', $user->id)->delete();
+            UserMenu::where('menu_id', $intId)->where('user_id', $user->id)->delete();
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+
+    }
 
 
     public function languages($id)
@@ -153,12 +258,11 @@ class DashboardController extends Controller
         $active = "active";
 
 
-        $config=ConfigLang::LANG_ARRAY;
+        $config = ConfigLang::LANG_ARRAY;
         //dd($config);
 
 
-
-        return view('dashboard::languages',compact('arrTabs', 'active'));
+        return view('dashboard::languages', compact('arrTabs', 'active'));
     }
 
 }

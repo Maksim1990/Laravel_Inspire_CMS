@@ -14,7 +14,6 @@ class CreateUserMenusTable extends Migration
     public function up()
     {
         Schema::create('user_menus', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('menu_id');
             $table->integer('user_id');
             $table->enum('active', ['Y', 'N'])->default("Y");

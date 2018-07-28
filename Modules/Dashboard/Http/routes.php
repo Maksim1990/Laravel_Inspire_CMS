@@ -9,6 +9,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
+        Route::post('/ajax_delete_menu', 'DashboardController@deleteMenu')->name('ajax_delete_menu');
 
 
     });

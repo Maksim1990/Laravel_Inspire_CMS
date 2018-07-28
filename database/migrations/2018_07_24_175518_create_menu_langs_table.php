@@ -15,6 +15,7 @@ class CreateMenuLangsTable extends Migration
     {
         Schema::create('menu_langs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('name');
             $table->string('lang')->default("EN");
             $table->timestamps();

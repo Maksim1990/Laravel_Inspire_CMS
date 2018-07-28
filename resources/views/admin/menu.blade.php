@@ -29,7 +29,9 @@
                     @endforeach
                     <th>Parent</th>
                     <th>Active</th>
+                        @if(Auth::user()->admin==1)
                     <th>Admin <br>active</th>
+                        @endif
                     <th>Sortorder</th>
                     <th></th>
                 </tr>
@@ -37,9 +39,6 @@
                 </thead>
                 <tbody id="menus_body">
                 @foreach($userMenus as $menu)
-                    @php
-                        //dd();
-                    @endphp
                     <tr id="menu_{{$menu->id}}">
 
                         {{--Loop through all active languages--}}
@@ -51,7 +50,7 @@
                                 @endphp
                                 @if(count($menu->langs)>0)
                                     @foreach($menu->langs as $menuLang)
-                                        @if($menuLang->lang==$strKey)
+                                        @if($menuLang->lang==$strKey && $menuLang->user_id == Auth::id())
                                             @php
                                                 $menuName=$menuLang->name;
                                             @endphp
@@ -66,7 +65,7 @@
                         @endforeach
 
                         <td>
-                            <select class="form-control" name="menu_parent" id="menu_parent" style="height: 33px;">
+                            <select class="form-control" name="menu_parent" id="{{$menu->id}}_menu_parent" style="height: 33px;">
                                 <option value='0'></option>
                                 @foreach($userMenus as $menuSelect)
 
@@ -83,8 +82,9 @@
                                                 $strSelected="selected";
                                                 }
                                             @endphp
-                                            @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale())
-                                                <option value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
+                                            @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
+                                                <option
+                                                    value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
                                             @endif
                                         @endforeach
                                     @endif
@@ -106,6 +106,7 @@
                                 @endforeach
                             </select>
                         </td>
+                        @if(Auth::user()->admin==1)
                         <td>
                             <select class="form-control" name="menu_active_admin" id="{{$menu->id}}_menu_active_admin"
                                     style="height: 33px;">
@@ -120,6 +121,7 @@
                                 @endforeach
                             </select>
                         </td>
+                        @endif
                         <td style="width:10%;">
                             <input type="number" class="form-control" name="menu_sortorder"
                                    id="{{$menu->id}}_menu_sortorder"
@@ -127,14 +129,14 @@
                         </td>
                         <td>
 
-                            <a href="#" id="delete_{{$menu->id}}">
-                                <span class="delete">
-                                    <i class="fas fa-minus-circle"></i>
-                                </span>
-                            </a>
-
+                            @if($menu->admin!="Y" || ($menu->admin=="Y" && Auth::user()->admin==1) )
+                                <a href="#" id="delete_{{$menu->id}}">
+                                    <span class="delete">
+                                        <i class="fas fa-minus-circle"></i>
+                                    </span>
+                                </a>
+                            @endif
                         </td>
-
                     </tr>
                 @endforeach
                 </tbody>
@@ -170,17 +172,29 @@
 
         $('#add').click(function () {
             newMenuCount++;
-            var keyFieldParent = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "menu_active_admin\" style=\"height: 33px;\">" +
-                "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
+            var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
+            keyFieldParent += "<option value=\"0\" selected></option>";
+            @foreach($userMenus as $menuSelect)
+                @if(count($menuSelect->langs)>0)
+                    @foreach($menuSelect->langs as $menuLangSelect)
+                        @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
+                        keyFieldParent += "<option value=\"{{$menuLangSelect->id}}\">{{$menuLangSelect->name}}</option>";
+                        @endif
+                    @endforeach
+                @endif
+            @endforeach
+            keyFieldParent += "</select></td>";
+
+
             var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\"" + newMenuCount + "_menu_active\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
-            var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "menu_active_admin\" style=\"height: 33px;\">" +
+            var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "_menu_active_admin\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
-            var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='key_" + newMenuCount + "'></td>";
+            var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
                 langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
-                    @endforeach
+                @endforeach
 
             var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
             $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
@@ -193,7 +207,7 @@
 
         function DeleteMenu(id) {
 
-            var url = '{{ route('ajax_delete_label') }}';
+            var url = '{{ route('ajax_delete_menu') }}';
 
             var conf = confirm("Do you want to delete this menu?");
             if (conf) {
@@ -210,17 +224,25 @@
                     success: function (data) {
                         if (data['result'] === "success") {
 
-                            //-- Hide label line from table
-                            $('#menu_' + id).hide();
-                            //-- Hide loading image
-                            $("div#divLoading").removeClass('show');
+                            //-- Hide menu line from table
+                            $('#menu_' + id).remove();
+
 
                             new Noty({
                                 type: 'success',
                                 layout: 'topRight',
                                 text: 'Menu deleted!'
                             }).show();
+                        }else{
+                            new Noty({
+                                type: 'error',
+                                layout: 'bottomLeft',
+                                text: data['error']
+                            }).show();
                         }
+
+                        //-- Hide loading image
+                        $("div#divLoading").removeClass('show');
                     }
                 });
             }
@@ -229,17 +251,24 @@
 
 
         function SaveMenu() {
-            var arrTranslationsKeys = {};
-            var arrTranslations = {};
-            $('input[id^="key_"]').each(function () {
+            var arrMenuKeys = {};
+            var arrMenuIds = [];
+            var arrMenuLangs = {};
+            $('[id^="menu_"]').each(function () {
                 if ($(this).attr('id')) {
-                    var id = $(this).attr('id').replace("key_", "").trim();
-                    arrTranslationsKeys[id] = $(this).val();
+                    var id = $(this).attr('id').replace("menu_", "").trim();
+                    arrMenuIds.push(id);
+                    arrMenuKeys[id+'_menu_parent'] = $('#'+id+'_menu_parent').val();
+                    arrMenuKeys[id+'_menu_active'] = $('#'+id+'_menu_active').val();
+                    arrMenuKeys[id+'_menu_active_admin'] = $('#'+id+'_menu_active_admin').val();
+                    arrMenuKeys[id+'_menu_sortorder'] = $('#'+id+'_menu_sortorder').val();
+
+
                     var pattern = id + "_text_";
 
                     $('input[id^=' + pattern + ']').each(function () {
-                        var idLabel = $(this).attr('id').replace(id + "_text_", "").trim();
-                        arrTranslations[id + "_" + idLabel] = $(this).val();
+                        var idMenu = $(this).attr('id').replace(id + "_text_", "").trim();
+                        arrMenuLangs[id + "_" + idMenu] = $(this).val();
                     });
                 }
             });
@@ -248,9 +277,9 @@
                 method: 'POST',
                 url: url,
                 data: {
-                    arrTranslations: arrTranslations,
-                    arrTranslationsKeys: arrTranslationsKeys,
-                    module: "website",
+                    arrMenuIds: arrMenuIds,
+                    arrMenuKeys: arrMenuKeys,
+                    arrMenuLangs: arrMenuLangs,
                     _token: token
                 }, beforeSend: function () {
                     //-- Show loading image while execution of ajax request

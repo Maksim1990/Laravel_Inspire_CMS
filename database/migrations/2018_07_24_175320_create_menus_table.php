@@ -20,6 +20,7 @@ class CreateMenusTable extends Migration
             $table->integer('module_id')->default(0);
             $table->string('icon')->nullable();
             $table->string('route')->nullable();
+            $table->enum('admin', ['Y', 'N'])->default("N");
             //$table->integer('sortorder')->nullable();
             $table->timestamps();
         });
