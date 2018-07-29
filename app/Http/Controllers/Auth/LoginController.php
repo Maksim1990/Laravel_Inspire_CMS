@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 class LoginController extends Controller
 {
@@ -30,7 +32,7 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        return '/admin/'.Auth::id().'/dashboard';
+        return '/'.LaravelLocalization::getCurrentLocale().'/admin/'.Auth::id().'/dashboard';
     }
 
     /**

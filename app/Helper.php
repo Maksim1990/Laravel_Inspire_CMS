@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Modules\Dashboard\Entities\Language;
 use Spatie\TranslationLoader\LanguageLine;
 
 class Helper
@@ -90,7 +91,6 @@ class Helper
     }
 
 
-
     /**
      * Get array of currently active languages
      *
@@ -98,12 +98,23 @@ class Helper
      */
     public static function GetActiveLanguages()
     {
-        $arrOfActiveLanguages = [
-            "EN" => "English",
-            "FR" => "French",
-            "RU" => "Russian",
-            "TH" => "Thai"
-        ];
+
+        $activeLangs = Language::where('user_id', Auth::id())->where('active','Y')->get()->toArray();
+
+        if (!empty($activeLangs)) {
+            foreach ($activeLangs as $langItem){
+                $arrOfActiveLanguages[strtoupper($langItem['name'])]=$langItem['native_en'];
+            }
+
+        } else {
+            $arrOfActiveLanguages = [
+                "EN" => "English",
+                "FR" => "French",
+                "RU" => "Russian",
+                "TH" => "Thai"
+            ];
+        }
+
 
         return $arrOfActiveLanguages;
 

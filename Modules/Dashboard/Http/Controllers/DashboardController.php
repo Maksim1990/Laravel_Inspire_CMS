@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Modules\Dashboard\Entities\Language;
 use Spatie\TranslationLoader\LanguageLine;
 
 class DashboardController extends Controller
@@ -257,12 +259,78 @@ class DashboardController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
+        //-- Get all active languages
+        $arrOfActiveLanguages = Helper::GetActiveLanguages();
+        $arrOfActiveLanguagesKeys=array_keys($arrOfActiveLanguages);
+
 
         $config = ConfigLang::LANG_ARRAY;
         //dd($config);
 
+        $allAvailableLanguages= LaravelLocalization::getSupportedLocales();
 
-        return view('dashboard::languages', compact('arrTabs', 'active'));
+        return view('dashboard::languages', compact('arrTabs', 'active','allAvailableLanguages','arrOfActiveLanguagesKeys'));
+    }
+
+    public function updateLanguages(Request $request)
+    {
+        $selectedLangs = $request['selectedLangs'];
+        $strError = "";
+        $result = "success";
+
+        $selectedLangsKeys=array();
+        if(count($selectedLangs)>0){
+            foreach ($selectedLangs as $langItem){
+                $arrLangDetails=explode('_',$langItem['value']);
+                $selectedLangsKeys[$arrLangDetails[0]]['native']=$arrLangDetails[1];
+                $selectedLangsKeys[$arrLangDetails[0]]['native_en']=$arrLangDetails[2];
+            }
+
+        }
+
+
+        //-- Get all active languages
+        $arrOfActiveLanguages = Helper::GetActiveLanguages();
+        $arrOfActiveLanguagesKeys=array_keys($arrOfActiveLanguages);
+
+        foreach($selectedLangsKeys as $strKey=>$strLang){
+            $langItem=Language::where('user_id',Auth::id())->where('name',$strKey)->first();
+            if($langItem){
+                $langItem->active="Y";
+                $langItem->update();
+            }else {
+                Language::create([
+                    'user_id' => Auth::id(),
+                    'name' => $strKey,
+                    'native' => $strLang['native'],
+                    'native_en' => $strLang['native_en'],
+                    'active' => "Y"
+                ]);
+            }
+
+            //-- Delete element from array of active language
+            if (($key = array_search(strtoupper($strKey), $arrOfActiveLanguagesKeys)) !== false) {
+                unset($arrOfActiveLanguagesKeys[$key]);
+            }
+        }
+
+        //-- Check if some language should be deactivated
+        if(count($arrOfActiveLanguagesKeys)>0){
+            foreach ($arrOfActiveLanguagesKeys as $langCode){
+                $langItem=Language::where('user_id',Auth::id())->where('name',strtolower($langCode))->first();
+                if($langItem) {
+                    $langItem->active = "N";
+                    $langItem->update();
+                }
+            }
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
     }
 
 }

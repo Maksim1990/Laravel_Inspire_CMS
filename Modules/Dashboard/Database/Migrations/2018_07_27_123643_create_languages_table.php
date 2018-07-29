@@ -17,6 +17,8 @@ class CreateLanguagesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('name');
+            $table->string('native')->nullable();
+            $table->string('native_en')->nullable();
             $table->enum('active', ['Y', 'N'])->default("Y");
             $table->timestamps();
         });
