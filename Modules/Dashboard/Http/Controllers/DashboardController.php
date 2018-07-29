@@ -263,13 +263,16 @@ class DashboardController extends Controller
         $arrOfActiveLanguages = Helper::GetActiveLanguages();
         $arrOfActiveLanguagesKeys=array_keys($arrOfActiveLanguages);
 
+        $arrOfDefaultLanguages = Helper::GetDefaultLanguages();
+        $arrOfDefaultLanguagesKeys=array_keys($arrOfDefaultLanguages);
+
 
         $config = ConfigLang::LANG_ARRAY;
         //dd($config);
 
         $allAvailableLanguages= LaravelLocalization::getSupportedLocales();
 
-        return view('dashboard::languages', compact('arrTabs', 'active','allAvailableLanguages','arrOfActiveLanguagesKeys'));
+        return view('dashboard::languages', compact('arrTabs', 'active','allAvailableLanguages','arrOfActiveLanguagesKeys','arrOfDefaultLanguagesKeys'));
     }
 
     public function updateLanguages(Request $request)
@@ -314,11 +317,15 @@ class DashboardController extends Controller
             }
         }
 
+
+        $arrOfDefaultLanguages = Helper::GetDefaultLanguages();
+        $arrOfDefaultLanguagesKeys=array_keys($arrOfDefaultLanguages);
+
         //-- Check if some language should be deactivated
         if(count($arrOfActiveLanguagesKeys)>0){
             foreach ($arrOfActiveLanguagesKeys as $langCode){
                 $langItem=Language::where('user_id',Auth::id())->where('name',strtolower($langCode))->first();
-                if($langItem) {
+                if($langItem && !in_array(strtoupper($langCode),$arrOfDefaultLanguagesKeys)) {
                     $langItem->active = "N";
                     $langItem->update();
                 }

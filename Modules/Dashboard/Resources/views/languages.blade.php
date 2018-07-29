@@ -14,8 +14,16 @@
                               if(in_array(strtoupper($strKey),$arrOfActiveLanguagesKeys)){
                               $strChecked='checked';
                               }
+
+                        $strDisabled='';
+                        //-- Disable default app language that can't be deactivated
+                        if(in_array(strtoupper($strKey),$arrOfDefaultLanguagesKeys)){
+                              $strDisabled='disabled';
+                              }
                         @endphp
-                        <p><input type="checkbox" {{$strChecked}} name="selectedLangs[]" value="{{$strKey}}_{{$langItem['native']}}_{{$langItem['name']}}">{{$langItem['native']}}</p>
+                        <p><input type="checkbox" {{$strChecked}} {{$strDisabled}} name="selectedLangs[]"
+                                  value="{{$strKey}}_{{$langItem['native']}}_{{$langItem['name']}}">{{$langItem['native']}}
+                        </p>
                     @endforeach
 
                 @endif
@@ -41,7 +49,7 @@
 
         function SaveMenu() {
 
-            var selectedLangs=$('#lang_form').serializeArray();
+            var selectedLangs = $('#lang_form').serializeArray();
 
             console.log(selectedLangs);
 

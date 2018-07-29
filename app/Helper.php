@@ -120,4 +120,25 @@ class Helper
 
     }
 
+    /**
+     * Get array of default languages that can't be deactivated
+     *
+     * @return array
+     */
+    public static function GetDefaultLanguages()
+    {
+
+            $arrOfDefaultLanguages = [
+                "EN" => "English",
+                "FR" => "French",
+                "RU" => "Russian",
+                "TH" => "Thai"
+            ];
+
+
+
+        return $arrOfDefaultLanguages;
+
+    }
+
 }
