@@ -1,7 +1,9 @@
 @extends('dashboard::layouts.master')
 
 @section('General')
-    <h3>Languages settings</h3>
+    <div>
+        <h3 class="title">Languages settings</h3>
+    </div>
     <div>
         <p>Module: <b>Website</b></p>
 

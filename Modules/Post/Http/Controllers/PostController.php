@@ -24,9 +24,12 @@ class PostController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create($userId)
     {
-        return view('post::create');
+        $arrTabs = ['General'];
+        $active = "active";
+
+        return view('post::create',compact('arrTabs', 'active'));
     }
 
     /**

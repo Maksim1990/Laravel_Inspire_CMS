@@ -3,6 +3,9 @@
 @section ('General')
 
     <div class="col-sm-6">
+        <div>
+            <h3 class="title">Change password</h3>
+        </div>
         {{ Form::model($user, ['method' =>'PATCH' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@updatePassword',$user->id],'files'=>true])}}
         <div class="group-form">
             {!! Form::label('password','Old password:') !!}

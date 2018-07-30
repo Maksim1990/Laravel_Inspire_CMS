@@ -63,6 +63,10 @@
 
                             <li><a href="{{route('images',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
                                                                                    style="font-size:20px;margin-right:10px;"></i>Images module</a></li>
+                            <li><a href="{{route('website_settings',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
+                                                                                    style="font-size:20px;margin-right:10px;"></i>Website settings</a></li>
+                            <li><a href="{{route('profile_settings',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
+                                                                                              style="font-size:20px;margin-right:10px;"></i>Profile settings</a></li>
 
                             <li><a href="{{route('about_us')}}"><i class="fa fa-info-circle"
                                                                    style="font-size:20px;margin-right:10px;"></i>About</a>

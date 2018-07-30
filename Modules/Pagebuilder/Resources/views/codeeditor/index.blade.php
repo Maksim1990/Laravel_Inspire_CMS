@@ -21,6 +21,9 @@
     <div class="row maintab">
         <div class="col-sm-12 col-lg-12 col-xs-12">
             <div class="col-sm-8 col-lg-8 col-xs-12">
+                <div>
+                    <h3 class="title">Code editor</h3>
+                </div>
                 <article>
                     <form>
                         <textarea id="code" name="code" rows="10">{{$blockCode}}</textarea>

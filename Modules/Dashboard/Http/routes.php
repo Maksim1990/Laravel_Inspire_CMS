@@ -6,6 +6,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/contacts', 'DashboardController@contacts')->name('contacts');
         Route::get('/{id}/languages', 'DashboardController@languages')->name('languages');
         Route::get('/{id}/menu', 'DashboardController@menu')->name('menu');
+        Route::get('/{id}/website/settings', 'DashboardController@websiteSettings')->name('website_settings');
 
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');

@@ -1,9 +1,14 @@
 @extends('post::layouts.master')
 
 @section('General')
-    <h1>Posts module</h1>
+    <div class="row">
+        <div class="col-sm-8 col-xs-10">
+            <h3 class="title">Posts</h3>
 
-    <p>
-        This view is loaded from module: {!! config('post.name') !!}
-    </p>
+
+            <div>
+                <a href="{{route("posts.create",Auth::id())}}" class="btn btn-success">New post</a>
+            </div>
+        </div>
+    </div>
 @stop

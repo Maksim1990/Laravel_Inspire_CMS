@@ -4,7 +4,7 @@
     left: 60%;
 }
 .maintab{
-    padding-top: 30px;
+    padding-top: 10px;
 }
 .text{
     line-height: 40px;
@@ -16,6 +16,13 @@ a .link{
     font-size: 14px;
     font-weight: bold;
     color:green;
+}
+
+.title{
+    color:green;
+    border-bottom:2px solid green;
+    margin-bottom:20px;
+    width:40%;
 }
 
 

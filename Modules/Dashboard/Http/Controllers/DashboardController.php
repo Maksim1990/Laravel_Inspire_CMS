@@ -340,4 +340,12 @@ class DashboardController extends Controller
         ));
     }
 
+
+    public function websiteSettings($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        return view('dashboard::website_settings', compact('arrTabs', 'active'));
+    }
+
 }

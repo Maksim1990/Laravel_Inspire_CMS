@@ -7,7 +7,9 @@
 @endsection
 @section ('General')
     <div>
-        <p >Edit User</p>
+        <div>
+            <h3 class="title">Edit User</h3>
+        </div>
         <div class="col-sm-5">
             <img height="200"  src="{{$user->image ? $user->image->full_path :custom_asset("images/includes/noimage.png")}}" class="image-responsive" alt="">
             <div>

@@ -9,7 +9,7 @@
     </style>
 @stop
 @section('General')
-    <h3>Translations</h3>
+    <h3 class="title">Translations</h3>
     <div>
         <p>Module: <b>Website</b></p>
         @if(!empty($translations))

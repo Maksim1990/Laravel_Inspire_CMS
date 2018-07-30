@@ -15,7 +15,7 @@
         'N'=>'N'
         ];
     @endphp
-    <h3>Menu settings</h3>
+    <h3  class="title">Menu settings</h3>
     <div>
         <p>Module: <b>Website</b></p>
         @if(!empty($userMenus))
