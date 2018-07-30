@@ -1,12 +1,7 @@
 @extends('dashboard::layouts.master')
 
 @section('styles')
-    <style>
-        .delete {
-            color: #be241a;
-            font-size: 23px;
-        }
-    </style>
+
 @stop
 @section('General')
     @php

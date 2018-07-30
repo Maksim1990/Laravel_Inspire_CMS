@@ -124,7 +124,11 @@
            $('.mainside').css('z-index', 2);
        });
 </script>
-
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 <script src="{{custom_asset('js/app.js')}}"></script>
 @yield('scripts')
 

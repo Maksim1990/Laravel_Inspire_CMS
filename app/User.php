@@ -6,6 +6,7 @@ use App\Menu\Menu;
 use App\Menu\UserMenu;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Images\Entities\Photo;
 
 class User extends Authenticatable
 {
@@ -38,6 +39,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Image');
     }
 
+    public function photos(){
+        return $this->hasMany(Photo::class);
+    }
 
 
     public function menu(){

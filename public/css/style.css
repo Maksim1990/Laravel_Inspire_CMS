@@ -18,6 +18,19 @@ a .link{
     color:green;
 }
 
+.delete {
+    color: #be241a;
+    font-size: 23px;
+}
+
+.icons span{
+    font-size: 23px;
+    margin-right: 10px;
+    float: right;
+}
+
+
+
 .title{
     color:green;
     border-bottom:2px solid green;
@@ -28,14 +41,19 @@ a .link{
 
 
 @media (min-width: 768px) {
-
+    /*.card_item{*/
+        /*min-height: 100px;*/
+    /*}*/
 }
 @media (min-width: 992px) {
-
+    .card_item{
+        min-height: 350px;
+    }
 }
 @media (max-width: 992px) {
     #pagebuilder_menu{
         position: initial;
         top:10%;
     }
+
 }

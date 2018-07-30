@@ -5,6 +5,8 @@ namespace Modules\Images\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Modules\Images\Entities\Photo;
 
 class ImagesController extends Controller
 {
@@ -17,7 +19,10 @@ class ImagesController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
-        return view('images::index',compact('arrTabs', 'active'));
+        $userImages = Auth::user()->photos;
+
+
+        return view('images::index', compact('arrTabs', 'active', 'userImages'));
     }
 
     /**
@@ -26,7 +31,10 @@ class ImagesController extends Controller
      */
     public function create()
     {
-        return view('images::create');
+        $arrTabs = ['General'];
+        $active = "active";
+
+        return view('images::create', compact('arrTabs', 'active'));
     }
 
     /**
@@ -36,6 +44,43 @@ class ImagesController extends Controller
      */
     public function store(Request $request)
     {
+
+        $strError = "";
+        $result = "success";
+        $arrAllowedExtension = ['png', 'jpg', 'jpeg'];
+
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+
+        if (in_array($extension, $arrAllowedExtension)) {
+            if (!($file->getClientSize() > 2100000)) {
+                $name = time() . $file->getClientOriginalName();
+
+                request()->file('file')->storeAs(
+                    'public/upload/' . Auth::id() . '/photos/', $name
+                );
+
+                Photo::create([
+                    'user_id' => Auth::id(),
+                    'path' => 'upload/' . Auth::id() . '/photos/' . $name
+                ]);
+
+            } else {
+                $strError = "Images with size bigger than 2 MB can't be uploaded!";
+                $result = "";
+            }
+        } else {
+            $strError = "It's allowed to upload only following formats: " . implode(",", $arrAllowedExtension);
+            $result = "";
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+
+
     }
 
     /**
@@ -71,5 +116,32 @@ class ImagesController extends Controller
      */
     public function destroy()
     {
+    }
+
+
+    public function deleteImage(Request $request)
+    {
+
+        $strError = "";
+        $result = "success";
+
+        $photoId = $request->id;
+        $photo=Photo::findOrFail($photoId);
+
+        if($photo->path){
+            unlink(storage_path('/app/public/'.$photo->path));
+            $photo->delete();
+        }else{
+            $strError = "Image was not found!";
+            $result = "";
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+
+
     }
 }
