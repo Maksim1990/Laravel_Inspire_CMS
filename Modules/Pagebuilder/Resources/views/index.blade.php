@@ -150,6 +150,7 @@
                     @php
                         for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
                             $strContent=str_replace('../../public/storage','../../../public/storage',$arrBlocks[$idx]['content']);
+                            $strContent=str_replace('../../storage','/public/storage',$arrBlocks[$idx]['content']);
                             echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['sortorder'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
                             echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $strContent . "<hr></div>";
                             echo "<span class=\"tooltiptext\">";
