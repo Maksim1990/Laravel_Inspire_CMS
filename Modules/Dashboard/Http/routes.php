@@ -18,6 +18,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/mail', 'MailController@index')->name('mail');
         Route::get('/{id}/send_mail', 'MailController@sendEmail')->name('send_mail');
 
+        //-- Inspire office functionality
+        Route::get('/{id}/office', 'OfficeController@index')->name('office');
+        Route::get('/{id}/read_file', 'OfficeController@readFile')->name('office_read_file');
+        Route::get('/{id}/ftp', 'OfficeController@setFTPCredentials')->name('office_ftp_connection');
+        Route::post('/{id}/ftp_store', 'OfficeController@storeFTPCredentials')->name('office_ftp_store');
+
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
         Route::post('/ajax_delete_menu', 'DashboardController@deleteMenu')->name('ajax_delete_menu');
