@@ -92,6 +92,7 @@ class DashboardController extends Controller
         return view('dashboard::about', compact('arrTabs', 'active'));
     }
 
+
     public function contacts()
     {
         $arrTabs = ['General'];

@@ -18,7 +18,10 @@ a .link{
     color:green;
 }
 
-
+.delete {
+    color: #be241a;
+    font-size: 23px;
+}
 
 .icons span{
     font-size: 23px;
@@ -35,19 +38,21 @@ a .link{
     width:40%;
 }
 
-
-.delete {
-    color: #be241a;
-    font-size: 23px;
+.card_item img{
+    object-fit: fill;
+    width:80%;
+}
+.card_item{
+    text-align: center;
+    max-height: 300px;
 }
 @media (min-width: 768px) {
-    /*.card_item{*/
-        /*min-height: 100px;*/
-    /*}*/
+
 }
-@media (min-width: 992px) {
-    .card_item{
-        min-height: 350px;
+@media (min-width: 1300px) {
+    .card_item img{
+        object-fit: fill;
+        width:80%;height:300px;
     }
 }
 @media (max-width: 992px) {

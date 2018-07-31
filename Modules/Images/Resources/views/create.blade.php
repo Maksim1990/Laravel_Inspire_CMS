@@ -15,7 +15,10 @@
 
         {{ Form::hidden('user_id', Auth::id() ) }}
         {!! Form::close() !!}
+            <br>
+            <a href="{{route("images",Auth::id())}}" class="btn btn-success">Back to all images</a>
     </div>
+
     @include('includes.formErrors')
     </div>
 @stop

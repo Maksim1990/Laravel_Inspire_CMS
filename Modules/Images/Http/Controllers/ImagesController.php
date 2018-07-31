@@ -54,7 +54,7 @@ class ImagesController extends Controller
 
         if (in_array($extension, $arrAllowedExtension)) {
             if (!($file->getClientSize() > 2100000)) {
-                $name = time() . $file->getClientOriginalName();
+                $name = time() ."_".$file->getClientOriginalName();
 
                 request()->file('file')->storeAs(
                     'public/upload/' . Auth::id() . '/photos/', $name
@@ -62,6 +62,8 @@ class ImagesController extends Controller
 
                 Photo::create([
                     'user_id' => Auth::id(),
+                    'name' => $name,
+                    'size' => $file->getClientSize(),
                     'path' => 'upload/' . Auth::id() . '/photos/' . $name
                 ]);
 
