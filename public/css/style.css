@@ -18,10 +18,7 @@ a .link{
     color:green;
 }
 
-.delete {
-    color: #be241a;
-    font-size: 23px;
-}
+
 
 .icons span{
     font-size: 23px;
@@ -39,7 +36,10 @@ a .link{
 }
 
 
-
+.delete {
+    color: #be241a;
+    font-size: 23px;
+}
 @media (min-width: 768px) {
     /*.card_item{*/
         /*min-height: 100px;*/

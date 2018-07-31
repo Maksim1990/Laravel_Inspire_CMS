@@ -112,10 +112,13 @@ class LabelController extends Controller
             $arrIDs = array_values(array_unique($arrIDs));
 
 
-            //-- Get all active languages
-            $arrOfActiveLanguages = Helper::GetActiveLanguages();
+
 
             foreach ($arrIDs as $intId) {
+
+                //-- Get all active languages
+                $arrOfActiveLanguages = Helper::GetActiveLanguages();
+
                 $i = 0;
                 $arrNewTranslation = array();
                 foreach ($arrOfActiveLanguages as $strKey => $strLang) {
@@ -132,9 +135,22 @@ class LabelController extends Controller
                                 $translateItem->key = $arrTranslationsKeys[$intId];
                                 $translateItem->user_id = Auth::id();
                                 $arrTranslationUpdated = $translateItem->text;
+
                                 foreach ($arrTranslationUpdated as $lang => $item) {
                                     if ($lang == strtolower($strKey)) {
                                         $arrTranslationUpdated[$lang] = $arrTranslations[$intId . "_" . strtolower($strKey)];
+                                    }
+
+                                    //-- Temporarily delete lang from active languages
+                                        unset($arrOfActiveLanguages[strtoupper($lang)]);
+                                }
+
+                                //-- Insert values from active languages that are not yet in translation
+                                if(count($arrOfActiveLanguages)>0){
+                                    foreach ($arrOfActiveLanguages as $langActive => $strValue) {
+                                        if(isset($arrTranslations[$intId . "_" . strtolower($strKey)])){
+                                            $arrTranslationUpdated[strtolower($langActive)] = $arrTranslations[$intId . "_" . strtolower($strKey)];
+                                        }
                                     }
                                 }
 

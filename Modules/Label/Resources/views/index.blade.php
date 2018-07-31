@@ -29,12 +29,12 @@
                         </td>
                         @foreach($arrOfActiveLanguages as $strKey=>$strLang)
                             <td>
-                                @if(isset($translate->text[strtolower($strKey)]) || $translate->text[strtolower($strKey)]=="")
+                                @if(isset($translate->text[strtolower($strKey)]))
                                     <input type="text" class="form-control"
                                            id="{{$translate->id}}_text_{{strtolower($strKey)}}"
                                            value="{{$translate->text[strtolower($strKey)]}}">
                                 @else
-                                    <input type="text" class="form-control" name="" value="">
+                                    <input type="text" class="form-control" id="{{$translate->id}}_text_{{strtolower($strKey)}}" name="" value="">
                                 @endif
                             </td>
                             @php
@@ -44,7 +44,7 @@
                         <td>
                             @if($translate->user_id==Auth::id())
                                 <a href="#" id="delete_{{$translate->id}}">
-                                <span class="delete">
+                                <span class="delete w3-text-red">
                                     <i class="fas fa-minus-circle"></i>
                                 </span>
                                 </a>
@@ -159,7 +159,8 @@
                     });
                 }
             });
-
+console.log(arrTranslations);
+console.log(arrTranslationsKeys);
 
             if (blnAllowSubmit) {
                 $.ajax({

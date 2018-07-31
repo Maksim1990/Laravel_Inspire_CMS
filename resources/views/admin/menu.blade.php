@@ -126,7 +126,7 @@
 
                             @if($menu->admin!="Y" || ($menu->admin=="Y" && Auth::user()->admin==1) )
                                 <a href="#" id="delete_{{$menu->id}}">
-                                    <span class="delete">
+                                    <span class="delete w3-text-red">
                                         <i class="fas fa-minus-circle"></i>
                                     </span>
                                 </a>
