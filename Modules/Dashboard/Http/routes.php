@@ -9,17 +9,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/website/settings', 'DashboardController@websiteSettings')->name('website_settings');
 
 
+        //-- Export functionality
         Route::get('/{id}/export', 'ExcelController@index')->name('export');
         Route::get('export/{type}/details', 'ExcelController@export')->name('export_file');
 
 
-        Route::get('import_books_main', 'ExcelController@importBooksMain');
-        Route::get('import_movies_main', 'ExcelController@importMoviesMain');
-        Route::get('downloadExcel_books/{type}', 'ExcelController@downloadBooks');
-        Route::get('downloadExcel_movies/{type}', 'ExcelController@downloadMovies');
-        Route::post('import_books', 'ExcelController@importBooks');
-        Route::post('import_movies', 'ExcelController@importMovies');
-
+        //-- Mail functionality
+        Route::get('/{id}/mail', 'MailController@index')->name('mail');
+        Route::get('/{id}/send_mail', 'MailController@sendEmail')->name('send_mail');
 
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
