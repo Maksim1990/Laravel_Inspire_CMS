@@ -16,7 +16,7 @@ jobs:
           - run:
              name: Deploy Over SSH
              command: |
-               ssh -t $SSH_USER@$SSH_HOST "cd public_html/inspirecms && git pull origin master"
+               ssh -t $SSH_USER@$SSH_HOST "cd public_html/inspirecms && git clone https://github.com/Maksim1990/Laravel_Inspire_CMS.git"
 workflows:
   version: 2
   build-and-deploy:
