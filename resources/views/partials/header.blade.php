@@ -71,6 +71,8 @@
                                                                                               style="font-size:20px;margin-right:10px;"></i>Export module</a></li>
                             </li><li><a href="{{route('mail',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
                                                                                               style="font-size:20px;margin-right:10px;"></i>Mail module</a></li>
+                            </li><li><a href="{{route('office',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
+                                                                                       style="font-size:20px;margin-right:10px;"></i>Office module</a></li>
 
                             <li><a href="{{route('about_us')}}"><i class="fa fa-info-circle"
                                                                    style="font-size:20px;margin-right:10px;"></i>About</a>

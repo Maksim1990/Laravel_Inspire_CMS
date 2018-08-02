@@ -52,7 +52,16 @@ a .link{
 @media (min-width: 1300px) {
     .card_item img{
         object-fit: fill;
-        width:80%;height:300px;
+        width:80%;
+        height:200px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .card_item img{
+        object-fit: fill;
+        width:80%;
+        height:300px;
     }
 }
 @media (max-width: 992px) {

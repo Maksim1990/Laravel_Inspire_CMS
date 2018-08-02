@@ -25,9 +25,9 @@
 
 
         <div class="group-form">
-            {!! Form::label('body','Body:') !!}
+            {!! Form::label('content','Body:') !!}
 
-            {!! Form::textarea('body', null, ['class'=>'form-control','id'=>'code', 'onkeypress'=>'return isNumberKey(event);','onpaste'=>'return isNumberKey(event);']) !!}
+            {!! Form::textarea('content', null, ['class'=>'form-control','id'=>'code']) !!}
             <br>
         </div>
         <a href="{{route("posts",Auth::id())}}" class="btn btn-success">Back to all posts</a>

@@ -171,7 +171,8 @@ footer{
     margin-right:-25px;
 }
 .post_item {padding: 10px 10px;}
-.post_item:hover {background-color: #F8F1F1;
+.post_item:hover {
+    background-color: #a1b98c;
     border-radius: 10px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);}
 
