@@ -11,6 +11,7 @@
         ];
     @endphp
     <h3  class="title">Menu settings</h3>
+    <div id="title_shape"></div>
     <div>
         <p>Module: <b>Website</b></p>
         @if(!empty($userMenus))

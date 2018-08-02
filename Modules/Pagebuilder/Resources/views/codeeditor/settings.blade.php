@@ -10,9 +10,10 @@
 @section('General')
     <div class="row maintab">
         <div class="col-sm-12 col-lg-12 col-xs-12">
-            <div class="col-sm-6 col-lg-6 col-xs-12">
+            <div class="col-sm-6 col-lg-12 col-xs-12">
                 <div>
                     <h3 class="title">Code editor settings</h3>
+                    <div id="title_shape"></div>
                 </div>
                 <div class="col-sm-7">
                     <p class="text">Choose favorite style of code editor</p>

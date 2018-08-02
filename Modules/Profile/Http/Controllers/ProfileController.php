@@ -23,8 +23,9 @@ class ProfileController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
+        $user=User::findOrFail($id);
 
-        return view('profile::index',compact('arrTabs','active'));
+        return view('profile::index',compact('arrTabs','active','user'));
     }
 
     /**

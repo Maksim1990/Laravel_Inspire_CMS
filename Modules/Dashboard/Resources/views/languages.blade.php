@@ -3,6 +3,7 @@
 @section('General')
     <div>
         <h3 class="title">Languages settings</h3>
+        <div id="title_shape"></div>
     </div>
     <div>
         <p>Module: <b>Website</b></p>

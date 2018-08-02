@@ -8,6 +8,7 @@
         <div class="col-sm-8 col-xs-10">
         <div>
             <h3 class="title">Upload photo</h3>
+            <div id="title_shape"></div>
         </div>
 
 

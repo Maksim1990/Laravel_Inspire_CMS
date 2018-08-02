@@ -5,6 +5,7 @@
     <div class="col-sm-6">
         <div>
             <h3 class="title">Change password</h3>
+            <div id="title_shape"></div>
         </div>
         {{ Form::model($user, ['method' =>'PATCH' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@updatePassword',$user->id],'files'=>true])}}
         <div class="group-form">

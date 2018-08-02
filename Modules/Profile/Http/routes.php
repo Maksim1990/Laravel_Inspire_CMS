@@ -16,7 +16,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         })->name("change_password");
         Route::patch('/update_profile/{id}', 'ProfileController@updateProfile');
         Route::patch('/update_password/{id}', 'ProfileController@updatePassword');
-        Route::delete('/delete_profile/{id}', 'ProfileController@deleteProfile');
+        Route::delete('/delete_profile/{id}', 'ProfileController@deleteProfile')->name('delete_profile');
 
     });
 });

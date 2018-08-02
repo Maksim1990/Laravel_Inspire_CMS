@@ -16,6 +16,7 @@
     <div class="row">
     <div class="col-sm-8 col-xs-10">
         <h3 class="title">Create Post</h3>
+        <div id="title_shape"></div>
 
         {!! Form::open(['method'=>'POST','action'=>['\Modules\Post\Http\Controllers\PostController@store','userId'=>Auth::id()], 'files'=>true])!!}
         <div class="group-form">

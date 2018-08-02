@@ -5,6 +5,7 @@
 @stop
 @section('General')
     <h3 class="title">Translations</h3>
+    <div id="title_shape"></div>
     <div>
         <p>Module: <b>Website</b></p>
         @if(!empty($translations))

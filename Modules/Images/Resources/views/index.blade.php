@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col-sm-12 col-xs-12">
             <h3 class="title">Images</h3>
+            <div id="title_shape"></div>
 
             <div class="w3-col m12 w3-margin-bottom">
                @if(count($userImages)>0)

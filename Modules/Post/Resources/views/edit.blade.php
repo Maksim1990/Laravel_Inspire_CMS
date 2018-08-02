@@ -16,6 +16,7 @@
     <div class="row">
         <div class="col-sm-8 col-xs-10">
             <h3 class="title">Edit Post</h3>
+            <div id="title_shape"></div>
 
             {!! Form::model($post,['method'=>'PATCH','action'=>['\Modules\Post\Http\Controllers\PostController@update','id'=>$post->id], 'files'=>true])!!}
             <div class="group-form">

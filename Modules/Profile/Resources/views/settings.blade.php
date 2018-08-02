@@ -1,6 +1,11 @@
 @extends('profile::layouts.master')
 
 @section('styles')
+    <style>
+        form{
+            display: inline;
+        }
+    </style>
 @stop
 @section ('scripts_header')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
@@ -9,11 +14,19 @@
     <div>
         <div>
             <h3 class="title">Edit User</h3>
+            <div id="title_shape"></div>
         </div>
         <div class="col-sm-5">
-            <img height="200"  src="{{$user->image ? $user->image->full_path :custom_asset("images/includes/noimage.png")}}" class="image-responsive" alt="">
-            <div>
-                <a href="{{route('change_password',['id'=>Auth::id()])}}" class="link">Change password</a>
+            <div class="col-sm-8 profile">
+                <div class="profile_image">
+                    <img src="{{$user->image ? $user->image->full_path :custom_asset("images/includes/noimage.png")}}"
+                         class="image-responsive" alt="">
+                    <div class="buttons">
+                        <a href="{{route('profile',['id'=>Auth::id()])}}" class="btn btn-success">Back to profile</a><br>
+                        <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-info">Change password</a><br>
+                        <a href="{{route('delete_profile',['id'=>Auth::id()])}}" class="btn btn-danger">Delete profile</a><br>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-7">
@@ -32,12 +45,12 @@
             </div>
 
             <br>
-            {!! Form::submit('Update User',['class'=>'btn btn-warning']) !!}
+            {!! Form::submit('Update profile',['class'=>'btn btn-warning']) !!}
             @if(Auth::id()==$user->id)
                 {!! Form::close() !!}
                 {{ Form::open(['method' =>'DELETE' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
 
-                {!! Form::submit('Delete User',['class'=>'btn btn-danger']) !!}
+                {!! Form::submit('Delete profile',['class'=>'btn btn-danger']) !!}
 
                 {!! Form::close() !!}
             @endif
