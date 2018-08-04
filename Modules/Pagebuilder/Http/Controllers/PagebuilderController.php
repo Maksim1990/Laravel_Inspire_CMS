@@ -239,6 +239,30 @@ class PagebuilderController extends Controller
         ));
     }
 
+    public function blocksSortOrderUpdate(Request $request)
+    {
+        $arrIDs = $request['arrIDs'];
+        $result = "success";
+
+        if(count($arrIDs)>0){
+            $intSortOrder=1;
+            foreach ($arrIDs as $id){
+                $block=Block::findOrFail($id);
+                $block->sortorder=$intSortOrder;
+                if(!$block->update()){
+                    $result = "";
+                }
+                $intSortOrder++;
+            }
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+    }
+
 
     public function codeeditorSetting($id)
     {

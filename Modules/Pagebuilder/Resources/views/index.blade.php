@@ -18,13 +18,13 @@
             @foreach($blockMain->content as $block)
                 @php
 
-                        $arrBlocks[$block->id]["block_content_id"]=$block->id;
-                        $arrBlocks[$block->id]["block_id"]=$blockMain->block_id;
-                        $arrBlocks[$block->id]["id"]=$blockMain->id;
-                        $arrBlocks[$block->id]["sortorder"]=$blockMain->sortorder;
+                        $arrBlocks[$blockMain->sortorder]["block_content_id"]=$block->id;
+                        $arrBlocks[$blockMain->sortorder]["block_id"]=$blockMain->block_id;
+                        $arrBlocks[$blockMain->sortorder]["id"]=$blockMain->id;
+                        $arrBlocks[$blockMain->sortorder]["sortorder"]=$blockMain->sortorder;
                         //TODO ADD option to choose between original label and converted label to text
                         //$arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
-                        $arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
+                        $arrBlocks[$blockMain->sortorder]["content"]=$blockMain->filteredContent($block->content);
                 @endphp
             @endforeach
         @endforeach
@@ -151,7 +151,7 @@
                         for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
                             $strContent=str_replace('../../public/storage','../../../public/storage',$arrBlocks[$idx]['content']);
                             $strContent=str_replace('../../storage','/public/storage',$arrBlocks[$idx]['content']);
-                            echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['sortorder'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
+                            echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['id'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
                             echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $strContent . "<hr></div>";
                             echo "<span class=\"tooltiptext\">";
                             //-- Code editor button
@@ -209,11 +209,32 @@
         });
 
         function saveOrder() {
-            var data = $("#gallery li").map(function () {
+            var arrIDs = $("#gallery li").map(function () {
                 return $(this).data("itemid");
             }).get();
-            console.log(data);
-            // $.post("admin/pagebuilder", { "ids[]": data });
+
+
+            var token = '{{\Illuminate\Support\Facades\Session::token()}}';
+            var url = '{{ route('ajax_blocks_sortorder_update') }}';
+
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    data: {
+                        arrIDs: arrIDs,
+                        _token: token
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data['result'] === "success") {
+                            new Noty({
+                                type: 'success',
+                                layout: 'topRight',
+                                text: 'Custom CSS was updated!'
+                            }).show();
+                        }
+                    }
+                });
         };
     </script>
     <script>

@@ -16,5 +16,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/content_editor_update', 'PagebuilderController@contentEditorUpdate')->name("ajax_content_editor_update");
         Route::post('/custom_css_update', 'PagebuilderController@customCssUpdate')->name("ajax_custom_css_update");
 
+        Route::post('/blocks_sortorder_update', 'PagebuilderController@blocksSortOrderUpdate')->name("ajax_blocks_sortorder_update");
+
     });
 });
