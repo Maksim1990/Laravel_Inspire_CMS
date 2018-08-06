@@ -4,6 +4,7 @@ namespace Modules\Dashboard\Http\Controllers;
 
 
 use App\Config\ConfigLang;
+use App\Config\DefaultMenuLangs;
 use App\Helper;
 use App\Menu\Menu;
 use App\Menu\MenuLang;
@@ -89,6 +90,8 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
+
+
         return view('dashboard::about', compact('arrTabs', 'active'));
     }
 
@@ -154,20 +157,19 @@ class DashboardController extends Controller
 
         if (count($arrMenuIds) > 0) {
             foreach ($arrMenuIds as $intId) {
-                try {
-
-                    $menu = Menu::findOrFail($intId);
-
-                    $menu->active = $arrMenuKeys[$intId . "_menu_active_admin"];
-                    $menu->update();
-
-
-                } catch (\Exception $e) {
-                    Menu::create([
-                        'id' => $intId,
-                        'active' => $arrMenuKeys[$intId . "_menu_active_admin"]
-                    ]);
+                if(Auth::user()->admin){
+                    try {
+                        $menu = Menu::findOrFail($intId);
+                        $menu->admin = $arrMenuKeys[$intId . "_menu_active_admin"];
+                        $menu->update();
+                    } catch (\Exception $e) {
+                        Menu::create([
+                            'id' => $intId,
+                            'admin' => $arrMenuKeys[$intId . "_menu_active_admin"]
+                        ]);
+                    }
                 }
+
 
 
                 foreach ($arrOfActiveLanguages as $strKey => $strLang) {
@@ -262,18 +264,18 @@ class DashboardController extends Controller
 
         //-- Get all active languages
         $arrOfActiveLanguages = Helper::GetActiveLanguages();
-        $arrOfActiveLanguagesKeys=array_keys($arrOfActiveLanguages);
+        $arrOfActiveLanguagesKeys = array_keys($arrOfActiveLanguages);
 
         $arrOfDefaultLanguages = Helper::GetDefaultLanguages();
-        $arrOfDefaultLanguagesKeys=array_keys($arrOfDefaultLanguages);
+        $arrOfDefaultLanguagesKeys = array_keys($arrOfDefaultLanguages);
 
 
         $config = ConfigLang::LANG_ARRAY;
         //dd($config);
 
-        $allAvailableLanguages= LaravelLocalization::getSupportedLocales();
+        $allAvailableLanguages = LaravelLocalization::getSupportedLocales();
 
-        return view('dashboard::languages', compact('arrTabs', 'active','allAvailableLanguages','arrOfActiveLanguagesKeys','arrOfDefaultLanguagesKeys'));
+        return view('dashboard::languages', compact('arrTabs', 'active', 'allAvailableLanguages', 'arrOfActiveLanguagesKeys', 'arrOfDefaultLanguagesKeys'));
     }
 
     public function updateLanguages(Request $request)
@@ -282,12 +284,13 @@ class DashboardController extends Controller
         $strError = "";
         $result = "success";
 
-        $selectedLangsKeys=array();
-        if(count($selectedLangs)>0){
-            foreach ($selectedLangs as $langItem){
-                $arrLangDetails=explode('_',$langItem['value']);
-                $selectedLangsKeys[$arrLangDetails[0]]['native']=$arrLangDetails[1];
-                $selectedLangsKeys[$arrLangDetails[0]]['native_en']=$arrLangDetails[2];
+        $selectedLangsKeys = array();
+
+        if (!empty($selectedLangs)) {
+            foreach ($selectedLangs as $langItem) {
+                $arrLangDetails = explode('_', $langItem['value']);
+                $selectedLangsKeys[$arrLangDetails[0]]['native'] = $arrLangDetails[1];
+                $selectedLangsKeys[$arrLangDetails[0]]['native_en'] = $arrLangDetails[2];
             }
 
         }
@@ -295,14 +298,14 @@ class DashboardController extends Controller
 
         //-- Get all active languages
         $arrOfActiveLanguages = Helper::GetActiveLanguages();
-        $arrOfActiveLanguagesKeys=array_keys($arrOfActiveLanguages);
+        $arrOfActiveLanguagesKeys = array_keys($arrOfActiveLanguages);
 
-        foreach($selectedLangsKeys as $strKey=>$strLang){
-            $langItem=Language::where('user_id',Auth::id())->where('name',$strKey)->first();
-            if($langItem){
-                $langItem->active="Y";
+        foreach ($selectedLangsKeys as $strKey => $strLang) {
+            $langItem = Language::where('user_id', Auth::id())->where('name', $strKey)->first();
+            if ($langItem) {
+                $langItem->active = "Y";
                 $langItem->update();
-            }else {
+            } else {
                 Language::create([
                     'user_id' => Auth::id(),
                     'name' => $strKey,
@@ -320,13 +323,13 @@ class DashboardController extends Controller
 
 
         $arrOfDefaultLanguages = Helper::GetDefaultLanguages();
-        $arrOfDefaultLanguagesKeys=array_keys($arrOfDefaultLanguages);
+        $arrOfDefaultLanguagesKeys = array_keys($arrOfDefaultLanguages);
 
         //-- Check if some language should be deactivated
-        if(count($arrOfActiveLanguagesKeys)>0){
-            foreach ($arrOfActiveLanguagesKeys as $langCode){
-                $langItem=Language::where('user_id',Auth::id())->where('name',strtolower($langCode))->first();
-                if($langItem && !in_array(strtoupper($langCode),$arrOfDefaultLanguagesKeys)) {
+        if (count($arrOfActiveLanguagesKeys) > 0) {
+            foreach ($arrOfActiveLanguagesKeys as $langCode) {
+                $langItem = Language::where('user_id', Auth::id())->where('name', strtolower($langCode))->first();
+                if ($langItem && !in_array(strtoupper($langCode), $arrOfDefaultLanguagesKeys)) {
                     $langItem->active = "N";
                     $langItem->update();
                 }

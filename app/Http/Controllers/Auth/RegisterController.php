@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Config\DefaultMenuLangs;
+use App\Helper;
+use App\Menu\Menu;
+use App\Menu\MenuLang;
+use App\Menu\UserMenu;
 use App\Setting;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -75,10 +80,47 @@ class RegisterController extends Controller
         ]);
 
 
-        //-- Create setting details for new user
+        //-- Create SETTINGS details for new user
         Setting::create([
             'user_id' => $user->id
         ]);
+
+        //-- Create MENU details for new user
+        $menuList = Menu::where('id', '<>', '0')->orderBy('id', 'DESC')->first();
+        if (!empty($menuList)) {
+            $intLastMenuId = $menuList->id;
+        } else {
+            $intLastMenuId = 0;
+        }
+
+        $arrOfDefaultMenus = DefaultMenuLangs::DEFAULT_LANGS;
+        $arrOfDefaultLanguages = Helper::GetDefaultLanguages();
+
+        $menuNew = Menu::where('id', $intLastMenuId)->first();
+        foreach ($arrOfDefaultMenus as $menuID => $strMenuDetails) {
+            $intLastMenuId++;
+            if ($menuNew->id) {
+                foreach ($arrOfDefaultLanguages as $strLang => $strFullLang) {
+                    MenuLang::create([
+                        'id' => $menuID,
+                        'user_id' => $user->id,
+                        'name' => $strMenuDetails['languages'][strtoupper($strLang)],
+                        'lang' => strtoupper($strLang)
+                    ]);
+                }
+                UserMenu::create([
+                    'menu_id' => $menuID,
+                    'user_id' => $user->id,
+                    'active'=>'Y',
+                    'parent' => $strMenuDetails['parent'],
+                    'sortorder' => $strMenuDetails['sortorder']
+                ]);
+            }
+        }
+
+
+
+
 
         return $user;
 
