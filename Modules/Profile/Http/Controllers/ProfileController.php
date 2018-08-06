@@ -5,13 +5,21 @@ namespace Modules\Profile\Http\Controllers;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Image;
+use App\Menu\MenuLang;
+use App\Menu\UserMenu;
+use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Modules\Images\Entities\Photo;
+use Modules\Post\Entities\Post;
+use Spatie\TranslationLoader\LanguageLine;
 
 class ProfileController extends Controller
 {
@@ -23,9 +31,9 @@ class ProfileController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return view('profile::index',compact('arrTabs','active','user'));
+        return view('profile::index', compact('arrTabs', 'active', 'user'));
     }
 
     /**
@@ -90,10 +98,10 @@ class ProfileController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $user=Auth::user();
+        $user = Auth::user();
 
-        $user=Auth::user();
-        return view('profile::settings',compact('arrTabs','active','user'));
+        $user = Auth::user();
+        return view('profile::settings', compact('arrTabs', 'active', 'user'));
     }
 
     /**
@@ -105,15 +113,15 @@ class ProfileController extends Controller
     {
 
 
-        $user=User::findOrFail($id);
-        $input=$request->all();
-        if($file=$request->file('photo_id')) {
+        $user = User::findOrFail($id);
+        $input = $request->all();
+        if ($file = $request->file('photo_id')) {
             if (!($file->getClientSize() > 2100000)) {
                 //dd('storage/upload/' . Auth::id() . '/profile/' . $user->image->path);
                 if ($user->image) {
                     unlink(storage_path('/app/public/upload/' . Auth::id() . '/profile/' . $user->image->path));
                     $photo_user = Image::findOrFail($user->image->id);
-                    if($photo_user){
+                    if ($photo_user) {
                         $photo_user->delete();
                     }
                 }
@@ -123,7 +131,7 @@ class ProfileController extends Controller
                 request()->file('photo_id')->storeAs(
                     'public/upload/' . Auth::id() . '/profile/', $name
                 );
-                Image::create(['path' => $name,'user_id'=>$id]);
+                Image::create(['path' => $name, 'user_id' => $id]);
 
             } else {
                 Session::flash('user_change', 'Image size should not exceed 2 MB');
@@ -134,26 +142,60 @@ class ProfileController extends Controller
         $input['name'] = $request->name;
         $input['email'] = $request->email;
         $user->update($input);
-        Session::flash('user_change','Profile has been successfully edited!');
-        return redirect('admin/profile/'.$user->id);
+        Session::flash('user_change', 'Profile has been successfully edited!');
+        return redirect('admin/profile/' . $user->id);
 
 
         //return view('profile::settings',compact('arrTabs','active'));
     }
 
     /**
+     * Functionality for deleting user and all relevant content from application
+     *
      * @return Response
      */
     public function deleteProfile(Request $request)
     {
 
-        dd("TEST");
-        $arrTabs = ['General'];
-        $active = "active";
+        $user_id = $request->user_id;
+        $user = User::findOrFail($user_id);
 
-        return view('profile::settings',compact('arrTabs','active'));
+
+        Setting::where('user_id', $user_id)->delete();
+        MenuLang::where('user_id', $user_id)->delete();
+        UserMenu::where('user_id', $user_id)->delete();
+        LanguageLine::where('user_id', $user_id)->delete();
+        Post::where('user_id', $user_id)->delete();
+
+
+        //-- Delete user profile image and unlick it physically from the server as well
+        $image = Image::where('user_id', $user_id)->first();
+        if (!empty($image)) {
+            unlink(storage_path('/app/public/upload/' . $user_id . '/profile/' . $user->image->path));
+            $image->delete();
+        }
+
+
+        $photos = Photo::where('user_id', $user_id)->get();
+        if (!empty($photos)) {
+            //-- Delete all user photos and unlick it physically from the server as well
+            foreach ($photos as $photo) {
+                unlink(storage_path('/app/public/' . $photo->path));
+                $photo->delete();
+            }
+        }
+
+        //-- Delete directory of this user in Storage
+        Storage::disk('local')->deleteDirectory('/public/upload/' . $user_id);
+
+        //-- Delete current user and logout from application
+        $user->delete();
+        Auth::logout();
+
+        //-- Redirect to the login page with corrent language locale
+        $strLocale = App::getLocale();
+        return redirect('/' . $strLocale . '/login');
     }
-
 
 
     /**
@@ -161,32 +203,32 @@ class ProfileController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request, $id)
     {
-        $user=User::findOrFail($id);
-        $input=$request->all();
-        $old_password=bcrypt(\Request::input('old_password'));
-        $password=\Request::input('password');
-        $password_2=\Request::input('password_2');
+        $user = User::findOrFail($id);
+        $input = $request->all();
+        $old_password = bcrypt(\Request::input('old_password'));
+        $password = \Request::input('password');
+        $password_2 = \Request::input('password_2');
         if (Hash::check(\Request::input('old_password'), $user->password)) {
-            if($password==$password_2){
+            if ($password == $password_2) {
                 $input['password'] = bcrypt(\Request::input('password'));
                 $user->update($input);
-                Session::flash('user_change','The password has been successfully edited!');
-                return redirect('admin/profile/'.$id);
-            }else{
-                $arrTabs=['General'];
-                $active="active";
-                $user=User::findOrFail($id);
-                $title='Change password';
-                Session::flash('user_change','You repeated new password not correct');
-                return view('profile::change_password', compact('user','arrTabs', 'active','title'));
+                Session::flash('user_change', 'The password has been successfully edited!');
+                return redirect('admin/profile/' . $id);
+            } else {
+                $arrTabs = ['General'];
+                $active = "active";
+                $user = User::findOrFail($id);
+                $title = 'Change password';
+                Session::flash('user_change', 'You repeated new password not correct');
+                return view('profile::change_password', compact('user', 'arrTabs', 'active', 'title'));
             }
-        }else{
-            $arrTabs=['General'];
-            $active="active";
-            $user=User::findOrFail($id);
-            $title='Change password';
-            Session::flash('user_change','You entered wrong old password');
-            return view('profile::change_password', compact('user','arrTabs', 'active','title'));
+        } else {
+            $arrTabs = ['General'];
+            $active = "active";
+            $user = User::findOrFail($id);
+            $title = 'Change password';
+            Session::flash('user_change', 'You entered wrong old password');
+            return view('profile::change_password', compact('user', 'arrTabs', 'active', 'title'));
         }
     }
 

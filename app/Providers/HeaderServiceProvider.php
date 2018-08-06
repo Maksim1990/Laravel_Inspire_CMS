@@ -14,7 +14,7 @@ class HeaderServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            'partials.menu',
+            'partials.header',
             'App\Http\ViewComposers\MenuComposer'
         );
     }

@@ -1,5 +1,7 @@
 @include('partials.style_header')
-
+@php
+//dd($menuCollection->getMenu());
+@endphp
 <header>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -19,68 +21,18 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav ">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Menu</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><i class="fa fa-group" style="font-size:20px;margin-right:10px;"></i>Community</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-file-sound-o" style="font-size:20px;margin-right:10px;"></i>Advertisement</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-tasks" style="font-size:20px;margin-right:10px;"></i>Tasks
-                                    management</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="fa fa-tasks" style="font-size:20px;margin-right:10px;"></i>Tasks
-                                    management</a></li>
-                        </ul>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules</a>
+                        @if(count($menuCollection->getMenu()->where('parent',1))>0)
+                            {!! BuildMenu(1, $menuCollection) !!}
+                        @endif
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">Modules</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{route("label",['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                   style="font-size:20px;margin-right:10px;"></i>Labels
-                                    management</a></li>
-                            <li><a href="{{route('pagebuilder_index',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                               style="font-size:20px;margin-right:10px;"></i>Pagebuilder</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="{{route('css',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                 style="font-size:20px;margin-right:10px;"></i>Custom
-                                    CSS</a></li>
-
-                            <li><a href="{{route('menu',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                 style="font-size:20px;margin-right:10px;"></i>Menu settings</a></li>
-
-                            <li><a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                 style="font-size:20px;margin-right:10px;"></i>Code editor settings</a></li>
-                            <li><a href="{{route('languages',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                                style="font-size:20px;margin-right:10px;"></i>Language settings</a></li>
-
-                            <li><a href="{{route('posts',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                       style="font-size:20px;margin-right:10px;"></i>Posts module</a></li>
-
-                            <li><a href="{{route('images',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                   style="font-size:20px;margin-right:10px;"></i>Images module</a></li>
-                            <li><a href="{{route('website_settings',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                    style="font-size:20px;margin-right:10px;"></i>Website settings</a></li>
-                            <li><a href="{{route('profile_settings',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                              style="font-size:20px;margin-right:10px;"></i>Profile settings</a>
-                            </li><li><a href="{{route('export',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                              style="font-size:20px;margin-right:10px;"></i>Export module</a></li>
-                            </li><li><a href="{{route('mail',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                              style="font-size:20px;margin-right:10px;"></i>Mail module</a></li>
-                            </li><li><a href="{{route('office',['id'=>Auth::id()])}}"><i class="fa fa-user-circle"
-                                                                                       style="font-size:20px;margin-right:10px;"></i>Office module</a></li>
-
-                            <li><a href="{{route('about_us')}}"><i class="fa fa-info-circle"
-                                                                   style="font-size:20px;margin-right:10px;"></i>About</a>
-                            </li>
-                            <li><a href="{{route('contacts')}}"><i class="fas fa-phone"
-                                                                   style="font-size:20px;margin-right:10px;"></i>Contact
-                                    Us</a></li>
-                        </ul>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings</a>
+                        @if(count($menuCollection->getMenu()->where('parent',1))>0)
+                            {!! BuildMenu(2, $menuCollection) !!}
+                        @endif
                     </li>
                     <li><a href="{{route("website")}}" target="_blank">Visit website</a></li>
                 </ul>

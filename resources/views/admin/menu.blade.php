@@ -24,7 +24,9 @@
                         <th>{{$strLang}}</th>
                     @endforeach
                     <th>Parent</th>
+                        @if(Auth::user()->admin!=1)
                     <th>Active</th>
+                        @endif
                         @if(Auth::user()->admin==1)
                     <th>Admin <br>active</th>
                         @endif
@@ -36,7 +38,6 @@
                 <tbody id="menus_body">
                 @foreach($userMenus as $menu)
                     <tr id="menu_{{$menu->id}}">
-
                         {{--Loop through all active languages--}}
                         @foreach($arrOfActiveLanguages as $strKey=>$strLang)
                             <td style="width:15%;">
@@ -87,6 +88,7 @@
                                 @endforeach
                             </select>
                         </td>
+                        @if(Auth::user()->admin!=1)
                         <td>
                             <select class="form-control" name="menu_active" id="{{$menu->id}}_menu_active"
                                     style="height: 33px;">
@@ -102,6 +104,7 @@
                                 @endforeach
                             </select>
                         </td>
+                        @endif
                         @if(Auth::user()->admin==1)
                         <td>
                             <select class="form-control" name="menu_active_admin" id="{{$menu->id}}_menu_active_admin"
@@ -109,7 +112,7 @@
                                 @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
                                     @php
                                         $strSelected="";
-                                        if($menu->active==$strKey){
+                                        if($menu->admin==$strKey){
                                         $strSelected="selected";
                                         }
                                     @endphp

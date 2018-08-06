@@ -2,6 +2,8 @@
 
 
 //-- Custom function that overwrite default asset() method
+use Illuminate\Support\Facades\App;
+
 function custom_asset($path, $secure = null){
     return asset('public/'.$path);
 }
@@ -20,4 +22,53 @@ function setEnvironmentValue($envKey, $envValue)
     $fp = fopen($envFile, 'w');
     fwrite($fp, $str);
     fclose($fp);
+}
+
+
+/**
+ * Function that build menu & submenu items
+ *
+ * @param integer $intParentNo
+ * @param $menuCollection
+ *
+ * @return string $strMenu
+ */
+function BuildMenu($intParentNo, $collectionMenu)
+{
+    //-- Build menu list of all sub menu items for specific $intParentNo
+    $strMenu = "";
+    $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
+
+    return $strMenu;
+}
+
+function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
+{
+    if (count($collectionMenu->getMenu()->where('parent', $intParentNo)) > 0) {
+
+        $strMenu .= "<ul class='dropdown-menu'>";
+        foreach ($collectionMenu->getMenu()->where('parent', $intParentNo) as $menuItem) {
+            $strMenu .= "<li>";
+
+            if($menuItem->route_id_parameter=="Y"){
+                $strPath = route($menuItem->route,['id' => \Auth::id()]);
+            }else{
+                $strPath = route($menuItem->route);
+            }
+
+            if (count($collectionMenu->getMenu()->where('parent', $menuItem->id)) > 0) {
+                $strMenu .= "  <li class=\"dropdown dropdown-submenu\">
+                                <a href='" . $strPath . "' class=\"dropdown-toggle\" data-toggle=\"dropdown\">".$collectionMenu->getMenu()->where('id', $menuItem->id)->first()->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
+
+                BuildMenuHTML($collectionMenu, $menuItem->id, $strMenu,$subMenu=true);
+                $strMenu .= "</li>";
+            }else{
+                $strMenu .="<a href='" . $strPath . "'>".$menuItem->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
+            }
+            $strMenu .= "</li>";
+        }
+        $strMenu .= "</ul>";
+
+        return $strMenu;
+    }
 }

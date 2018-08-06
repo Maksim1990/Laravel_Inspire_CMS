@@ -24,7 +24,14 @@
                     <div class="buttons">
                         <a href="{{route('profile',['id'=>Auth::id()])}}" class="btn btn-success">Back to profile</a><br>
                         <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-info">Change password</a><br>
-                        <a href="{{route('delete_profile',['id'=>Auth::id()])}}" class="btn btn-danger">Delete profile</a><br>
+                        @if(Auth::id()==$user->id)
+                            {!! Form::close() !!}
+                            {{ Form::open(['method' =>'DELETE' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
+                            <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                            {!! Form::submit('Delete profile',['class'=>'btn btn-danger']) !!}
+
+                            {!! Form::close() !!}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -49,7 +56,7 @@
             @if(Auth::id()==$user->id)
                 {!! Form::close() !!}
                 {{ Form::open(['method' =>'DELETE' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
-
+                <input type="hidden" name="user_id" value="{{Auth::id()}}">
                 {!! Form::submit('Delete profile',['class'=>'btn btn-danger']) !!}
 
                 {!! Form::close() !!}

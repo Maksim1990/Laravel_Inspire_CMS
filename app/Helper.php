@@ -127,7 +127,6 @@ class Helper
      */
     public static function GetDefaultLanguages()
     {
-
             $arrOfDefaultLanguages = [
                 "EN" => "English",
                 "FR" => "French",
@@ -135,10 +134,7 @@ class Helper
                 "TH" => "Thai"
             ];
 
-
-
         return $arrOfDefaultLanguages;
-
     }
 
 }

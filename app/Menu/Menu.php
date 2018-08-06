@@ -12,11 +12,11 @@ class Menu extends Model
 
 
     public function langs(){
-        return $this->hasMany('App\Menu\MenuLang','id');
+        return $this->hasMany('App\Menu\MenuLang','id')->where('user_id',\Auth::id());
     }
 
     public function menuActive(){
-        return $this->hasMany('App\Menu\UserMenu','menu_id');
+        return $this->hasMany('App\Menu\UserMenu','menu_id')->where('user_id',\Auth::id());
     }
 
 }

@@ -82,7 +82,8 @@ class RegisterController extends Controller
 
         //-- Create SETTINGS details for new user
         Setting::create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'custom_css' => '/* Your custom CSS will be here */',
         ]);
 
         //-- Create MENU details for new user

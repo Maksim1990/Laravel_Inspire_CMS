@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Dashboard\Entities\Language;
 use Spatie\TranslationLoader\LanguageLine;
@@ -90,7 +91,6 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-
 
         return view('dashboard::about', compact('arrTabs', 'active'));
     }
