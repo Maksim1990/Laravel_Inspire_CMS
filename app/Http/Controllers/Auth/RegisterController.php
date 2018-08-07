@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Modules\Dashboard\Entities\Language;
+use Modules\Pagebuilder\Entities\Block;
+use Modules\Pagebuilder\Entities\BlockContent;
+use Modules\Pagebuilder\Entities\BlockDefault;
+use Modules\Pagebuilder\Entities\UserBlockPivot;
 
 class RegisterController extends Controller
 {
@@ -36,7 +42,7 @@ class RegisterController extends Controller
      */
     public function redirectTo()
     {
-        return '/admin/'.Auth::id().'/dashboard';
+        return '/'.LaravelLocalization::getCurrentLocale().'/admin/'.Auth::id().'/dashboard';
     }
 
     /**
@@ -78,13 +84,15 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        //****** END USER ******//
 
 
         //-- Create SETTINGS details for new user
         Setting::create([
             'user_id' => $user->id,
-            'custom_css' => '/* Your custom CSS will be here */',
+            'custom_css' => '/* Your custom CSS will be here */'
         ]);
+        //****** END SETTINGS ******//
 
         //-- Create MENU details for new user
         $menuList = Menu::where('id', '<>', '0')->orderBy('id', 'DESC')->first();
@@ -118,9 +126,53 @@ class RegisterController extends Controller
                 ]);
             }
         }
+        //****** END MENU ******//
 
 
 
+        //-- Create PAGEBUILDER BLOCKS default details for new user
+        $blockDefaults=BlockDefault::all();
+        if(!empty($blockDefaults)){
+            foreach ($blockDefaults as $defaultBlock){
+                $block=Block::create([
+                    'user_id' => $user->id,
+                    'block_id' => $defaultBlock->block_id."_".$user->id,
+                    'block_type' => $defaultBlock->block_id,
+                    'sortorder' => $defaultBlock->id
+                ]);
+
+                $blockContent=BlockContent::create([
+                    'id' => $block->id,
+                    'content' => $defaultBlock->content,
+                    'block_template' => $defaultBlock->block_template
+                ]);
+
+                UserBlockPivot::create([
+                    'block_id' => $block->id,
+                    'block_content_id' => $blockContent->id
+                ]);
+            }
+        }
+        //****** END PAGEBUILDER BLOCKS ******//
+
+
+
+
+        //-- Create DEFAULT LANGUAGES default details for new user
+        //-- Get all active languages
+        $arrOfDefaultLanguages = Helper::GetDefaultLanguagesWithNativeNames();
+        if(!empty($arrOfDefaultLanguages)){
+            foreach ($arrOfDefaultLanguages as $strKey=>$arrLangDetails){
+                Language::create([
+                    'user_id' => $user->id,
+                    'name'=>strtolower($strKey),
+                    'native' => $arrLangDetails['native'],
+                    'native_en' => $arrLangDetails['native_en'],
+                    'active' => 'Y'
+                ]);
+            }
+        }
+        //****** END DEFAULT LANGUAGES ******//
 
 
         return $user;

@@ -137,4 +137,34 @@ class Helper
         return $arrOfDefaultLanguages;
     }
 
+
+    /**
+     * Get array of default languages that can't be deactivated
+     *
+     * @return array
+     */
+    public static function GetDefaultLanguagesWithNativeNames()
+    {
+        $arrOfDefaultLanguages = [
+            "EN" => [
+                'native_en'=>"English",
+                'native'=>"English",
+            ],
+            "FR" => [
+                'native_en'=>"French",
+                'native'=>"Français",
+            ],
+            "RU" => [
+                'native_en'=>"Russian",
+                'native'=>"Русский",
+            ],
+            "TH" => [
+                'native_en'=>"Thai",
+                'native'=>"ไทย",
+            ]
+        ];
+
+        return $arrOfDefaultLanguages;
+    }
+
 }

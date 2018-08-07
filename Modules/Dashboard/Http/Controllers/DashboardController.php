@@ -9,6 +9,7 @@ use App\Helper;
 use App\Menu\Menu;
 use App\Menu\MenuLang;
 use App\Menu\UserMenu;
+use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Dashboard\Entities\Language;
+use Modules\Pagebuilder\Entities\Block;
+use Modules\Pagebuilder\Entities\BlockContent;
+use Modules\Pagebuilder\Entities\BlockDefault;
+use Modules\Pagebuilder\Entities\UserBlockPivot;
 use Spatie\TranslationLoader\LanguageLine;
 
 class DashboardController extends Controller
@@ -91,6 +96,9 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
+
+
+
 
         return view('dashboard::about', compact('arrTabs', 'active'));
     }

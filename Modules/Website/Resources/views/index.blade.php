@@ -9,7 +9,8 @@
     @foreach($websiteBlocks as $blockMain)
         @foreach($blockMain->content as $block)
             @php
-                $template="website::blocks.".$blockMain->block_id;
+                $arrBlockName=explode("_",$blockMain->block_id);
+                $template="website::blocks.".$arrBlockName[0];
              $strContent=str_replace('../../public/storage','../../../public/storage',$blockMain->filteredContent($block->content));
                             $strContent=str_replace('../../storage','/public/storage',$blockMain->filteredContent($block->content));
             @endphp

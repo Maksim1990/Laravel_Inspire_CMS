@@ -20,6 +20,11 @@ class MailController extends Controller
         return view('dashboard::mail.index', compact('arrTabs', 'active'));
     }
 
+
+    /**
+     * For sending emails through Mailgun to the not authorized mail addresses
+     * than payment credentials should be added in Mailgun account
+     */
     public function sendEmail()
     {
         Mail::raw('Sending emails with Mailgun and Laravel is easy!', function($message)
@@ -27,7 +32,8 @@ class MailController extends Controller
             $message->subject('Mailgun and Laravel are awesome!');
             $message->from('maksim@website_name.com', 'DiscoveringWorld');
             //$message->to('narushevich.maksim@gmail.com');
-            $message->to('maxim.narushevich@cactussoft.biz');
+
+            $message->to('maxim@digitalmind.be');
         });
     }
 

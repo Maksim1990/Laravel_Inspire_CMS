@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Modules\Dashboard\Entities\Language;
 use Modules\Images\Entities\Photo;
+use Modules\Pagebuilder\Entities\Block;
+use Modules\Pagebuilder\Entities\BlockContent;
+use Modules\Pagebuilder\Entities\UserBlockPivot;
 use Modules\Post\Entities\Post;
 use Spatie\TranslationLoader\LanguageLine;
 
@@ -165,7 +169,13 @@ class ProfileController extends Controller
         MenuLang::where('user_id', $user_id)->delete();
         UserMenu::where('user_id', $user_id)->delete();
         LanguageLine::where('user_id', $user_id)->delete();
+        Language::where('user_id', $user_id)->delete();
         Post::where('user_id', $user_id)->delete();
+
+        //-- Deleting PAGEBUILDER BLOCKS related to this user
+        BlockContent::where('user_id', $user_id)->delete();
+        Block::where('user_id', $user_id)->delete();
+        UserBlockPivot::where('user_id', $user_id)->delete();
 
 
         //-- Delete user profile image and unlick it physically from the server as well
