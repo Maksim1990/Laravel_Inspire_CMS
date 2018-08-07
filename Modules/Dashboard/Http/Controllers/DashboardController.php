@@ -97,9 +97,6 @@ class DashboardController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
-
-
-
         return view('dashboard::about', compact('arrTabs', 'active'));
     }
 

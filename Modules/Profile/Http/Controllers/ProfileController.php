@@ -173,9 +173,17 @@ class ProfileController extends Controller
         Post::where('user_id', $user_id)->delete();
 
         //-- Deleting PAGEBUILDER BLOCKS related to this user
-        BlockContent::where('user_id', $user_id)->delete();
-        Block::where('user_id', $user_id)->delete();
-        UserBlockPivot::where('user_id', $user_id)->delete();
+        $blocks=Block::where('user_id', $user_id)->get();
+        if (!empty($blocks)) {
+            foreach ($blocks as $block){
+                UserBlockPivot::where('block_id', $block->id)->delete();
+                BlockContent::where('id', $block->id)->delete();
+                Block::where('id', $block->id)->delete();
+            }
+        }
+
+
+
 
 
         //-- Delete user profile image and unlick it physically from the server as well
