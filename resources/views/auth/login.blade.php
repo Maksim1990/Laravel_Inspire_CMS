@@ -10,17 +10,25 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
-
+                        @if ($errors->has('attempt_limit_alert'))
+                            <div class="alert alert-danger" id="alert_limit">
+                                <p class="text-center">{!!  $errors->first('attempt_limit_alert') !!}</p>
+                            </div>
+                        @endif
+                        <br>
                         <div class="form-group row">
                             <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <br>
+                                @if ($errors->has('email') || $errors->has('attempts_left'))
+                                    <div class="alert alert-danger" id="alert">
+                                        <ul>
+                                            <li>{{  $errors->first('email') }}</li>
+                                            <li>{!!  $errors->first('attempts_left') !!}</li>
+                                        </ul>
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -51,7 +59,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" id="button" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
 
@@ -66,4 +74,20 @@
         </div>
     </div>
 </div>
+<script>
+
+            @if (!$errors->first('attempts'))
+    var intTimeLeft = '{{$errors->first('seconds')}}';
+
+    var loginTime = setInterval(function () {
+        $("#seconds").text(--intTimeLeft);
+        $("#button").prop("disabled", true);
+        if (intTimeLeft <= 0) {
+            clearInterval(loginTime);
+            $("#alert_limit").remove();
+            $("#button").prop("disabled", false);
+        }
+    }, 1000);
+    @endif
+</script>
 @endsection
