@@ -87,7 +87,18 @@
         };
 
 
-        //-- Functionality to update labels for current module
+        //-- Functionality for sending email form
+        $('form').submit( function(ev){
+            ev.preventDefault();
+
+            var conf = confirm("Send this email?");
+            if (conf) {
+                //-- Submit email form
+                $(this).unbind('submit').submit();
+            }
+        });
+
+        //-- Functionality to show area for uploading images
         $('#add_attachment').click(function (e) {
             e.preventDefault();
             $('#mail_attachments').toggle();

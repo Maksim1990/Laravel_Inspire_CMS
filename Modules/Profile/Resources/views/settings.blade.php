@@ -26,9 +26,9 @@
                         <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-info">Change password</a><br>
                         @if(Auth::id()==$user->id)
                             {!! Form::close() !!}
-                            {{ Form::open(['method' =>'DELETE' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
+                            {{ Form::open(['method' =>'DELETE' ,'class'=>'deleteProfile', 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
                             <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                            {!! Form::submit('Delete profile',['class'=>'btn btn-danger']) !!}
+                            {!! Form::submit('Delete profile',['class'=>'btn btn-danger delete_profile']) !!}
 
                             {!! Form::close() !!}
                         @endif
@@ -55,9 +55,9 @@
             {!! Form::submit('Update profile',['class'=>'btn btn-warning']) !!}
             @if(Auth::id()==$user->id)
                 {!! Form::close() !!}
-                {{ Form::open(['method' =>'DELETE' , 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
+                {{ Form::open(['method' =>'DELETE' ,'class'=>'deleteProfile', 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
                 <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                {!! Form::submit('Delete profile',['class'=>'btn btn-danger']) !!}
+                {!! Form::submit('Delete profile',['class'=>'btn btn-danger delete_profile']) !!}
 
                 {!! Form::close() !!}
             @endif
@@ -77,5 +77,19 @@
 
         }).show();
         @endif
+
+
+
+        //-- Functionality for sending email form
+        $('.deleteProfile').submit( function(ev){
+            ev.preventDefault();
+
+            var conf = confirm("Do you really want to delete profile?");
+            if (conf) {
+                //-- Submit email form
+                $(this).unbind('submit').submit();
+            }
+        });
+
     </script>
 @endsection
