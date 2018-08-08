@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Modules\Dashboard\Entities\Language;
-use Modules\Dashboard\Entities\Mail;
+use Modules\Dashboard\Entities\MailEntity;
 use Modules\Images\Entities\Photo;
 use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
@@ -172,7 +172,7 @@ class ProfileController extends Controller
         LanguageLine::where('user_id', $user_id)->delete();
         Language::where('user_id', $user_id)->delete();
         Post::where('user_id', $user_id)->delete();
-        Mail::where('user_id', $user_id)->delete();
+        MailEntity::where('user_id', $user_id)->delete();
 
         //-- Deleting PAGEBUILDER BLOCKS related to this user
         $blocks=Block::where('user_id', $user_id)->get();
@@ -183,9 +183,6 @@ class ProfileController extends Controller
                 Block::where('id', $block->id)->delete();
             }
         }
-
-
-
 
 
         //-- Delete user profile image and unlick it physically from the server as well
