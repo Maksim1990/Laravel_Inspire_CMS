@@ -21,6 +21,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('show_left_sidebar/', 'SettingController@showSidebar')->name("show_left_sidebar");
 
         Route::get('/home', 'HomeController@index')->name('home');
+
+        //Bugsnag example
+        Route::get('/bugsnag', 'HomeController@bugsnag')->name('bugsnag');
     });
 });
 

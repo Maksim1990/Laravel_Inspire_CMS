@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Http\Request;
+use RuntimeException;
 
 class HomeController extends Controller
 {
@@ -25,4 +27,11 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function bugsnag()
+    {
+        Bugsnag::notifyException(new RuntimeException("Test error"));
+        return "Error reported to Bugsnag!";
+    }
+
 }

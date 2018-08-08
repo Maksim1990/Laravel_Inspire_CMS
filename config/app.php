@@ -166,6 +166,7 @@ return [
         App\Providers\HeaderServiceProvider::class,
 
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
     ],
 
     /*
