@@ -15,8 +15,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
 
         //-- Mail functionality
+        Route::resource('/{id}/mail', 'MailController');
         Route::get('/{id}/mail', 'MailController@index')->name('mail');
-        Route::get('/{id}/send_mail', 'MailController@sendEmail')->name('send_mail');
+        Route::get('/{id}/mail/create', 'MailController@createEmail')->name('create_mail');
+        Route::post('/{id}/add_mail_image_attachment', 'MailController@attachImages')->name('mail_image_attachments');
 
         //-- Inspire office functionality
         Route::get('/{id}/office', 'OfficeController@index')->name('office');

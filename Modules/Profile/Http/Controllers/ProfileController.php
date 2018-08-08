@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Modules\Dashboard\Entities\Language;
+use Modules\Dashboard\Entities\Mail;
 use Modules\Images\Entities\Photo;
 use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
@@ -83,7 +84,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request);
+
     }
 
     /**
@@ -171,6 +172,7 @@ class ProfileController extends Controller
         LanguageLine::where('user_id', $user_id)->delete();
         Language::where('user_id', $user_id)->delete();
         Post::where('user_id', $user_id)->delete();
+        Mail::where('user_id', $user_id)->delete();
 
         //-- Deleting PAGEBUILDER BLOCKS related to this user
         $blocks=Block::where('user_id', $user_id)->get();
