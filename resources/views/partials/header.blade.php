@@ -34,7 +34,7 @@
                             {!! BuildMenu(2, $menuCollection) !!}
                         @endif
                     </li>
-                    <li><a href="{{route("website")}}" target="_blank">Visit website</a></li>
+                    <li><a href="{{route("website",['id'=>Auth::id(),'sitename'=>Auth::user()->website_setting->website_name])}}" target="_blank">Visit website</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right" id="user_block_menu">

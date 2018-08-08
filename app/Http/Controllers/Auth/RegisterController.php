@@ -20,6 +20,7 @@ use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
 use Modules\Pagebuilder\Entities\BlockDefault;
 use Modules\Pagebuilder\Entities\UserBlockPivot;
+use Modules\Website\Entities\WebsiteSetting;
 
 class RegisterController extends Controller
 {
@@ -93,6 +94,13 @@ class RegisterController extends Controller
             'custom_css' => '/* Your custom CSS will be here */'
         ]);
         //****** END SETTINGS ******//
+
+        //-- Create WEBSITE SETTINGS details for new user
+        WebsiteSetting::create([
+            'user_id' => $user->id,
+            'website_name' => date("Y_m_d_h_i_s")."_".$user->id."_website",
+        ]);
+        //****** END WEBSITE SETTINGS ******//
 
         //-- Create MENU details for new user
         $menuList = Menu::where('id', '<>', '0')->orderBy('id', 'DESC')->first();

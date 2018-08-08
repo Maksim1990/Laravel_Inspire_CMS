@@ -7,6 +7,7 @@ use App\Menu\UserMenu;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\Images\Entities\Photo;
+use Modules\Website\Entities\WebsiteSetting;
 
 class User extends Authenticatable
 {
@@ -33,6 +34,10 @@ class User extends Authenticatable
 
     public function setting(){
         return $this->hasOne('App\Setting');
+    }
+
+    public function website_setting(){
+        return $this->hasOne(WebsiteSetting::class);
     }
 
     public function image(){

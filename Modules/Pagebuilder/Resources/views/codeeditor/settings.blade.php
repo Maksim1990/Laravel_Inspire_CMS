@@ -63,7 +63,6 @@
                     _token: token
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data['result'] === "success") {
                         new Noty({
                             type: 'success',

@@ -6,7 +6,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/contacts', 'DashboardController@contacts')->name('contacts');
         Route::get('/{id}/languages', 'DashboardController@languages')->name('languages');
         Route::get('/{id}/menu', 'DashboardController@menu')->name('menu');
-        Route::get('/{id}/website/settings', 'DashboardController@websiteSettings')->name('website_settings');
+
+        //-- Website Settings
+        Route::get('/{id}/website/settings', 'WebsiteSettingsController@index')->name('website_settings');
+        Route::post('/ajax_website_name_update', 'WebsiteSettingsController@updateWebsiteName')->name('ajax_website_name_update');
+        Route::post('/ajax_website_email_form', 'WebsiteSettingsController@updateWebsiteEmailForm')->name('ajax_website_email_form');
 
 
         //-- Export functionality

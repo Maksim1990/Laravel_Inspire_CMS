@@ -24,6 +24,7 @@
 
 <link href="{{custom_asset('css/libs.css')}}" rel="stylesheet">
 <link href="{{custom_asset('css/layout_admin.css')}}" rel="stylesheet">
+<link href="{{custom_asset('css/checkbox_style.css')}}" rel="stylesheet">
 <link href="{{custom_asset('css/style.css')}}" rel="stylesheet">
 
 @yield('styles')
