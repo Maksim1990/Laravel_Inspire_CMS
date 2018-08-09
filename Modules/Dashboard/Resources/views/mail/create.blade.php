@@ -97,7 +97,7 @@
         Dropzone.options.uploadForm = {
             dataType: "json",
             success: function(file, response){
-                if (response['result'] === "success") {
+                if (response == "success") {
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
@@ -107,7 +107,7 @@
                     new Noty({
                         type: 'error',
                         layout: 'bottomLeft',
-                        text: response['error']
+                        text: response
                     }).show();
                 }
             }

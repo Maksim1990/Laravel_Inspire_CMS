@@ -92,7 +92,6 @@ class MailController extends Controller
     public function attachImages(Request $request)
     {
 
-        $strError = "";
         $result = "success";
         $arrAllowedExtension = ['png', 'jpg', 'jpeg'];
 
@@ -115,18 +114,15 @@ class MailController extends Controller
                 ]);
 
             } else {
-                $strError = "Images with size bigger than 2 MB can't be uploaded!";
-                $result = "";
+                $result = "Images with size bigger than 2 MB can't be uploaded!";
             }
         } else {
-            $strError = "It's allowed to upload only following formats: " . implode(",", $arrAllowedExtension);
-            $result = "";
+            $result = "It's allowed to upload only following formats: " . implode(",", $arrAllowedExtension);
         }
 
         header('Content-Type: application/json');
         echo json_encode(array(
-            'result' => $result,
-            'error' => $strError
+            $result
         ));
     }
 
