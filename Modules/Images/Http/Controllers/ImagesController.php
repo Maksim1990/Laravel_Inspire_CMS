@@ -72,10 +72,7 @@ class ImagesController extends Controller
             $result = "It's allowed to upload only following formats: " . implode(",", $arrAllowedExtension);
         }
 
-        header('Content-Type: application/json');
-        echo json_encode(array(
-            $result
-        ));
+        echo $result;
 
 
     }
