@@ -22,7 +22,7 @@ class PostController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
-        $posts=Post::where('user_id',$id)->get();
+        $posts=Post::where('user_id',$id)->orderBy('created_at','DESC')->get();
 
         return view('post::index', compact('arrTabs', 'active','posts'));
     }
@@ -36,7 +36,9 @@ class PostController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
-        return view('post::create', compact('arrTabs', 'active'));
+        $userImages = Auth::user()->photos;
+
+        return view('post::create', compact('arrTabs', 'active','userImages'));
     }
 
     /**

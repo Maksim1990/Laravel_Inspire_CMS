@@ -24,7 +24,9 @@
                     <div class="buttons">
                         <a href="{{route('profile',['id'=>Auth::id()])}}" class="btn btn-success">Back to profile</a><br>
                         <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-info">Change password</a><br>
+                        @if(Auth::id()==$user->id)
                         <a data-toggle="modal" data-target="#delete_profile" class="btn btn-danger" >Delete profile</a>
+                        @endif
                     </div>
                 </div>
             </div>
