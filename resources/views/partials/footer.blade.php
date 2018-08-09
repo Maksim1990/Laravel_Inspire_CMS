@@ -1,3 +1,5 @@
+
+</div>
 <footer id="footer">
     <div class="w3-row ">
         <div class="w3-col s6 m6  w3-center"><ul class="w3-ul">
@@ -21,6 +23,11 @@
     <div class="w3-col s1 m1"><p></p></div>
 </footer>
 </div>
+
+{{--Right sidebar button--}}
+    <a id="openNavRight" onclick="ShowRightSidebar()"><img src="{{custom_asset("images/includes/rightSideBarArrow.png")}}" alt=""></a>
+
+
 <div id="divLoading"></div>
 
 <script>
@@ -74,42 +81,75 @@
     if (show_left_sidebar == 'Y') {
         $(document).ready(function () {
             if ($(window).width() < 960) {
-                w3_close();
+                HideLeftSidebar();
             }
             else {
-                w3_open();
+                ShowLeftSidebar();
             }
         });
+
         $(window).resize(function () {
             if ($(window).width() < 960) {
-                w3_close();
+                ShowLeftSidebar();
             }
             else {
-                w3_open();
+                HideLeftSidebar();
             }
         });
     } else {
-        w3_close();
+        HideLeftSidebar();
     }
+
+    $(window).resize(function () {
+        if ($(window).width() < 960) {
+            HideRightSidebar(false);
+        }
+    });
+
+
     document.getElementById("Sidebar").style.width = "20%";
 
-    function w3_open() {
+    function ShowLeftSidebar() {
         document.getElementById("main").style.marginLeft = "20%";
         document.getElementById("Sidebar").style.width = "20%";
         document.getElementById("mainside").style.marginLeft = "0";
         document.getElementById("footer").style.marginLeft = "0";
         document.getElementById("Sidebar").style.display = "block";
         document.getElementById("mainClick").style.display = "none";
+        HideRightSidebar();
     }
 
-    function w3_close() {
+    function HideLeftSidebar() {
         document.getElementById("main").style.marginLeft = "0%";
         document.getElementById("mainside").style.marginLeft = "50px";
         document.getElementById("footer").style.marginLeft = "70px";
         document.getElementById("Sidebar").style.display = "none";
         document.getElementById("mainClick").style.display = "inline-block";
+
     }
 </script>
+
+
+<script>
+    function ShowRightSidebar() {
+        document.getElementById("mainContent").style.marginRight = "25%";
+        document.getElementById("rightSidebar").style.width = "25%";
+        document.getElementById("rightSidebar").style.display = "block";
+        document.getElementById("rightSidebar").style.right = "0%";
+        document.getElementById("openNavRight").style.display = 'none';
+        HideLeftSidebar();
+    }
+    function HideRightSidebar(status=true) {
+        document.getElementById("mainContent").style.marginRight = "0%";
+        document.getElementById("rightSidebar").style.display = "none";
+        document.getElementById("openNavRight").style.display = "inline-block";
+        if(!status){
+            HideLeftSidebar();
+        }
+    }
+</script>
+
+
 
 <script>
        $('.image_gallery img').attr('onclick','onClick(this)');

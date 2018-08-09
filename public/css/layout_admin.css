@@ -7,7 +7,7 @@ header{background-color:black;
     width: 100%;
 }
 .navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {color:white;}
-#Sidebar,.panel-default > .panel-heading {
+#Sidebar,.panel-default > .panel-heading,#rightSidebar {
     background-color: #1a312e;
     color:white;
 }
@@ -293,4 +293,22 @@ img.emojione {
 #user_block_menu{
     border-left: 1px solid white;
     padding-left: 20px;
+}
+
+/*.wrapper_rightSidebar {*/
+    /*text-align: center;*/
+/*}*/
+
+#openNavRight {
+    position: fixed;
+    padding:5px 0 5px 15px;
+    top:50%;
+    right: -225px;
+}
+#openNavRight:hover {
+   background-color: lightgray;
+    border-radius: 20px;
+}
+#openNavRight img{
+width: 10%;
 }

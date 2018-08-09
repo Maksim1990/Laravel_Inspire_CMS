@@ -1,6 +1,6 @@
 <div class="leftside col-xs-10 col-sm-5 w3-sidebar w3-bar-block w3-card-2 w3-animate-left" style="display:inline-block;" id="Sidebar">
     <button class="w3-bar-item w3-button w3-large" style="text-align: right;"
-            onclick="w3_close()"><i class="fas fa-arrow-circle-left"></i></button>
+            onclick="HideLeftSidebar()"><i class="fas fa-arrow-circle-left"></i></button>
     <div class="navbar-default sidebar">
         <div class="sidebar-nav">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

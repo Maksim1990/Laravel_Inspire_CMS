@@ -2,6 +2,8 @@
 @php
 //dd($menuCollection->getMenu());
 @endphp
+@include('partials.sidebar_right')
+<div id="mainContent">
 <header>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -71,6 +73,5 @@
             </div>
         </div>
     </nav>
-
 
 </header>
