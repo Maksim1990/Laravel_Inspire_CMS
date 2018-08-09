@@ -5,6 +5,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         return view('welcome');
     });
 
+
     Route::get('/404', function () {
         return view('errors.404_g');
     });
