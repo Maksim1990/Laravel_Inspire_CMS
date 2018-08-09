@@ -7,6 +7,7 @@
         $.ajax({
             method: 'POST',
             url: url,
+            dataType: "json",
             data: {
                 website_name: website_name,
                 _token: token
@@ -35,6 +36,7 @@
         $.ajax({
             method: 'POST',
             url: url,
+            dataType: "json",
             data: {
                 website_email_form: website_email_form,
                 _token: token

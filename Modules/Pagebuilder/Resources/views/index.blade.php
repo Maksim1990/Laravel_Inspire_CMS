@@ -220,6 +220,7 @@
                 $.ajax({
                     method: 'POST',
                     url: url,
+                    dataType: "json",
                     data: {
                         arrIDs: arrIDs,
                         _token: token
@@ -247,6 +248,7 @@
             $.ajax({
                 method: 'POST',
                 url: url,
+                dataType: "json",
                 data: {
                     codeEditorContent: codeEditorContent,
                     block_id: intBlockId,

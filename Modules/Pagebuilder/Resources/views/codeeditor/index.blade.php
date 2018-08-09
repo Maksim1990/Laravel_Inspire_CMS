@@ -68,6 +68,7 @@
             $.ajax({
                 method: 'POST',
                 url: url,
+                dataType: "json",
                 data: {
                     codeEditorContent: codeEditorContent,
                     block_id: block_id,

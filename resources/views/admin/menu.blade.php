@@ -213,6 +213,7 @@
                 $.ajax({
                     method: 'POST',
                     url: url,
+                    dataType: "json",
                     data: {
                         id: id,
                         _token: token
@@ -275,6 +276,7 @@
             $.ajax({
                 method: 'POST',
                 url: url,
+                dataType: "json",
                 data: {
                     arrMenuIds: arrMenuIds,
                     arrMenuKeys: arrMenuKeys,

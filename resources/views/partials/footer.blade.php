@@ -71,6 +71,7 @@
             $.ajax({
                 method: 'POST',
                 url: url_side_bar,
+                dataType: "json",
                 data: {active_left_sidebar: active_left_sidebar, user_id: user_id, _token: token}
             });
         });

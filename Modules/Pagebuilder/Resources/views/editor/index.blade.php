@@ -25,8 +25,6 @@
         // we override default upload handler to simulate successful upload
         images_upload_handler: function (blobInfo, success, failure) {
 
-     // console.log(blobInfo.filename());
-     // console.log(blobInfo.blob());
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
             xhr.open('POST', '{{route("editor_upload_image")}}');

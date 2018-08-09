@@ -59,6 +59,7 @@
             $.ajax({
                 method: 'POST',
                 url: url,
+                dataType: "json",
                 data: {
                     selectedLangs: selectedLangs,
                     _token: token

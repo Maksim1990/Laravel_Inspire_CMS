@@ -110,6 +110,7 @@
                 $.ajax({
                     method: 'POST',
                     url: url,
+                    dataType: "json",
                     data: {
                         id: id,
                         _token: token
@@ -160,13 +161,13 @@
                     });
                 }
             });
-console.log(arrTranslations);
-console.log(arrTranslationsKeys);
+
 
             if (blnAllowSubmit) {
                 $.ajax({
                     method: 'POST',
                     url: url,
+                    dataType: "json",
                     data: {
                         arrTranslations: arrTranslations,
                         arrTranslationsKeys: arrTranslationsKeys,
@@ -176,6 +177,7 @@ console.log(arrTranslationsKeys);
                         //-- Show loading image while execution of ajax request
                         $("div#divLoading").addClass('show');
                     },
+
                     success: function (data) {
                         if (data['result'] === "success") {
                             new Noty({

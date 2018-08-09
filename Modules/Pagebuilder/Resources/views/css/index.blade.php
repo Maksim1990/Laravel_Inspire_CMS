@@ -75,6 +75,7 @@
             $.ajax({
                 method: 'POST',
                 url: url,
+                dataType: "json",
                 data: {
                     customCssContent: customCssContent,
                     _token: token

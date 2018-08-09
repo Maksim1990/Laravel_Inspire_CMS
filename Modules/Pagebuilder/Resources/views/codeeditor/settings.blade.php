@@ -58,6 +58,7 @@
             $.ajax({
                 method: 'POST',
                 url: url,
+                dataType: "json",
                 data: {
                     codeEditorTheme: codeEditorTheme,
                     _token: token

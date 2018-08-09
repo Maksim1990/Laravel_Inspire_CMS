@@ -114,6 +114,7 @@
                 $.ajax({
                     method: 'POST',
                     url: url,
+                    dataType: "json",
                     data: {
                         id: id,
                         _token: token
