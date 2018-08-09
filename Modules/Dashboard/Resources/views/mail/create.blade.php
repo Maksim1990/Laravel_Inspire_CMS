@@ -13,7 +13,7 @@
         <div class="col-sm-8 col-xs-10">
             <h3 class="title">Create mail</h3>
             <div id="title_shape"></div>
-            {!! Form::open(['method'=>'POST','action'=>['\Modules\Dashboard\Http\Controllers\MailController@store','id'=>Auth::id()], 'files'=>true])!!}
+            {!! Form::open(['method'=>'POST', 'id'=>"email_form",'action'=>['\Modules\Dashboard\Http\Controllers\MailController@store','id'=>Auth::id()], 'files'=>true])!!}
             {!! Form::hidden('from', \Auth::user()->email) !!}
             <div class="group-form">
                 {!! Form::label('sender','From:') !!}
@@ -42,7 +42,7 @@
 
             <a href="{{route("mail",Auth::id())}}" class="btn btn-success">Back to Mail module</a>
             <a href="#" id="add_attachment" class="btn btn-info">Add attachment</a>
-            {!! Form::submit('Send',['class'=>'btn btn-warning']) !!}
+            <a data-toggle="modal" data-target="#send_mail" class="btn btn-warning" >Send email</a>
             {!! Form::close() !!}
 
             <div id="mail_attachments">
@@ -52,7 +52,33 @@
             <br>
             @include('includes.formErrors')
         </div>
+    </div>
 
+
+    {{--Delete profile modal--}}
+    <div class="modal" id="send_mail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Do you really want to send this email?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p class="confirm_info">
+                        Please check that all data in form is correct before real sending of email.
+                    </p>
+                    <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                    <a href="#" id="send_mail_form" class="btn btn-success">Send mail</a>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer"></div>
+            </div>
+        </div>
     </div>
 @stop
 @section('scripts')
@@ -87,21 +113,32 @@
         };
 
 
-        //-- Functionality for sending email form
-        $('form').submit( function(ev){
-            ev.preventDefault();
-
-            var conf = confirm("Send this email?");
-            if (conf) {
-                //-- Submit email form
-                $(this).unbind('submit').submit();
-            }
-        });
+        // //-- Functionality for sending email form
+        // $('form').submit( function(ev){
+        //     ev.preventDefault();
+        //
+        //     var conf = confirm("Send this email?");
+        //     if (conf) {
+        //         //-- Submit email form
+        //         $(this).unbind('submit').submit();
+        //     }
+        // });
 
         //-- Functionality to show area for uploading images
         $('#add_attachment').click(function (e) {
             e.preventDefault();
             $('#mail_attachments').toggle();
+        });
+
+
+        //-- Functionality to submit email form
+        $('#send_mail_form').click(function () {
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                text: 'Email form was submitted!'
+            }).show();
+            $('#email_form').trigger('submit');
         });
 
     </script>
