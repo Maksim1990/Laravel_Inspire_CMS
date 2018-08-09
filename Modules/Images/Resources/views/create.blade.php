@@ -27,6 +27,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.0/min/dropzone.min.js"></script>
     <script>
             Dropzone.options.uploadForm = {
+                dataType: "json",
                 success: function(file, response){
                     if (response['result'] === "success") {
                         new Noty({
