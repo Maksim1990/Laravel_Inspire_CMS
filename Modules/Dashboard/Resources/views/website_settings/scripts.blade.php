@@ -1,6 +1,22 @@
 <script>
     var token = '{{\Illuminate\Support\Facades\Session::token()}}';
 
+
+    //-- Functionality to check allowed input values
+    function checkInput(obj){
+        var id=obj.id;
+        $('#alert_'+id).text('');
+        $('#save_'+id).prop('disabled',false);
+        var arrInvalidCharacters=[" ","<",">"]
+        for(var i=0;i<=arrInvalidCharacters.length;i++){
+            if (obj.value.indexOf(arrInvalidCharacters[i]) > -1)
+            {
+                $('#alert_'+id).text('Prohibited symbol');
+                $('#save_'+id).prop('disabled',true);
+            }
+        }
+    }
+
     $('#save_website_name').click(function () {
         var url = '{{ route('ajax_website_name_update') }}';
         var website_name = $('#website_name').val();
@@ -52,4 +68,233 @@
             }
         });
     });
+
+
+
+    //-- Functionality to update GitHub URL
+    $('#save_github').click(function () {
+        var url = '{{ route('ajax_website_settings_github') }}';
+        var github = $('#github').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                github: github,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'GitHub URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update Facebook URL
+    $('#save_facebook').click(function () {
+        var url = '{{ route('ajax_website_settings_facebook') }}';
+        var facebook = $('#facebook').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                facebook: facebook,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Facebook URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update VK URL
+    $('#save_vk').click(function () {
+        var url = '{{ route('ajax_website_settings_vk') }}';
+        var vk = $('#vk').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                vk: vk,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'VK URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update LinkedIn URL
+    $('#save_linkedin').click(function () {
+        var url = '{{ route('ajax_website_settings_linkedin') }}';
+        var linkedin = $('#linkedin').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                linkedin: linkedin,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'LinkedIn URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update Line URL
+    $('#save_line').click(function () {
+        var url = '{{ route('ajax_website_settings_line') }}';
+        var line = $('#line').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                line: line,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Line URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update Instagram URL
+    $('#save_instagram').click(function () {
+        var url = '{{ route('ajax_website_settings_instagram') }}';
+        var instagram = $('#instagram').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                instagram: instagram,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Instagram URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update Pinterest URL
+    $('#save_pinterest').click(function () {
+        var url = '{{ route('ajax_website_settings_pinterest') }}';
+        var pinterest = $('#pinterest').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                pinterest: pinterest,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Pinterest URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+
+    //-- Functionality to update Twitter URL
+    $('#save_twitter').click(function () {
+        var url = '{{ route('ajax_website_settings_twitter') }}';
+        var twitter = $('#twitter').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                twitter: twitter,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Twitter URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality to update Google URL
+    $('#save_google').click(function () {
+        var url = '{{ route('ajax_website_settings_google') }}';
+        var google = $('#google').val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                google: google,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Google URL was updated!'
+                    }).show();
+                }
+            }
+        });
+    });
+
 </script>

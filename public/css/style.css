@@ -36,7 +36,26 @@ a .link{
 .buttons a{
     margin-bottom: 15px;
 }
+.icon_social{
+    font-size: 25px;
+    color: green;
+}
 
+.icon_social:hover{
+    color: #00b200;
+}
+
+.line{
+    padding: 15px 5px 15px 5px;
+    border-radius: 20px;
+}
+.line:hover{
+    background-color: rgba(0, 205, 0, 0.17);
+}
+.info_alert{
+    color: red;
+    font-weight: bold;
+}
 .title{
     color:green;
     border-bottom:2px solid green;

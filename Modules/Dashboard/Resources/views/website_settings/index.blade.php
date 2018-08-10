@@ -9,20 +9,20 @@
             </div>
             {{-- Website name--}}
             <div class="col-sm-12 col-lg-12 col-xs-12">
-                <div class="col-sm-5">
+                <div class="col-sm-5 col-xs-12">
                     <p class="text">Website name</p>
 
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-5 col-xs-12">
                     <div class="form-group">
                         <input type="text" class="form-control" id="website_name"
                                value="{{Auth::user()->website_setting->website_name}}">
                     </div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 col-xs-12">
                     <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_website_name">Save</button>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-xs-12">
                     <hr>
                 </div>
             </div>
@@ -30,11 +30,13 @@
 
             {{-- Email form--}}
             <div class="col-sm-12 col-lg-12 col-xs-12">
-                <div class="col-sm-5">
+                <div class="col-sm-5 col-xs-12">
                     <p class="text">Show email form on the page</p>
 
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-5 hidden-lg hidden-sm col-xs-12">
+                </div>
+                <div class="col-sm-1 col-xs-12">
                     <div class="form-group" style="margin-top: 15px;">
                         @php
                             $strChecked="";
@@ -48,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-xs-12">
                     <hr>
                 </div>
             </div>
@@ -56,7 +58,9 @@
 
         </div>
     </div>
-
+@stop
+@section('Social')
+    @include('dashboard::website_settings.social_icons')
 @stop
 @section('scripts')
     @include('dashboard::website_settings.scripts')

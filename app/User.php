@@ -6,6 +6,7 @@ use App\Menu\Menu;
 use App\Menu\UserMenu;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Dashboard\Entities\SocialIcon;
 use Modules\Images\Entities\Photo;
 use Modules\Website\Entities\WebsiteSetting;
 
@@ -38,6 +39,10 @@ class User extends Authenticatable
 
     public function website_setting(){
         return $this->hasOne(WebsiteSetting::class);
+    }
+
+    public function social_icons(){
+        return $this->hasOne(SocialIcon::class);
     }
 
     public function image(){

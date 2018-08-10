@@ -12,6 +12,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/ajax_website_name_update', 'WebsiteSettingsController@updateWebsiteName')->name('ajax_website_name_update');
         Route::post('/ajax_website_email_form', 'WebsiteSettingsController@updateWebsiteEmailForm')->name('ajax_website_email_form');
 
+        Route::post('/ajax_website_settings_twitter', 'WebsiteSettingsController@updateWebsiteTwitter')->name('ajax_website_settings_twitter');
+        Route::post('/ajax_website_settings_github', 'WebsiteSettingsController@updateWebsiteGithub')->name('ajax_website_settings_github');
+        Route::post('/ajax_website_settings_vk', 'WebsiteSettingsController@updateWebsiteVk')->name('ajax_website_settings_vk');
+        Route::post('/ajax_website_settings_facebook', 'WebsiteSettingsController@updateWebsiteFacebook')->name('ajax_website_settings_facebook');
+        Route::post('/ajax_website_settings_linkedin', 'WebsiteSettingsController@updateWebsiteLinkedin')->name('ajax_website_settings_linkedin');
+        Route::post('/ajax_website_settings_line', 'WebsiteSettingsController@updateWebsiteLine')->name('ajax_website_settings_line');
+        Route::post('/ajax_website_settings_instagram', 'WebsiteSettingsController@updateWebsiteInstagram')->name('ajax_website_settings_instagram');
+        Route::post('/ajax_website_settings_pinterest', 'WebsiteSettingsController@updateWebsitePinterest')->name('ajax_website_settings_pinterest');
+        Route::post('/ajax_website_settings_google', 'WebsiteSettingsController@updateWebsiteGoogle')->name('ajax_website_settings_google');
+
 
         //-- Export functionality
         Route::get('/{id}/export', 'ExcelController@index')->name('export');

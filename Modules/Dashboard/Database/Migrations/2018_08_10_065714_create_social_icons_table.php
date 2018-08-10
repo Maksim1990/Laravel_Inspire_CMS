@@ -24,6 +24,7 @@ class CreateSocialIconsTable extends Migration
             $table->string('instagram')->nullable();
             $table->string('pinterest')->nullable();
             $table->string('twitter')->nullable();
+            $table->string('google')->nullable();
             $table->timestamps();
         });
     }

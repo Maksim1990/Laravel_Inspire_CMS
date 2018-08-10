@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Dashboard\Entities\Language;
+use Modules\Dashboard\Entities\SocialIcon;
 use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
 use Modules\Pagebuilder\Entities\BlockDefault;
@@ -101,6 +102,12 @@ class RegisterController extends Controller
             'website_name' => date("Y_m_d_h_i_s")."_".$user->id."_website",
         ]);
         //****** END WEBSITE SETTINGS ******//
+
+        //-- Create SOCIAL ICONS details for new user
+        SocialIcon::create([
+            'user_id' => $user->id
+        ]);
+        //****** END SOCIAL ICONS ******//
 
         //-- Create MENU details for new user
         $menuList = Menu::where('id', '<>', '0')->orderBy('id', 'DESC')->first();
