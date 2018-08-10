@@ -16,7 +16,7 @@ class WebsiteSettingsController extends Controller
      */
     public function index()
     {
-        $arrTabs = ['General'];
+        $arrTabs = ['General','Social'];
         $active = "active";
         return view('dashboard::website_settings.index', compact('arrTabs', 'active'));
     }
