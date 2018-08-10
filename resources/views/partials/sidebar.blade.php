@@ -8,7 +8,7 @@
                     <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                <i class="fa fa-users"></i> Medialibary<span class="fa arrow"></span>
+                                <i class="fa fa-users"></i> Profile<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -16,10 +16,17 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#" >My profile</a>
+                                    <a href="{{route('profile',['id'=>Auth::id()])}}" >My profile</a>
                                 </li>
                                 <li>
-                                    <a href="#" >My profile 2</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Settings</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -29,7 +36,7 @@
                     <div class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-bookmark"></i> Pagebuilder<span class="fa arrow"></span>
+                                <i class="fa fa-bookmark"></i> Modules<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -37,7 +44,19 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#" >My profile 3</a>
+                                    <a href="{{route('posts',['id'=>Auth::id()])}}" >Posts</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('images',['id'=>Auth::id()])}}" >Images</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('office',['id'=>Auth::id()])}}" >Office</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('label',['id'=>Auth::id()])}}">Labels management</a>
+                                </li>
+                                 <li>
+                                    <a href="{{route('mail',['id'=>Auth::id()])}}">Mail box</a>
                                 </li>
                             </ul>
                         </div>
@@ -47,7 +66,7 @@
                     <div class="panel-heading" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-list"></i> Website settings<span class="fa arrow"></span>
+                                <i class="fa fa-list"></i>Main settings<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -55,7 +74,16 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#" >My profile 4</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Profile settings</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('languages',['id'=>Auth::id()])}}" >Languages settings</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}" >Code editor settings</a>
                                 </li>
 
                             </ul>
@@ -67,7 +95,7 @@
                     <div class="panel-heading" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-picture-o"></i> Modules<span class="fa arrow"></span>
+                                <i class="fa fa-picture-o"></i>Website settings<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -75,10 +103,7 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#" >My profile 6</a>
-                                </li>
-                                <li>
-                                    <a href="#" >My profile 7</a>
+                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
                                 </li>
                             </ul>
                         </div>

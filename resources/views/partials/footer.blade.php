@@ -171,6 +171,7 @@
     });
 </script>
 <script src="{{custom_asset('js/app.js')}}"></script>
+<script src="{{custom_asset('js/app_custom.js')}}"></script>
 @yield('scripts')
 
 

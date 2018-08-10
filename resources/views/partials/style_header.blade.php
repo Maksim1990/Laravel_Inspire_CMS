@@ -37,9 +37,9 @@
         display: block;
         width: 100%;
         color: white;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        height: 50px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        height: 30px;
     }
     .tooltip_header_menu .tooltiptext a:hover{
         background-color: rgba(50, 166, 54, 0.55);
@@ -54,7 +54,7 @@
     .tooltip_menu_side .tooltiptext {
         visibility: hidden;
         width: 320px;
-        font-size: 20px;
+        font-size: 15px;
         background-color: #061114;
         color: black;
         text-align: center;
@@ -84,9 +84,9 @@
     .tooltip_menu_side .tooltiptext a{
         display: block;
         width: 100%;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        height: 50px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        height: 30px;
     }
     .tooltip_menu_side .tooltiptext a:hover{
         background-color: rgba(50, 166, 54, 0.55);

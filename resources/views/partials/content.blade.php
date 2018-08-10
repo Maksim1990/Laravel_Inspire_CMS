@@ -8,22 +8,37 @@
                 <p class="btnShowSidebar" style="margin-top: -5px;" onclick="ShowLeftSidebar()"><span>&#9776;</span></p>
                 <p class="tooltip_menu_side"><span><i class='fa fa-users' aria-hidden='true'></i></span>
                     <span class="tooltiptext">
-                               <a href="#" >All</a>
-                                <a href="#" >Settings</a>
-                                <a href="#" >Info</a>
+                                    <a href="{{route('profile',['id'=>Auth::id()])}}" >My profile</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Settings</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                    </a>
                             </span>
                 </p>
                 <p class="tooltip_menu_side"><span><i class='fa fa-bookmark' aria-hidden='true'></i></span>
                     <span class="tooltiptext">
-                               <a href="#" >Profile</a>
-                                <a href="#" >CSS</a>
-                                <a href="#" >Settings</a>
+                                    <a href="{{route('posts',['id'=>Auth::id()])}}" >Posts</a>
+                                    <a href="{{route('images',['id'=>Auth::id()])}}" >Images</a>
+                                    <a href="{{route('office',['id'=>Auth::id()])}}" >Office</a>
+                                    <a href="{{route('label',['id'=>Auth::id()])}}">Labels management</a>
+                                    <a href="{{route('mail',['id'=>Auth::id()])}}">Mail box</a>
                             </span>
                 </p>
-                <p><span data-html="true" data-container="body" data-placement="right" data-toggle="tooltip"
-                         title="Blog"><a href="#"><i class='fa fa-book' aria-hidden='true'></i></a></span></p>
-                <p><span rel="tooltip" title="A nice tooltip"><a
-                                href="#"><i class='fa fa-comments' aria-hidden='true'></i></a></span></p>
+                <p class="tooltip_menu_side"><span><a href="#"><i class='fa fa-book' aria-hidden='true'></i></a></span>
+                    <span class="tooltiptext">
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Profile settings</a>
+                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
+                                    <a href="{{route('languages',['id'=>Auth::id()])}}" >Languages settings</a>
+                                    <a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}" >Code editor settings</a>
+                            </span>
+                </p>
+                <p class="tooltip_menu_side"><span><a href="#"><i class='fa fa-comments' aria-hidden='true'></i></a></span>
+                    <span class="tooltiptext">
+                                  <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
+                            </span>
+                </p>
 
             </div>
             @include('partials.tabs')
