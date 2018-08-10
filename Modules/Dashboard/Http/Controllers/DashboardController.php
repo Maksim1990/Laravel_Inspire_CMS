@@ -197,15 +197,23 @@ class DashboardController extends Controller
 
                 $userMenu = UserMenu::where('menu_id', $intId)->where('user_id', Auth::id())->first();
                 if ($userMenu) {
-                    $userMenu->active = $arrMenuKeys[$intId . "_menu_active"];
-                    $userMenu->parent = $arrMenuKeys[$intId . "_menu_parent"];
-                    $userMenu->sortorder = $arrMenuKeys[$intId . "_menu_sortorder"];
+                    if(isset($arrMenuKeys[$intId . "_menu_active"])){
+                        $userMenu->active = $arrMenuKeys[$intId . "_menu_active"];
+                    }
+
+                    if(isset($arrMenuKeys[$intId . "_menu_parent"])) {
+                        $userMenu->parent = $arrMenuKeys[$intId . "_menu_parent"];
+                    }
+
+                    if(isset($arrMenuKeys[$intId . "_menu_sortorder"])) {
+                        $userMenu->sortorder = $arrMenuKeys[$intId . "_menu_sortorder"];
+                    }
                     $userMenu->update();
                 } else {
                     UserMenu::create([
                         'user_id' => Auth::id(),
                         'menu_id' => $intId,
-                        'active' => $arrMenuKeys[$intId . "_menu_active"],
+                        'active' => "Y",
                         'parent' => isset($arrMenuKeys[$intId . "_menu_parent"]) ? $arrMenuKeys[$intId . "_menu_parent"] : 0,
                         'sortorder' => $arrMenuKeys[$intId . "_menu_sortorder"]
                     ]);
