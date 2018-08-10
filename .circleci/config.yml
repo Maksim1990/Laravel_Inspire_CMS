@@ -21,17 +21,12 @@ jobs:
                      fingerprints:
                        - "0c:33:a8:8c:40:06:fa:ae:13:c8:63:a6:e7:52:a1:b0"
           - run:
-             name: Connect via ssh to VPS server
+             name: Deploy Over SSH to VPS server
              command: |
-               ssh -t $SSH_USER_VPS@$SSH_HOST_VPS "cd $CIRCLE_PROJECT_DIRECTORY"
-          - run:
-              name: Pull latest updates from the master branch
-              command: |
-                cd $CIRCLE_PROJECT_DIRECTORY && git pull origin master
-          - run:
-              name: Run all required migrations
-              command: |
-                cd $CIRCLE_PROJECT_DIRECTORY && php artisan module:migrate && php artisan migrate
+               ssh -t $SSH_USER_VPS@$SSH_HOST_VPS "cd /var/www/html/vps/public_html/inspirecms/
+               && git pull origin master
+               && php artisan module:migrate
+               && php artisan migrate"
 workflows:
   version: 2
   build-and-deploy:
