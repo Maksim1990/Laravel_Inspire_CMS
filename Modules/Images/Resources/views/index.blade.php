@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="w3-container icons">
                                       <span class="delete" data-toggle="tooltip" data-placement="bottom" title="Delete">
-                                    <a href="#" onclick="DeleteImage('{{$image->id}}')" class="w3-text-red"><i class="fas fa-minus-circle"></i></a>
+                                             <a data-toggle="modal" data-target="#image_modal_delete_{{$image->id}}" ><i class="fas fa-minus-circle"></i></a>
                                           </span>
                                     <span data-toggle="tooltip" data-placement="bottom" title="Big size">
                                         <a data-toggle="modal" data-target="#image_modal_{{$image->id}}" ><i class="fas fa-expand-arrows-alt"></i></a>
@@ -93,6 +93,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{--Image delete modal--}}
+                        <div class="modal" id="image_modal_delete_{{$image->id}}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Do you want to delete this image?</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <p class="confirm_info">
+                                            Image will be deleted permanently
+                                        </p>
+                                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                        <a href="#" onclick="DeleteImage('{{$image->id}}')" class="btn btn-danger">Delete image</a>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer"></div>
+                                </div>
+                            </div>
+                        </div>
+
                        @endforeach
                    @endif
             </div>
@@ -109,8 +136,7 @@
             var url = '{{ route('ajax_delete_image') }}';
             var token = '{{\Illuminate\Support\Facades\Session::token()}}';
 
-            var conf = confirm("Do you want to delete this image?");
-            if (conf) {
+
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -143,11 +169,11 @@
                             }).show();
                         }
 
+                        $('#image_modal_delete_'+id).modal('toggle');
                         //-- Hide loading image
                         $("div#divLoading").removeClass('show');
                     }
                 });
-            }
 
         }
     </script>
