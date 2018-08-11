@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -208,6 +209,10 @@ class ProfileController extends Controller
 
         //-- Delete directory of this user in Storage
         Storage::disk('local')->deleteDirectory('/public/upload/' . $user_id);
+
+
+        //-- Flush cached header menu for current user
+        Cache::tags('menu_'.$user_id)->flush();
 
         //-- Delete current user and logout from application
         $user->delete();

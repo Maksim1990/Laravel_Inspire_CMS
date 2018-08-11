@@ -48,9 +48,8 @@ function BuildMenu($intParentNo, $collectionMenu)
         $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
         Cache::tags(['menu_'.Auth::id()])->put('menu_'.$intParentNo, $strMenu, 22 * 60);
     }else{
-        //-- Flush 'books' key from redis cache
-       // Cache::tags('menu_'.Auth::id())->flush();
-        dd('FROM CACHE');
+
+        //dd('FROM CACHE');
         $strMenu=$userMenu;
     }
 

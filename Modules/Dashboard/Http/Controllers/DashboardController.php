@@ -152,6 +152,9 @@ class DashboardController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     */
     public function updateMenu(Request $request)
     {
 
@@ -228,6 +231,8 @@ class DashboardController extends Controller
             }
         }
 
+        //-- Flush cached header menu for current user
+        Cache::tags('menu_'.Auth::id())->flush();
 
         header('Content-Type: application/json');
         echo json_encode(array(
