@@ -8,8 +8,8 @@
                 <p class="btnShowSidebar" style="margin-top: -5px;" onclick="ShowLeftSidebar()"><span>&#9776;</span></p>
                 <p class="tooltip_menu_side"><span><i class='fa fa-users' aria-hidden='true'></i></span>
                     <span class="tooltiptext">
-                                    <a href="{{route('profile',['id'=>Auth::id()])}}" >My profile</a>
-                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Settings</a>
+                                    <a href="{{route('profile',['id'=>Auth::id()])}}" >@lang('messages.my_profile')</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >@lang('messages.settings')</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -19,11 +19,11 @@
                 </p>
                 <p class="tooltip_menu_side"><span><i class='fa fa-bookmark' aria-hidden='true'></i></span>
                     <span class="tooltiptext">
-                                    <a href="{{route('posts',['id'=>Auth::id()])}}" >Posts</a>
-                                    <a href="{{route('images',['id'=>Auth::id()])}}" >Images</a>
-                                    <a href="{{route('office',['id'=>Auth::id()])}}" >Office</a>
-                                    <a href="{{route('label',['id'=>Auth::id()])}}">Labels management</a>
-                                    <a href="{{route('mail',['id'=>Auth::id()])}}">Mail box</a>
+                                    <a href="{{route('posts',['id'=>Auth::id()])}}" >@lang('messages.posts')</a>
+                                    <a href="{{route('images',['id'=>Auth::id()])}}" >@lang('messages.images')</a>
+                                    <a href="{{route('office',['id'=>Auth::id()])}}" >@lang('messages.office')</a>
+                                    <a href="{{route('label',['id'=>Auth::id()])}}">@lang('messages.labels_management')</a>
+                                    <a href="{{route('mail',['id'=>Auth::id()])}}">@lang('messages.mail_box')</a>
                             </span>
                 </p>
                 <p class="tooltip_menu_side"><span><a href="#"><i class='fa fa-book' aria-hidden='true'></i></a></span>

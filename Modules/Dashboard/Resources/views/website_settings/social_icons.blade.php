@@ -1,7 +1,7 @@
 <div class="row maintab">
     <div class="col-sm-12  col-xs-12">
         <div>
-            <h3 class="title">Website social networks settings</h3>
+            <h3 class="title">@lang('messages.website_social_networks_settings')</h3>
             <div id="title_shape"></div>
         </div>
 
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_github">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_github">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_google">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_google">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_instagram">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_instagram">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_facebook">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_facebook">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -133,7 +133,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_twitter">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_twitter">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -160,7 +160,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_vk">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_vk">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -187,7 +187,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_linkedin">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_linkedin">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_line">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_line">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>
@@ -241,7 +241,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-xs-12">
-                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_pinterest">Save</button>
+                <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_pinterest">@lang('messages.save')</button>
             </div>
             <div class="col-sm-12 col-xs-12">
                 <hr>

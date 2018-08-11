@@ -53,11 +53,11 @@
                                      src="{{Auth::user()->image ? Auth::user()->image->full_path : custom_asset("images/includes/noimage.png")}}"
                                      alt="">
                                 <span class=""
-                                      style="color:white;display:inline;position: relative;top: 5px;"> Hello, {{ Auth::user()->name }}
+                                      style="color:white;display:inline;position: relative;top: 5px;"> @lang('messages.hello'), {{ Auth::user()->name }}
                                     !</span>
                                 <span class="tooltiptext">
-                                <a href="{{route('profile',['id'=>Auth::id()])}}">Profile</a><br>
-                                <a href="{{route('profile_settings',['id'=>Auth::id()])}}">Settings</a><br>
+                                <a href="{{route('profile',['id'=>Auth::id()])}}">@lang('messages.profile')</a><br>
+                                <a href="{{route('profile_settings',['id'=>Auth::id()])}}">@lang('messages.settings')</a><br>
                                  <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

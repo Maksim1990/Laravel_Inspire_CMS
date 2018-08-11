@@ -4,7 +4,7 @@
     <div class="row maintab">
         <div class="col-sm-12 col-lg-12 col-xs-12">
             <div>
-                <h3 class="title">Website settings</h3>
+                <h3 class="title">@lang('messages.website_settings')</h3>
                 <div id="title_shape"></div>
             </div>
             {{-- Website name--}}
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2 col-xs-12">
-                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_website_name">Save</button>
+                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_website_name">@lang('messages.save')</button>
                 </div>
                 <div class="col-sm-12 col-xs-12">
                     <hr>

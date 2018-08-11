@@ -8,7 +8,7 @@
                     <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                <i class="fa fa-users"></i> Profile<span class="fa arrow"></span>
+                                <i class="fa fa-users"></i> @lang('messages.profile')<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -16,10 +16,10 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{route('profile',['id'=>Auth::id()])}}" >My profile</a>
+                                    <a href="{{route('profile',['id'=>Auth::id()])}}" >@lang('messages.my_profile')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Settings</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >@lang('messages.settings')</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -44,19 +44,19 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{route('posts',['id'=>Auth::id()])}}" >Posts</a>
+                                    <a href="{{route('posts',['id'=>Auth::id()])}}" >@lang('messages.posts')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('images',['id'=>Auth::id()])}}" >Images</a>
+                                    <a href="{{route('images',['id'=>Auth::id()])}}" >@lang('messages.images')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('office',['id'=>Auth::id()])}}" >Office</a>
+                                    <a href="{{route('office',['id'=>Auth::id()])}}" >@lang('messages.office')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('label',['id'=>Auth::id()])}}">Labels management</a>
+                                    <a href="{{route('label',['id'=>Auth::id()])}}">@lang('messages.labels_management')</a>
                                 </li>
                                  <li>
-                                    <a href="{{route('mail',['id'=>Auth::id()])}}">Mail box</a>
+                                    <a href="{{route('mail',['id'=>Auth::id()])}}">@lang('messages.mail_box')</a>
                                 </li>
                             </ul>
                         </div>
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="w3-center " style="position:absolute;bottom:15%;left:5%;">
-                    <span >Version {{$dataSidebar->getAppVersion()}}</span>
+                    <span >@lang('messages.version') {{$dataSidebar->getAppVersion()}}</span>
                 </div>
 
             </div>

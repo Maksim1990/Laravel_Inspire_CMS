@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2 col-xs-12">
-                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_app_version">Save</button>
+                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_app_version">@lang('messages.save')</button>
                 </div>
                 <div class="col-sm-12 col-xs-12">
                     <hr>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2 col-xs-12">
-                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_reset_cache">Save</button>
+                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_reset_cache">@lang('messages.save')</button>
                 </div>
                 <div class="col-sm-12 col-xs-12">
                     <hr>
