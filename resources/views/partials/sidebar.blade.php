@@ -74,16 +74,16 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Profile settings</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >@lang('messages.profile_settings')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
+                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >@lang('messages.website_settings')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('languages',['id'=>Auth::id()])}}" >Languages settings</a>
+                                    <a href="{{route('languages',['id'=>Auth::id()])}}" >@lang('messages.language_settings')</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}" >Code editor settings</a>
+                                    <a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}" >@lang('messages.code_editor_settings')</a>
                                 </li>
 
                             </ul>
@@ -95,7 +95,7 @@
                     <div class="panel-heading" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-picture-o"></i>Website settings<span class="fa arrow"></span>
+                                <i class="fa fa-picture-o"></i>@lang('messages.website_settings')<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -103,7 +103,7 @@
                         <div class="panel-body">
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
+                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >@lang('messages.website_settings')</a>
                                 </li>
                             </ul>
                         </div>

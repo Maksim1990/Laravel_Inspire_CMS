@@ -21,7 +21,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Cache was reset for user '+data['name']+'!'
+                        text: '{{trans('messages.cache_was_reset_for_user')}}'+' '+data['name']+'!'
                     }).show();
                 }else{
                     new Noty({
@@ -57,7 +57,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'App version was updated!'
+                        text: '{{trans('messages.app_version_was_updated')}}'+'!'
                     }).show();
                 }else{
                     new Noty({

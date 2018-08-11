@@ -2,7 +2,7 @@
 
 @section('General')
     <div>
-        <h3 class="title">Languages settings</h3>
+        <h3 class="title">@lang('messages.language_settings')</h3>
         <div id="title_shape"></div>
     </div>
     <div>
@@ -34,7 +34,7 @@
             </form>
             <div class="border-top mt-4 pt-2 text-right">
                 <br>
-                <input type="submit" id="submit" value="Save" class="btn btn-success">
+                <input type="submit" id="submit" value="@lang('messages.save')" class="btn btn-success">
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                         new Noty({
                             type: 'success',
                             layout: 'topRight',
-                            text: 'Languages updated!'
+                            text: '{{trans('messages.language_updated')}}!'
                         }).show();
                     }
                 }

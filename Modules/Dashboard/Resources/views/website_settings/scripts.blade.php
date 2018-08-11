@@ -11,7 +11,7 @@
         for(var i=0;i<=arrInvalidCharacters.length;i++){
             if (obj.value.indexOf(arrInvalidCharacters[i]) > -1)
             {
-                $('#alert_'+id).text('Prohibited symbol');
+                $('#alert_'+id).text('{{trans('messages.prohibited_symbol')}}');
                 $('#save_'+id).prop('disabled',true);
             }
         }
@@ -33,7 +33,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Website name was updated!'
+                        text: '{{trans('messages.website_name_updated')}}!'
                     }).show();
                 }
             }
@@ -62,7 +62,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Website settings option was updated!'
+                        text: '{{trans('messages.website_settings_option_updated')}}!'
                     }).show();
                 }
             }
@@ -89,7 +89,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'GitHub URL was updated!'
+                        text: 'GitHub URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -114,7 +114,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Facebook URL was updated!'
+                        text: 'Facebook URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -139,7 +139,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'VK URL was updated!'
+                        text: 'VK URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -164,7 +164,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'LinkedIn URL was updated!'
+                        text: 'LinkedIn URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -189,7 +189,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Line URL was updated!'
+                        text: 'Line URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -214,7 +214,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Instagram URL was updated!'
+                        text: 'Instagram URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -239,7 +239,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Pinterest URL was updated!'
+                        text: 'Pinterest URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -265,7 +265,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Twitter URL was updated!'
+                        text: 'Twitter URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }
@@ -290,7 +290,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Google URL was updated!'
+                        text: 'Google URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
             }

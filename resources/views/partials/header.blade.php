@@ -39,10 +39,10 @@
                         </li>
                         <li>
                             <a href="{{route("website",['id'=>Auth::id(),'sitename'=>Auth::user()->website_setting->website_name])}}"
-                               target="_blank">Visit website</a></li>
+                               target="_blank">@lang('messages.visit_website')</a></li>
                         @if(Auth::user()->admin==1)
                             <li>
-                                <a href="{{route("admin_settings",['id'=>Auth::id()])}}">Admin settings</a></li>
+                                <a href="{{route("admin_settings",['id'=>Auth::id()])}}">@lang('messages.admin_settings')</a></li>
                         @endif
                     </ul>
 

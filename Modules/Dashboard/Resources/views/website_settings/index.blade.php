@@ -10,7 +10,7 @@
             {{-- Website name--}}
             <div class="col-sm-12 col-lg-12 col-xs-12">
                 <div class="col-sm-5 col-xs-12">
-                    <p class="text">Website name</p>
+                    <p class="text">@lang('messages.website_name')</p>
 
                 </div>
                 <div class="col-sm-5 col-xs-12">
@@ -31,7 +31,7 @@
             {{-- Email form--}}
             <div class="col-sm-12 col-lg-12 col-xs-12">
                 <div class="col-sm-5 col-xs-12">
-                    <p class="text">Show email form on the page</p>
+                    <p class="text">@lang('messages.show_email_form_on_the_page')</p>
 
                 </div>
                 <div class="col-sm-5 hidden-lg hidden-sm col-xs-12">

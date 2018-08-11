@@ -1,7 +1,7 @@
 @extends('dashboard::layouts.master')
 
 @section('General')
-    <h3 class="title">Contact Us</h3>
+    <h3 class="title">@lang('messages.contact_us')</h3>
     <div id="title_shape"></div>
 
     <p>

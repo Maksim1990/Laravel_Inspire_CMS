@@ -28,15 +28,15 @@
                 </p>
                 <p class="tooltip_menu_side"><span><a href="#"><i class='fa fa-book' aria-hidden='true'></i></a></span>
                     <span class="tooltiptext">
-                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >Profile settings</a>
-                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
-                                    <a href="{{route('languages',['id'=>Auth::id()])}}" >Languages settings</a>
-                                    <a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}" >Code editor settings</a>
+                                    <a href="{{route('profile_settings',['id'=>Auth::id()])}}" >@lang('messages.profile_settings')</a>
+                                    <a href="{{route('website_settings',['id'=>Auth::id()])}}" >@lang('messages.website_settings')</a>
+                                    <a href="{{route('languages',['id'=>Auth::id()])}}" >@lang('messages.language_settings')</a>
+                                    <a href="{{route('codeeditor_setting',['id'=>Auth::id()])}}" >@lang('messages.code_editor_settings')</a>
                             </span>
                 </p>
                 <p class="tooltip_menu_side"><span><a href="#"><i class='fa fa-comments' aria-hidden='true'></i></a></span>
                     <span class="tooltiptext">
-                                  <a href="{{route('website_settings',['id'=>Auth::id()])}}" >Website settings</a>
+                                  <a href="{{route('website_settings',['id'=>Auth::id()])}}" >@lang('messages.website_settings')</a>
                             </span>
                 </p>
 

@@ -76,7 +76,7 @@ module.exports = __webpack_require__(37);
 /***/ 37:
 /***/ (function(module, exports) {
 
-alert("TEST");
+
 
 /***/ })
 
