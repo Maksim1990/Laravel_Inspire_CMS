@@ -11,28 +11,28 @@
 @section('General')
     <div class="row">
         <div class="col-sm-8 col-xs-10">
-            <h3 class="title">Create mail</h3>
+            <h3 class="title">@lang('messages.create_mail')</h3>
             <div id="title_shape"></div>
             {!! Form::open(['method'=>'POST', 'id'=>"email_form",'action'=>['\Modules\Dashboard\Http\Controllers\MailController@store','id'=>Auth::id()], 'files'=>true])!!}
             {!! Form::hidden('from', \Auth::user()->email) !!}
             <div class="group-form">
-                {!! Form::label('sender','From:') !!}
+                {!! Form::label('sender',trans('messages.from').':') !!}
                 {!! Form::text('sender', \Auth::user()->email, ['class'=>'form-control','disabled'=>'disabled']) !!}
             </div>
 
             <div class="group-form">
-                {!! Form::label('to','To:') !!}
+                {!! Form::label('to',trans('messages.to').':') !!}
                 {!! Form::text('to', null, ['class'=>'form-control']) !!}
             </div>
 
             <div class="group-form">
-                {!! Form::label('title','Title:') !!}
+                {!! Form::label('title',trans('messages.title').':') !!}
                 {!! Form::text('title', null, ['class'=>'form-control']) !!}
             </div>
 
 
             <div class="group-form">
-                {!! Form::label('content','Content:') !!}
+                {!! Form::label('content',trans('messages.content').':') !!}
 
                 {!! Form::textarea('content', null, ['class'=>'form-control','id'=>'code']) !!}
                 <br>
@@ -40,9 +40,9 @@
 
 
 
-            <a href="{{route("mail",Auth::id())}}" class="btn btn-success">Back to Mail module</a>
-            <a href="#" id="add_attachment" class="btn btn-info">Add attachment</a>
-            <a data-toggle="modal" data-target="#send_mail" class="btn btn-warning" >Send email</a>
+            <a href="{{route("mail",Auth::id())}}" class="btn btn-success">@lang('messages.back_to_mail_module')</a>
+            <a href="#" id="add_attachment" class="btn btn-info">@lang('messages.add_attachment')</a>
+            <a data-toggle="modal" data-target="#send_mail" class="btn btn-warning" >@lang('messages.send_mail')</a>
             {!! Form::close() !!}
 
             <div id="mail_attachments">
@@ -62,17 +62,17 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Do you really want to send this email?</h4>
+                    <h4 class="modal-title">@lang('messages.want_to_send_email')?</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
                     <p class="confirm_info">
-                        Please check that all data in form is correct before real sending of email.
+                        @lang('messages.check_email_form)
                     </p>
-                    <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-                    <a href="#" id="send_mail_form" class="btn btn-success">Send mail</a>
+                    <button type="button" class="btn" data-dismiss="modal">@lang('messages.cancel')</button>
+                    <a href="#" id="send_mail_form" class="btn btn-success">@lang('messages.send_mail')</a>
                 </div>
 
                 <!-- Modal footer -->
@@ -101,7 +101,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Images attached!'
+                        text: '{{trans('messages.images_attached')}}!'
                     }).show();
                 }else{
                     new Noty({
@@ -137,7 +137,7 @@
             new Noty({
                 type: 'success',
                 layout: 'topRight',
-                text: 'Email form was submitted!'
+                text: '{{trans('messages.email_form_submitted')}}!'
             }).show();
             $('#email_form').trigger('submit');
         });
