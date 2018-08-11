@@ -35,7 +35,7 @@
 @section('General')
     <div class="col-sm-12 " id="search_header">
         <h3 class="title">
-            Export module
+            @lang('dashboard::messages.export_module')
         </h3>
     </div>
     <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1 w3-center search_main">
