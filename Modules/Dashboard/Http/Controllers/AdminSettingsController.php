@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
+use Modules\Dashboard\Entities\AdminSettings;
 
 class AdminSettingsController extends Controller
 {
@@ -18,7 +19,11 @@ class AdminSettingsController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('dashboard::admin_settings.index', compact('arrTabs', 'active'));
+
+        $admin=User::where('admin',1)->first();
+        $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
+
+        return view('dashboard::admin_settings.index', compact('arrTabs', 'active','adminSettings'));
     }
 
     /**
@@ -110,13 +115,36 @@ class AdminSettingsController extends Controller
         }
 
 
-
-
-
         header('Content-Type: application/json');
         echo json_encode(array(
             'result' => $result,
             'name' => $name,
+            'error' => $strError
+        ));
+    }
+
+    /**
+     * Reset cache for specific user
+     *
+     * @param Request $request
+     */
+    public function ajaxUpdateAppVersion(Request $request)
+    {
+
+        $strError = "";
+        $result = "success";
+
+        $app_version = $request->app_version;
+
+
+        $admin=User::where('admin',1)->first();
+        $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
+        $adminSettings->app_version=$app_version;
+        $adminSettings->update();
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
             'error' => $strError
         ));
     }

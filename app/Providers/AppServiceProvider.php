@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer(
+            'partials.sidebar',
+            'App\Http\ViewComposers\SidebarComposer'
+        );
     }
 
     /**

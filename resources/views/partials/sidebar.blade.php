@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="w3-center " style="position:absolute;bottom:15%;left:5%;">
-                    <span >Version 0.0.9</span>
+                    <span >Version {{$dataSidebar->getAppVersion()}}</span>
                 </div>
 
             </div>

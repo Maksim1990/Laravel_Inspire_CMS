@@ -15,12 +15,12 @@
                 </div>
                 <div class="col-sm-5 col-xs-12">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="website_name"
-                               value="{{Auth::user()->website_setting->website_name}}">
+                        <input type="text" class="form-control" id="app_version"
+                               value="{{$adminSettings->app_version}}">
                     </div>
                 </div>
                 <div class="col-sm-2 col-xs-12">
-                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_website_name">Save</button>
+                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_app_version">Save</button>
                 </div>
                 <div class="col-sm-12 col-xs-12">
                     <hr>

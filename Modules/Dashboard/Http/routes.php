@@ -12,6 +12,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/settings', 'AdminSettingsController@index')->name('admin_settings');
         Route::get('/{id}/reset_cache', 'AdminSettingsController@resetCache')->name('reset_cache');
         Route::post('/ajax_admin_settings_reset_cache', 'AdminSettingsController@ajaxResetCache')->name('ajax_admin_settings_reset_cache');
+        Route::post('/ajax_admin_settings_app_version', 'AdminSettingsController@ajaxUpdateAppVersion')->name('ajax_admin_settings_app_version');
 
         //-- Website Settings
         Route::get('/{id}/website/settings', 'WebsiteSettingsController@index')->name('website_settings');

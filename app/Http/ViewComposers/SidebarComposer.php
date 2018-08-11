@@ -4,14 +4,16 @@ namespace App\Http\ViewComposers;
 
 use App\Helper;
 use App\Menu\Menu;
+use App\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Modules\Dashboard\Entities\AdminSettings;
 
-class FooterComposer
+class SidebarComposer
 {
 
-    public $appLanguages = [];
+    public $appVersion ="";
     /**
      * Create a movie composer.
      *
@@ -20,16 +22,19 @@ class FooterComposer
     public function __construct()
     {
 
-        $this->appLanguages=Helper::GetDefaultLanguages();
-        //-- Store default languages collection and additional debugging information into array
+        $admin=User::where('admin',1)->first();
+        $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
+        $this->appVersion=$adminSettings->app_version;
+
+        //-- Store admin settings collection and additional debugging information into array
         $this->arrData = [
-            "appLanguages" => $this->appLanguages
+            "appVersion" => $this->appVersion
         ];
 
         $this->arrData = collect($this->arrData);
         //-- Add additional collection methods for easily retrieve collection's data
-        Collection::macro('getAppLanguages', function () {
-            return $this["appLanguages"];
+        Collection::macro('getAppVersion', function () {
+            return $this["appVersion"];
         });
     }
 
@@ -41,6 +46,6 @@ class FooterComposer
      */
     public function compose(View $view)
     {
-        $view->with('appFooter', $this->arrData);
+        $view->with('dataSidebar', $this->arrData);
     }
 }
