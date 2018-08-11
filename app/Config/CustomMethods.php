@@ -5,6 +5,7 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 function custom_asset($path, $secure = null){
     return asset('public/'.$path);
@@ -41,14 +42,13 @@ function BuildMenu($intParentNo, $collectionMenu)
     $strMenu = "";
 
     //-- Trying to get menu from Redis cache depending on current user
-    $userMenu = Cache::tags(['menu_'.Auth::id()])->get('menu_'.$intParentNo);
+    $userMenu = Cache::tags(['menu_'.Auth::id()])->get('menu_'.$intParentNo."_".LaravelLocalization::getCurrentLocale());
 
     if(!$userMenu){
         //dd('normal');
         $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
-        Cache::tags(['menu_'.Auth::id()])->put('menu_'.$intParentNo, $strMenu, 22 * 60);
+        Cache::tags(['menu_'.Auth::id()])->put('menu_'.$intParentNo."_".LaravelLocalization::getCurrentLocale(), $strMenu, 22 * 60);
     }else{
-
         //dd('FROM CACHE');
         $strMenu=$userMenu;
     }

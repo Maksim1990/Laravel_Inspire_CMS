@@ -56,11 +56,13 @@
                           @else
                               @php $strImage='en'; @endphp
                           @endif
-                  <li> <a rel="alternate"
+                  <li>
+                      <a rel="alternate"
                           href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
                           <img style="border-radius: 30px;" width="25" height="25"
                                src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}" alt=""> {{$strFullLang}}
-                      </a></li>
+                      </a>
+                  </li>
                       @endforeach
                       @endif
               </ul>

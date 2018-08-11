@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Dashboard\Entities\Language;
 use Modules\Dashboard\Entities\MailEntity;
 use Modules\Dashboard\Entities\SocialIcon;
@@ -170,6 +171,7 @@ class ProfileController extends Controller
 
 
         Setting::where('user_id', $user_id)->delete();
+        AdminSettings::where('user_id', $user_id)->delete();
         MenuLang::where('user_id', $user_id)->delete();
         UserMenu::where('user_id', $user_id)->delete();
         LanguageLine::where('user_id', $user_id)->delete();
