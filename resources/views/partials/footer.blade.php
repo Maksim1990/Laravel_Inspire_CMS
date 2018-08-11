@@ -11,7 +11,7 @@
             <ul class="w3-ul">
                 <li class="w3-hover-green"><a href="#">Contact Us</a></li>
                 <li class="w3-hover-green">Eve</li>
-                <li class="w3-hover-green">Adam</li>
+                <li class="w3-hover-green" data-toggle="modal" data-target="#modal_languages">Languages</li>
             </ul>
         </div>
     </div>
@@ -29,6 +29,49 @@
 
 
 <div id="divLoading"></div>
+
+
+{{--Image delete modal--}}
+<div class="modal" id="modal_languages">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Do you want to change language?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <ul>
+                  @if(!empty($appFooter->getAppLanguages()))
+                      @foreach($appFooter->getAppLanguages() as $strLand=>$strFullLang)
+                          @if(strtolower($strLand)=='th')
+                              @php $strImage='th'; @endphp
+                          @elseif(strtolower($strLand)=='fr')
+                              @php $strImage='fr'; @endphp
+                          @elseif(strtolower($strLand)=='ru')
+                              @php $strImage='ru'; @endphp
+                          @else
+                              @php $strImage='en'; @endphp
+                          @endif
+                  <li> <a rel="alternate"
+                          href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
+                          <img style="border-radius: 30px;" width="25" height="25"
+                               src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}" alt=""> {{$strFullLang}}
+                      </a></li>
+                      @endforeach
+                      @endif
+              </ul>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     function emojiDir(emoji) {
