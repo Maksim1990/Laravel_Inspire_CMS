@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Dashboard\Entities\Language;
@@ -96,6 +97,10 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
+
+//        $cache = Cache::tags(['books'])->get('books_1');
+//        dd($cache);
+//        Cache::tags(['books'])->put('books_1', 30, 22 * 60);
 
         return view('dashboard::about', compact('arrTabs', 'active'));
     }

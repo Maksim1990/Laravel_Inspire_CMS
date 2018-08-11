@@ -3,6 +3,8 @@
 
 //-- Custom function that overwrite default asset() method
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 function custom_asset($path, $secure = null){
     return asset('public/'.$path);
@@ -37,7 +39,20 @@ function BuildMenu($intParentNo, $collectionMenu)
 {
     //-- Build menu list of all sub menu items for specific $intParentNo
     $strMenu = "";
-    $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
+
+    //-- Trying to get menu from Redis cache depending on current user
+    $userMenu = Cache::tags(['menu_'.Auth::id()])->get('menu_'.$intParentNo);
+
+    if(!$userMenu){
+        //dd('normal');
+        $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
+        Cache::tags(['menu_'.Auth::id()])->put('menu_'.$intParentNo, $strMenu, 22 * 60);
+    }else{
+        //-- Flush 'books' key from redis cache
+       // Cache::tags('menu_'.Auth::id())->flush();
+        dd('FROM CACHE');
+        $strMenu=$userMenu;
+    }
 
     return $strMenu;
 }
