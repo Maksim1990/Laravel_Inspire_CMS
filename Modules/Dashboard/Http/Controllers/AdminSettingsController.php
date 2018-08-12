@@ -2,12 +2,18 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
+use App\Config\Elastic;
+use App\Helper;
+use App\Menu\Menu;
+use App\Menu\MenuLang;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Modules\Dashboard\Entities\AdminSettings;
+use Modules\Post\Entities\Post;
 
 class AdminSettingsController extends Controller
 {
@@ -24,6 +30,113 @@ class AdminSettingsController extends Controller
         $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
 
         return view('dashboard::admin_settings.index', compact('arrTabs', 'active','adminSettings'));
+    }
+
+    public function search()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+//        $deleteMenu = Menu::find(18);
+//        $elastic = app(Elastic::class);
+//            $elastic->delete([
+//                'index' => 'inspirecms_menus_' . Auth::id(),
+//                'type' => 'menu',
+//                'id' => 18,
+//            ]);
+//
+//        dd("TEST");
+
+        $elastic = app(Elastic::class);
+
+//        $elastic->index([
+//            'index' => 'inspirecms',
+//            'type' => 'menu',
+//            'id' => 1,
+//            'body' => [
+//                'title' => 'Hello world!',
+//                'content' => 'My first indexed post!'
+//    ]
+//]);
+//
+//        $posts=MenuLang::where('user_id',Auth::id())->get();
+//            foreach ($posts as $post) {
+//                $elastic->index([
+//                    'index' => 'inspirecms_menus_'.$post->user_id,
+//                    'type' => 'menu',
+//                    'id' => $post->id."_".$post->user_id."_".$post->lang,
+//                    'body' => $post->toArray()
+//                ]);
+//            }
+
+
+        //====== Search by multiple fields ==============//
+//        $query = [
+//            'multi_match' => [
+//                'query' => 'Settings TH',
+//                'fields' => ['name', 'lang'],
+//                "fuzziness"=> "AUTO",
+//            ],
+//        ];
+
+        //====== Search by specific field ==============//
+        $query = [
+            'match' => [
+                'user_id' => '3'
+            ],
+        ];
+        //====== Search by wildcard (beginning of each word according to template) ==============//
+//        $query = [
+//            'wildcard' => [
+//                'content' => 'aspernatu*'
+//            ],
+//        ];
+
+        //====== Search by regex ==============//
+//        $query = [
+//            'regexp' => [
+//                'content' => '[a-z]'
+//            ],
+//        ];
+        //====== Search by phrase ==============//
+//        $query = [
+//            'multi_match' => [
+//                "query" => "Images module",
+//                "fields" => ["name", "lang"],
+//                "type" => "phrase",
+//                "slop" => 3 //Specify range between searching words
+//            ],
+//        ];
+
+
+        $parameters = [
+            'index' => 'inspirecms_menus',
+            'type' => 'menu',
+            'body' => [
+                'query' => $query,
+                'highlight' => [
+                    'fields'    => [
+                        'name' => (object) [],
+                        'lang' => (object) [],
+                    ]
+                ],
+                "sort"=>[
+                    "id"=>["order"=>"ASC"]
+                ]
+            ]
+        ];
+
+        $response = $elastic->search($parameters);
+        if(!empty($response["hits"]["hits"])){
+            var_dump($response["hits"]["hits"][0]["_id"]);
+        }
+
+        var_dump($response);
+
+
+        //return view('dashboard::search.index', compact('arrTabs', 'active'));
+        return view('home');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Config\Elastic;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(Elastic::class, function ($app) {
+            return new Elastic(
+                ClientBuilder::create()
+                    ->setLogger(ClientBuilder::defaultLogger(storage_path('logs/elastic.log')))
+                    ->build()
+            );
+        });
     }
 }
