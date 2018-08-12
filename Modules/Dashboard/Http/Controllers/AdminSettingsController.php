@@ -130,7 +130,6 @@ class AdminSettingsController extends Controller
      */
     public function ajaxUpdateAppVersion(Request $request)
     {
-
         $strError = "";
         $result = "success";
 
