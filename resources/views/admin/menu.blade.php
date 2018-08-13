@@ -17,7 +17,10 @@
             <p>Module: <b>Website</b></p>
         </div>
         <div class="col-sm-12 col-lg-4 col-xs-12">
-            <input type="text" class="form-control" id="search_bar" placeholder="Search...">
+            <img height="30" data-toggle="tooltip" data-placement="left" title="Elasticsearch functionality"
+                 src="{{custom_asset('images/includes/elastic-elasticsearch.svg')}}" alt="" align="top">
+            <input type="text" class="form-control" style="display: inline;width: 85%;" id="search_bar" placeholder="Search...">
+
         </div>
         <hr>
     </div>
