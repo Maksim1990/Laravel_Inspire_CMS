@@ -344,11 +344,11 @@
 
                         for (var i = 0; i < data['userMenus'].length; i++) {
 
-                            console.log(data['userMenus'][i]);
+                            //console.log(data['userMenus'][i]);
                             //-- Initialize array of currently active languages
                             var arrLangsKeys = Object.keys(arrLangs);
 
-                            var newMenuCount = i;
+                            var newMenuCount =  data['userMenus'][i]['id'];
                             var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
                             keyFieldParent += "<option value=\"0\" selected></option>";
                             @foreach($userMenus as $menuSelect)
@@ -401,7 +401,7 @@
                             var langField = "";
 
                             for (var j = 0; j < data['userMenus'][i]['langs'].length; j++) {
-                                langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + data['userMenus'][i]['langs'][j]['lang'] + "' class=\"form-control\" name='' value='" + data['userMenus'][i]['langs'][j]['name'] + "'></td>";
+                                langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + data['userMenus'][i]['langs'][j]['lang'].toLowerCase() + "' class=\"form-control\" name='' value='" + data['userMenus'][i]['langs'][j]['name'] + "'></td>";
                                 arrLangsKeys.remove(data['userMenus'][i]['langs'][j]['lang']);
 
                             }
@@ -409,7 +409,7 @@
                             //-- Fill in empty menu lang inputs
                             if (arrLangsKeys.length > 0) {
                                 for (var j = 0; j < arrLangsKeys.length; j++) {
-                                    langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + arrLangsKeys[j] + "' class=\"form-control\" name='' value=''></td>";
+                                    langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + arrLangsKeys[j].toLowerCase() + "' class=\"form-control\" name='' value=''></td>";
                                 }
                             }
 
