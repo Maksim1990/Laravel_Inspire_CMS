@@ -156,10 +156,8 @@
                             echo "<span class=\"tooltiptext\">";
                             //-- Code editor button
                             echo "<a id='pagebuilder_menu_code_editor_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-info tooltip_link'>Go to code editor</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change style</a><br>";
+                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change block background</a><br>";
+                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Block info</a><br>";
                             echo "<button id='pagebuilder_menu_save_".$arrBlocks[$idx]['id']."' data-blockid='' class='btn btn-success tooltip_link'>Save</button><br>";
                             echo "</span>";
                             echo "</li>";
