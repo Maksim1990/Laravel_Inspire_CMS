@@ -25,6 +25,19 @@ class Elastic
         return $this->client->index($parameters);
     }
 
+
+
+    /**
+     * Index a single item
+     *
+     * @param  array $parameters [index, type, id, body]
+     * @return array
+     */
+    public function update(array $parameters)
+    {
+        return $this->client->update($parameters);
+    }
+
     /**
      * Delete a single item
      *

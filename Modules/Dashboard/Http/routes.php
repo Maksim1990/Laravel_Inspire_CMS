@@ -13,6 +13,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/reset_cache', 'AdminSettingsController@resetCache')->name('reset_cache');
         Route::post('/ajax_admin_settings_reset_cache', 'AdminSettingsController@ajaxResetCache')->name('ajax_admin_settings_reset_cache');
         Route::post('/ajax_admin_settings_app_version', 'AdminSettingsController@ajaxUpdateAppVersion')->name('ajax_admin_settings_app_version');
+        Route::post('/ajax_admin_elasticsearch_update', 'AdminSettingsController@ajaxUpdateElasticSearch')->name('ajax_admin_elasticsearch_update');
+        Route::post('/ajax_admin_elasticsearch_truncate', 'AdminSettingsController@ajaxTruncateElasticSearch')->name('ajax_admin_elasticsearch_truncate');
 
         //-- ELASTIC SEARCH functionality
         Route::get('/{id}/search', 'AdminSettingsController@search')->name('elastic_search');
