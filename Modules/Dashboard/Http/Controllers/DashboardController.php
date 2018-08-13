@@ -144,6 +144,7 @@ class DashboardController extends Controller
 
         // dd($userMenus);
         $userMenus = Menu::whereHas('menuActive', function ($query) {
+            //$query->where('user_id', Auth::id())->whereIn('menu_id',[1,2]);
             $query->where('user_id', Auth::id());
         })->get();
 

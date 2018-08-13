@@ -10,10 +10,19 @@
         'N'=>'N'
         ];
     @endphp
-    <h3  class="title">Menu settings</h3>
+    <h3 class="title">Menu settings</h3>
     <div id="title_shape"></div>
+    <div class="row">
+        <div class="col-sm-12 col-lg-8 col-xs-12">
+            <p>Module: <b>Website</b></p>
+        </div>
+        <div class="col-sm-12 col-lg-4 col-xs-12">
+            <input type="text" class="form-control" id="search_bar" placeholder="Search...">
+        </div>
+        <hr>
+    </div>
     <div>
-        <p>Module: <b>Website</b></p>
+
         @if(!empty($userMenus))
 
             <table class="w3-table-all w3-hoverable ">
@@ -24,12 +33,12 @@
                         <th>{{$strLang}}</th>
                     @endforeach
                     <th>Parent</th>
-                        @if(Auth::user()->admin!=1)
-                    <th>Active</th>
-                        @endif
-                        @if(Auth::user()->admin==1)
-                    <th>Admin <br>active</th>
-                        @endif
+                    @if(Auth::user()->admin!=1)
+                        <th>Active</th>
+                    @endif
+                    @if(Auth::user()->admin==1)
+                        <th>Admin <br>active</th>
+                    @endif
                     <th>Sortorder</th>
                     <th></th>
                 </tr>
@@ -62,7 +71,8 @@
                         @endforeach
 
                         <td>
-                            <select class="form-control" name="menu_parent" id="{{$menu->id}}_menu_parent" style="height: 33px;">
+                            <select class="form-control" name="menu_parent" id="{{$menu->id}}_menu_parent"
+                                    style="height: 33px;">
                                 <option value='0'></option>
                                 @foreach($userMenus as $menuSelect)
 
@@ -81,7 +91,7 @@
                                             @endphp
                                             @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
                                                 <option
-                                                    value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
+                                                        value="{{$menuSelect->id}}" {{$strSelected}}>{{$menuLangSelect->name}}</option>
                                             @endif
                                         @endforeach
                                     @endif
@@ -89,37 +99,38 @@
                             </select>
                         </td>
                         @if(Auth::user()->admin!=1)
-                        <td>
-                            <select class="form-control" name="menu_active" id="{{$menu->id}}_menu_active"
-                                    style="height: 33px;">
-                                @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
-                                    @php
-                                        $strSelected="";
-                                          $menuActive=$menu->menuActive->where('user_id',Auth::id())->first();
-                                            if(isset($menuActive) && $menuActive->active==$strKey){
-                                        $strSelected="selected";
-                                        }
-                                    @endphp
-                                    <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
-                                @endforeach
-                            </select>
-                        </td>
+                            <td>
+                                <select class="form-control" name="menu_active" id="{{$menu->id}}_menu_active"
+                                        style="height: 33px;">
+                                    @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
+                                        @php
+                                            $strSelected="";
+                                              $menuActive=$menu->menuActive->where('user_id',Auth::id())->first();
+                                                if(isset($menuActive) && $menuActive->active==$strKey){
+                                            $strSelected="selected";
+                                            }
+                                        @endphp
+                                        <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                         @endif
                         @if(Auth::user()->admin==1)
-                        <td>
-                            <select class="form-control" name="menu_active_admin" id="{{$menu->id}}_menu_active_admin"
-                                    style="height: 33px;">
-                                @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
-                                    @php
-                                        $strSelected="";
-                                        if($menu->admin==$strKey){
-                                        $strSelected="selected";
-                                        }
-                                    @endphp
-                                    <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
-                                @endforeach
-                            </select>
-                        </td>
+                            <td>
+                                <select class="form-control" name="menu_active_admin"
+                                        id="{{$menu->id}}_menu_active_admin"
+                                        style="height: 33px;">
+                                    @foreach($menuActiveOptions as $strKey=>$menuActiveOption)
+                                        @php
+                                            $strSelected="";
+                                            if($menu->admin==$strKey){
+                                            $strSelected="selected";
+                                            }
+                                        @endphp
+                                        <option value="{{$strKey}}" {{$strSelected}}>{{$menuActiveOption}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                         @endif
                         <td style="width:10%;">
                             <input type="number" class="form-control" name="menu_sortorder"
@@ -174,15 +185,15 @@
             var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
             keyFieldParent += "<option value=\"0\" selected></option>";
             @foreach($userMenus as $menuSelect)
-                @if(count($menuSelect->langs)>0)
+                    @if(count($menuSelect->langs)>0)
                     @foreach($menuSelect->langs as $menuLangSelect)
-                        @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
-                        keyFieldParent += "<option value=\"{{$menuLangSelect->id}}\">{{$menuLangSelect->name}}</option>";
-                        @endif
+                    @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
+                keyFieldParent += "<option value=\"{{$menuLangSelect->id}}\">{{$menuLangSelect->name}}</option>";
+            @endif
                     @endforeach
-                @endif
-            @endforeach
-            keyFieldParent += "</select></td>";
+                    @endif
+                    @endforeach
+                keyFieldParent += "</select></td>";
 
 
             var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\"" + newMenuCount + "_menu_active\" style=\"height: 33px;\">" +
@@ -193,7 +204,7 @@
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
                 langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
-                @endforeach
+                    @endforeach
 
             var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
             $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
@@ -233,7 +244,7 @@
                                 layout: 'topRight',
                                 text: 'Menu deleted!'
                             }).show();
-                        }else{
+                        } else {
                             new Noty({
                                 type: 'error',
                                 layout: 'bottomLeft',
@@ -258,10 +269,10 @@
                 if ($(this).attr('id')) {
                     var id = $(this).attr('id').replace("menu_", "").trim();
                     arrMenuIds.push(id);
-                    arrMenuKeys[id+'_menu_parent'] = $('#'+id+'_menu_parent').val();
-                    arrMenuKeys[id+'_menu_active'] = $('#'+id+'_menu_active').val();
-                    arrMenuKeys[id+'_menu_active_admin'] = $('#'+id+'_menu_active_admin').val();
-                    arrMenuKeys[id+'_menu_sortorder'] = $('#'+id+'_menu_sortorder').val();
+                    arrMenuKeys[id + '_menu_parent'] = $('#' + id + '_menu_parent').val();
+                    arrMenuKeys[id + '_menu_active'] = $('#' + id + '_menu_active').val();
+                    arrMenuKeys[id + '_menu_active_admin'] = $('#' + id + '_menu_active_admin').val();
+                    arrMenuKeys[id + '_menu_sortorder'] = $('#' + id + '_menu_sortorder').val();
 
 
                     var pattern = id + "_text_";
@@ -301,5 +312,132 @@
                 }
             });
         }
+
+
+        //-- Functionality when something was typed in Searching bar
+        $('#search_bar').keyup(function () {
+            var url = '{{ route('ajax_search_bar') }}';
+            var strValue = $(this).val();
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                dataType: "json",
+                data: {
+                    strValue: strValue,
+                    strModule: 'menu',
+                    _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
+                },
+                success: function (data) {
+                    if (data['result'] === "success") {
+
+                        //-- Hide loading image
+                        $("div#divLoading").removeClass('show');
+
+                        //-- Making mine data block empty
+                        $("#menus_body").html('');
+
+                        var arrLangs =@php echo json_encode($arrOfActiveLanguages); @endphp;
+
+                        for (var i = 0; i < data['userMenus'].length; i++) {
+
+                            console.log(data['userMenus'][i]);
+                            //-- Initialize array of currently active languages
+                            var arrLangsKeys = Object.keys(arrLangs);
+
+                            var newMenuCount = i;
+                            var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
+                            keyFieldParent += "<option value=\"0\" selected></option>";
+                            @foreach($userMenus as $menuSelect)
+                                    @if(count($menuSelect->langs)>0)
+                                    @foreach($menuSelect->langs as $menuLangSelect)
+                                    @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
+                                var strSelected="";
+                                if(data['userMenus'][i]['menu_active'][0]['parent']=== +'{{$menuLangSelect->id}}'){
+                                    strSelected="selected";
+                            }
+                                keyFieldParent += "<option value=\"{{$menuLangSelect->id}}\" "+strSelected+">{{$menuLangSelect->name}}</option>";
+                            @endif
+                                    @endforeach
+                                    @endif
+                                    @endforeach
+                                keyFieldParent += "</select></td>";
+
+
+                            var arrSelectOptions = ["Y", "N"];
+                                    @if(Auth::user()->admin!=1)
+                            var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\"" + newMenuCount + "_menu_active\" style=\"height: 33px;\">";
+                            for (var j = 0; j < arrSelectOptions.length; j++) {
+                                var strSelected = "";
+                                if (data['userMenus'][i]['menu_active'][0]["active"] === arrSelectOptions[i]) {
+                                    strSelected = "selected";
+                                }
+                                keyFieldActive += "<option value=" + arrSelectOptions[i] + " " + strSelected + ">" + arrSelectOptions[i] + "</option>";
+                            }
+                            keyFieldActive += "</td>";
+                                    @else
+                            var keyFieldActive = "";
+                                    @endif
+
+
+                                    @if(Auth::user()->admin==1)
+                            var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "_menu_active_admin\" style=\"height: 33px;\">";
+                            for (var j = 0; j < arrSelectOptions.length; j++) {
+                            var strSelected = "";
+                            if (data['userMenus'][i]['admin'] === arrSelectOptions[j]) {
+                                strSelected = "selected";
+                            }
+                            keyFieldAdminActive += "<option value=" + arrSelectOptions[j] + " " + strSelected + ">" + arrSelectOptions[j] + "</option>";
+                        }
+                        keyFieldAdminActive += "</td>";
+                                @else
+                        var keyFieldAdminActive = "";
+                                @endif
+
+                            var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder' value='" + data['userMenus'][i]['menu_active'][0]['sortorder'] + "'></td>";
+                            var langField = "";
+
+                            for (var j = 0; j < data['userMenus'][i]['langs'].length; j++) {
+                                langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + data['userMenus'][i]['langs'][j]['lang'] + "' class=\"form-control\" name='' value='" + data['userMenus'][i]['langs'][j]['name'] + "'></td>";
+                                arrLangsKeys.remove(data['userMenus'][i]['langs'][j]['lang']);
+
+                            }
+
+                            //-- Fill in empty menu lang inputs
+                            if (arrLangsKeys.length > 0) {
+                                for (var j = 0; j < arrLangsKeys.length; j++) {
+                                    langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + arrLangsKeys[j] + "' class=\"form-control\" name='' value=''></td>";
+                                }
+                            }
+
+                            var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
+                            $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
+                        }
+                    }
+
+                    $('[id^="delete_"]').click(function () {
+                        DeleteMenu($(this).attr('id').replace('delete_', ""));
+                    });
+                }
+            });
+
+        });
+
+
+        //-- Add remove() method to prototype
+        Array.prototype.remove = function () {
+            var what, a = arguments, L = a.length, ax;
+            while (L && this.length) {
+                what = a[--L];
+                while ((ax = this.indexOf(what)) !== -1) {
+                    this.splice(ax, 1);
+                }
+            }
+            return this;
+        };
+
     </script>
 @stop

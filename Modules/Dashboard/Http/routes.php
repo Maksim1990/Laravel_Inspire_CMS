@@ -53,5 +53,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/ajax_update_languages', 'DashboardController@updateLanguages')->name('ajax_update_languages');
 
 
+
+        //-- SEARCH FUNCTIONALITY
+        Route::post('/ajax_search_bar', 'SearchController@ajaxSearchBar')->name('ajax_search_bar');
+
+
+
+
+
     });
 });
