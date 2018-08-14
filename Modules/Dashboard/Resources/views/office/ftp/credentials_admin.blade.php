@@ -25,7 +25,7 @@
 
                 <div class="col-sm-12">
                     <br>
-                    <a href="{{route("office",Auth::id())}}" class="btn btn-warning">@lang('dashboard::messages.ftp_bach_to_manager')</a>
+                    <a href="{{route("office_ftp_manager",Auth::id())}}" class="btn btn-warning">@lang('dashboard::messages.ftp_bach_to_manager')</a>
                     {!! Form::submit(trans('messages.save'),['class'=>'btn btn-success']) !!}
                 </div>
 

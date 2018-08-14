@@ -13,7 +13,7 @@
                         <i class="fab fa-github"></i>
                     </span>
                     GitHub
-                <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) GitHub URL"></i></span>
+                <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') GitHub URL"></i></span>
                 </p>
 
             </div>
@@ -40,7 +40,7 @@
                         <i class="fab fa-google-plus-g"></i>
                     </span>
                     Google
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) Google URL"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') Google URL"></i></span>
                 </p>
 
             </div>
@@ -67,7 +67,7 @@
                     <i class="fab fa-instagram"></i>
                     </span>
                     Instagram
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) Instagram ID"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') Instagram ID"></i></span>
                 </p>
 
             </div>
@@ -94,7 +94,7 @@
                         <i class="fab fa-facebook-square"></i>
                     </span>
                     Facebook
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) Facebook URL"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') Facebook URL"></i></span>
                 </p>
 
             </div>
@@ -121,7 +121,7 @@
                     <i class="fab fa-twitter-square"></i>
                     </span>
                     Twitter
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) Twitter URL"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') Twitter URL"></i></span>
                 </p>
 
             </div>
@@ -148,7 +148,7 @@
                         <i class="fab fa-vk"></i>
                     </span>
                     VK
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) VK URL"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') VK URL"></i></span>
                 </p>
 
             </div>
@@ -175,7 +175,7 @@
                   <i class="fab fa-linkedin"></i>
                     </span>
                     LinkedIn
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) LinkedIn URL"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') LinkedIn URL"></i></span>
                 </p>
 
             </div>
@@ -202,7 +202,7 @@
              <i class="fab fa-line"></i>
                     </span>
                     Line
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) Line ID"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') Line ID"></i></span>
                 </p>
 
             </div>
@@ -229,7 +229,7 @@
                   <i class="fab fa-pinterest-square"></i>
                     </span>
                     Pinterest
-                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update) Pinterest URL"></i></span>
+                    <span class="w3-text-green"><i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="@lang('messages.update') Pinterest URL"></i></span>
                 </p>
 
             </div>

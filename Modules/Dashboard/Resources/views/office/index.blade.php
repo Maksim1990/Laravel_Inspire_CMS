@@ -10,7 +10,7 @@
     </p>
     <p>
         <a href="{{route('office_ftp_manager',['id'=>Auth::id()])}}" >
-            FTP Manager
+            @lang('dashboard::messages.ftp_manager')
         </a>
     </p>
 @stop

@@ -29,6 +29,32 @@ a .link{
     float: right;
 }
 
+.insp_buttons{
+    margin-bottom: 20px;border-bottom: 2px solid #cbcbcb;padding-bottom: 20px;
+}
+.icon_module {
+    transition: box-shadow .3s;
+    width: 90%;
+    min-height: 180px;
+    border-radius:10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    float: left;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+.icon_module .font_icon{
+    font-size: 50px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.icon_module:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
 .buttons{
     margin: auto;
     text-align: center;
