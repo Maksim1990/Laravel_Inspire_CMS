@@ -40,10 +40,8 @@ a .link{
     border: 1px solid #ccc;
     background: #fff;
     float: left;
-    margin-left: 5%;
-    margin-right: 5%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin-bottom: 5%;
+    padding: 10px;
 
 }
 .icon_module .font_icon{
