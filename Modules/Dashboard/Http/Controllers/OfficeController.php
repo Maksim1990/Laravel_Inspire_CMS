@@ -40,6 +40,19 @@ class OfficeController extends Controller
         return view('dashboard::office.ftp.manager', compact('arrTabs', 'active'));
     }
 
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function folderTree()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        return view('dashboard::office.ftp.tree', compact('arrTabs', 'active'));
+    }
+
     public function readFile()
     {
 

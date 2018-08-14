@@ -49,6 +49,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         //-- Inspire office functionality
         Route::get('/{id}/office', 'OfficeController@index')->name('office');
+        Route::get('/{id}/folder/tree', 'OfficeController@folderTree')->name('folder_tree');
         Route::get('/{id}/read_file', 'OfficeController@readFile')->name('office_read_file');
         Route::get('/{id}/ftp/content', 'OfficeController@ftpContent')->name('office_ftp_content');
         Route::get('/{id}/ftp/credentials/admin', 'OfficeController@setFTPCredentialsAdmin')->name('office_ftp_connection_admin');
