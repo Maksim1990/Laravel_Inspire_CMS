@@ -215,4 +215,36 @@
 
     });
 
+
+
+    //-- Functionality to update FTP connection type
+    $('#admin_frp_credentials').click(function () {
+        var url = '{{ route('ajax_admin_frp_credentials') }}';
+        var admin_frp_credentials = "N";
+
+        if ($(this).is(":checked"))
+        {
+            admin_frp_credentials="Y";
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                admin_frp_credentials: admin_frp_credentials,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('dashboard::messages.admin_settings_option_updated')}}!'
+                    }).show();
+                }
+            }
+        });
+    });
+
 </script>

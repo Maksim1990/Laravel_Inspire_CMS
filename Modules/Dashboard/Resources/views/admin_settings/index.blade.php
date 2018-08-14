@@ -131,6 +131,34 @@
                 </div>
             </div>
 
+
+            {{-- Use admin FTP credentials--}}
+            <div class="col-sm-12 col-lg-12 col-xs-12">
+                <div class="col-sm-5 col-xs-12">
+                    <p class="text">@lang('dashboard::messages.use_admin_ftp_credentials')</p>
+
+                </div>
+                <div class="col-sm-5 hidden-lg hidden-sm col-xs-12">
+                </div>
+                <div class="col-sm-1 col-xs-12">
+                    <div class="form-group" style="margin-top: 15px;">
+                        @php
+                            $strChecked="";
+                            if(Auth::user()->admin_setting->use_admin_ftp_credentials=='Y'){
+                             $strChecked="checked";
+                            }
+                        @endphp
+                        <div class="material-switch pull-right" >
+                            <input id="admin_frp_credentials" name="admin_frp_credentials" type="checkbox" {{$strChecked}}/>
+                            <label for="admin_frp_credentials" class="label-success"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <hr>
+                </div>
+            </div>
+
         </div>
     </div>
 @stop

@@ -108,7 +108,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$websiteSetting->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -162,7 +162,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -189,7 +189,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -215,7 +215,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -242,7 +242,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -269,7 +269,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -295,7 +295,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -321,7 +321,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -347,7 +347,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$socialIcons->update()){
             $result = "";
-            $strError = "Option was not updated. Please try again!";
+            $strError = trans('dashboard::messages.option_was_not_updated');
         }
 
         header('Content-Type: application/json');

@@ -207,6 +207,29 @@ class AdminSettingsController extends Controller
     {
     }
 
+
+    public function updateAdminFtpCredentials(Request $request)
+    {
+        $strAdminFtpCredentials = $request->admin_frp_credentials;
+        $strError = "";
+        $result = "success";
+
+        $adminSetting=AdminSettings::findOrFail(Auth::id());
+        $adminSetting->use_admin_ftp_credentials=$strAdminFtpCredentials;
+
+        if(!$adminSetting->update()){
+            $result = "";
+            $strError = trans('dashboard::messages.option_was_not_updated');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+
     /**
      * @param $id
      * @return string

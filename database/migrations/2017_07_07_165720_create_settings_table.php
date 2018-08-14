@@ -18,6 +18,9 @@ class CreateSettingsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->enum('active_left_sidebar', ['Y', 'N']);
             $table->text('custom_css')->nullable();
+            $table->string('ftp_host')->nullable();
+            $table->string('ftp_user_name')->nullable();
+            $table->string('ftp_password')->nullable();
             $table->timestamps();
         });
     }

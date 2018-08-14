@@ -2,31 +2,31 @@
 
 @section('General')
     <div class="row">
-        <div class="col-sm-12 col-md-4  col-xs-12">
+        <div class="col-sm-12 col-md-6  col-xs-12">
             <div class="col-sm-12 col-md-12  col-xs-12">
-                <h3 class="title">FTP connection</h3>
+                <h3 class="title">@lang('dashboard::messages.ftp_connection')</h3>
                 <div id="title_shape"></div>
 
                 {!! Form::open(['method'=>'POST','action'=>['\Modules\Dashboard\Http\Controllers\OfficeController@storeFTPCredentials','userId'=>Auth::id()], 'files'=>true])!!}
                 <div class="group-form">
-                    {!! Form::label('ftp_host','FTP Host:') !!}
-                    {!! Form::text('ftp_host', null, ['class'=>'form-control']) !!}
+                    {!! Form::label('ftp_host',trans('dashboard::messages.ftp_host').':') !!}
+                    {!! Form::text('ftp_host', Auth::user()->setting->ftp_host, ['class'=>'form-control']) !!}
                 </div>
 
                 <div class="group-form">
-                    {!! Form::label('ftp_user_name','FTP User name:') !!}
-                    {!! Form::text('ftp_user_name', null, ['class'=>'form-control']) !!}
+                    {!! Form::label('ftp_user_name',trans('dashboard::messages.ftp_user_name').':') !!}
+                    {!! Form::text('ftp_user_name', Auth::user()->setting->ftp_user_name, ['class'=>'form-control']) !!}
                 </div>
 
                 <div class="group-form">
-                    {!! Form::label('ftp_password','FTP Password:') !!}
-                    {!! Form::text('ftp_password', null, ['class'=>'form-control']) !!}
+                    {!! Form::label('ftp_password',trans('dashboard::messages.ftp_password').':') !!}
+                    {!! Form::text('ftp_password', Auth::user()->setting->ftp_password, ['class'=>'form-control']) !!}
                 </div>
 
                 <div class="col-sm-12">
                     <br>
-                    <a href="{{route("office",Auth::id())}}" class="btn btn-warning">Back to the Office</a>
-                    {!! Form::submit('Save',['class'=>'btn btn-success']) !!}
+                    <a href="{{route("office",Auth::id())}}" class="btn btn-warning">@lang('dashboard::messages.ftp_bach_to_manager')</a>
+                    {!! Form::submit(trans('messages.save'),['class'=>'btn btn-success']) !!}
                 </div>
 
                 {!! Form::close() !!}
@@ -39,3 +39,15 @@
         </div>
     </div>
 @stop
+@section('scripts')
+    <script>
+        @if(Session::has('ftp_change'))
+        new Noty({
+            type: 'error',
+            layout: 'bottomLeft',
+            text: '{{session('ftp_change')}}'
+
+        }).show();
+        @endif
+    </script>
+@endsection

@@ -19,6 +19,7 @@ class CreateAdminSettingsTable extends Migration
             $table->string('app_version')->nullable();
             $table->string('app_name')->nullable();
             $table->enum('app_status', ['Y', 'N'])->default("Y");
+            $table->enum('use_admin_ftp_credentials', ['Y', 'N'])->default("N");
             $table->timestamps();
         });
     }
