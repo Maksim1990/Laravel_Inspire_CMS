@@ -18,8 +18,6 @@ return [
     'code_editor_settings' => 'Code editor settings',
     'website_name' => 'Website name',
     'website_social_networks_settings' => 'Website social networks settings',
-    'reset_cache_for_specific_user' => 'Reset cache for specific user',
-    'app_version' => 'Application version',
     'admin_settings' => 'Admin settings',
     'visit_website' => 'Visit website',
     'app_version_was_updated' => 'App version was updated',

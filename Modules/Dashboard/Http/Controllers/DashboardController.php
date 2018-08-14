@@ -5,6 +5,7 @@ namespace Modules\Dashboard\Http\Controllers;
 
 use App\Config\ConfigLang;
 use App\Config\DefaultMenuLangs;
+use App\Config\Elastic;
 use App\Helper;
 use App\Menu\Menu;
 use App\Menu\MenuLang;
@@ -171,7 +172,7 @@ class DashboardController extends Controller
 
         if (count($arrMenuIds) > 0) {
             foreach ($arrMenuIds as $intId) {
-                if(Auth::user()->admin){
+               if (Auth::user()->admin) {
                     try {
                         $menu = Menu::findOrFail($intId);
                         $menu->admin = $arrMenuKeys[$intId . "_menu_active_admin"];
@@ -182,8 +183,15 @@ class DashboardController extends Controller
                             'admin' => $arrMenuKeys[$intId . "_menu_active_admin"]
                         ]);
                     }
-                }
-
+                }else{
+                   try {
+                       Menu::findOrFail($intId);
+                   } catch (\Exception $e) {
+                       Menu::create([
+                           'id' => $intId
+                       ]);
+                   }
+               }
 
 
                 foreach ($arrOfActiveLanguages as $strKey => $strLang) {
@@ -194,11 +202,21 @@ class DashboardController extends Controller
                         $menuLang->update();
                     } else {
                         if (!empty($strName)) {
-                            MenuLang::create([
+                            $menuLang = MenuLang::create([
                                 'id' => $intId,
                                 'user_id' => Auth::id(),
                                 'name' => $strName,
                                 'lang' => strtoupper($strKey)
+                            ]);
+
+
+                            //-- Add new menu to elastic search
+                            $elastic = app(Elastic::class);
+                            $elastic->index([
+                                'index' => 'inspirecms_menus_' . Auth::id(),
+                                'type' => 'menu',
+                                'id' => $menuLang->id."_".Auth::id()."_".strtoupper($strKey),
+                                'body' => $menuLang->toArray()
                             ]);
                         }
                     }
@@ -206,15 +224,15 @@ class DashboardController extends Controller
 
                 $userMenu = UserMenu::where('menu_id', $intId)->where('user_id', Auth::id())->first();
                 if ($userMenu) {
-                    if(isset($arrMenuKeys[$intId . "_menu_active"])){
+                    if (isset($arrMenuKeys[$intId . "_menu_active"])) {
                         $userMenu->active = $arrMenuKeys[$intId . "_menu_active"];
                     }
 
-                    if(isset($arrMenuKeys[$intId . "_menu_parent"])) {
+                    if (isset($arrMenuKeys[$intId . "_menu_parent"])) {
                         $userMenu->parent = $arrMenuKeys[$intId . "_menu_parent"];
                     }
 
-                    if(isset($arrMenuKeys[$intId . "_menu_sortorder"])) {
+                    if (isset($arrMenuKeys[$intId . "_menu_sortorder"])) {
                         $userMenu->sortorder = $arrMenuKeys[$intId . "_menu_sortorder"];
                     }
                     $userMenu->update();
@@ -233,7 +251,7 @@ class DashboardController extends Controller
         }
 
         //-- Flush cached header menu for current user
-        Cache::tags('menu_'.Auth::id())->flush();
+        Cache::tags('menu_' . Auth::id())->flush();
 
 
         header('Content-Type: application/json');
@@ -244,7 +262,7 @@ class DashboardController extends Controller
 
     }
 
-    
+
     public function deleteMenu(Request $request)
     {
 
@@ -257,6 +275,16 @@ class DashboardController extends Controller
 
         $deleteMenu = Menu::find($intId);
 
+        //-- Delete menu from Elastic search index
+        $elastic = app(Elastic::class);
+        $arrOfActiveLanguages = Helper::GetActiveLanguages();
+        foreach ($arrOfActiveLanguages as $strKey => $strLang) {
+            $elastic->delete([
+                'index' => 'inspirecms_menus_' . Auth::id(),
+                'type' => 'menu',
+                'id' => $deleteMenu->id . "_" . Auth::id() . "_".strtoupper($strKey),
+            ]);
+        }
 
         if ($deleteMenu->admin == "Y") {
             if ($user->admin) {
