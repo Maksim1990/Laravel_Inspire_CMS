@@ -44,8 +44,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         //-- Inspire office functionality
         Route::get('/{id}/office', 'OfficeController@index')->name('office');
         Route::get('/{id}/read_file', 'OfficeController@readFile')->name('office_read_file');
-        Route::get('/{id}/ftp', 'OfficeController@setFTPCredentials')->name('office_ftp_connection');
+        Route::get('/{id}/ftp/content', 'OfficeController@ftpContent')->name('office_ftp_content');
+        Route::get('/{id}/ftp/credentials/admin', 'OfficeController@setFTPCredentialsAdmin')->name('office_ftp_connection_admin');
+        Route::get('/{id}/ftp/credentials', 'OfficeController@setFTPCredentials')->name('office_ftp_connection');
+        Route::get('/{id}/ftp/manager', 'OfficeController@ftpManager')->name('office_ftp_manager');
         Route::post('/{id}/ftp_store', 'OfficeController@storeFTPCredentials')->name('office_ftp_store');
+        Route::post('/{id}/ftp_store_admin', 'OfficeController@storeFTPCredentialsAdmin')->name('office_ftp_store_admin');
 
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');

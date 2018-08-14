@@ -26,6 +26,19 @@ class OfficeController extends Controller
         return view('dashboard::office.index', compact('arrTabs', 'active'));
     }
 
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function ftpManager()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        return view('dashboard::office.ftp.manager', compact('arrTabs', 'active'));
+    }
+
     public function readFile()
     {
 
@@ -67,13 +80,50 @@ class OfficeController extends Controller
     }
 
 
+    public function setFTPCredentialsAdmin()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        return view('dashboard::office.ftp.credentials_admin', compact('arrTabs', 'active', 'test'));
+    }
+
     public function setFTPCredentials()
     {
         $arrTabs = ['General'];
         $active = "active";
 
 
-        return view('dashboard::office.ftp', compact('arrTabs', 'active', 'test'));
+        return view('dashboard::office.ftp.credentials', compact('arrTabs', 'active', 'test'));
+    }
+
+    public function ftpContent()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        $files = Storage::disk('ftp')->allFiles('/');
+        $files = Storage::disk('ftp')->allDirectories('/');
+        dd($files);
+
+        return view('dashboard::office.ftp.content', compact('arrTabs', 'active', 'test'));
+    }
+
+    public function storeFTPCredentialsAdmin(CreateFTPRequest $request)
+    {
+
+        $user=Auth::user();
+        $ftp_host = $request->ftp_host;
+        $ftp_user_name = $request->ftp_user_name;
+        $ftp_password = $request->ftp_password;
+
+        setEnvironmentValue('FTP_HOST', $ftp_host);
+        setEnvironmentValue('FTP_USER_NAME', $ftp_user_name);
+        setEnvironmentValue('FTP_PASS', $ftp_password);
+
+        Session::flash('office_change','FTP credentials were successfully updated!');
+        return redirect('admin/'.$user->id.'/office');
+
     }
 
     public function storeFTPCredentials(CreateFTPRequest $request)

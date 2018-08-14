@@ -4,9 +4,10 @@
     <div class="row">
         <div class="col-sm-12 col-md-4  col-xs-12">
             <div class="col-sm-12 col-md-12  col-xs-12">
-                <h3 class="title">FTP connection</h3>
+                <h3 class="title">FTP admin connection</h3>
+                <div id="title_shape"></div>
 
-                {!! Form::open(['method'=>'POST','action'=>['\Modules\Dashboard\Http\Controllers\OfficeController@storeFTPCredentials','userId'=>Auth::id()], 'files'=>true])!!}
+                {!! Form::open(['method'=>'POST','action'=>['\Modules\Dashboard\Http\Controllers\OfficeController@setFTPCredentialsAdmin','userId'=>Auth::id()], 'files'=>true])!!}
                 <div class="group-form">
                     {!! Form::label('ftp_host','FTP Host:') !!}
                     {!! Form::text('ftp_host', null, ['class'=>'form-control']) !!}
@@ -34,7 +35,7 @@
         </div>
         <div class="col-sm-12 col-md-12  col-xs-12">
             <br>
-        @include('includes.formErrors')
+            @include('includes.formErrors')
         </div>
     </div>
 @stop

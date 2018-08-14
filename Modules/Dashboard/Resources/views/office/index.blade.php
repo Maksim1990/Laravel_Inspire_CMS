@@ -2,15 +2,15 @@
 
 @section('General')
     <h3 class="title">Inspire Office</h3>
-
+    <div id="title_shape"></div>
     <p>
         <a href="{{route('office_read_file',['id'=>Auth::id()])}}" >
             Read file
         </a>
     </p>
     <p>
-        <a href="{{route('office_ftp_connection',['id'=>Auth::id()])}}" >
-            Update FTP credentials
+        <a href="{{route('office_ftp_manager',['id'=>Auth::id()])}}" >
+            FTP Manager
         </a>
     </p>
 @stop

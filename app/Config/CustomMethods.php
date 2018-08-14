@@ -86,3 +86,10 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
         return $strMenu;
     }
 }
+
+
+//-- Functionality for programmatically replace variables in env file
+function buildFTPFolderTree($envKey, $envValue)
+{
+
+}
