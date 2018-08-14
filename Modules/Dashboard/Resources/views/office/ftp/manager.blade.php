@@ -28,7 +28,7 @@
                         @lang('dashboard::messages.ftp_update_credentials')
                     </a>
                 </div>
-                
+
                 @if(Auth::user()->admin==1)
                     <div class="col-sm-12 col-md-3 col-md-offset-1 col-xs-12 text-center icon_module">
                         <a href="{{route('office_ftp_connection_admin',['id'=>Auth::id()])}}">

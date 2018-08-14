@@ -88,8 +88,24 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
 }
 
 
-//-- Functionality for programmatically replace variables in env file
-function buildFTPFolderTree($envKey, $envValue)
+//-- Functionality for building tree of arrays from FTP server
+function buildFTPFolderTree($arrFolders, $strFolderItem=null)
 {
+dd($arrFolders);
+    if(!empty($strFolderItem)){
+        var_dump($strFolderItem);
+    }
+
+    if (($key = array_search($strFolderItem, $arrFolders)) !== false) {
+        unset($arrFolders[$key]);
+    }
+
+    if(!empty($arrFolders)){
+        foreach ($arrFolders as $folder){
+            if($folder !=$strFolderItem){
+                buildFTPFolderTree($arrFolders, $folder);
+            }
+        }
+    }
 
 }

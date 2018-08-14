@@ -104,25 +104,29 @@ class OfficeController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
-        //-- Choose what type of FTP credentials to use
-        if (!isset(Auth::user()->admin_setting->use_admin_ftp_credentials) || Auth::user()->admin_setting->use_admin_ftp_credentials == 'Y') {
+
+
             try{
+                //-- Choose what type of FTP credentials to use
+                if (!isset(Auth::user()->admin_setting->use_admin_ftp_credentials) || Auth::user()->admin_setting->use_admin_ftp_credentials == 'Y') {
                 config(['filesystems.disks.ftp' => [
                     'driver' => 'ftp',
                     'host' => Auth::user()->setting->ftp_host,
                     'username' => Auth::user()->setting->ftp_user_name,
                     'password' => Auth::user()->setting->ftp_password
                 ]]);
+                }
 
-                $files = Storage::disk('ftp')->allFiles('/');
-                $files = Storage::disk('ftp')->allDirectories('/');
-                dd($files);
+                //$files = Storage::disk('ftp')->allFiles('/');
+                $arrFolders = Storage::disk('ftp')->directories('/');
+                buildFTPFolderTree($arrFolders);
+
             }catch (\Exception $e){
                 Session::flash('ftp_change', trans('dashboard::messages.ftp_could_not_connect'));
                 return redirect()->route('office_ftp_connection',['id'=>Auth::id()]);
             }
 
-        }
+
 
 
         return view('dashboard::office.ftp.content', compact('arrTabs', 'active', 'test'));
