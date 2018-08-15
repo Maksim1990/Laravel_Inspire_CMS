@@ -177,33 +177,37 @@ class OfficeController extends Controller
 
         //-- Initialize array of folder children
         $arrData = array();
-
-        $arrFolders = Storage::disk('ftp')->directories('/' . $strPath);
-        if (!empty($arrFolders)) {
-            foreach ($arrFolders as $key => $path) {
-                $arrPath = explode("/", $path);
-                $folder = $arrPath[count($arrPath) - 1];
-                $arrData[] = [
-                    'id' => $strId . "_" . $key . "_folder",
-                    'data' => $path,
-                    'text' => $folder,
-                    'icon' => ""
-                ];
+        try {
+            $arrFolders = Storage::disk('ftp')->directories('/' . $strPath);
+            if (!empty($arrFolders)) {
+                foreach ($arrFolders as $key => $path) {
+                    $arrPath = explode("/", $path);
+                    $folder = $arrPath[count($arrPath) - 1];
+                    $arrData[] = [
+                        'id' => $strId . "_" . $key . "_folder",
+                        'data' => $path,
+                        'text' => $folder,
+                        'icon' => ""
+                    ];
+                }
             }
-        }
 
-        $arrFiles = Storage::disk('ftp')->files('/' . $strPath);
-        if (!empty($arrFiles)) {
-            foreach ($arrFiles as $key => $path) {
-                $arrPath = explode("/", $path);
-                $file = $arrPath[count($arrPath) - 1];
-                $arrData[] = [
-                    'id' => $strId . "_" . $key . "_file",
-                    'text' => $file,
-                    'data' => "",
-                    'icon' => "jstree-file"
-                ];
+            $arrFiles = Storage::disk('ftp')->files('/' . $strPath);
+            if (!empty($arrFiles)) {
+                foreach ($arrFiles as $key => $path) {
+                    $arrPath = explode("/", $path);
+                    $file = $arrPath[count($arrPath) - 1];
+                    $arrData[] = [
+                        'id' => $strId . "_" . $key . "_file",
+                        'text' => $file,
+                        'data' => "",
+                        'icon' => "jstree-file"
+                    ];
+                }
             }
+        } catch (\Exception $e) {
+            $strError = "Can not connect to remote server";
+            $result = "";
         }
 
         header('Content-Type: application/json');

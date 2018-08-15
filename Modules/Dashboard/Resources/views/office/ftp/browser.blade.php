@@ -88,6 +88,12 @@
                                         text: '{{trans('dashboard::messages.folder_empty')}}'
                                     }).show();
                                 }
+                            }else{
+                                new Noty({
+                                    type: 'error',
+                                    layout: 'bottomLeft',
+                                    text: dataAjax['error']
+                                }).show();
                             }
                             //-- Hide loading image
                             $("div#divLoading").removeClass('show');
