@@ -40,18 +40,6 @@ class OfficeController extends Controller
         return view('dashboard::office.ftp.manager', compact('arrTabs', 'active'));
     }
 
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function folderTree()
-    {
-        $arrTabs = ['General'];
-        $active = "active";
-
-
-        return view('dashboard::office.ftp.tree', compact('arrTabs', 'active'));
-    }
 
     public function readFile()
     {
@@ -112,37 +100,119 @@ class OfficeController extends Controller
         return view('dashboard::office.ftp.credentials', compact('arrTabs', 'active', 'test'));
     }
 
+
+    /**
+     * Get content of FTP root folder
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function ftpContent()
     {
         $arrTabs = ['General'];
         $active = "active";
 
-
-
-            try{
-                //-- Choose what type of FTP credentials to use
-                if (!isset(Auth::user()->admin_setting->use_admin_ftp_credentials) || Auth::user()->admin_setting->use_admin_ftp_credentials == 'Y') {
+        try {
+            //-- Choose what type of FTP credentials to use
+            if (!isset(Auth::user()->admin_setting->use_admin_ftp_credentials) || Auth::user()->admin_setting->use_admin_ftp_credentials == 'N') {
                 config(['filesystems.disks.ftp' => [
                     'driver' => 'ftp',
                     'host' => Auth::user()->setting->ftp_host,
                     'username' => Auth::user()->setting->ftp_user_name,
                     'password' => Auth::user()->setting->ftp_password
                 ]]);
-                }
-
-                //$files = Storage::disk('ftp')->allFiles('/');
-                $arrFolders = Storage::disk('ftp')->directories('/');
-                buildFTPFolderTree($arrFolders);
-
-            }catch (\Exception $e){
-                Session::flash('ftp_change', trans('dashboard::messages.ftp_could_not_connect'));
-                return redirect()->route('office_ftp_connection',['id'=>Auth::id()]);
             }
 
+            $arrData = array();
+
+            $arrFolders = Storage::disk('ftp')->directories('/');
+            if (!empty($arrFolders)) {
+                foreach ($arrFolders as $key => $folder) {
+                    $arrData[] = [
+                        'id' => "root_" . $key . "_folder",
+                        'data' => $folder,
+                        'text' => $folder,
+                        'icon' => ""
+                    ];
+                }
+            }
+
+            $arrFiles = Storage::disk('ftp')->files('/');
+            if (!empty($arrFiles)) {
+                foreach ($arrFiles as $key => $file) {
+                    $arrData[] = [
+                        'id' => "root_" . $key . "_file",
+                        'text' => $file,
+                        'data' => "",
+                        'icon' => "jstree-file"
+                    ];
+                }
+            }
+
+            if (!empty($arrData)) {
+                $arrData = json_encode($arrData, true);
+            }
+
+        } catch (\Exception $e) {
+            Session::flash('ftp_change', trans('dashboard::messages.ftp_could_not_connect'));
+            return redirect()->route('office_ftp_connection', ['id' => Auth::id()]);
+        }
+
+        return view('dashboard::office.ftp.browser', compact('arrTabs', 'active', 'arrData'));
+    }
 
 
+    /**
+     * Generate folder content for specific FTP folder
+     *
+     * @param Request $request
+     */
+    public function ajaxGetFolderContent(Request $request)
+    {
 
-        return view('dashboard::office.ftp.content', compact('arrTabs', 'active', 'test'));
+        $strId = $request['id'];
+        $strPath = $request['path'];
+        $strError = "";
+        $result = "success";
+
+
+        //-- Initialize array of folder children
+        $arrData = array();
+
+        $arrFolders = Storage::disk('ftp')->directories('/' . $strPath);
+        if (!empty($arrFolders)) {
+            foreach ($arrFolders as $key => $path) {
+                $arrPath = explode("/", $path);
+                $folder = $arrPath[count($arrPath) - 1];
+                $arrData[] = [
+                    'id' => $strId . "_" . $key . "_folder",
+                    'data' => $path,
+                    'text' => $folder,
+                    'icon' => ""
+                ];
+            }
+        }
+
+        $arrFiles = Storage::disk('ftp')->files('/' . $strPath);
+        if (!empty($arrFiles)) {
+            foreach ($arrFiles as $key => $path) {
+                $arrPath = explode("/", $path);
+                $file = $arrPath[count($arrPath) - 1];
+                $arrData[] = [
+                    'id' => $strId . "_" . $key . "_file",
+                    'text' => $file,
+                    'data' => "",
+                    'icon' => "jstree-file"
+                ];
+            }
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError,
+            'arrData' => $arrData,
+        ));
+
     }
 
 
@@ -165,7 +235,7 @@ class OfficeController extends Controller
         setEnvironmentValue('FTP_PASS', $ftp_password);
 
         Session::flash('office_change', trans('dashboard::messages.ftp_credentials_were_updated'));
-        return redirect()->route('office_ftp_manager',['id'=>$user->id]);
+        return redirect()->route('office_ftp_manager', ['id' => $user->id]);
 
     }
 
@@ -189,13 +259,13 @@ class OfficeController extends Controller
         $settings->ftp_user_name = $ftp_user_name;
         $settings->ftp_password = $ftp_password;
 
-        if(!$settings->update()){
+        if (!$settings->update()) {
             Session::flash('office_change', trans('dashboard::messages.option_was_not_updated'));
-        }else{
+        } else {
             Session::flash('office_change', trans('dashboard::messages.ftp_credentials_were_updated'));
         }
 
-        return redirect()->route('office_ftp_manager',['id'=>$user->id]);
+        return redirect()->route('office_ftp_manager', ['id' => $user->id]);
 
     }
 

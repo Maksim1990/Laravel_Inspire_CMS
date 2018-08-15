@@ -29,6 +29,9 @@ return [
     'ftp_password' => 'FTP Password',
     'ftp_update_credentials' => 'Update FTP credentials',
     'ftp_update_credentials_admin' => 'Update Admin FTP credentials',
-    'ftp_see_content' => 'See content of  FTP folder',
+    'ftp_browser' => 'FTP Browser',
     'back_to_office_menu' => 'Back to the Office menu',
+    'folder_empty' => 'Folder is empty',
+    'simple_file' => 'This is simple file',
+    'close_all_nodes' => 'Close all nodes',
 ];

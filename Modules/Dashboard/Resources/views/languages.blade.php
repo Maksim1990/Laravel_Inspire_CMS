@@ -54,8 +54,6 @@
 
             var selectedLangs = $('#lang_form').serializeArray();
 
-            console.log(selectedLangs);
-
             $.ajax({
                 method: 'POST',
                 url: url,

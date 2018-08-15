@@ -49,7 +49,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         //-- Inspire office functionality
         Route::get('/{id}/office', 'OfficeController@index')->name('office');
-        Route::get('/{id}/folder/tree', 'OfficeController@folderTree')->name('folder_tree');
         Route::get('/{id}/read_file', 'OfficeController@readFile')->name('office_read_file');
         Route::get('/{id}/ftp/content', 'OfficeController@ftpContent')->name('office_ftp_content');
         Route::get('/{id}/ftp/credentials/admin', 'OfficeController@setFTPCredentialsAdmin')->name('office_ftp_connection_admin');
@@ -57,11 +56,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/ftp/manager', 'OfficeController@ftpManager')->name('office_ftp_manager');
         Route::post('/{id}/ftp_store', 'OfficeController@storeFTPCredentials')->name('office_ftp_store');
         Route::post('/{id}/ftp_store_admin', 'OfficeController@storeFTPCredentialsAdmin')->name('office_ftp_store_admin');
+        Route::post('/ajax_get_folder_content', 'OfficeController@ajaxGetFolderContent')->name('ajax_get_folder_content');
 
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
         Route::post('/ajax_delete_menu', 'DashboardController@deleteMenu')->name('ajax_delete_menu');
         Route::post('/ajax_update_languages', 'DashboardController@updateLanguages')->name('ajax_update_languages');
+
 
 
 

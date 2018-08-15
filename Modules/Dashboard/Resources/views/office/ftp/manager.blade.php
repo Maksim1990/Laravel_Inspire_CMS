@@ -18,7 +18,7 @@
                             <img  height="100"
                                  src="{{custom_asset('images/includes/ftp.png')}}" alt="">
                         </p>
-                        <span>@lang('dashboard::messages.ftp_see_content')</span>
+                        <span>@lang('dashboard::messages.ftp_browser')</span>
                     </a>
                 </div>
                 <div class="col-sm-12 col-md-3 col-md-offset-1   col-xs-12 text-center icon_module">
