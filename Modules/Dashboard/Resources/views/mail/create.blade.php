@@ -69,7 +69,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <p class="confirm_info">
-                        @lang('messages.check_email_form)
+                        @lang('messages.check_email_form')
                     </p>
                     <button type="button" class="btn" data-dismiss="modal">@lang('messages.cancel')</button>
                     <a href="#" id="send_mail_form" class="btn btn-success">@lang('messages.send_mail')</a>

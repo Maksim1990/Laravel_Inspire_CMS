@@ -7,6 +7,7 @@ use App\Menu\UserMenu;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\Dashboard\Entities\AdminSettings;
+use Modules\Dashboard\Entities\MailEntity;
 use Modules\Dashboard\Entities\SocialIcon;
 use Modules\Images\Entities\Photo;
 use Modules\Website\Entities\WebsiteSetting;
@@ -58,6 +59,9 @@ class User extends Authenticatable
         return $this->hasMany(Photo::class);
     }
 
+    public function mails(){
+        return $this->hasMany(MailEntity::class);
+    }
 
     public function menu(){
         return $this->hasManyThrough(

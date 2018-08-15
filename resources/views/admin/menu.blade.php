@@ -19,7 +19,7 @@
         <div class="col-sm-12 col-lg-4 col-xs-12">
             <img height="30" data-toggle="tooltip" data-placement="left" title="Elasticsearch functionality"
                  src="{{custom_asset('images/includes/elastic-elasticsearch.svg')}}" alt="" align="top">
-            <input type="text" class="form-control" style="display: inline;width: 85%;" id="search_bar" placeholder="Search...">
+            <input type="text" class="form-control" style="display: inline;width: 85%;" id="search_bar" placeholder="@lang('messages.search')">
 
         </div>
         <hr>
@@ -345,13 +345,13 @@
 
                         var arrLangs =@php echo json_encode($arrOfActiveLanguages); @endphp;
 
-                        for (var i = 0; i < data['userMenus'].length; i++) {
+                        for (var i = 0; i < data['arrData'].length; i++) {
 
-                            //console.log(data['userMenus'][i]);
+                            //console.log(data['arrData'][i]);
                             //-- Initialize array of currently active languages
                             var arrLangsKeys = Object.keys(arrLangs);
 
-                            var newMenuCount =  data['userMenus'][i]['id'];
+                            var newMenuCount =  data['arrData'][i]['id'];
                             var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
                             keyFieldParent += "<option value=\"0\" selected></option>";
                             @foreach($userMenus as $menuSelect)
@@ -359,7 +359,7 @@
                                     @foreach($menuSelect->langs as $menuLangSelect)
                                     @if(strtolower($menuLangSelect->lang)=== LaravelLocalization::getCurrentLocale() && $menuLangSelect->user_id == Auth::id())
                                 var strSelected="";
-                                if(data['userMenus'][i]['menu_active'][0]['parent']=== +'{{$menuLangSelect->id}}'){
+                                if(data['arrData'][i]['menu_active'][0]['parent']=== +'{{$menuLangSelect->id}}'){
                                     strSelected="selected";
                             }
                                 keyFieldParent += "<option value=\"{{$menuLangSelect->id}}\" "+strSelected+">{{$menuLangSelect->name}}</option>";
@@ -375,7 +375,7 @@
                             var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\"" + newMenuCount + "_menu_active\" style=\"height: 33px;\">";
                             for (var j = 0; j < arrSelectOptions.length; j++) {
                                 var strSelected = "";
-                                if (data['userMenus'][i]['menu_active'][0]["active"] === arrSelectOptions[i]) {
+                                if (data['arrData'][i]['menu_active'][0]["active"] === arrSelectOptions[i]) {
                                     strSelected = "selected";
                                 }
                                 keyFieldActive += "<option value=" + arrSelectOptions[i] + " " + strSelected + ">" + arrSelectOptions[i] + "</option>";
@@ -390,7 +390,7 @@
                             var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "_menu_active_admin\" style=\"height: 33px;\">";
                             for (var j = 0; j < arrSelectOptions.length; j++) {
                             var strSelected = "";
-                            if (data['userMenus'][i]['admin'] === arrSelectOptions[j]) {
+                            if (data['arrData'][i]['admin'] === arrSelectOptions[j]) {
                                 strSelected = "selected";
                             }
                             keyFieldAdminActive += "<option value=" + arrSelectOptions[j] + " " + strSelected + ">" + arrSelectOptions[j] + "</option>";
@@ -400,12 +400,12 @@
                         var keyFieldAdminActive = "";
                                 @endif
 
-                            var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder' value='" + data['userMenus'][i]['menu_active'][0]['sortorder'] + "'></td>";
+                            var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder' value='" + data['arrData'][i]['menu_active'][0]['sortorder'] + "'></td>";
                             var langField = "";
 
-                            for (var j = 0; j < data['userMenus'][i]['langs'].length; j++) {
-                                langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + data['userMenus'][i]['langs'][j]['lang'].toLowerCase() + "' class=\"form-control\" name='' value='" + data['userMenus'][i]['langs'][j]['name'] + "'></td>";
-                                arrLangsKeys.remove(data['userMenus'][i]['langs'][j]['lang']);
+                            for (var j = 0; j < data['arrData'][i]['langs'].length; j++) {
+                                langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_" + data['arrData'][i]['langs'][j]['lang'].toLowerCase() + "' class=\"form-control\" name='' value='" + data['arrData'][i]['langs'][j]['name'] + "'></td>";
+                                arrLangsKeys.remove(data['arrData'][i]['langs'][j]['lang']);
 
                             }
 

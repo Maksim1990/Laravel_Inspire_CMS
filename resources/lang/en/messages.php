@@ -45,4 +45,8 @@ return [
     'title' => 'Title',
     'content' => 'Content',
     'create_new_email' => 'Create new email',
+    'date' => 'Date',
+    'close' => 'Close',
+    'search' => 'Search...',
+    'delete' => 'Delete',
 ];

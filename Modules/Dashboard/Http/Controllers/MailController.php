@@ -23,6 +23,7 @@ class MailController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
+
         return view('dashboard::mail.index', compact('arrTabs', 'active'));
     }
 
@@ -121,6 +122,51 @@ class MailController extends Controller
         }
 
         echo $result;
+    }
+
+
+    public function ajaxGetMailData(Request $request)
+    {
+
+        $mailId = $request['mailId'];
+        $strError = "";
+        $result = "success";
+
+
+        $mail=MailEntity::find($mailId);
+        if(!$mail){
+            $mail="";
+            $strError = "Mail was not found";
+            $result = "";
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError,
+            'mail' => $mail
+        ));
+
+    }
+
+    /**
+     * Delete specific mail data
+     *
+     * @param Request $request
+     */
+    public function ajaxDeleteMailData(Request $request)
+    {
+        $mailId = $request['id'];
+        $strError = "";
+        $result = "success";
+        MailEntity::find($mailId)->delete();
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+
     }
 
 

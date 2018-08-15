@@ -34,4 +34,7 @@ return [
     'folder_empty' => 'Folder is empty',
     'simple_file' => 'This is simple file',
     'close_all_nodes' => 'Close all nodes',
+    'delete_this_mail' => 'Do you want to delete this mail?',
+    'mail_deleted' => 'Mail was deleted',
+    'no_mails_found' => 'No mails found',
 ];

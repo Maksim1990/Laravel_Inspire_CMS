@@ -47,6 +47,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/mail/create', 'MailController@createEmail')->name('create_mail');
         Route::post('/{id}/add_mail_image_attachment', 'MailController@attachImages')->name('mail_image_attachments');
 
+        Route::post('/ajax_get_mail_data', 'MailController@ajaxGetMailData')->name('ajax_get_mail_data');
+        Route::post('/ajax_delete_mail', 'MailController@ajaxDeleteMailData')->name('ajax_delete_mail');
+
         //-- Inspire office functionality
         Route::get('/{id}/office', 'OfficeController@index')->name('office');
         Route::get('/{id}/read_file', 'OfficeController@readFile')->name('office_read_file');
