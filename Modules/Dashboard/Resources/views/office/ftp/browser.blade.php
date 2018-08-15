@@ -88,6 +88,7 @@
                                         text: '{{trans('dashboard::messages.folder_empty')}}'
                                     }).show();
                                 }
+                                
                             }else{
                                 new Noty({
                                     type: 'error',
