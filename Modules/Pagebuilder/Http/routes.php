@@ -6,6 +6,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/content/editor', 'PagebuilderController@editor')->name("editor");
         Route::get('code_editor/{block_id?}', 'PagebuilderController@code_editor')->name("code_editor");
         Route::get('/{id}/css', 'PagebuilderController@css')->name("css");
+        Route::get('/background/{id?}', 'PagebuilderController@background')->name("background");
+        Route::get('/block/info/{id?}', 'PagebuilderController@blockInfo')->name("block_info");
         Route::get('/{id}/codeeditor/setting', 'PagebuilderController@codeeditorSetting')->name("codeeditor_setting");
 
 

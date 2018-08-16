@@ -1,6 +1,14 @@
 <script>
     var token = '{{\Illuminate\Support\Facades\Session::token()}}';
 
+    //-- Toggle Google maps key block based on Google map checkbox
+    if ($('#website_google_map').is(":checked"))
+    {
+        ShowGoogleMapsKeyBlock();
+    }else{
+        HideGoogleMapsKeyBlock();
+    }
+
 
     //-- Functionality to check allowed input values
     function checkInput(obj){
@@ -33,7 +41,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: '{{trans('messages.website_name_updated')}}!'
+                        text: '{{trans('dashboard::messages.website_name_updated')}}!'
                     }).show();
                 }
             }
@@ -69,7 +77,130 @@
         });
     });
 
+    //-- Functionality for trigger go to the top button visibility
+    $('#website_go_to_the_top').click(function () {
+        var url = '{{ route('ajax_website_go_to_the_top') }}';
+        var website_go_to_the_top = "N";
 
+        if ($(this).is(":checked"))
+        {
+            website_go_to_the_top="Y";
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                website_go_to_the_top: website_go_to_the_top,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('messages.website_settings_option_updated')}}!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality for trigger posts page visibility
+    $('#website_posts_page').click(function () {
+        var url = '{{ route('ajax_website_posts_page') }}';
+        var website_posts_page = "N";
+
+        if ($(this).is(":checked"))
+        {
+            website_posts_page="Y";
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                website_posts_page: website_posts_page,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('messages.website_settings_option_updated')}}!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    //-- Functionality for trigger Google maps visibility
+    $('#website_google_map').click(function () {
+        var url = '{{ route('ajax_website_google_map') }}';
+        var website_google_map = "N";
+
+        if ($(this).is(":checked"))
+        {
+            website_google_map="Y";
+            ShowGoogleMapsKeyBlock();
+        }else{
+            HideGoogleMapsKeyBlock();
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                website_google_map: website_google_map,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('messages.website_settings_option_updated')}}!'
+                    }).show();
+                }
+            }
+        });
+    });
+
+    function ShowGoogleMapsKeyBlock() {
+        $('#google_maps_block').show();
+    }
+
+    function HideGoogleMapsKeyBlock() {
+        $('#google_maps_block').hide();
+    }
+
+    //-- Functionality to update Google maps key
+    $('#save_website_google_map_key').click(function () {
+        var url = '{{ route('ajax_website_google_map_key') }}';
+        var website_google_map_key = $('#website_google_map_key').val();
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                website_google_map_key: website_google_map_key,
+                _token: token
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('dashboard::messages.website_google_maps_key_updated')}}!'
+                    }).show();
+                }
+            }
+        });
+    });
 
     //-- Functionality to update GitHub URL
     $('#save_github').click(function () {

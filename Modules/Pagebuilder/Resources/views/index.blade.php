@@ -29,10 +29,6 @@
             @endforeach
         @endforeach
 
-        @php
-            //dd($arrBlocks);
-        @endphp
-
         <script>
             tinymce.init({
                 selector: 'h2.editable',
@@ -87,12 +83,14 @@
                     editor.on('MouseOver', function (e) {
                         blockID = e.target.closest("li").id.replace("block_", "").trim();
                         var blockTextID = e.target.closest("li").dataset.blocktextid;
-                        //console.log(blockTextID);
+
 
                         $("#pagebuilder_menu_code_editor_" + blockID).data('blockid', blockID);
                         $("#pagebuilder_menu_save_" + blockID).data('blockid', blockTextID);
                         $("#pagebuilder_menu_code_editor_" + blockID).attr('href', '{{route("code_editor")}}/' + blockID);
-                        //console.log($("#pagebuilder_menu_code_editor").data('blockid'));
+                        $("#pagebuilder_menu_background_" + blockID).attr('href', '{{route("background")}}/' + blockID);
+                        $("#pagebuilder_menu_info_" + blockID).attr('href', '{{route("block_info")}}/' + blockID);
+
                     });
                 },
 
@@ -155,10 +153,10 @@
                             echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $strContent . "<hr></div>";
                             echo "<span class=\"tooltiptext\">";
                             //-- Code editor button
-                            echo "<a id='pagebuilder_menu_code_editor_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-info tooltip_link'>Go to code editor</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Change block background</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>Block info</a><br>";
-                            echo "<button id='pagebuilder_menu_save_".$arrBlocks[$idx]['id']."' data-blockid='' class='btn btn-success tooltip_link'>Save</button><br>";
+                            echo "<a id='pagebuilder_menu_code_editor_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-info tooltip_link'>".trans('pagebuilder::messages.go_to_code_editor')."</a><br>";
+                            echo "<a id='pagebuilder_menu_background_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>".trans('pagebuilder::messages.change_background')."</a><br>";
+                            echo "<a id='pagebuilder_menu_info_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>".trans('pagebuilder::messages.block_info')."</a><br>";
+                            echo "<button id='pagebuilder_menu_save_".$arrBlocks[$idx]['id']."' data-blockid='' class='btn btn-success tooltip_link'>".trans('messages.save')."</button><br>";
                             echo "</span>";
                             echo "</li>";
                         }
@@ -167,10 +165,9 @@
                 <div style="clear:both;"></div>
             </div>
             <div id="pagebuilder_menu" class="col-sm-6 col-xs-12">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home">Editor settings</a></li>
-                    <li><a data-toggle="tab" href="#menu1">Website main settiings</a></li>
-                    <li><a data-toggle="tab" href="#menu2">Custom CSS</a></li>
+                <ul class="nav nav-tabs" id="pagebuilder_settings">
+                    <li class="active"><a data-toggle="tab" href="#home" class="tab_link">Editor settings</a></li>
+                    <li><a data-toggle="tab" href="#menu1" class="tab_link">Custom CSS</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -179,27 +176,27 @@
                         <p>1. Pagebuilder background color</p>
                         <p>2. How to display labels in text</p>
                     </div>
-                    <div id="menu1" class="tab-pane fade">
-                        <h3>Menu 1</h3>
-                        <p>Some content in menu 1.</p>
-                    </div>
-                    <div id="menu2" class="tab-pane fade">
+                    <div id="menu1" class="tab-pane">
                         <h3>Menu 2</h3>
                         <p>Some content in menu 2.</p>
                     </div>
                 </div>
             </div>
         @else
-            <p>No data found for pagebuilder!</p>
+            <p>@lang('pagebuilder::messages.no_data_found_for_pagebuilder')</p>
         @endif
     </div>
 @stop
+
+{{-- Including website settings tabs --}}
+@include('pagebuilder::settings')
+
 @section('scripts')
     <script src="{{custom_asset('js/jquery.dragsort.js')}}" type="text/javascript"></script>
 
     <script type="text/javascript">
 
-//-- Code for draagging functionality
+        //-- Code for draagging functionality
         $("#gallery").dragsort({
             dragSelector: "div",
             dragEnd: saveOrder,
@@ -229,7 +226,7 @@
                             new Noty({
                                 type: 'success',
                                 layout: 'topRight',
-                                text: 'Custom CSS was updated!'
+                                text: '{{trans('pagebuilder::messages.custom_css_updated')}}'
                             }).show();
                         }
                     }
@@ -258,7 +255,7 @@
                         new Noty({
                             type: 'success',
                             layout: 'topRight',
-                            text: 'Code updated!'
+                            text: '{{trans('pagebuilder::messages.code_updated')}}'
                         }).show();
                     }
                 }

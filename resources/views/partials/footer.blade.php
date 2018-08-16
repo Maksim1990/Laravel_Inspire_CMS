@@ -1,12 +1,13 @@
-
 </div>
 <footer id="footer">
     <div class="w3-row ">
-        <div class="w3-col s6 m6  w3-center"><ul class="w3-ul">
+        <div class="w3-col s6 m6  w3-center">
+            <ul class="w3-ul">
                 <li class="w3-hover-green"><a href="#">About</a></li>
                 <li class="w3-hover-green">Future updates</li>
                 <li class="w3-hover-green">Adam</li>
-            </ul></div>
+            </ul>
+        </div>
         <div class="w3-col s6 m6  w3-center">
             <ul class="w3-ul">
                 <li class="w3-hover-green"><a href="#">Contact Us</a></li>
@@ -25,7 +26,8 @@
 </div>
 
 {{--Right sidebar button--}}
-    <a id="openNavRight" onclick="ShowRightSidebar()"><img src="{{custom_asset("images/includes/rightSideBarArrow.png")}}" alt=""></a>
+<a id="openNavRight" onclick="ShowRightSidebar()"><img src="{{custom_asset("images/includes/rightSideBarArrow.png")}}"
+                                                       alt=""></a>
 
 
 <div id="divLoading"></div>
@@ -44,28 +46,29 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-              <ul>
-                  @if(!empty($appFooter->getAppLanguages()))
-                      @foreach($appFooter->getAppLanguages() as $strLand=>$strFullLang)
-                          @if(strtolower($strLand)=='th')
-                              @php $strImage='th'; @endphp
-                          @elseif(strtolower($strLand)=='fr')
-                              @php $strImage='fr'; @endphp
-                          @elseif(strtolower($strLand)=='ru')
-                              @php $strImage='ru'; @endphp
-                          @else
-                              @php $strImage='en'; @endphp
-                          @endif
-                  <li>
-                      <a rel="alternate"
-                          href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
-                          <img style="border-radius: 30px;" width="25" height="25"
-                               src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}" alt=""> {{$strFullLang}}
-                      </a>
-                  </li>
-                      @endforeach
-                      @endif
-              </ul>
+                <ul>
+                    @if(!empty($appFooter->getAppLanguages()))
+                        @foreach($appFooter->getAppLanguages() as $strLand=>$strFullLang)
+                            @if(strtolower($strLand)=='th')
+                                @php $strImage='th'; @endphp
+                            @elseif(strtolower($strLand)=='fr')
+                                @php $strImage='fr'; @endphp
+                            @elseif(strtolower($strLand)=='ru')
+                                @php $strImage='ru'; @endphp
+                            @else
+                                @php $strImage='en'; @endphp
+                            @endif
+                            <li>
+                                <a rel="alternate"
+                                   href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
+                                    <img style="border-radius: 30px;" width="25" height="25"
+                                         src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}"
+                                         alt=""> {{$strFullLang}}
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
             </div>
 
             <!-- Modal footer -->
@@ -77,28 +80,30 @@
 
 <script>
     function emojiDir(emoji) {
-        var emojiPathImage="<img width='30' src="+emoji+"  alt='' />";
-        $('#postInput').val(function(_, val){return val + emojiPathImage; });
+        var emojiPathImage = "<img width='30' src=" + emoji + "  alt='' />";
+        $('#postInput').val(function (_, val) {
+            return val + emojiPathImage;
+        });
     }
 </script>
 <script>
-    $(document).ready(function(){
-        var statusImageBorder=true;
+    $(document).ready(function () {
+        var statusImageBorder = true;
 
-        $('#loggedName img').css('border-style','solid');
-        $('#loggedName img').css('border-color','transparent');
-        $('#loggedName').click(function(){
-            if(statusImageBorder){
-                $('#loggedName img').css('borderWidth','3px');
-                $('#loggedName img').css('borderRadius','30px');
-                $('#loggedName img').css('borderColor','orange');
-                statusImageBorder=false;
+        $('#loggedName img').css('border-style', 'solid');
+        $('#loggedName img').css('border-color', 'transparent');
+        $('#loggedName').click(function () {
+            if (statusImageBorder) {
+                $('#loggedName img').css('borderWidth', '3px');
+                $('#loggedName img').css('borderRadius', '30px');
+                $('#loggedName img').css('borderColor', 'orange');
+                statusImageBorder = false;
 
-            }else{
-                $('#loggedName img').css('borderWidth','0px');
-                $('#loggedName img').css('borderRadius','40px');
-                $('#loggedName img').css('borderColor','transparent');
-                statusImageBorder=true;
+            } else {
+                $('#loggedName img').css('borderWidth', '0px');
+                $('#loggedName img').css('borderRadius', '40px');
+                $('#loggedName img').css('borderColor', 'transparent');
+                statusImageBorder = true;
             }
         });
     });
@@ -185,33 +190,44 @@
         document.getElementById("openNavRight").style.display = 'none';
         HideLeftSidebar();
     }
+
     function HideRightSidebar(status=true) {
         document.getElementById("mainContent").style.marginRight = "0%";
         document.getElementById("rightSidebar").style.display = "none";
         document.getElementById("openNavRight").style.display = "inline-block";
-        if(!status){
+        if (!status) {
             HideLeftSidebar();
         }
     }
 </script>
 
 
-
 <script>
-       $('.image_gallery img').attr('onclick','onClick(this)');
+    $('.image_gallery img').attr('onclick', 'onClick(this)');
 
 
-       //-- Funcrionality for adapt hover left sidebar submenus
-       //-- In order to display above all other content on the page
-       $('.tooltip_menu_side').on('mouseover',function () {
-           $('.mainside').css('z-index', -2);
-       });
-       $('.tooltip_menu_side').on('mouseout',function () {
-           $('.mainside').css('z-index', 2);
-       });
+    //-- Funcrionality for adapt hover left sidebar submenus
+    //-- In order to display above all other content on the page
+    $('.tooltip_menu_side').on('mouseover', function () {
+        $('.mainside').css('z-index', -2);
+    });
+    $('.tooltip_menu_side').on('mouseout', function () {
+        $('.mainside').css('z-index', 2);
+    });
 </script>
+
 <script>
-    $(document).ready(function(){
+    //-- Functionality that fixes issue with correct style for bootstrap tabs
+    $('.tab_link').on('click', function () {
+        var parentULTagId = $(this).parent().closest('ul').attr('id');
+        $("#" + parentULTagId + ">li").removeClass("active");
+        $(this).parent().addClass('active');
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>

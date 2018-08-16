@@ -1,6 +1,4 @@
-@extends('dashboard::layouts.master')
-
-@section('General')
+@section('Settings')
     <div class="row maintab">
         <div class="col-sm-12 col-lg-12 col-xs-12">
             <div>

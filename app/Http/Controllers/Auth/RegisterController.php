@@ -152,7 +152,7 @@ class RegisterController extends Controller
                 $block=Block::create([
                     'user_id' => $user->id,
                     'block_id' => $defaultBlock->block_id."_".$user->id,
-                    'block_type' => $defaultBlock->block_id,
+                    'block_custom_id' => $defaultBlock->block_custom_id,
                     'sortorder' => $defaultBlock->id
                 ]);
 
