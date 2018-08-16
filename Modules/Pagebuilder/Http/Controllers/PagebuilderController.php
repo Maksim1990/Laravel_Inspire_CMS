@@ -23,7 +23,7 @@ class PagebuilderController extends Controller
     {
 
         $user = User::findOrFail($id);
-        $arrTabs = ['General','Settings'];
+        $arrTabs = ['General','Settings','Social'];
         $active = "active";
         $websiteBlocks = Block::where('user_id', $user->id)->orderBy('sortorder', 'ASC')->get();
 
