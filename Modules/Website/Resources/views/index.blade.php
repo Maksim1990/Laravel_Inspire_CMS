@@ -10,11 +10,12 @@
         @foreach($blockMain->content as $block)
             @php
                 $arrBlockName=explode("_",$blockMain->block_id);
+                $strBlockHtmlId=$blockMain->block_custom_id;
                 $template="website::blocks.".$arrBlockName[0];
              $strContent=str_replace('../../public/storage','../../../public/storage',$blockMain->filteredContent($block->content));
                             $strContent=str_replace('../../storage','/public/storage',$blockMain->filteredContent($block->content));
             @endphp
-            @include($template, ['content' => $strContent])
+            @include($template, ['content' => $strContent,'id'=>$strBlockHtmlId])
         @endforeach
     @endforeach
 

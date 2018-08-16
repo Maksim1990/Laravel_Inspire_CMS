@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Mews\Purifier\Facades\Purifier;
+use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
 
 class PagebuilderController extends Controller
@@ -204,15 +205,43 @@ class PagebuilderController extends Controller
     public function css($id)
     {
 
-        $arrTabs = ['General'];
-        $active = "active";
         $customSetting = Setting::where('user_id', $id)->first();
-        $blockCode = "";
         $arrTabs = ['General'];
         $active = "active";
-        $cssCode = "";
 
         return view('pagebuilder::css.index', compact('arrTabs', 'active', 'customSetting'));
+    }
+
+    /**
+     * Functionality to change block background
+     *
+     * @param $id
+     * @return Response
+     */
+    public function background($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        $user_id=Auth::id();
+        $customSetting = Background::where('user_id', $user_id)->where('block_id', $id)->first();
+
+        return view('pagebuilder::css.background', compact('arrTabs', 'active'));
+    }
+
+    /**
+     * Functionality to dispaly info about specific pagebuilder block
+     *
+     * @param $id
+     * @return Response
+     */
+    public function blockInfo($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        $user_id=Auth::id();
+
+
+        return view('pagebuilder::css.info', compact('arrTabs', 'active'));
     }
 
 

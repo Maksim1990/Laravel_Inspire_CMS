@@ -29,10 +29,6 @@
             @endforeach
         @endforeach
 
-        @php
-            //dd($arrBlocks);
-        @endphp
-
         <script>
             tinymce.init({
                 selector: 'h2.editable',
@@ -87,12 +83,14 @@
                     editor.on('MouseOver', function (e) {
                         blockID = e.target.closest("li").id.replace("block_", "").trim();
                         var blockTextID = e.target.closest("li").dataset.blocktextid;
-                        //console.log(blockTextID);
+
 
                         $("#pagebuilder_menu_code_editor_" + blockID).data('blockid', blockID);
                         $("#pagebuilder_menu_save_" + blockID).data('blockid', blockTextID);
                         $("#pagebuilder_menu_code_editor_" + blockID).attr('href', '{{route("code_editor")}}/' + blockID);
-                        //console.log($("#pagebuilder_menu_code_editor").data('blockid'));
+                        $("#pagebuilder_menu_background_" + blockID).attr('href', '{{route("background")}}/' + blockID);
+                        $("#pagebuilder_menu_info_" + blockID).attr('href', '{{route("block_info")}}/' + blockID);
+
                     });
                 },
 
@@ -156,8 +154,8 @@
                             echo "<span class=\"tooltiptext\">";
                             //-- Code editor button
                             echo "<a id='pagebuilder_menu_code_editor_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-info tooltip_link'>".trans('pagebuilder::messages.go_to_code_editor')."</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>".trans('pagebuilder::messages.change_background')."</a><br>";
-                            echo "<a id='pagebuilder_menu_style_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>".trans('pagebuilder::messages.block_info')."</a><br>";
+                            echo "<a id='pagebuilder_menu_background_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>".trans('pagebuilder::messages.change_background')."</a><br>";
+                            echo "<a id='pagebuilder_menu_info_".$arrBlocks[$idx]['id']."' data-blockid='' href='#' class='btn btn-warning tooltip_link'>".trans('pagebuilder::messages.block_info')."</a><br>";
                             echo "<button id='pagebuilder_menu_save_".$arrBlocks[$idx]['id']."' data-blockid='' class='btn btn-success tooltip_link'>".trans('messages.save')."</button><br>";
                             echo "</span>";
                             echo "</li>";
