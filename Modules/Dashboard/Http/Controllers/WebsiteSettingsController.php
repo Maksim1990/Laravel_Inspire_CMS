@@ -87,7 +87,7 @@ class WebsiteSettingsController extends Controller
 
         if(!$websiteSetting->update()){
             $result = "";
-            $strError = "Website name was not updated. Please try again!";
+            $strError = trans('dashboard::messages.website_name_not_updated');
         }
 
         header('Content-Type: application/json');
@@ -118,6 +118,90 @@ class WebsiteSettingsController extends Controller
         ));
     }
 
+    public function updateWebsiteGoToTheTopButton(Request $request)
+    {
+        $strWebsiteGoToTheTopButton = $request->website_go_to_the_top;
+        $strError = "";
+        $result = "success";
+
+        $websiteSetting=WebsiteSetting::findOrFail(Auth::id());
+        $websiteSetting->go_top_button=$strWebsiteGoToTheTopButton;
+
+        if(!$websiteSetting->update()){
+            $result = "";
+            $strError = trans('dashboard::messages.option_was_not_updated');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+    public function updateWebsitePostsPage(Request $request)
+    {
+        $strWebsitePostsPage = $request->website_posts_page;
+        $strError = "";
+        $result = "success";
+
+        $websiteSetting=WebsiteSetting::findOrFail(Auth::id());
+        $websiteSetting->posts_page=$strWebsitePostsPage;
+
+        if(!$websiteSetting->update()){
+            $result = "";
+            $strError = trans('dashboard::messages.option_was_not_updated');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+    public function updateWebsiteGoogleMap(Request $request)
+    {
+        $strWebsiteGoogleMap = $request->website_google_map;
+        $strError = "";
+        $result = "success";
+
+        $websiteSetting=WebsiteSetting::findOrFail(Auth::id());
+        $websiteSetting->google_map=$strWebsiteGoogleMap;
+
+        if(!$websiteSetting->update()){
+            $result = "";
+            $strError = trans('dashboard::messages.option_was_not_updated');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+
+    public function updateWebsiteGoogleMapKey(Request $request)
+    {
+        $strWebsiteGoogleMapKey = $request->website_google_map_key;
+        $strError = "";
+        $result = "success";
+
+        $websiteSetting=WebsiteSetting::findOrFail(Auth::id());
+        $websiteSetting->google_map_key=$strWebsiteGoogleMapKey;
+
+        if(!$websiteSetting->update()){
+            $result = "";
+            $strError = trans('dashboard::messages.website_google_maps_key_not_updated');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
 
 
     /**
