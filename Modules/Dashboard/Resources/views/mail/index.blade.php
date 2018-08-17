@@ -145,6 +145,10 @@
 
         //-- Show mail content
         $('.mail_item .mail_click').click(function () {
+            ShowMailInfo();
+        });
+
+        function ShowMailInfo(){
             var mailId = $('.mail_item').data('id');
 
             var url = '{{ route('ajax_get_mail_data') }}';
@@ -176,7 +180,8 @@
                     $("div#divLoading").removeClass('show');
                 }
             });
-        });
+        }
+
 
         function DeleteMail(id) {
 
@@ -271,6 +276,11 @@
                     //-- Delete label functionality
                     $('[id^="modal_delete_"]').click(function () {
                         ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
+                    });
+
+                    //-- Show mail content
+                    $('.mail_item .mail_click').click(function () {
+                        ShowMailInfo();
                     });
                 }
             });
