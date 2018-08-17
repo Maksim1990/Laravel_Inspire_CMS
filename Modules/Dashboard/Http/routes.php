@@ -45,6 +45,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('export/{type}/details', 'ExcelController@export')->name('export_file');
 
 
+        Route::get('/{id}/export/langs', 'ExcelController@exportLangs')->name('export_langs');
+        Route::post('export/{type}/langs', 'ExcelController@exportLangsFile')->name('export_langs_file');
+
+        Route::get('/{id}/export/menus', 'ExcelController@exportMenus')->name('export_menus');
+        Route::post('export/{type}/menus', 'ExcelController@exportMenusFile')->name('export_menus_file');
+
+        Route::get('/{id}/export/labels', 'ExcelController@exportLabels')->name('export_labels');
+
+        Route::get('/{id}/export/posts', 'ExcelController@exportPosts')->name('export_posts');
+        Route::post('export/{type}/posts', 'ExcelController@exportPostsFile')->name('export_posts_file');
+
+
         //-- Mail functionality
         Route::resource('/{id}/mail', 'MailController');
         Route::get('/{id}/mail', 'MailController@index')->name('mail');

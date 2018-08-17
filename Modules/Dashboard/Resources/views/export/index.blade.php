@@ -28,30 +28,58 @@
         }
 
 
-
     </style>
 
 @endsection
 @section('General')
-    <div class="col-sm-12 " id="search_header">
-        <h3 class="title">
-            @lang('dashboard::messages.export_module')
-        </h3>
-    </div>
-    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1 w3-center search_main">
+    <div class="row">
+        <div class="col-sm-12 col-md-10  col-xs-12">
+            <div class="col-sm-12 col-md-12  col-xs-12">
+                <h3 class="title">
+                    @lang('dashboard::messages.export_module')
+                </h3>
+                <div id="title_shape"></div>
 
-        <div class="col-sm-4 col-sm-offset-1 search_block users">
-            <a href="{{route('export_file',['type'=>'xls'])}}" class="text-uppercase">
-                <i class="fas fa-search"></i><br>
-                Export languages
-            </a>
+                <div class="insp_buttons">
+                    <a href="{{route("office",['id'=>Auth::id()])}}"
+                       class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')</a>
+                </div>
 
-        </div>
-        <div class="col-sm-4 col-sm-offset-1 search_block books">
-            <a href="{{URL::to(LaravelLocalization::getCurrentLocale() .'/import_movies_main')}}" class="text-uppercase">
-                <i class="fas fa-search"></i><br>
-                @lang('messages.movies')
-            </a>
+
+                <div class="col-sm-12 col-md-4 col-md-offset-1  col-xs-12 text-center icon_module">
+                    <a href="{{route('export_menus',['id'=>Auth::id()])}}">
+                        <p>
+                            <img height="100"
+                                 src="{{custom_asset('images/includes/ftp.png')}}" alt="">
+                        </p>
+                        <span>@lang('dashboard::messages.export_menus')</span>
+                    </a>
+                </div>
+
+                <div class="col-sm-12 col-md-4 col-md-offset-1   col-xs-12 text-center icon_module">
+                    <a href="{{route('export_langs',['id'=>Auth::id()])}}">
+                        {{--<p><i class="fa fa-spinner w3-spin" style="font-size:64px"></i></p>--}}
+                        <p class="font_icon"><i class="fas fa-wrench"></i></p>
+                        @lang('dashboard::messages.export_langs')
+                    </a>
+                </div>
+
+                <div class="col-sm-12 col-md-4 col-md-offset-1   col-xs-12 text-center icon_module">
+                    <a href="{{route('export_labels',['id'=>Auth::id()])}}">
+                        {{--<p><i class="fa fa-spinner w3-spin" style="font-size:64px"></i></p>--}}
+                        <p class="font_icon"><i class="fas fa-wrench"></i></p>
+                        @lang('dashboard::messages.export_labels')
+                    </a>
+                </div>
+
+                <div class="col-sm-12 col-md-4 col-md-offset-1   col-xs-12 text-center icon_module">
+                    <a href="{{route('export_posts',['id'=>Auth::id()])}}">
+                        {{--<p><i class="fa fa-spinner w3-spin" style="font-size:64px"></i></p>--}}
+                        <p class="font_icon"><i class="fas fa-wrench"></i></p>
+                        @lang('dashboard::messages.export_posts')
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

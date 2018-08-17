@@ -2,14 +2,12 @@
 
 namespace App\Office\Export;
 
-
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Modules\Dashboard\Entities\Language;
+use Illuminate\Support\Facades\Auth;
+use Modules\Post\Entities\Post;
 
-class LanguagesExport implements FromCollection
+class PostsExport implements FromCollection
 {
-
     /**
      * Number of lines to be exported
      */
@@ -38,7 +36,7 @@ class LanguagesExport implements FromCollection
      */
     public function collection()
     {
-        $languages=Language::where('user_id',Auth::id())->limit($this->count)->orderBy('id',$this->order)->get();
+        $posts=Post::where('user_id',Auth::id())->limit($this->count)->orderBy('id',$this->order)->get();
 
 
         if(!empty($this->columns)){
@@ -48,20 +46,20 @@ class LanguagesExport implements FromCollection
         }else{
             $this->columns=['id'];
         }
-            $languagesExport = $languages->map(function ($lang) {
-                return collect($lang->toArray())
-                    ->only($this->columns)
-                    ->all();
-            });
+        $postsExport = $posts->map(function ($post) {
+            return collect($post->toArray())
+                ->only($this->columns)
+                ->all();
+        });
 
 
-        $languagesHeader=array();
+        $postsHeader=array();
         foreach ($this->columns as $column){
-            $languagesHeader[$column]=$column;
+            $postsHeader[$column]=$column;
         }
 
-        $languagesExport->prepend($languagesHeader);
+        $postsExport->prepend($postsHeader);
 
-        return $languagesExport;
+        return $postsExport;
     }
 }
