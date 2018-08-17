@@ -139,6 +139,7 @@ class OfficeController extends Controller
             $response->header('Content-Type', 'application/pdf');
 
             return $response;
+            
         }
 
 // Or to download
