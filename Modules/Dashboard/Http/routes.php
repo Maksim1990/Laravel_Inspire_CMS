@@ -80,7 +80,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/read_file', 'OfficeController@readFile')->name('office_read_file');
         Route::get('/{id}/docs', 'OfficeController@docs')->name('office_docs');
         Route::get('/{id}/docs/upload', 'OfficeController@uploadDoc')->name('upload_document');
-        Route::post('/{id}/docs/store', 'OfficeController@storeDocs')->name('upload_document');
+        Route::post('/{id}/docs/store', 'OfficeController@storeDocs')->name('upload_document_store');
 
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
