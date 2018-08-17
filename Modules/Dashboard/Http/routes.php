@@ -52,6 +52,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('export/{type}/menus', 'ExcelController@exportMenusFile')->name('export_menus_file');
 
         Route::get('/{id}/export/labels', 'ExcelController@exportLabels')->name('export_labels');
+        Route::post('export/{type}/labels', 'ExcelController@exportLabelsFile')->name('export_labels_file');
 
         Route::get('/{id}/export/posts', 'ExcelController@exportPosts')->name('export_posts');
         Route::post('export/{type}/posts', 'ExcelController@exportPostsFile')->name('export_posts_file');

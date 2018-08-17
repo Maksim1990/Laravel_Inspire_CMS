@@ -324,9 +324,6 @@ class DashboardController extends Controller
         $arrOfDefaultLanguagesKeys = array_keys($arrOfDefaultLanguages);
 
 
-        $config = ConfigLang::LANG_ARRAY;
-        //dd($config);
-
         $allAvailableLanguages = LaravelLocalization::getSupportedLocales();
 
         return view('dashboard::languages', compact('arrTabs', 'active', 'allAvailableLanguages', 'arrOfActiveLanguagesKeys', 'arrOfDefaultLanguagesKeys'));
