@@ -18,9 +18,9 @@
             <div class="col-sm-12 col-md-8  col-xs-12">
                 {!! Form::open(['method'=>'POST','action'=>['\Modules\Dashboard\Http\Controllers\ExcelController@exportLabelsFile','id'=>Auth::id()], 'files'=>true])!!}
                 <div class="group-form col-sm-12">
-                    {!! Form::label('type','Export file type') !!}<br>
-                    {!! Form::radio('type', 'xls', true) !!}XLS<br>
-                    {!! Form::radio('type', 'csv', false) !!}CSV
+                    {!! Form::label('type',trans('dashboard::messages.export_file_type')) !!}<br>
+                    {!! Form::radio('type', 'xls', true,['id'=>'xls']) !!} {!! Form::label('xls','XLS',['style'=>'font-weight: 100;']) !!}<br>
+                    {!! Form::radio('type', 'csv', false,['id'=>'csv']) !!} {!! Form::label('csv','CSV',['style'=>'font-weight: 100;']) !!}
                     <hr>
                 </div>
                 <div class="group-form col-sm-12 col-md-8  col-xs-12">
@@ -30,23 +30,23 @@
                     <hr>
                 </div>
                 <div class="group-form col-sm-12">
-                    {!! Form::label('type','Order type') !!}<br>
-                    {!! Form::radio('order', 'ASC', true) !!}Normal<br>
-                    {!! Form::radio('order', 'DESC', false) !!}Recent first
+                    {!! Form::label('type',trans('dashboard::messages.export_order_type')) !!}<br>
+                    {!! Form::radio('order', 'ASC', true,['id'=>'normal']) !!} {!! Form::label('normal',trans('dashboard::messages.export_normal'),['style'=>'font-weight: 100;']) !!}<br>
+                    {!! Form::radio('order', 'DESC', false,['id'=>'recent']) !!} {!! Form::label('recent',trans('dashboard::messages.export_recent_first'),['style'=>'font-weight: 100;']) !!}
                     <hr>
                 </div>
 
                 <div class="group-form col-sm-12">
                     {!! Form::label('type',trans('dashboard::messages.export_chose_columns')) !!}<br>
                     @foreach($arrKeys as $key)
-                        {!! Form::checkbox('columns[]', $key, true) !!}{{$key}}<br>
+                        {!! Form::checkbox('columns[]', $key, true, ['id'=>$key]) !!} {!! Form::label($key,$key,['style'=>'font-weight: 100;']) !!}<br>
                     @endforeach
                     <hr>
                 </div>
                 <div class="group-form col-sm-12">
                     {!! Form::label('type',trans('dashboard::messages.export_item_language_to_export')) !!}<br>
                     @foreach($arrLabelLangs as $key=>$strLang)
-                        {!! Form::checkbox('arrLanguages[]', $key, true) !!}{{$strLang}}<br>
+                        {!! Form::checkbox('arrLanguages[]', $key, true, ['id'=>$strLang]) !!} {!! Form::label($strLang,$strLang,['style'=>'font-weight: 100;']) !!}<br>
                     @endforeach
                     <hr>
                 </div>

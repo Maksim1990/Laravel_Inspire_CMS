@@ -57,4 +57,8 @@ return [
     'export_chose_columns' => 'Choose what columns should be exported',
     'export_number_records' => 'Number of records to export',
     'export_item_language_to_export' => 'Choose languages of menus items to be exported',
+    'export_file_type' => 'Export file type',
+    'export_order_type' => 'Order type',
+    'export_normal' => 'Normal',
+    'export_recent_first' => 'Recent first',
 ];
