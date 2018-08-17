@@ -82,6 +82,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/docs/upload', 'OfficeController@uploadDoc')->name('upload_document');
         Route::post('/{id}/docs/store', 'OfficeController@storeDocs')->name('upload_document_store');
 
+        Route::post('/ajax_delete_file', 'OfficeController@ajaxDeleteFile')->name('ajax_delete_file');
+
 
         Route::post('/ajax_update_menu', 'DashboardController@updateMenu')->name('ajax_update_menu');
         Route::post('/ajax_delete_menu', 'DashboardController@deleteMenu')->name('ajax_delete_menu');

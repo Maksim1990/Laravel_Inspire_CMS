@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Modules\Dashboard\Entities\Document;
 use Modules\Dashboard\Entities\MailEntity;
 
 class SearchController extends Controller
@@ -46,6 +47,14 @@ class SearchController extends Controller
                         ->orWhere('to','like', '%'.$strValue.'%')
                         ->orWhere('title','like', '%'.$strValue.'%')
                         ->orWhere('content','like', '%'.$strValue.'%');
+                })->get();
+                $arrData = $arrMails;
+                break;
+            case "file":
+                $arrMails=Document::where('user_id',Auth::id())->where(function ($query)use($strValue){
+                    $query->where('name','like', '%'.$strValue.'%')
+                        ->orWhere('size','like', '%'.$strValue.'%')
+                        ->orWhere('extension','like', '%'.$strValue.'%');
                 })->get();
                 $arrData = $arrMails;
                 break;

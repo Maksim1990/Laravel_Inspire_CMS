@@ -45,13 +45,13 @@ class OfficeController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function docs()
+    public function docs($id)
     {
         $arrTabs = ['General'];
         $active = "active";
 
-
-        return view('dashboard::office.documents.index', compact('arrTabs', 'active'));
+        $documents=Document::where('user_id',$id)->orderBy('id')->paginate(10);
+        return view('dashboard::office.documents.index', compact('arrTabs', 'active','documents'));
     }
 
     /**
@@ -75,7 +75,7 @@ class OfficeController extends Controller
     public function storeDocs(Request $request)
     {
         $result = "success";
-        $arrAllowedExtension = ['pdf', 'xls', 'txt','doc','docx'];
+        $arrAllowedExtension = ['pdf', 'xls','xlsx','csv', 'txt','doc','docx'];
 
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
@@ -105,6 +105,35 @@ class OfficeController extends Controller
 
         echo $result;
 
+
+    }
+
+    /**
+     * Delete specific mail data
+     *
+     * @param Request $request
+     */
+    public function ajaxDeleteFile(Request $request)
+    {
+        $fileId = $request->id;
+        $strError = "";
+        $result = "success";
+        $file=Document::find($fileId);
+
+        if($file->path){
+            unlink(storage_path('/app/public/'.$file->path));
+            $file->delete();
+        }else{
+            $strError = trans('dashboard::messages.file_not_found');
+            $result = "";
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
 
     }
 

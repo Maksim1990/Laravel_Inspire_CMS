@@ -10,7 +10,9 @@
 
             <div class="insp_buttons">
                 <a href="{{route("office",['id'=>Auth::id()])}}"
-                   class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')</a>
+                   class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')
+                </a><a href="{{route("office_docs",['id'=>Auth::id()])}}"
+                   class="btn btn-info">@lang('dashboard::messages.back_to_all_documents')</a>
             </div>
             <div class="row">
                 <div class="col-sm-12 col-lg-8 col-xs-12">
@@ -38,7 +40,7 @@
                     new Noty({
                         type: 'success',
                         layout: 'topRight',
-                        text: 'Images updated!'
+                        text: '{{trans('dashboard::messages.file_uploaded')}}'
                     }).show();
                 }else{
                     new Noty({

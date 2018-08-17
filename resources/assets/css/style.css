@@ -32,6 +32,10 @@ a .link{
 .insp_buttons{
     margin-bottom: 20px;border-bottom: 2px solid #cbcbcb;padding-bottom: 20px;
 }
+.insp_buttons a{
+    margin-right: 10px;
+}
+
 .icon_module {
     transition: box-shadow .3s;
     width: 90%;

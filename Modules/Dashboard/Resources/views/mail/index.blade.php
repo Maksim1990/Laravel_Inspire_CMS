@@ -9,9 +9,10 @@
         <a href="{{route("create_mail",Auth::id())}}" class="btn btn-success">@lang('messages.create_new_email')</a>
     </div>
 
-    @if(count(Auth::user()->mails)>0)
+    @if(count($mails)>0)
         <div class="row">
             <div class="col-sm-12 col-lg-8 col-xs-12">
+                <span id="found_items"></span>
             </div>
             <div class="col-sm-12 col-lg-4 col-xs-12">
                 <input type="text" class="form-control" style="display: inline;" id="search_bar"
@@ -32,7 +33,7 @@
             </tr>
             </thead>
             <tbody id="mail_body">
-            @foreach(Auth::user()->mails as $mail)
+            @foreach($mails as $mail)
 
                 <tr class="mail_item" id="mail_{{$mail->id}}" data-id="{{$mail->id}}">
                     <td class="mail_click">{{$mail->from}}</td>
@@ -52,9 +53,12 @@
 
             @endforeach
             </tbody>
+            <tbody id="mail_body_search"></tbody>
         </table>
     @endif
-
+    <div class="col-sm-12 col-lg-8 col-xs-12 w3-center" id="links">
+        {!! $mails->links() !!}
+    </div>
     {{--Image big size modal--}}
     <div class="modal" id="mail_modal">
         <div class="modal-dialog">
@@ -216,6 +220,7 @@
             var url = '{{ route('ajax_search_bar') }}';
             var strValue = $(this).val();
 
+            if(strValue!=""){
             $.ajax({
                 method: 'POST',
                 url: url,
@@ -234,9 +239,15 @@
                         //-- Hide loading image
                         $("div#divLoading").removeClass('show');
 
-                        //-- Making mine data block empty
-                        $("#mail_body").html('');
+                        //-- Hide mails list
+                        $("#mail_body,#links").hide();
+                        $("#mail_body_search,#found_items").html('');
+
                         if (data['arrData'].length > 0) {
+
+                            //-- Set number of found items
+                            $("#found_items").html('Number of found items:<b>'+data['arrData'].length+'</b>');
+
                             for (var i = 0; i < data['arrData'].length; i++) {
 
                                 var newMenuCount = data['arrData'][i]['id'];
@@ -248,20 +259,25 @@
                                 var strDeleteButton = '<td><a href="#" id="delete_' + data['arrData'][i]['id'] + '"><span class="delete w3-text-red"><i class="fas fa-minus-circle"></i></span></a></td>';
                                 var strContent = strFrom + strTo + strTitle + strDate + strDeleteButton;
 
-                                $(' <tr class="mail_item" id="mail_' + newMenuCount + '" data-id="' + newMenuCount + '">').html(strContent + "</tr>").appendTo('#mail_body');
+                                $(' <tr class="mail_item" id="mail_' + newMenuCount + '" data-id="' + newMenuCount + '">').html(strContent + "</tr>").appendTo('#mail_body_search');
 
                             }
                         } else {
-                            $(' <p class="w3-text-grey" style="font-size: 30px;padding:10px 10px;">').html("{{trans('dashboard::messages.no_mails_found')}}</p>").appendTo('#mail_body');
+                            $(' <p class="w3-text-grey" style="font-size: 30px;padding:10px 10px;">').html("{{trans('dashboard::messages.no_mails_found')}}</p>").appendTo('#mail_body_search');
                         }
 
                     }
 
-                    $('[id^="delete_"]').click(function () {
-                        DeleteMail($(this).attr('id').replace('delete_', ""));
+                    //-- Delete label functionality
+                    $('[id^="modal_delete_"]').click(function () {
+                        ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
                     });
                 }
             });
+            }else{
+                $("#mail_body_search,#found_items").html('');
+                $("#mail_body,#links").show();
+            }
 
         });
 

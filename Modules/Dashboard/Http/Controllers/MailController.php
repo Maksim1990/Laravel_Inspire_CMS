@@ -19,12 +19,13 @@ class MailController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
         $arrTabs = ['General'];
         $active = "active";
+        $mails=MailEntity::where('user_id',$id)->orderBy('id')->paginate(10);
 
-        return view('dashboard::mail.index', compact('arrTabs', 'active'));
+        return view('dashboard::mail.index', compact('arrTabs', 'active','mails'));
     }
 
 
