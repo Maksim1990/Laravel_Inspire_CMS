@@ -1,34 +1,5 @@
 @extends('dashboard::layouts.master')
 @section('styles')
-    <style>
-        .search_main {
-            padding-top: 100px;
-        }
-
-        #search_header {
-            margin-bottom: 50px;
-        }
-
-        .search_block {
-            border-radius: 20px;
-            background-color: lightgreen;
-            padding: 0px 10px 0px 10px;
-            margin-bottom: 30px;
-        }
-
-        .search_block:hover {
-            background-color: darkseagreen;
-        }
-
-        .search_block a {
-            display: block;
-            height: 200px;
-            width: 100%;
-            padding-top: 60px;
-        }
-
-
-    </style>
 
 @endsection
 @section('General')
@@ -85,5 +56,5 @@
 
 @endsection
 @section('scripts')
-    <script src="{{asset('js/app.js')}}"></script>
+
 @endsection

@@ -6,7 +6,6 @@
         <div id="title_shape"></div>
     </div>
     <div>
-        <p>Module: <b>Website</b></p>
 
         <div>
             <form action="POST" name="lang_form" id="lang_form">

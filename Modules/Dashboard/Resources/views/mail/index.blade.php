@@ -8,17 +8,19 @@
     <div class="insp_buttons">
         <a href="{{route("create_mail",Auth::id())}}" class="btn btn-success">@lang('messages.create_new_email')</a>
     </div>
-    <div class="row">
-        <div class="col-sm-12 col-lg-8 col-xs-12">
-        </div>
-        <div class="col-sm-12 col-lg-4 col-xs-12">
-            <input type="text" class="form-control" style="display: inline;" id="search_bar"
-                   placeholder="@lang('messages.search')">
 
-        </div>
-        <hr>
-    </div>
     @if(count(Auth::user()->mails)>0)
+        <div class="row">
+            <div class="col-sm-12 col-lg-8 col-xs-12">
+            </div>
+            <div class="col-sm-12 col-lg-4 col-xs-12">
+                <input type="text" class="form-control" style="display: inline;" id="search_bar"
+                       placeholder="@lang('messages.search')">
+
+            </div>
+            <hr>
+        </div>
+
         <table class="w3-table-all w3-hoverable">
             <thead>
             <tr class="w3-light-grey">
@@ -91,8 +93,9 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <button type="button" class="btn btn-success" id="cancel" data-dismiss="modal">@lang('messages.cancel')</button>
-                <span id="delete_button"></span>
+                    <button type="button" class="btn btn-success" id="cancel"
+                            data-dismiss="modal">@lang('messages.cancel')</button>
+                    <span id="delete_button"></span>
                 </div>
 
                 <!-- Modal footer -->
@@ -123,20 +126,17 @@
 
 
         function ShowDeleteModal(id) {
-            var strDeleteButton='<a href="#" class="btn btn-danger delete_mail" data-id="'+id+'" >{{trans('messages.delete')}}</a>';
+            var strDeleteButton = '<a href="#" class="btn btn-danger delete_mail" data-id="' + id + '" >{{trans('messages.delete')}}</a>';
             $("#delete_button").html(strDeleteButton);
             $('#delete_mail').modal('toggle');
 
 
             $('.delete_mail').click(function () {
-                var id=$(this).data('id');
+                var id = $(this).data('id');
                 DeleteMail(id);
             });
 
         }
-
-
-
 
 
         //-- Show mail content
@@ -180,33 +180,33 @@
             $('#delete_mail').modal('hide');
 
             var url = '{{ route('ajax_delete_mail') }}';
-                $.ajax({
-                    method: 'POST',
-                    url: url,
-                    dataType: "json",
-                    data: {
-                        id: id,
-                        _token: token
-                    }, beforeSend: function () {
-                        //-- Show loading image while execution of ajax request
-                        $("div#divLoading").addClass('show');
-                    },
-                    success: function (data) {
-                        if (data['result'] === "success") {
+            $.ajax({
+                method: 'POST',
+                url: url,
+                dataType: "json",
+                data: {
+                    id: id,
+                    _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
+                },
+                success: function (data) {
+                    if (data['result'] === "success") {
 
-                            //-- Hide mail line from table
-                            $('#mail_' + id).hide();
-                            //-- Hide loading image
-                            $("div#divLoading").removeClass('show');
+                        //-- Hide mail line from table
+                        $('#mail_' + id).hide();
+                        //-- Hide loading image
+                        $("div#divLoading").removeClass('show');
 
-                            new Noty({
-                                type: 'success',
-                                layout: 'topRight',
-                                text: '{{trans('dashboard::messages.mail_deleted')}}' + '!'
-                            }).show();
-                        }
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: '{{trans('dashboard::messages.mail_deleted')}}' + '!'
+                        }).show();
                     }
-                });
+                }
+            });
 
         }
 

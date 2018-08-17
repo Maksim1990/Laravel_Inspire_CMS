@@ -62,14 +62,15 @@ class ImagesController extends Controller
                     'user_id' => Auth::id(),
                     'name' => $name,
                     'size' => $file->getClientSize(),
+                    'extension' => $extension,
                     'path' => 'upload/' . Auth::id() . '/photos/' . $name
                 ]);
 
             } else {
-                $result = "Images with size bigger than 2 MB can't be uploaded!";
+                $result = trans('images::messages.image_limit')." 2 MB!";
             }
         } else {
-            $result = "It's allowed to upload only following formats: " . implode(",", $arrAllowedExtension);
+            $result = trans('messages.document_can_not_be_bigger_than').": " . implode(",", $arrAllowedExtension);
         }
 
         echo $result;

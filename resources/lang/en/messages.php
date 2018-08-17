@@ -46,4 +46,5 @@ return [
     'close' => 'Close',
     'search' => 'Search...',
     'delete' => 'Delete',
+    'allowed_to_upload_formats' => 'It\'s allowed to upload only following formats',
 ];

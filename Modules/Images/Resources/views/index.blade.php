@@ -3,10 +3,12 @@
 @section('General')
     <div class="row">
         <div class="col-sm-12 col-xs-12">
-            <h3 class="title">Images</h3>
+            <h3 class="title">@lang('messages.images')</h3>
             <div id="title_shape"></div>
             <div class="insp_buttons">
-                <a href="{{route("images.create",Auth::id())}}" class="btn btn-success">Upload new image</a>
+                <a href="{{route("office",['id'=>Auth::id()])}}"
+                   class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')</a>
+                <a href="{{route("images.create",Auth::id())}}" class="btn btn-success">@lang('images::messages.upload_image')</a>
             </div>
 
             <div class="w3-col m12 w3-margin-bottom">
@@ -41,7 +43,7 @@
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Modal Heading</h4>
+                                        <h4 class="modal-title"></h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
@@ -52,7 +54,7 @@
 
                                     <!-- Modal footer -->
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">@lang('messages.close')</button>
                                     </div>
 
                                 </div>
@@ -89,7 +91,7 @@
 
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">@lang('messages.close')</button>
                                         </div>
 
                                     </div>
@@ -104,17 +106,17 @@
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Do you want to delete this image?</h4>
+                                        <h4 class="modal-title"> @lang('images::messages.image_want_deleted')</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
                                         <p class="confirm_info">
-                                            Image will be deleted permanently
+                                            @lang('images::messages.image_will_be_deleted')
                                         </p>
-                                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                        <a href="#" onclick="DeleteImage('{{$image->id}}')" class="btn btn-danger">Delete image</a>
+                                        <button type="button" class="btn btn-success" data-dismiss="modal">@lang('messages.cancel')</button>
+                                        <a href="#" onclick="DeleteImage('{{$image->id}}')" class="btn btn-danger">@lang('images::messages.image_delete')</a>
                                     </div>
 
                                     <!-- Modal footer -->
@@ -159,7 +161,7 @@
                             new Noty({
                                 type: 'success',
                                 layout: 'topRight',
-                                text: 'Image was deleted!'
+                                text: '{{trans('images::messages.image_deleted')}}'
                             }).show();
                         }else{
                             new Noty({

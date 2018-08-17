@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Modules\Dashboard\Entities\Document;
 use Modules\Dashboard\Http\Requests\CreateFTPRequest;
 
 class OfficeController extends Controller
@@ -38,6 +39,73 @@ class OfficeController extends Controller
 
 
         return view('dashboard::office.ftp.manager', compact('arrTabs', 'active'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function docs()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+
+        return view('dashboard::office.documents.index', compact('arrTabs', 'active'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function uploadDoc()
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+
+        return view('dashboard::office.documents.upload', compact('arrTabs', 'active'));
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     * @param  Request $request
+     * @return Response
+     */
+    public function storeDocs(Request $request)
+    {
+        $result = "success";
+        $arrAllowedExtension = ['pdf', 'xls', 'txt','doc','docx'];
+
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+
+        if (in_array($extension, $arrAllowedExtension)) {
+            if (!($file->getClientSize() > 3100000)) {
+                $name = time() ."_".$file->getClientOriginalName();
+
+                request()->file('file')->storeAs(
+                    'public/upload/' . Auth::id() . '/documents/', $name
+                );
+
+                Document::create([
+                    'user_id' => Auth::id(),
+                    'name' => $name,
+                    'size' => $file->getClientSize(),
+                    'extension' => $extension,
+                    'path' => 'upload/' . Auth::id() . '/documents/' . $name
+                ]);
+
+            } else {
+                $result = trans('dashboard::messages.document_can_not_be_bigger_than')." 3 MB !";
+            }
+        } else {
+            $result = trans('messages.document_can_not_be_bigger_than').": " . implode(",", $arrAllowedExtension);
+        }
+
+        echo $result;
+
+
     }
 
 
