@@ -42,7 +42,7 @@
             <h3 class="title">Posts</h3>
             <div id="title_shape"></div>
 
-            <div>
+            <div class="insp_buttons">
                 <a href="{{route("posts.create",Auth::id())}}" class="btn btn-success">New post</a>
                 <hr>
             </div>

@@ -126,6 +126,8 @@
                         </div>
 
                        @endforeach
+                   @else
+                   <p class="w3-text-grey not_found_text">@lang('images::messages.no_images_found')</p>
                    @endif
             </div>
         </div>

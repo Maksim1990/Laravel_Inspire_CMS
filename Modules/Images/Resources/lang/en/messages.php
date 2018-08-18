@@ -8,4 +8,6 @@ return [
     'image_delete' => 'Delete image',
     'image_limit' => 'Image with size can not be bigger than',
     'image_not_found' => 'Image was not found!',
+    'no_images_found' => 'No images found',
+    'go_to_images_module' => 'Go to Images module',
 ];

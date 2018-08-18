@@ -35,7 +35,9 @@ a .link{
 .insp_buttons a{
     margin-right: 10px;
 }
-
+.not_found_text{
+    font-size: 30px;padding:10px 10px;
+}
 .icon_module {
     transition: box-shadow .3s;
     width: 90%;

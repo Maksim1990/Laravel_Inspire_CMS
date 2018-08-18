@@ -212,7 +212,7 @@
 
                                 }
                             } else {
-                                $(' <p class="w3-text-grey" style="font-size: 30px;padding:10px 10px;">').html("{{trans('dashboard::messages.no_files_found')}}</p>").appendTo('#file_body_search');
+                                $(' <p class="w3-text-grey not_found_text">').html("{{trans('dashboard::messages.no_files_found')}}</p>").appendTo('#file_body_search');
                             }
 
                         }

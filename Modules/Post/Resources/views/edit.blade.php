@@ -62,6 +62,12 @@
                                             <img src="{{custom_asset("storage/".$image->path)}}" width="100" height="100" class="w3-border w3-hover-opacity" >
                                         </a>
                                     @endforeach
+                                @else
+                                    <div class="w3-text-grey not_found_text" style="width: 100%;">@lang('images::messages.no_images_found')</div>
+                                    <div>
+                                        <a href="{{route("images",['id'=>Auth::id()])}}"
+                                           class="btn btn-success">@lang('images::messages.go_to_images_module')</a>
+                                    </div>
                                 @endif
 
                             </div>

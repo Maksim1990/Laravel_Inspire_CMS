@@ -124,7 +124,9 @@ class ImagesController extends Controller
         $photo=Photo::findOrFail($photoId);
 
         if($photo->path){
-            unlink(storage_path('/app/public/'.$photo->path));
+            if(file_exists(storage_path('/app/public/' . $photo->path))) {
+                unlink(storage_path('/app/public/' . $photo->path));
+            }
             $photo->delete();
         }else{
             $strError = trans('images::messages.image_not_found');
