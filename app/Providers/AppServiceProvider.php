@@ -19,6 +19,16 @@ class AppServiceProvider extends ServiceProvider
             'partials.sidebar',
             'App\Http\ViewComposers\SidebarComposer'
         );
+
+        view()->composer(
+            [
+                'website::partials.header_menu',
+                'website::partials.header_html',
+                'website::partials.footer',
+                'website::partials.contact_form',
+            ],
+            'App\Http\ViewComposers\WebsiteHeaderComposer'
+        );
     }
 
     /**

@@ -1,16 +1,20 @@
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+    @if($dataWebsite->getWebsiteSettings()->go_top_button=="Y")
     <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+    @endif
     <div class="w3-xlarge w3-section">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
+        <a href="{{$dataWebsite->getSocialIcons()->facebook}}" target="_blank"><i class="fab fa-facebook-square w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->google}}" target="_blank"><i class="fab fa-google-plus-g w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->instagram}}" target="_blank"><i class="fab fa-instagram w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->line}}" target="_blank"><i class="fab fa-line w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->pinterest}}" target="_blank"><i class="fab fa-pinterest-square w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->twitter}}" target="_blank"><i class="fab fa-twitter-square w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->linkedin}}" target="_blank"><i class="fab fa-linkedin w3-hover-opacity"></i></a>
+        <a href="{{$dataWebsite->getSocialIcons()->vk}}" target="_blank"><i class="fab fa-vk w3-hover-opacity"></i></a>
     </div>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank"
-                     class="w3-hover-text-green">w3.css</a></p>
+    <p>Powered by <a href="{{route('admin',['id'=>Auth::id()])}}" title="W3.CSS" target="_blank"
+                     class="w3-hover-text-green">Inspire CMS</a></p>
 </footer>
 
 <!-- Add Google Maps -->
@@ -83,5 +87,7 @@
     //-- In order to escape any JS from code editor that are deleted by Purifier before saving in DB
     $('.image_gallery img').attr('onclick', 'onClick(this)');
 </script>
+@if($dataWebsite->getWebsiteSettings()->google_map=="Y")
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBtG9lCya_s1zxvYtU9Ob1L2JbwZ67vNk&callback=myMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key={{$dataWebsite->getWebsiteSettings()->google_map_key}}"></script>
+    @endif

@@ -36,4 +36,9 @@ class Block extends Model
         return $blockContent;
     }
 
+    public function background(){
+        return $this->hasOne(Background::class);
+    }
+
+
 }
