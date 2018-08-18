@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Mews\Purifier\Facades\Purifier;
+use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
 
@@ -29,7 +30,10 @@ class PagebuilderController extends Controller
         $active = "active";
         $websiteBlocks = Block::where('user_id', $user->id)->orderBy('sortorder', 'ASC')->get();
 
-        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks'));
+        $admin=User::where('admin',1)->first();
+        $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
+
+        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks','adminSettings'));
     }
 
     /**

@@ -18,13 +18,13 @@
             @foreach($blockMain->content as $block)
                 @php
 
-                        $arrBlocks[$blockMain->sortorder]["block_content_id"]=$block->id;
-                        $arrBlocks[$blockMain->sortorder]["block_id"]=$blockMain->block_id;
-                        $arrBlocks[$blockMain->sortorder]["id"]=$blockMain->id;
-                        $arrBlocks[$blockMain->sortorder]["sortorder"]=$blockMain->sortorder;
-                        //TODO ADD option to choose between original label and converted label to text
-                        //$arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
-                        $arrBlocks[$blockMain->sortorder]["content"]=$blockMain->filteredContent($block->content);
+                    $arrBlocks[$blockMain->sortorder]["block_content_id"]=$block->id;
+                    $arrBlocks[$blockMain->sortorder]["block_id"]=$blockMain->block_id;
+                    $arrBlocks[$blockMain->sortorder]["id"]=$blockMain->id;
+                    $arrBlocks[$blockMain->sortorder]["sortorder"]=$blockMain->sortorder;
+                    //TODO ADD option to choose between original label and converted label to text
+                    //$arrBlocks[$block->id]["content"]=$blockMain->filteredContent($block->content);
+                    $arrBlocks[$blockMain->sortorder]["content"]=$blockMain->filteredContent($block->content);
                 @endphp
             @endforeach
         @endforeach
@@ -114,8 +114,10 @@
 @section('General')
     <style>
         .tooltip_menu {
-            width:100%; overflow: auto;
+            width: 100%;
+            overflow: auto;
         }
+
         .tooltip_menu .tooltiptext {
             visibility: hidden;
             width: 40%;
@@ -147,8 +149,14 @@
                 <ul id="gallery">
                     @php
                         for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
+
+                        if($adminSettings->use_remote_server=="Y" && !empty($adminSettings->remote_server)){
+                            $strContent=str_replace('../../public/storage',$adminSettings->remote_server.'/public/storage',$arrBlocks[$idx]['content']);
+                            $strContent=str_replace('../../storage',$adminSettings->remote_server.'/public/storage',$arrBlocks[$idx]['content']);
+                        }else{
                             $strContent=str_replace('../../public/storage','../../../public/storage',$arrBlocks[$idx]['content']);
                             $strContent=str_replace('../../storage','/public/storage',$arrBlocks[$idx]['content']);
+                            }
                             echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['id'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
                             echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $strContent . "<hr></div>";
                             echo "<span class=\"tooltiptext\">";
@@ -212,25 +220,25 @@
             var token = '{{\Illuminate\Support\Facades\Session::token()}}';
             var url = '{{ route('ajax_blocks_sortorder_update') }}';
 
-                $.ajax({
-                    method: 'POST',
-                    url: url,
-                    dataType: "json",
-                    data: {
-                        arrIDs: arrIDs,
-                        _token: token
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        if (data['result'] === "success") {
-                            new Noty({
-                                type: 'success',
-                                layout: 'topRight',
-                                text: '{{trans('pagebuilder::messages.custom_css_updated')}}'
-                            }).show();
-                        }
+            $.ajax({
+                method: 'POST',
+                url: url,
+                dataType: "json",
+                data: {
+                    arrIDs: arrIDs,
+                    _token: token
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data['result'] === "success") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: '{{trans('pagebuilder::messages.custom_css_updated')}}'
+                        }).show();
                     }
-                });
+                }
+            });
         };
     </script>
     <script>
