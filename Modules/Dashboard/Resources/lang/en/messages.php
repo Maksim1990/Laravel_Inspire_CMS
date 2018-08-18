@@ -70,4 +70,9 @@ return [
     'back_to_all_documents' => 'Back to all documents',
     'file_uploaded' => 'File(s) updated!',
     'file_not_found' => 'File was not found!',
+    'remote_server' => 'Remote server',
+    'use_remote_server' => 'Use remote server',
+    'remote_server_was_updated' => 'Remote server was updated!',
+    'remote_server_activated' => 'Remote server activated!',
+    'remote_server_deactivated' => 'Remote server deactivated!',
 ];

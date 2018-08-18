@@ -300,6 +300,46 @@ class AdminSettingsController extends Controller
         ));
     }
 
+    public function ajaxUpdateUseRemoteServer(Request $request)
+    {
+        $strError = "";
+        $result = "success";
+
+        $use_remote_server = $request->use_remote_server;
+
+
+        $admin = User::where('admin', 1)->first();
+        $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
+        $adminSettings->use_remote_server = $use_remote_server;
+        $adminSettings->update();
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+    public function ajaxUpdateRemoteServer(Request $request)
+    {
+        $strError = "";
+        $result = "success";
+
+        $remote_server = $request->remote_server;
+
+
+        $admin = User::where('admin', 1)->first();
+        $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
+        $adminSettings->remote_server = $remote_server;
+        $adminSettings->update();
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
     /**
      * Update data for Elastic search cluster
      *

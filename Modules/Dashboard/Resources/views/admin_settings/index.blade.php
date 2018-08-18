@@ -28,6 +28,53 @@
                 </div>
             </div>
 
+            {{-- Use remote server --}}
+            <div class="col-sm-12 col-lg-12 col-xs-12">
+                <div class="col-sm-5 col-xs-12">
+                    <p class="text">@lang('dashboard::messages.use_remote_server')</p>
+
+                </div>
+                <div class="col-sm-5 hidden-lg hidden-sm col-xs-12">
+                </div>
+                <div class="col-sm-1 col-xs-12">
+                    <div class="form-group" style="margin-top: 15px;">
+                        @php
+                            $strChecked="";
+                            if($adminSettings->use_remote_server=='Y'){
+                             $strChecked="checked";
+                            }
+                        @endphp
+                        <div class="material-switch pull-right" >
+                            <input id="use_remote_server" name="use_remote_server" type="checkbox" {{$strChecked}}/>
+                            <label for="use_remote_server" class="label-success"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <hr>
+                </div>
+            </div>
+
+            {{-- Remote server --}}
+            <div class="col-sm-12 col-lg-12 col-xs-12" id="remote_server_block" style="display:none;">
+                <div class="col-sm-5 col-xs-12">
+                    <p class="text">@lang('dashboard::messages.remote_server')</p>
+
+                </div>
+                <div class="col-sm-5 col-xs-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="remote_server"
+                               value="{{$adminSettings->remote_server}}">
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-12">
+                    <button class="btn btn-sm btn-success" style="margin-top: 2px;" id="save_remote_server">@lang('messages.save')</button>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <hr>
+                </div>
+            </div>
+
 
             {{-- Reset Cache form--}}
             <div class="col-sm-12 col-lg-12 col-xs-12">

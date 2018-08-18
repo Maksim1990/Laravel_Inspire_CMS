@@ -2,11 +2,13 @@
 
 namespace Modules\Website\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Mews\Purifier\Facades\Purifier;
+use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Pagebuilder\Entities\Block;
 
 class WebsiteController extends Controller
@@ -19,8 +21,11 @@ class WebsiteController extends Controller
     {
 
         $websiteBlocks=Block::where('user_id',Auth::id())->orderBy('sortorder','ASC')->get();
+        $admin=User::where('admin',1)->first();
+        $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
 
-        return view('website::index',compact('websiteBlocks'));
+
+        return view('website::index',compact('websiteBlocks','adminSettings'));
     }
 
     /**

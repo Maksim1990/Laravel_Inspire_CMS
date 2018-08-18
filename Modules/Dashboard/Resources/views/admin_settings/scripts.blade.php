@@ -1,5 +1,13 @@
 <script>
     var token = '{{\Illuminate\Support\Facades\Session::token()}}';
+    //-- Toggle Google maps key block based on Google map checkbox
+    if ($('#use_remote_server').is(":checked"))
+    {
+        ShowRemoteServerInput();
+    }else{
+        HideRemoteServerInput();
+    }
+
 
     //-- RESET CACHE
     $('#save_reset_cache').click(function () {
@@ -39,6 +47,91 @@
             }
         });
     });
+
+    //-- Update remote server
+    $('#save_remote_server').click(function () {
+        //-- Hide alert block
+        $('#alert_settings').css('display','none');
+
+        var url = '{{ route('ajax_admin_settings_remote_server') }}';
+        var remote_server = $('#remote_server').val();
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                remote_server: remote_server,
+                _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('dashboard::messages.remote_server_was_updated')}}'+'!'
+                    }).show();
+                }else{
+                    new Noty({
+                        type: 'error',
+                        layout: 'bottomLeft',
+                        text: data['error']
+                    }).show();
+                }
+
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
+            }
+        });
+    });
+
+    //-- Functionality for trigger Google maps visibility
+    $('#use_remote_server').click(function () {
+        var url = '{{ route('ajax_use_remote_server_update') }}';
+        var use_remote_server = "N";
+
+        if ($(this).is(":checked"))
+        {
+            use_remote_server="Y";
+            ShowRemoteServerInput();
+        }else{
+            HideRemoteServerInput();
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                use_remote_server: use_remote_server,
+                _token: token
+            },
+            success: function (data) {
+                var srtNotification='{{trans('dashboard::messages.remote_server_activated')}}';
+                if(use_remote_server=="N"){
+                    srtNotification='{{trans('dashboard::messages.remote_server_deactivated')}}';
+                }
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: srtNotification
+                    }).show();
+                }
+            }
+        });
+    });
+
+    function ShowRemoteServerInput() {
+        $('#remote_server_block').show();
+    }
+
+    function HideRemoteServerInput() {
+        $('#remote_server_block').hide();
+    }
+
 
     //-- Update App version
     $('#save_app_version').click(function () {

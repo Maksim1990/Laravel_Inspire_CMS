@@ -20,6 +20,8 @@ class CreateAdminSettingsTable extends Migration
             $table->string('app_name')->nullable();
             $table->enum('app_status', ['Y', 'N'])->default("Y");
             $table->enum('use_admin_ftp_credentials', ['Y', 'N'])->default("N");
+            $table->enum('use_remote_server', ['Y', 'N'])->default("N");
+            $table->text('remote_server')->nullable();
             $table->timestamps();
         });
     }

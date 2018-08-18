@@ -15,8 +15,16 @@
                 $objBackground=$blockMain->background;
 
                 $template="website::blocks.".$arrBlockName[0];
+
+
+             if($adminSettings->use_remote_server=="Y" && !empty($adminSettings->remote_server)){
+             $strContent=str_replace('../../public/storage',$adminSettings->remote_server.'/public/storage',$blockMain->filteredContent($block->content));
+              $strContent=str_replace('../../storage',$adminSettings->remote_server.'/public/storage',$blockMain->filteredContent($block->content));
+             }else{
              $strContent=str_replace('../../public/storage','../../../public/storage',$blockMain->filteredContent($block->content));
-                            $strContent=str_replace('../../storage','/public/storage',$blockMain->filteredContent($block->content));
+              $strContent=str_replace('../../storage','/public/storage',$blockMain->filteredContent($block->content));
+             }
+
             @endphp
             @include($template, ['content' => $strContent,'id'=>$strBlockHtmlId,'background'=>$objBackground])
         @endforeach
