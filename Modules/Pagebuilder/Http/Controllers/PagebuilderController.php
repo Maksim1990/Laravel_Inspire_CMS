@@ -384,11 +384,24 @@ class PagebuilderController extends Controller
                     'public/upload/' . Auth::id() . '/background/', $name
                 );
 
-                $background->image_name = $name;
-                $background->image_size = $file->getClientSize();
-                $background->image_extension = $extension;
-                $background->image_path='upload/' . Auth::id() . '/background/'. $name;
-                $background->update();
+                if($background){
+                    $background->image_name = $name;
+                    $background->image_size = $file->getClientSize();
+                    $background->image_extension = $extension;
+                    $background->image_path='upload/' . Auth::id() . '/background/'. $name;
+                    $background->update();
+                }else{
+                    Background::create([
+                        'user_id' => $user_id,
+                        'block_id' => $block_id,
+                        'background_type' => 'image',
+                        'image_name' => $name,
+                        'image_size' => $file->getClientSize(),
+                        'image_extension' => $extension,
+                        'image_path' => 'upload/' . Auth::id() . '/background/'. $name
+                    ]);
+                }
+
 
                 //-- Build notification array
                 $arrOptions=[
