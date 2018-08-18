@@ -17,6 +17,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/codeeditor_theme_update', 'PagebuilderController@codeEditorThemeUpdate')->name("ajax_codeeditor_theme_update");
         Route::post('/content_editor_update', 'PagebuilderController@contentEditorUpdate')->name("ajax_content_editor_update");
         Route::post('/custom_css_update', 'PagebuilderController@customCssUpdate')->name("ajax_custom_css_update");
+        Route::post('/ajax_bg_color_update', 'PagebuilderController@blockBackgroundUpdate')->name("ajax_bg_color_update");
+        Route::post('/ajax_bg_type_update', 'PagebuilderController@blockBackgroundTypeUpdate')->name("ajax_bg_type_update");
+        Route::post('/ajax_bg_image_update', 'PagebuilderController@blockBackgroundImageUpdate')->name("ajax_bg_image_update");
+        Route::delete('/{id}/delete_background_image', 'PagebuilderController@deleteBackgroundImage')->name("delete_background_image");
+        Route::patch('/{id}/upload_background_image', 'PagebuilderController@storeBackgroundImage')->name("upload_background_image");
 
         Route::post('/blocks_sortorder_update', 'PagebuilderController@blocksSortOrderUpdate')->name("ajax_blocks_sortorder_update");
 

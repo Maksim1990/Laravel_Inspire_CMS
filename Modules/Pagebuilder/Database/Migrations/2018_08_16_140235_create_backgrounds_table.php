@@ -20,6 +20,9 @@ class CreateBackgroundsTable extends Migration
             $table->enum('background_type', ['color', 'image'])->default("color");
             $table->string('color')->nullable();
             $table->string('image_path')->nullable();
+            $table->string('image_name')->nullable();
+            $table->string('image_size')->nullable();
+            $table->string('image_extension')->nullable();
             $table->timestamps();
         });
     }

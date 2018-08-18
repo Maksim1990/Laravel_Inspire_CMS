@@ -50,4 +50,5 @@ return [
     'name' => 'Name',
     'size' => 'Size',
     'extension' => 'Extension',
+    'image' => 'Image',
 ];

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Mews\Purifier\Facades\Purifier;
 use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
@@ -222,10 +223,193 @@ class PagebuilderController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $user_id=Auth::id();
-        $customSetting = Background::where('user_id', $user_id)->where('block_id', $id)->first();
 
-        return view('pagebuilder::css.background', compact('arrTabs', 'active'));
+        $block_id=$id;
+        $blockBackground = Background::where('user_id', Auth::id())->where('block_id',$id)->first();
+        $userImages = Auth::user()->photos;
+
+        return view('pagebuilder::css.background', compact('arrTabs', 'active','block_id','blockBackground','userImages'));
+    }
+
+    /**
+     * Functionality for update background color for specific block
+     *
+     * @param Request $request
+     */
+    public function blockBackgroundUpdate(Request $request)
+    {
+        $bg_color = $request['bg_color'];
+        $background_type = $request['background_type'];
+        $block_id = $request['block_id'];
+        $result = "";
+
+
+        $background = Background::firstOrNew(array('user_id' => Auth::id(),'block_id'=>$block_id));
+        $background->background_type = $background_type;
+        $background->color = $bg_color;
+        $background->user_id = Auth::id();
+
+        if ($background->save()) {
+            $result = "success";
+        }
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+    }
+
+    /**
+     * Functionality for update background type for specific block
+     *
+     * @param Request $request
+     */
+    public function blockBackgroundTypeUpdate(Request $request)
+    {
+        $background_type = $request['background_type'];
+        $block_id = $request['block_id'];
+        $result = "";
+
+
+        $background = Background::firstOrNew(array('user_id' => Auth::id(),'block_id'=>$block_id));
+        $background->background_type = $background_type;
+        $background->user_id = Auth::id();
+
+        if ($background->save()) {
+            $result = "success";
+        }
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+    }
+
+    /**
+     * Functionality for update background image for specific block
+     *
+     * @param Request $request
+     */
+    public function blockBackgroundImageUpdate(Request $request)
+    {
+        $background_type = $request['background_type'];
+        $block_id = $request['block_id'];
+        $imagePath = $request['imagePath'];
+        $result = "";
+
+
+        $background = Background::firstOrNew(array('user_id' => Auth::id(),'block_id'=>$block_id));
+        if(!empty( $background->image_name)){
+            $background->image_name = null;
+            $background->image_size = null;
+            $background->image_extension = null;
+            if(file_exists(storage_path('/app/public/' . $background->image_path))){
+                unlink(storage_path('/app/public/' . $background->image_path));
+            }
+        }
+        $background->background_type = $background_type;
+        $background->user_id = Auth::id();
+        $background->image_path = $imagePath;
+
+        if ($background->save()) {
+            $result = "success";
+        }
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
+    }
+
+    /**
+     * Functionality for delete background image for specific block
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteBackgroundImage(Request $request)
+    {
+        $user_id = $request->user_id;
+        $block_id = $request->block_id;
+        $background = Background::where('user_id',$user_id)->where('block_id',$block_id)->first();
+        if($background){
+            if(!empty( $background->image_name)){
+                $background->image_name = null;
+                $background->image_size = null;
+                $background->image_extension = null;
+                if(file_exists(storage_path('/app/public/' . $background->image_path))){
+                    unlink(storage_path('/app/public/' . $background->image_path));
+                }
+            }
+            $background->image_path = null;
+            $background->update();
+        }
+
+        //-- Build notification array
+        $arrOptions=[
+            'message'=>trans('pagebuilder::messages.background_image_deleted'),
+            'type'=>'success',
+            'position'=>'rightTop'
+        ];
+        Session::flash('background_change', $arrOptions);
+        return redirect()->route('background',['id'=>$block_id]);
+    }
+
+    /**
+     * Functionality for upload background image for specific block
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeBackgroundImage(Request $request)
+    {
+        $user_id = $request->user_id;
+        $block_id = $request->block_id;
+
+        $background = Background::where('user_id',$user_id)->where('block_id',$block_id)->first();
+
+        if ($file = $request->file('photo_id')) {
+            $extension = $file->getClientOriginalExtension();
+            if (!($file->getClientSize() > 2100000)) {
+                if (!empty($background->image_path)) {
+                    if(file_exists(storage_path('/app/public/' . $background->image_path))){
+                        unlink(storage_path('/app/public/' . $background->image_path));
+                    }
+                    $background->image_name = null;
+                    $background->image_size = null;
+                    $background->image_extension = null;
+                    $background->image_path=null;
+                    $background->update();
+                }
+
+                $name = time() . $file->getClientOriginalName();
+                request()->file('photo_id')->storeAs(
+                    'public/upload/' . Auth::id() . '/background/', $name
+                );
+
+                $background->image_name = $name;
+                $background->image_size = $file->getClientSize();
+                $background->image_extension = $extension;
+                $background->image_path='upload/' . Auth::id() . '/background/'. $name;
+                $background->update();
+
+                //-- Build notification array
+                $arrOptions=[
+                    'message'=>trans('pagebuilder::messages.background_image_updated'),
+                    'type'=>'success',
+                    'position'=>'topRight'
+                ];
+
+                Session::flash('background_change', $arrOptions);
+                return redirect()->route('background',['id'=>$block_id]);
+            } else {
+                //-- Build notification array
+                $arrOptions=[
+                    'message'=>trans('pagebuilder::messages.background_image_size_error'),
+                    'type'=>'error',
+                    'position'=>'bottomLeft'
+                ];
+                Session::flash('background_change', $arrOptions);
+                return redirect()->route('background',['id'=>$block_id]);
+            }
+        }
     }
 
     /**
