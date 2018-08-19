@@ -45,7 +45,6 @@ function BuildMenu($intParentNo, $collectionMenu)
     $userMenu = Cache::tags(['menu_'.Auth::id()])->get('menu_'.$intParentNo."_".LaravelLocalization::getCurrentLocale());
 
     if(!$userMenu){
-        $
         $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
         Cache::tags(['menu_'.Auth::id()])->put('menu_'.$intParentNo."_".LaravelLocalization::getCurrentLocale(), $strMenu, 22 * 60);
     }else{

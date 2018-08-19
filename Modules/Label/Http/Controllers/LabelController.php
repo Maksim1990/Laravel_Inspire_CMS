@@ -33,7 +33,6 @@ class LabelController extends Controller
             $intLastLabelId = 0;
         }
 
-
         $arrOfActiveLanguages = Helper::GetActiveLanguages();
 
         return view('label::index', compact('arrTabs', 'active', 'translations', 'arrOfActiveLanguages', 'intLastLabelId'));

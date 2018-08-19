@@ -51,4 +51,5 @@ return [
     'size' => 'Size',
     'extension' => 'Extension',
     'image' => 'Image',
+    'number_of_found_items' => 'Number of found items',
 ];

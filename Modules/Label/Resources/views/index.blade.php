@@ -6,9 +6,26 @@
 @section('General')
     <h3 class="title">Translations</h3>
     <div id="title_shape"></div>
+
+    <div class="insp_buttons">
+        <a href="{{route("office",['id'=>Auth::id()])}}"
+           class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')</a>
+    </div>
+
     <div>
-        <p>Module: <b>Website</b></p>
         @if(!empty($translations))
+            <div class="row">
+                <div class="col-sm-12 col-lg-8 col-xs-12">
+                    <span id="found_items"></span>
+                </div>
+                <div class="col-sm-12 col-lg-4 col-xs-12">
+                    <input type="text" class="form-control" style="display: inline;" id="search_bar"
+                           placeholder="@lang('messages.search')">
+
+                </div>
+                <hr>
+            </div>
+
 
             <table class="w3-table-all w3-hoverable ">
                 <thead>
@@ -23,7 +40,7 @@
                 </thead>
                 <tbody id="labels_body">
                 @foreach($translations as $translate)
-                    <tr id="label_{{$translate->id}}">
+                    <tr class="label_item" id="label_{{$translate->id}}">
                         <td>
                             <input type="text" class="form-control" id="key_{{$translate->id}}"
                                    value="{{$translate->key}}">
@@ -44,7 +61,7 @@
                         @endforeach
                         <td>
                             @if($translate->user_id==Auth::id())
-                                <a href="#" id="delete_{{$translate->id}}">
+                                <a href="#" id="modal_delete_{{$translate->id}}">
                                 <span class="delete w3-text-red">
                                     <i class="fas fa-minus-circle"></i>
                                 </span>
@@ -65,6 +82,30 @@
             </form>
         @endif
     </div>
+
+    {{--Delete label modal--}}
+    <div class="modal" id="delete_label_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">@lang('dashboard::messages.delete_this_file')</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <button type="button" class="btn btn-success" id="cancel"
+                            data-dismiss="modal">@lang('messages.cancel')</button>
+                    <span id="delete_button"></span>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
 @stop
 @section('scripts')
     <script>
@@ -76,10 +117,24 @@
             SaveLabel();
         });
 
-        //-- Delete label functionality
-        $('[id^="delete_"]').click(function () {
-            DeleteLabel($(this).attr('id').replace('delete_', ""));
+        //-- Show delete file modal functionality
+        $('[id^="modal_delete_"]').click(function () {
+            ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
         });
+
+
+        function ShowDeleteModal(id) {
+            var strDeleteButton = '<a href="#" class="btn btn-danger delete_label" data-id="' + id + '" >{{trans('messages.delete')}}</a>';
+            $("#delete_button").html(strDeleteButton);
+            $('#delete_label_modal').modal('toggle');
+
+
+            $('.delete_label').click(function () {
+                var id = $(this).data('id');
+                DeleteLabel(id);
+            });
+
+        }
 
 
         //-- Add new label functionality
@@ -92,21 +147,23 @@
                 langField += "<td><input type='text' id='" + newLabelCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
                     @endforeach
 
-            var deleteIcon = "<td><a href=\"#\" id='delete_" + newLabelCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
+            var deleteIcon = "<td><a href=\"#\" id='modal_delete_" + newLabelCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
             $('<tr id="label_' + newLabelCount + '">').html(keyField + langField + deleteIcon + "</tr>").appendTo('#labels_body');
 
-            $('[id^="delete_"]').click(function () {
-                DeleteLabel($(this).attr('id').replace('delete_', ""));
+            //-- Show delete file modal functionality
+            $('[id^="modal_delete_"]').click(function () {
+                ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
             });
 
         });
 
         function DeleteLabel(id) {
 
+            //-- Hide delete modal
+            $('#delete_label_modal').modal('hide');
+
             var url = '{{ route('ajax_delete_label') }}';
 
-            var conf = confirm("Do you want to delete this label?");
-            if (conf) {
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -134,8 +191,6 @@
                         }
                     }
                 });
-            }
-
         }
 
 
@@ -195,6 +250,9 @@
 
                         //-- Hide loading image
                         $("div#divLoading").removeClass('show');
+
+                        //-- Update labels list
+                        SearchAndUpdateLabels();
                     }
                 });
             } else {
@@ -204,6 +262,77 @@
                     text: 'Label key can not be empty!'
                 }).show();
             }
+        }
+
+
+        //-- Functionality when something was typed in Searching bar
+        $('#search_bar').keyup(function () {
+            SearchAndUpdateLabels();
+        });
+
+        function SearchAndUpdateLabels() {
+            var url = '{{ route('ajax_search_bar') }}';
+            var strValue = $('#search_bar').val();
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                dataType: "json",
+                data: {
+                    strValue: strValue,
+                    strModule: 'label',
+                    _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
+                },
+                success: function (data) {
+                    if (data['result'] === "success") {
+
+                        //-- Hide loading image
+                        $("div#divLoading").removeClass('show');
+
+                        //-- Hide files list
+                        $("#labels_body,#found_items").html('');
+                        if (data['arrData'].length > 0) {
+
+                            //-- Set number of found items
+                            $("#found_items").html('{{trans('messages.number_of_found_items')}}:<b>'+data['arrData'].length+'</b>');
+
+                            for (var i = 0; i < data['arrData'].length; i++) {
+
+                                var newMenuCount = data['arrData'][i]['id'];
+                                var strKey = '<td><input type="text" class="form-control" id="key_' + data['arrData'][i]['id'] + '" value="' + data['arrData'][i]['key'] + '"</td>';
+
+                                var strTranslations="";
+                                for (var j = 0; j < data['arrData'][i]['langs'].length; j++) {
+                                    var strTranslation=data['arrData'][i]['langs'][j]['translation'];
+                                    if(strTranslation===null){
+                                        strTranslation="";
+                                    }
+                                    strTranslations += '<td><input type="text" class="form-control" id="' + data['arrData'][i]['id'] + '_text_' + data['arrData'][i]['langs'][j]['langKey'] + '" value="' + strTranslation + '"></td>';
+                                }
+
+                                var strDeleteButton = '<td><a href="#" id="modal_delete_' + data['arrData'][i]['id'] + '"><span class="delete w3-text-red"><i class="fas fa-minus-circle"></i></span></a></td>';
+
+
+
+                                var strContent = strKey + strTranslations + strDeleteButton;
+
+                                $(' <tr class="label_item" id="label_' + newMenuCount + '" data-id="' + newMenuCount + '">').html(strContent + "</tr>").appendTo('#labels_body');
+
+                            }
+
+                            //-- Show delete file modal functionality
+                            $('[id^="modal_delete_"]').click(function () {
+                                ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
+                            });
+                        } else {
+                            $(' <p class="w3-text-grey not_found_text">').html("{{trans('dashboard::messages.no_files_found')}}</p>").appendTo('#labels_body');
+                        }
+                    }
+                }
+            });
         }
     </script>
 @stop

@@ -251,7 +251,7 @@
                         if (data['arrData'].length > 0) {
 
                             //-- Set number of found items
-                            $("#found_items").html('Number of found items:<b>'+data['arrData'].length+'</b>');
+                            $("#found_items").html('{{trans('messages.number_of_found_items')}}:<b>'+data['arrData'].length+'</b>');
 
                             for (var i = 0; i < data['arrData'].length; i++) {
 
