@@ -32,8 +32,9 @@ class PagebuilderController extends Controller
 
         $admin=User::where('admin',1)->first();
         $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
+        $customSetting = Setting::where('user_id', $id)->first();
 
-        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks','adminSettings'));
+        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks','adminSettings','customSetting'));
     }
 
     /**

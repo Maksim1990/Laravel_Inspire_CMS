@@ -52,12 +52,7 @@
                             }
                         });
                     </script>
-
-                    <p>Demonstration of
-                        the <a href="../doc/manual.html#addon_fullscreen">fullscreen</a>
-                        addon. Press <strong>F11</strong> when cursor is in the editor to
-                        toggle full screen editing. <strong>Esc</strong> can also be used
-                        to <i>exit</i> full screen editing.</p>
+                    <br>
                 </article>
                 <a href="{{route("codeeditor_setting",Auth::id())}}" class="btn btn-info">Editor settings</a>
                 <button id="submit" class="btn btn-success">Save</button>
@@ -79,15 +74,20 @@
                 data: {
                     customCssContent: customCssContent,
                     _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data['result'] === "success") {
                         new Noty({
                             type: 'success',
                             layout: 'topRight',
                             text: 'Custom CSS was updated!'
                         }).show();
+
+                        //-- Hide loading image
+                        $("div#divLoading").removeClass('show');
                     }
                 }
             });

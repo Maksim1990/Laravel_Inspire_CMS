@@ -101,6 +101,7 @@
             });
         </script>
     @endif
+
 @stop
 @section('styles')
     <style type="text/css">
@@ -185,8 +186,7 @@
                         <p>2. How to display labels in text</p>
                     </div>
                     <div id="menu1" class="tab-pane">
-                        <h3>Menu 2</h3>
-                        <p>Some content in menu 2.</p>
+                        @include('pagebuilder::custom_css')
                     </div>
                 </div>
             </div>
@@ -271,4 +271,6 @@
         });
 
     </script>
+
+
 @stop
