@@ -215,7 +215,8 @@
 
             $('.delete_menu').click(function () {
                 var id = $(this).data('id');
-                if(id!=="new"){
+                var newLabelCount = '{{$intLastMenuId}}';
+                if(id<= +newLabelCount){
                     DeleteMenu(id);
                 }else{
                     //-- Hide menu line from table
@@ -233,7 +234,7 @@
         var newMenuCount = '{{$intLastMenuId}}';
 
         $('#add').click(function () {
-            newMenuCount='new';
+            newMenuCount++;
             var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
             keyFieldParent += "<option value=\"0\" selected></option>";
             @foreach($userMenus as $menuSelect)

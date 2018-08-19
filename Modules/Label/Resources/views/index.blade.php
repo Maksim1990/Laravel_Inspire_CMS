@@ -130,8 +130,10 @@
 
 
             $('.delete_label').click(function () {
-                var id = $(this).data('id');
-                if(id!=="new"){
+                var id = $(this).data('id')
+                //-- Add new label functionality
+                var newLabelCount = '{{$intLastLabelId}}';
+                if(id<= +newLabelCount){
                     DeleteLabel(id);
                 }else{
                     //-- Hide menu line from table
@@ -147,7 +149,7 @@
         //-- Add new label functionality
         var newLabelCount = '{{$intLastLabelId}}';
         $('#add').click(function () {
-            newLabelCount="new";
+            newLabelCount++;
             var keyField = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
