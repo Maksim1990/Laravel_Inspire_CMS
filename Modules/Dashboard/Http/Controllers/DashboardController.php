@@ -147,7 +147,7 @@ class DashboardController extends Controller
         $userMenus = Menu::whereHas('menuActive', function ($query) {
             //$query->where('user_id', Auth::id())->whereIn('menu_id',[1,2]);
             $query->where('user_id', Auth::id());
-        })->orderBy('id')->paginate(10);
+        })->get();
 
 
         return view('admin.menu', compact('arrTabs', 'active', 'userMenus', 'intLastMenuId', 'arrOfActiveLanguages'));

@@ -155,7 +155,6 @@
                     </tr>
                 @endforeach
                 </tbody>
-                <tbody id="menus_body_search"></tbody>
             </table>
             <div class="border-top mt-4 pt-2 text-right">
                 <br>
@@ -165,9 +164,6 @@
 
             </form>
         @endif
-    </div>
-    <div class="col-sm-12 col-lg-8 col-xs-12 w3-center" id="links">
-        {!! $userMenus->links() !!}
     </div>
 @stop
 @section('scripts')
@@ -331,7 +327,7 @@
             var url = '{{ route('ajax_search_bar') }}';
             var strValue = $(this).val();
 
-            if (strValue != "") {
+
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -351,8 +347,8 @@
                             //-- Hide loading image
                             $("div#divLoading").removeClass('show');
 
-                            $("#menus_body,#links").hide();
-                            $("#menus_body_search,#found_items").html('');
+
+                            $("#menus_body,#found_items").html('');
                             if (data['arrData'].length > 0) {
 
                                 //-- Set number of found items
@@ -432,10 +428,10 @@
                                     }
 
                                     var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
-                                    $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body_search');
+                                    $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
                                 }
                             } else {
-                                $(' <p class="w3-text-grey not_found_text">').html("{{trans('dashboard::messages.no_files_found')}}</p>").appendTo('#menus_body_search');
+                                $(' <p class="w3-text-grey not_found_text">').html("{{trans('dashboard::messages.no_files_found')}}</p>").appendTo('#menus_body');
                             }
                         }
 
@@ -444,10 +440,6 @@
                         });
                     }
                 });
-            } else {
-                $("#menus_body_search,#found_items").html('');
-                $("#menus_body,#links").show();
-            }
 
         });
 
