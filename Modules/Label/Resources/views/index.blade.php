@@ -131,7 +131,14 @@
 
             $('.delete_label').click(function () {
                 var id = $(this).data('id');
-                DeleteLabel(id);
+                if(id!=="new"){
+                    DeleteLabel(id);
+                }else{
+                    //-- Hide menu line from table
+                    $('#menu_' + id).remove();
+                    //-- Hide delete modal
+                    $('#delete_menu_modal').modal('hide');
+                }
             });
 
         }
@@ -140,7 +147,7 @@
         //-- Add new label functionality
         var newLabelCount = '{{$intLastLabelId}}';
         $('#add').click(function () {
-            newLabelCount++;
+            newLabelCount="new";
             var keyField = "<td><input type=\"text\" class=\"form-control\" id='key_" + newLabelCount + "'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)

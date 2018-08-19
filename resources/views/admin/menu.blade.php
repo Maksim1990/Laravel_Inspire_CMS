@@ -215,7 +215,15 @@
 
             $('.delete_menu').click(function () {
                 var id = $(this).data('id');
-                DeleteMenu(id);
+                if(id!=="new"){
+                    DeleteMenu(id);
+                }else{
+                    //-- Hide menu line from table
+                    $('#menu_' + id).remove();
+                    //-- Hide delete modal
+                    $('#delete_menu_modal').modal('hide');
+                }
+
             });
 
         }
@@ -225,7 +233,7 @@
         var newMenuCount = '{{$intLastMenuId}}';
 
         $('#add').click(function () {
-            newMenuCount++;
+            newMenuCount='new';
             var keyFieldParent = "<td><select class=\"form-control\" name=\"menu_parent\" id=\"" + newMenuCount + "_menu_parent\" style=\"height: 33px;\">";
             keyFieldParent += "<option value=\"0\" selected></option>";
             @foreach($userMenus as $menuSelect)
@@ -258,7 +266,7 @@
                 langField += "<td style=\"width:15%;\"><input type='text' id='" + newMenuCount + "_text_{{strtolower($strKey)}}' class=\"form-control\" name='' value=''></td>";
                 @endforeach
 
-            var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
+            var deleteIcon = "<td><a href=\"#\" id='modal_delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
             $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
 
             //-- Show delete file modal functionality
