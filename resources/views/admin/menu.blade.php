@@ -145,7 +145,7 @@
                         <td>
 
                             @if($menu->admin!="Y" || ($menu->admin=="Y" && Auth::user()->admin==1) )
-                                <a href="#" id="delete_{{$menu->id}}">
+                                <a href="#" id="modal_delete_{{$menu->id}}">
                                     <span class="delete w3-text-red">
                                         <i class="fas fa-minus-circle"></i>
                                     </span>
@@ -165,6 +165,30 @@
             </form>
         @endif
     </div>
+
+    {{--Delete menu modal--}}
+    <div class="modal" id="delete_menu_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">@lang('dashboard::messages.delete_this_file')</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <button type="button" class="btn btn-success" id="cancel"
+                            data-dismiss="modal">@lang('messages.cancel')</button>
+                    <span id="delete_button"></span>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
 @stop
 @section('scripts')
     <script>
@@ -176,10 +200,25 @@
             SaveMenu();
         });
 
-        //-- Delete menu functionality
-        $('[id^="delete_"]').click(function () {
-            DeleteMenu($(this).attr('id').replace('delete_', ""));
+
+        //-- Show delete file modal functionality
+        $('[id^="modal_delete_"]').click(function () {
+            ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
         });
+
+
+        function ShowDeleteModal(id) {
+            var strDeleteButton = '<a href="#" class="btn btn-danger delete_menu" data-id="' + id + '" >{{trans('messages.delete')}}</a>';
+            $("#delete_button").html(strDeleteButton);
+            $('#delete_menu_modal').modal('toggle');
+
+
+            $('.delete_menu').click(function () {
+                var id = $(this).data('id');
+                DeleteMenu(id);
+            });
+
+        }
 
 
         //-- Add new menu functionality
@@ -201,10 +240,18 @@
                 keyFieldParent += "</select></td>";
 
 
+                @if(Auth::user()->admin!=1)
             var keyFieldActive = "<td> <select class=\"form-control\" name=\"menu_active\" id=\"" + newMenuCount + "_menu_active\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
+            @else
+            var keyFieldActive="";
+            @endif
+                @if(Auth::user()->admin==1)
             var keyFieldAdminActive = "<td> <select class=\"form-control\" name=\"menu_active_admin\" id=\"" + newMenuCount + "_menu_active_admin\" style=\"height: 33px;\">" +
                 "<option value=\"Y\" selected>Y</option><option value=\"N\">N</option></select></td>";
+            @else
+            var keyFieldAdminActive ="";
+            @endif
             var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder'></td>";
             var langField = "";
             @foreach($arrOfActiveLanguages as $strKey=>$strLang)
@@ -214,18 +261,20 @@
             var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
             $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
 
-            $('[id^="delete_"]').click(function () {
-                DeleteMenu($(this).attr('id').replace('delete_', ""));
+            //-- Show delete file modal functionality
+            $('[id^="modal_delete_"]').click(function () {
+                ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
             });
 
         });
 
         function DeleteMenu(id) {
 
+            //-- Hide delete modal
+            $('#delete_menu_modal').modal('hide');
+
             var url = '{{ route('ajax_delete_menu') }}';
 
-            var conf = confirm("Do you want to delete this menu?");
-            if (conf) {
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -261,7 +310,6 @@
                         $("div#divLoading").removeClass('show');
                     }
                 });
-            }
 
         }
 
@@ -408,7 +456,11 @@
                                     var keyFieldAdminActive = "";
                                         @endif
 
-                                    var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder' value='" + data['arrData'][i]['menu_active'][0]['sortorder'] + "'></td>";
+                                        var strSortOrder=data['arrData'][i]['menu_active'][0]['sortorder'];
+                                        if(strSortOrder===null){
+                                            strSortOrder="";
+                                        }
+                                    var keyFieldSortOrder = "<td style=\"width:10%;\"><input type=\"text\" class=\"form-control\" id='" + newMenuCount + "_menu_sortorder' value='" + strSortOrder + "'></td>";
                                     var langField = "";
 
                                     for (var j = 0; j < data['arrData'][i]['langs'].length; j++) {
@@ -424,7 +476,7 @@
                                         }
                                     }
 
-                                    var deleteIcon = "<td><a href=\"#\" id='delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
+                                    var deleteIcon = "<td><a href=\"#\" id='modal_delete_" + newMenuCount + "'><span class=\"delete\"><i class=\"fas fa-minus-circle\"></i></span></a></td>";
                                     $('<tr id="menu_' + newMenuCount + '">').html(langField + keyFieldParent + keyFieldActive + keyFieldAdminActive + keyFieldSortOrder + deleteIcon + "</tr>").appendTo('#menus_body');
                                 }
                             } else {
@@ -432,8 +484,9 @@
                             }
                         }
 
-                        $('[id^="delete_"]').click(function () {
-                            DeleteMenu($(this).attr('id').replace('delete_', ""));
+                        //-- Show delete file modal functionality
+                        $('[id^="modal_delete_"]').click(function () {
+                            ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
                         });
                     }
                 });

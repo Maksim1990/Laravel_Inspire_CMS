@@ -210,14 +210,14 @@ class DashboardController extends Controller
                             ]);
 
 
-                            //-- Add new menu to elastic search
-                            $elastic = app(Elastic::class);
-                            $elastic->index([
-                                'index' => 'inspirecms_menus_' . Auth::id(),
-                                'type' => 'menu',
-                                'id' => $menuLang->id."_".Auth::id()."_".strtoupper($strKey),
-                                'body' => $menuLang->toArray()
-                            ]);
+//                            //-- Add new menu to elastic search
+//                            $elastic = app(Elastic::class);
+//                            $elastic->index([
+//                                'index' => 'inspirecms_menus_' . Auth::id(),
+//                                'type' => 'menu',
+//                                'id' => $menuLang->id."_".Auth::id()."_".strtoupper($strKey),
+//                                'body' => $menuLang->toArray()
+//                            ]);
                         }
                     }
                 }
@@ -275,16 +275,16 @@ class DashboardController extends Controller
 
         $deleteMenu = Menu::find($intId);
 
-        //-- Delete menu from Elastic search index
-        $elastic = app(Elastic::class);
-        $arrOfActiveLanguages = Helper::GetActiveLanguages();
-        foreach ($arrOfActiveLanguages as $strKey => $strLang) {
-            $elastic->delete([
-                'index' => 'inspirecms_menus_' . Auth::id(),
-                'type' => 'menu',
-                'id' => $deleteMenu->id . "_" . Auth::id() . "_".strtoupper($strKey),
-            ]);
-        }
+//        //-- Delete menu from Elastic search index
+//        $elastic = app(Elastic::class);
+//        $arrOfActiveLanguages = Helper::GetActiveLanguages();
+//        foreach ($arrOfActiveLanguages as $strKey => $strLang) {
+//            $elastic->delete([
+//                'index' => 'inspirecms_menus_' . Auth::id(),
+//                'type' => 'menu',
+//                'id' => $deleteMenu->id . "_" . Auth::id() . "_".strtoupper($strKey),
+//            ]);
+//        }
 
         if ($deleteMenu->admin == "Y") {
             if ($user->admin) {
