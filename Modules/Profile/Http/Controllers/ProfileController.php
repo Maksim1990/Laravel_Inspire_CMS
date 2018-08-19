@@ -23,6 +23,7 @@ use Modules\Dashboard\Entities\Language;
 use Modules\Dashboard\Entities\MailEntity;
 use Modules\Dashboard\Entities\SocialIcon;
 use Modules\Images\Entities\Photo;
+use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
 use Modules\Pagebuilder\Entities\UserBlockPivot;
@@ -180,6 +181,7 @@ class ProfileController extends Controller
         MailEntity::where('user_id', $user_id)->delete();
         SocialIcon::where('user_id', $user_id)->delete();
         WebsiteSetting::where('user_id', $user_id)->delete();
+        Background::where('user_id', $user_id)->delete();
 
         //-- Deleting PAGEBUILDER BLOCKS related to this user
         $blocks=Block::where('user_id', $user_id)->get();

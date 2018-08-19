@@ -3,6 +3,7 @@
 namespace Modules\Dashboard\Http\Controllers;
 
 use App\Menu\Menu;
+use App\Menu\MenuLang;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -31,8 +32,11 @@ class SearchController extends Controller
         switch ($strModule) {
             case "menu":
                 if (!empty($strValue)) {
-                    $userMenus = Menu::whereHas('menuActive', function ($query) {
-                        $query->where('user_id', Auth::id())->whereIn('menu_id', [1, 2, 3]);
+
+                    $userMenusLangs = MenuLang::where('name','like', '%'.$strValue.'%')->where('user_id',Auth::id())->pluck('id')->unique();
+
+                    $userMenus = Menu::whereHas('menuActive', function ($query) use ($userMenusLangs) {
+                        $query->where('user_id', Auth::id())->whereIn('menu_id', $userMenusLangs);
                     })->get();
                 } else {
                     $userMenus = Menu::whereHas('menuActive', function ($query) {

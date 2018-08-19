@@ -1,3 +1,21 @@
-<div class="w3-row w3-center w3-dark-grey w3-padding-16" id="{{$id}}">
+@php
+
+    if(!empty($background) && $background->background_type=='color'){
+    $strBackground="background-color:".$background->color.";";
+    }elseif(!empty($background) && $background->background_type=='image'){
+    if(!empty($background->image_path)){
+    $strBackground="background: url('".custom_asset("storage/".$background->image_path)."') no-repeat center center fixed;
+        min-height: 100%;
+        background-size: cover;
+        ";
+        }else{
+    $strBackground="";
+    }
+    }else{
+    $strBackground="";
+    }
+
+@endphp
+<div class="w3-row w3-center w3-dark-grey w3-padding-16" id="{{$id}}" style="{{$strBackground}}">
     {!! $content !!}
 </div>
