@@ -56,4 +56,5 @@ return [
     'not_active' => 'Not active',
     'active' => 'Active',
     'activate' => 'Activate',
+
 ];

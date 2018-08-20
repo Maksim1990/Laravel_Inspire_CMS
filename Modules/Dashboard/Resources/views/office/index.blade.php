@@ -11,27 +11,45 @@
     </div>
 
 
-    <div class="col-sm-12 col-md-4 col-md-offset-1  col-xs-12 text-center icon_module">
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
         <a href="{{route('office_docs',['id'=>Auth::id()])}}" >
             <p class="font_icon"><i class="fas fa-file-alt"></i></p>
             <span>@lang('dashboard::messages.documents')</span>
         </a>
     </div>
 
-    <div class="col-sm-12 col-md-4 col-md-offset-1  col-xs-12 text-center icon_module">
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
         <a href="{{route('images',['id'=>Auth::id()])}}" >
             <p class="font_icon"><i class="fas fa-images"></i></p>
             <span>@lang('messages.images')</span>
         </a>
     </div>
 
-    <div class="col-sm-12 col-md-4 col-md-offset-1  col-xs-12 text-center icon_module">
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
         <a href="{{route('office_ftp_manager',['id'=>Auth::id()])}}">
             <p class="font_icon">
                 <img height="100"
                      src="{{custom_asset('images/includes/ftp.png')}}" alt="">
             </p>
             <span> @lang('dashboard::messages.ftp_manager')</span>
+        </a>
+    </div>
+
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
+        <a href="{{route('export',['id'=>Auth::id()])}}">
+            <p class="font_icon">
+                <i class="fas fa-download"></i>
+            </p>
+            <span> @lang('dashboard::messages.export_module')</span>
+        </a>
+    </div>
+
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
+        <a href="{{route('import',['id'=>Auth::id()])}}">
+            <p class="font_icon">
+                <i class="fas fa-file-export"></i>
+            </p>
+            <span> @lang('dashboard::messages.import_module')</span>
         </a>
     </div>
 

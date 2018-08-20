@@ -59,6 +59,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/export/posts', 'ExcelController@exportPosts')->name('export_posts');
         Route::post('export/{type}/posts', 'ExcelController@exportPostsFile')->name('export_posts_file');
 
+        Route::get('/{id}/import', 'ExcelController@import')->name('import');
+        Route::get('/{id}/import/file/{type}', 'ExcelController@importFile')->name('import_page');
+        Route::post('/{id}/import/upload/{type}', 'ExcelController@importFileUpload')->name('import_file');
+
 
         //-- Mail functionality
         Route::resource('/{id}/mail', 'MailController');

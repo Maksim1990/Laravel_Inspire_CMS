@@ -214,7 +214,7 @@ class MailController extends Controller
         $mailTemplateContent = Purifier::clean($mailTemplateContent, array('Attr.EnableID' => true));
 
         $template = MailTemplate::where('user_id',Auth::id())->where('id', $template_id)->first();
-      
+
         if ($template) {
             $template->content = $mailTemplateContent;
             $template->title = $strTemplateTitle;

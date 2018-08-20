@@ -84,5 +84,7 @@ return [
     'mail_templates_list' => 'List of mail templates',
     'mail_template_activated' => 'Mail template activated',
     'template_title' => 'Template title',
+    'import_module' => 'Import module',
+    'import_languages' => 'Import languages',
     'mail_template_customize_info' => 'Please leave/insert <span class="w3-text-red">:mailVariable</span> variable that position where you want content from mail form be placed in the email.<br><b>Example:</b><div style="background-color:rgba(255,127,80,0.47);padding: 15px;15px;border-radius:20px;"><br><h1>Hello World</h1><p>:mailVariable</p></div>You can write any valid html code.',
 ];
