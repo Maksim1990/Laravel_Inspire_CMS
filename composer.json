@@ -18,6 +18,7 @@
         "mews/purifier": "^2.1",
         "nwidart/laravel-modules": "^3.2",
         "predis/predis": "^1.1",
+        "rap2hpoutre/fast-excel": "^0.6.0",
         "spatie/laravel-translation-loader": "^2.1"
     },
     "require-dev": {

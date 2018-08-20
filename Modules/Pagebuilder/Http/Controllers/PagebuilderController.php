@@ -351,7 +351,7 @@ class PagebuilderController extends Controller
         $arrOptions=[
             'message'=>trans('pagebuilder::messages.background_image_deleted'),
             'type'=>'success',
-            'position'=>'rightTop'
+            'position'=>'topRight'
         ];
         Session::flash('background_change', $arrOptions);
         return redirect()->route('background',['id'=>$block_id]);

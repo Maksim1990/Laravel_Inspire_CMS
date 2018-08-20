@@ -11,10 +11,13 @@ use App\Office\Export\PostsExport;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Dashboard\Entities\Language;
 use Modules\Post\Entities\Post;
+use Rap2hpoutre\FastExcel\FastExcel;
 use Spatie\TranslationLoader\LanguageLine;
 
 class ExcelController extends Controller
@@ -44,40 +47,65 @@ class ExcelController extends Controller
         return view('dashboard::import.import', compact('arrTabs', 'active', 'type'));
     }
 
-    public function importFileUpload($id, $type)
+    public function importFileUpload($id, $type,Request $request)
     {
-        if (Input::hasFile('import_file')) {
-            $path = Input::file('import_file')->getRealPath();
-            $arrError = array();
-            $intImported = 0;
-            $data = \Excel::load($path, function ($reader) {
-            })->get();
-            if (!empty($data) && $data->count()) {
 
-                foreach ($data as $key => $value) {
-//                    if (!empty($value->title) && !empty($value->author) && !empty($value->finished_reading_date)) {
-//                        $input['title'] = $value->title;
-//                        $input['author'] = $value->author;
-//                        $input['date'] = $value->finished_reading_date;
-//                        $input['description'] = !empty($value->description) ? $value->description : "none";
-//                        $input['publish_year'] = !empty($value->publish_year) ? $value->publish_year : "";
-//                        $input['user_id'] = Auth::id();
-//                        $input['category_id'] = 18;
-//                        $input['active'] = 1;
-//                        $intImported++;
-//                    } else {
-//                        $arrError[$value->id] = "Fields 'author' ,'title' and 'date' for line " . $value->id . " shouldn't be empty";
-//                    }
-dd($type);
-dd($value);
 
-                    if (!empty($input)) {
-                        Book::create($input);
-                        // dd('Insert Record successfully.');
-                    }
+
+        $input = $request->all();
+        $importType = $request->type;
+        if ($file = $request->file('file')) {
+            if (!($file->getClientSize() > 2100000)) {
+
+
+
+                $name = time() . $file->getClientOriginalName();
+                //$file->move('images', $name);
+                request()->file('file')->storeAs(
+                    'public/upload/' . Auth::id() . '/import/', $name
+                );
+
+
+                        //$arrImport = (new FastExcel)->import(public_path('files/templates/import_'.$type.'.xlsx'), function ($line) {
+                        $arrImport = (new FastExcel)->import(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name), function ($line) use($importType) {
+           // dd($line);
+            //dd($importType);
+//            return User::create([
+//                'name' => $line['Name'],
+//                'email' => $line['Email']
+//            ]);
+        });
+//        dd($type);
+
+
+                //-- Remove file after successful import
+                if(file_exists(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name))){
+                    unlink(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name));
                 }
+
+                //-- Build notification array
+                $arrOptions=[
+                    'message'=>trans('dashboard::messages.import_completed'),
+                    'type'=>'success',
+                    'position'=>'topRight'
+                ];
+                Session::flash('import_change', $arrOptions);
+                return redirect()->route('import_page',['id'=>Auth::id(),'type'=>$importType]);
+
+            } else {
+                $arrOptions=[
+                    'message'=>trans('dashboard::messages.import_failed'),
+                    'type'=>'error',
+                    'position'=>'bottomLeft'
+                ];
+                Session::flash('import_change', $arrOptions);
+                return redirect()->route('import_page',['id'=>Auth::id(),'type'=>$importType]);
             }
         }
+
+
+
+
     }
 
     /**
