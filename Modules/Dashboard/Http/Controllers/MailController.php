@@ -180,7 +180,7 @@ class MailController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $template = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->where('id',$template_id)->first();
+        $template = MailTemplate::where('user_id', Auth::id())->where('id',$template_id)->first();
 
         $templates= MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->orderBy('id',"ASC")->first();
         if($templates){
@@ -195,7 +195,7 @@ class MailController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $templates = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->get();
+        $templates = MailTemplate::where('user_id', Auth::id())->get();
 
         return view('dashboard::mail.template_list', compact('arrTabs', 'templates', 'active'));
     }
@@ -205,6 +205,7 @@ class MailController extends Controller
 
         $template_id = $request['template_id'];
         $mailTemplateContent = $request['mailTemplateContent'];
+        $strTemplateTitle = $request['template_title'];
         $strError = "";
         $result = "success";
 
@@ -212,20 +213,65 @@ class MailController extends Controller
         //-- Removing not allowed <script> tags
         $mailTemplateContent = Purifier::clean($mailTemplateContent, array('Attr.EnableID' => true));
 
-        $template = MailTemplate::where('user_id',Auth::id())->where('active','Y')->where('id', $template_id)->first();
+        $template = MailTemplate::where('user_id',Auth::id())->where('id', $template_id)->first();
+      
         if ($template) {
             $template->content = $mailTemplateContent;
+            $template->title = $strTemplateTitle;
             if (!$template->update()) {
                 $strError = trans('dashboard::messages.mail_template_can_not_update');
                 $result = "";
             }
         }else{
+
+            //-- Deactivate all mail templates
+            $templates = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->get();
+            if($templates) {
+                foreach ($templates as $template){
+                    $template->active = 'N';
+                    $template->save();
+                }
+            }
+
             MailTemplate::create([
                 'user_id'=>Auth::id(),
                 'active'=>'Y',
-                'title'=>'',
+                'title'=>$strTemplateTitle,
                 'content'=>$mailTemplateContent
             ]);
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+
+    }
+
+    public function ajaxMailTemplateActiveUpdate(Request $request)
+    {
+
+        $template_id = $request['template_id'];
+        $strError = "";
+        $result = "success";
+
+
+        //-- Deactivate all mail templates
+        $templates = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->get();
+        if($templates) {
+            foreach ($templates as $template){
+                $template->active = 'N';
+                $template->save();
+            }
+        }
+
+
+        //-- Activate selected mail template
+        $template = MailTemplate::where('user_id', Auth::id())->where('id',$template_id)->first();
+        if($template) {
+                $template->active = 'Y';
+                $template->update();
         }
 
         header('Content-Type: application/json');

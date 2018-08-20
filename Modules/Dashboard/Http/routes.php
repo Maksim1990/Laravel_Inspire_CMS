@@ -68,6 +68,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/mail/templates/list', 'MailController@mailTemplatesList')->name('mail_template_list');
         Route::post('/{id}/add_mail_image_attachment', 'MailController@attachImages')->name('mail_image_attachments');
         Route::post('/ajax_mail_template_update', 'MailController@ajaxMailTemplateUpdate')->name('ajax_mail_template_update');
+        Route::post('/ajax_mail_template_active_update', 'MailController@ajaxMailTemplateActiveUpdate')->name('ajax_mail_template_active_update');
 
         Route::post('/ajax_get_mail_data', 'MailController@ajaxGetMailData')->name('ajax_get_mail_data');
         Route::post('/ajax_delete_mail', 'MailController@ajaxDeleteMailData')->name('ajax_delete_mail');

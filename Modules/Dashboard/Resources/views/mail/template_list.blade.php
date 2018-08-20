@@ -18,9 +18,17 @@
             @if(!empty($templates))
                 <ul>
                 @foreach($templates as $template)
-                    <li>
-                        <a href="{{route("customize_mail_template",['id'=>Auth::id(),'template_id'=>$template->id])}}">{{!empty($template->title)?$template->title:trans('messages.no_title')}}</a>
-                        <a href="{{route("customize_mail_template",['id'=>Auth::id(),'template_id'=>$template->id])}}" class="btn btn-sm btn-info">@lang('dashboard::messages.customize_mail_template')</a>
+                    <li style="height: 70px;">
+                        <a href="{{route("customize_mail_template",['id'=>Auth::id(),'template_id'=>$template->id])}}" style="display:inline-block;width: 250px;">{{!empty($template->title)?$template->title:trans('messages.no_title')}}</a>
+                        <a href="{{route("customize_mail_template",['id'=>Auth::id(),'template_id'=>$template->id])}}" style="display:inline-block;width: 200px;margin-right: 10%;" class="btn btn-sm btn-info">@lang('dashboard::messages.customize_mail_template')</a>
+                       @php
+                       $strChecked="";
+                       if($template->active=="Y"){
+                       $strChecked="checked";
+                       }
+                       @endphp
+                        <input type="radio" name="email_active"  {{$strChecked}} onclick="ChangeActiveTemplate('{{$template->id}}')">
+                        <span class="checkmark"></span>
                     </li>
                     @endforeach
                 </ul>
@@ -33,5 +41,45 @@
 
 
 @section('scripts')
+    <script>
+        var token = '{{\Illuminate\Support\Facades\Session::token()}}';
+       function ChangeActiveTemplate(id) {
 
+           var url = '{{ route('ajax_mail_template_active_update') }}';
+
+           $.ajax({
+               method: 'POST',
+               url: url,
+               dataType: "json",
+               data: {
+
+                   template_id: id,
+                   _token: token
+               }, beforeSend: function () {
+                   //-- Show loading image while execution of ajax request
+                   $("div#divLoading").addClass('show');
+               },
+               success: function (data) {
+                   if (data['result'] === "success") {
+                       new Noty({
+                           type: 'success',
+                           layout: 'topRight',
+                           text: '{{trans('dashboard::messages.mail_template_activated')}}'
+                       }).show();
+
+                   } else {
+                       new Noty({
+                           type: 'error',
+                           layout: 'bottomLeft',
+                           text: data['result']
+                       }).show();
+                   }
+                   //-- Hide loading image
+                   $("div#divLoading").removeClass('show');
+               }
+           });
+       }
+
+
+    </script>
 @stop

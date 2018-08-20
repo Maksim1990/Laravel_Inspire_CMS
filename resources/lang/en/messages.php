@@ -53,4 +53,7 @@ return [
     'image' => 'Image',
     'number_of_found_items' => 'Number of found items',
     'no_title' => 'No title',
+    'not_active' => 'Not active',
+    'active' => 'Active',
+    'activate' => 'Activate',
 ];

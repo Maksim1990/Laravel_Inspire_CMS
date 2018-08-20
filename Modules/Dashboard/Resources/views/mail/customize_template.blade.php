@@ -30,7 +30,15 @@
                 <article>
 
                     <form>
+                        <div class="col-sm-12col-xs-12 w3-margin-bottom">
+                            <input type="text" id="template_title" class="form-control" placeholder="@lang('dashboard::messages.template_title')"
+                                   data-toggle="tooltip" data-placement="top" title="@lang('dashboard::messages.template_title')" aria-describedby="basic-addon2"
+                                   value="{{isset($template)?$template->title:""}}">
+
+                        </div>
+                        <div class="col-sm-12col-xs-12">
                         <textarea id="codeCSS" name="codeCSS" rows="10">{{isset($template)?$template->content:""}}</textarea>
+                        </div>
                     </form>
                     <script>
                         var editor = CodeMirror.fromTextArea(document.getElementById("codeCSS"), {
@@ -55,6 +63,25 @@
                 <button id="submit" class="btn btn-success">Save</button>
             </div>
             <div class="col-sm-4 col-xs-10">
+                @if(isset($template))
+                <div>
+                    @php
+                        $strActive=trans('messages.not_active');
+                        $strClass="success";
+                        $strButtonTittle=trans('messages.activate');
+                        $strClassText="red";
+                    if($template->active=="Y"){
+                    $strActive=trans('messages.active');
+                    $strClassText="green";
+                    }
+                    @endphp
+                    Template status: <b class="w3-text-{{$strClassText}}" id="status">{{$strActive}}</b>
+                    @if($template->active=="N")
+                    <a href="#" class="btn btn-{{$strClass}}" id="activate_button" onclick="ChangeActiveTemplate('{{$template->id}}')">{{$strButtonTittle}}</a>
+                    @endif
+                    <br><hr>
+                </div>
+                @endif
                 @lang('dashboard::messages.mail_template_customize_info',['mailVariable'=>'@{{$content}}'])
             </div>
         </div>
@@ -70,6 +97,7 @@
         var url = '{{ route('ajax_mail_template_update') }}';
         $('#submit').click(function () {
             var mailTemplateContent = editor.getValue();
+            var template_title = $('#template_title').val();
 
             $.ajax({
                 method: 'POST',
@@ -78,6 +106,7 @@
                 data: {
                     mailTemplateContent: mailTemplateContent,
                     template_id: '{{$template_id}}',
+                    template_title: template_title,
                     _token: token
                 }, beforeSend: function () {
                     //-- Show loading image while execution of ajax request
@@ -103,5 +132,45 @@
                 }
             });
         });
+
+        function ChangeActiveTemplate(id) {
+
+            var url = '{{ route('ajax_mail_template_active_update') }}';
+            $.ajax({
+                method: 'POST',
+                url: url,
+                dataType: "json",
+                data: {
+
+                    template_id: id,
+                    _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
+                },
+                success: function (data) {
+                    if (data['result'] === "success") {
+                        new Noty({
+                            type: 'success',
+                            layout: 'topRight',
+                            text: '{{trans('dashboard::messages.mail_template_activated')}}'
+                        }).show();
+
+                        $('#status').removeClass('w3-text-red').addClass('w3-text-green').text('{{trans('messages.active')}}');
+                        $('#activate_button').hide();
+                    } else {
+                        new Noty({
+                            type: 'error',
+                            layout: 'bottomLeft',
+                            text: data['result']
+                        }).show();
+                    }
+                    //-- Hide loading image
+                    $("div#divLoading").removeClass('show');
+                }
+            });
+        }
+
+
     </script>
 @stop
