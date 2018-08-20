@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Dashboard\Entities\Language;
 use Modules\Dashboard\Entities\MailEntity;
+use Modules\Dashboard\Entities\MailTemplate;
 use Modules\Dashboard\Entities\SocialIcon;
 use Modules\Images\Entities\Photo;
 use Modules\Pagebuilder\Entities\Background;
@@ -179,6 +180,7 @@ class ProfileController extends Controller
         Language::where('user_id', $user_id)->delete();
         Post::where('user_id', $user_id)->delete();
         MailEntity::where('user_id', $user_id)->delete();
+        MailTemplate::where('user_id', $user_id)->delete();
         SocialIcon::where('user_id', $user_id)->delete();
         WebsiteSetting::where('user_id', $user_id)->delete();
         Background::where('user_id', $user_id)->delete();

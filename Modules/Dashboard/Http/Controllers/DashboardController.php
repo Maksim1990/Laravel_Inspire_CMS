@@ -346,7 +346,6 @@ class DashboardController extends Controller
 
         }
 
-
         //-- Get all active languages
         $arrOfActiveLanguages = Helper::GetActiveLanguages();
         $arrOfActiveLanguagesKeys = array_keys($arrOfActiveLanguages);
@@ -387,12 +386,10 @@ class DashboardController extends Controller
             }
         }
 
-
         header('Content-Type: application/json');
         echo json_encode(array(
             'result' => $result,
             'error' => $strError
         ));
     }
-
 }

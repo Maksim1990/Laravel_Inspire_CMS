@@ -165,6 +165,7 @@ return [
         m3assy\nationals\nationalsServiceProvider::class,
         App\Providers\HeaderServiceProvider::class,
         App\Providers\FooterServiceProvider::class,
+        App\Providers\MailServiceProvider::class,
 
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,

@@ -4,8 +4,10 @@
 //-- Custom function that overwrite default asset() method
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 function custom_asset($path, $secure = null){
     return asset('public/'.$path);

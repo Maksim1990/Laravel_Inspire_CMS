@@ -40,7 +40,7 @@ class MailModuleTemplate extends Mailable
     public function build()
     {
 
-        $email = $this->view('dashboard::mail.templates.mail')
+        $email = $this->view('dashboard::mail.templates.mail_1')
             ->with('content', $this->content)
             ->from($this->mail_from, Auth::user()->name)
             ->replyTo($this->mail_from, Auth::user()->name)

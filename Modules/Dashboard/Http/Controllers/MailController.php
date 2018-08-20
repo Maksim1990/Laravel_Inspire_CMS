@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Modules\Dashboard\Emails\MailModuleTemplate;
 use Modules\Dashboard\Entities\MailEntity;
 use Modules\Dashboard\Entities\MailPhoto;
+use Modules\Dashboard\Entities\MailTemplate;
 use Modules\Dashboard\Http\Requests\CreateMailRequest;
 
 class MailController extends Controller
@@ -39,6 +40,8 @@ class MailController extends Controller
         $active = "active";
         return view('dashboard::mail.create', compact('arrTabs', 'active'));
     }
+
+
 
 
 
@@ -170,6 +173,38 @@ class MailController extends Controller
 
     }
 
+    public function customizeMailTemplate($id,$template_id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        $template=MailTemplate::where('user_id',Auth::id())->where('active','Y')->first();
 
+        return view('dashboard::mail.customize_template', compact('arrTabs','template_id', 'active','template'));
+    }
+
+    public function ajaxMailTemplateUpdate(Request $request)
+    {
+
+        $template_id = $request['template_id'];
+        $mailTemplateContent= $request['mailTemplateContent'];
+        $strError = "";
+        $result = "success";
+
+        $template=MailTemplate::where('user_id',Auth::id())->where('active','Y')->where('id',$template_id)->first();
+        if($template){
+            $template->content=$mailTemplateContent;
+            if(!$template->update()){
+                $strError = trans('dashboard::messages.mail_template_can_not_update');
+                $result = "";
+            }
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+
+    }
 
 }

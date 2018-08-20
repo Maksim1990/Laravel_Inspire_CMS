@@ -75,4 +75,7 @@ return [
     'remote_server_was_updated' => 'Remote server was updated!',
     'remote_server_activated' => 'Remote server activated!',
     'remote_server_deactivated' => 'Remote server deactivated!',
+    'customize_mail_template' => 'Customize mail template',
+    'mail_template_updated' => 'Mail template is updated!',
+    'mail_template_can_not_update' => 'Template can not be updated!',
 ];
