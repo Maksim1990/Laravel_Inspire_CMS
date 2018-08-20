@@ -106,6 +106,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/ajax_search_bar', 'SearchController@ajaxSearchBar')->name('ajax_search_bar');
 
 
+        //-- TASKS FUNCTIONALITY
+        Route::get('/{id}/tasks', 'TaskController@index')->name("tasks");
+
 
 
 

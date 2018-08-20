@@ -53,6 +53,15 @@
         </a>
     </div>
 
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
+        <a href="{{route('tasks',['id'=>Auth::id()])}}">
+            <p class="font_icon">
+                <i class="fas fa-file-export"></i>
+            </p>
+            <span> @lang('dashboard::messages.tasks_module')</span>
+        </a>
+    </div>
+
 @stop
 @section ('scripts')
     <script>
