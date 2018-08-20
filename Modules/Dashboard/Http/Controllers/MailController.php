@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Modules\Dashboard\Emails\MailModuleTemplate;
@@ -178,6 +179,7 @@ class MailController extends Controller
         $arrTabs = ['General'];
         $active = "active";
         $template=MailTemplate::where('user_id',Auth::id())->where('active','Y')->first();
+
 
         return view('dashboard::mail.customize_template', compact('arrTabs','template_id', 'active','template'));
     }

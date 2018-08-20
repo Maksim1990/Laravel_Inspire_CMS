@@ -23,34 +23,38 @@
 @stop
 @section('General')
     <div class="row">
-        <div class="col-sm-8 col-xs-10">
+        <div class="col-sm-12 col-xs-12">
             <h3 class="title">@lang('dashboard::messages.customize_mail_template')</h3>
             <div id="title_shape"></div>
+            <div class="col-sm-8 col-xs-12">
+                <article>
 
-            <article>
-
-                <form>
-                    <textarea id="codeCSS" name="codeCSS" rows="10">{{$template->content}}</textarea>
-                </form>
-                <script>
-                    var editor = CodeMirror.fromTextArea(document.getElementById("codeCSS"), {
-                        lineNumbers: true,
-                        theme: '{{$strCodeeditorTheme}}',
-                        mode:'text/css',
-                        extraKeys: {
-                            "F11": function (cm) {
-                                cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-                            },
-                            "Esc": function (cm) {
-                                if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                    <form>
+                        <textarea id="codeCSS" name="codeCSS" rows="10">{{$template->content}}</textarea>
+                    </form>
+                    <script>
+                        var editor = CodeMirror.fromTextArea(document.getElementById("codeCSS"), {
+                            lineNumbers: true,
+                            theme: '{{$strCodeeditorTheme}}',
+                            mode: 'text/css',
+                            extraKeys: {
+                                "F11": function (cm) {
+                                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                                },
+                                "Esc": function (cm) {
+                                    if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                                }
                             }
-                        }
-                    });
-                </script>
-                <br>
-            </article>
-            <a href="{{route("codeeditor_setting",Auth::id())}}" class="btn btn-info">Editor settings</a>
-            <button id="submit" class="btn btn-success">Save</button>
+                        });
+                    </script>
+                    <br>
+                </article>
+                <a href="{{route("codeeditor_setting",Auth::id())}}" class="btn btn-info">Editor settings</a>
+                <button id="submit" class="btn btn-success">Save</button>
+            </div>
+            <div class="col-sm-4 col-xs-10">
+                @lang('dashboard::messages.mail_template_customize_info',['mailVariable'=>'@{{$content}}'])
+            </div>
         </div>
     </div>
 
@@ -85,7 +89,7 @@
                             text: '{{trans('dashboard::messages.mail_template_updated')}}'
                         }).show();
 
-                    }else{
+                    } else {
                         new Noty({
                             type: 'error',
                             layout: 'bottomLeft',

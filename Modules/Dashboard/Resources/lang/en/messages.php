@@ -78,4 +78,5 @@ return [
     'customize_mail_template' => 'Customize mail template',
     'mail_template_updated' => 'Mail template is updated!',
     'mail_template_can_not_update' => 'Template can not be updated!',
+    'mail_template_customize_info' => 'Please leave <span class="w3-text-red">:mailVariable</span> variable that position where you want content from mail form be placed in the email.',
 ];
