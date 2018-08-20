@@ -20,7 +20,7 @@ class WebsiteController extends Controller
     public function index($id)
     {
 
-        $websiteBlocks=Block::where('user_id',Auth::id())->orderBy('sortorder','ASC')->get();
+        $websiteBlocks=Block::where('user_id',Auth::id())->where('active','Y')->orderBy('sortorder','ASC')->get();
         $admin=User::where('admin',1)->first();
         $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
 

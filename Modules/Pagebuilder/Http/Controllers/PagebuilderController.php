@@ -28,7 +28,7 @@ class PagebuilderController extends Controller
         $user = User::findOrFail($id);
         $arrTabs = ['General','Settings','Social'];
         $active = "active";
-        $websiteBlocks = Block::where('user_id', $user->id)->orderBy('sortorder', 'ASC')->get();
+        $websiteBlocks = Block::where('user_id', $user->id)->where('active','Y')->orderBy('sortorder', 'ASC')->get();
 
         $admin=User::where('admin',1)->first();
         $adminSettings=AdminSettings::where('user_id',$admin->id)->first();

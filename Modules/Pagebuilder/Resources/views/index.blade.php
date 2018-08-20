@@ -150,8 +150,8 @@
                 <ul id="gallery">
                     @php
                         for ($idx = 1; $idx < count($arrBlocks); $idx += 1) {
-
-                        if($adminSettings->use_remote_server=="Y" && !empty($adminSettings->remote_server)){
+                        if(isset($arrBlocks[$idx])){
+                           if($adminSettings->use_remote_server=="Y" && !empty($adminSettings->remote_server)){
                             $strContent=str_replace('../../public/storage',$adminSettings->remote_server.'/public/storage',$arrBlocks[$idx]['content']);
                             $strContent=str_replace('../../storage',$adminSettings->remote_server.'/public/storage',$arrBlocks[$idx]['content']);
                         }else{
@@ -168,6 +168,7 @@
                             echo "<button id='pagebuilder_menu_save_".$arrBlocks[$idx]['id']."' data-blockid='' class='btn btn-success tooltip_link'>".trans('messages.save')."</button><br>";
                             echo "</span>";
                             echo "</li>";
+                            }
                         }
                     @endphp
                 </ul>
