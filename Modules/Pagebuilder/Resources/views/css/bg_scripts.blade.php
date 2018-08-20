@@ -26,6 +26,9 @@
                 block_id: block_id,
                 background_type: background_type,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -35,6 +38,8 @@
                         text: '{{trans('pagebuilder::messages.background_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -85,6 +90,9 @@
                 block_id: block_id,
                 background_type: background_type,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -94,6 +102,9 @@
                         text: '{{trans('pagebuilder::messages.background_type_updated')}}!'
                     }).show();
                 }
+
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
 
@@ -121,6 +132,9 @@
                 background_type: background_type,
                 imagePath: imagePath,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -132,6 +146,9 @@
 
                     $('#delete_image_button').css('display','inline');
                 }
+
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });

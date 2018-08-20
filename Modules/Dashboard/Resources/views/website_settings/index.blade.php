@@ -164,6 +164,10 @@
 @section('Social')
     @include('dashboard::website_settings.social_icons')
 @stop
+@section('Footer')
+    @include('dashboard::website_settings.footer')
+@stop
 @section('scripts')
     @include('dashboard::website_settings.scripts')
+    @include('pagebuilder::css.bg_scripts')
 @stop

@@ -62,6 +62,9 @@
                 data: {
                     codeEditorTheme: codeEditorTheme,
                     _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
                 },
                 success: function (data) {
                     if (data['result'] === "success") {
@@ -71,6 +74,8 @@
                             text: 'Theme was successfully updated!'
                         }).show();
                     }
+                    //-- Hide loading image
+                    $("div#divLoading").removeClass('show');
                 }
             });
 

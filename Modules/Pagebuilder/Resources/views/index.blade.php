@@ -184,6 +184,12 @@
                         <h3>HOME</h3>
                         <p>1. Pagebuilder background color</p>
                         <p>2. How to display labels in text</p>
+                        <div>
+                            <a href="{{route("background",['id'=>'footer'])}}"
+                               class="btn btn-warning w3-margin-bottom">Customize website footer</a><br>
+                            <a href="{{route("background",['id'=>'google_contact_form'])}}"
+                               class="btn btn-warning w3-margin-bottom">Customize Google & Contact form block</a><br>
+                        </div>
                     </div>
                     <div id="menu1" class="tab-pane">
                         @include('pagebuilder::custom_css')

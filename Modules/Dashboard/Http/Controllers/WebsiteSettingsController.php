@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Dashboard\Entities\SocialIcon;
+use Modules\Pagebuilder\Entities\Background;
 use Modules\Website\Entities\WebsiteSetting;
 
 class WebsiteSettingsController extends Controller
@@ -17,9 +18,15 @@ class WebsiteSettingsController extends Controller
      */
     public function index()
     {
-        $arrTabs = ['General','Social','Google_map_and_Contact_form','Footer'];
+        $arrTabs = ['General','Social','Footer'];
         $active = "active";
-        return view('dashboard::website_settings.index', compact('arrTabs', 'active'));
+
+        $block_footer='footer';
+
+        $blockBackgroundFooter = Background::where('user_id', Auth::id())->where('block_id',$block_footer)->first();
+        $userImages = Auth::user()->photos;
+
+        return view('dashboard::website_settings.index', compact('arrTabs', 'active','block_footer','blockBackgroundFooter','userImages'));
     }
 
     /**

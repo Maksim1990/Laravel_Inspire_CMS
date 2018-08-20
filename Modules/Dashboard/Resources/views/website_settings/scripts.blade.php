@@ -35,6 +35,9 @@
             data: {
                 website_name: website_name,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -44,6 +47,8 @@
                         text: '{{trans('dashboard::messages.website_name_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -64,6 +69,9 @@
             data: {
                 website_email_form: website_email_form,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -73,6 +81,8 @@
                         text: '{{trans('messages.website_settings_option_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -94,6 +104,9 @@
             data: {
                 website_go_to_the_top: website_go_to_the_top,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -103,6 +116,8 @@
                         text: '{{trans('messages.website_settings_option_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -124,6 +139,9 @@
             data: {
                 website_posts_page: website_posts_page,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -133,6 +151,8 @@
                         text: '{{trans('messages.website_settings_option_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -157,6 +177,9 @@
             data: {
                 website_google_map: website_google_map,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -166,6 +189,8 @@
                         text: '{{trans('messages.website_settings_option_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -189,6 +214,9 @@
             data: {
                 website_google_map_key: website_google_map_key,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -198,6 +226,8 @@
                         text: '{{trans('dashboard::messages.website_google_maps_key_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -214,6 +244,9 @@
             data: {
                 github: github,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -223,6 +256,8 @@
                         text: 'GitHub URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -239,6 +274,9 @@
             data: {
                 facebook: facebook,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -248,6 +286,8 @@
                         text: 'Facebook URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -264,6 +304,9 @@
             data: {
                 vk: vk,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -273,6 +316,8 @@
                         text: 'VK URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -289,6 +334,9 @@
             data: {
                 linkedin: linkedin,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -298,6 +346,8 @@
                         text: 'LinkedIn URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -314,6 +364,9 @@
             data: {
                 line: line,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -323,6 +376,8 @@
                         text: 'Line URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -339,6 +394,9 @@
             data: {
                 instagram: instagram,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -348,6 +406,8 @@
                         text: 'Instagram URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -364,6 +424,9 @@
             data: {
                 pinterest: pinterest,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -373,6 +436,8 @@
                         text: 'Pinterest URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -390,6 +455,9 @@
             data: {
                 twitter: twitter,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -399,6 +467,8 @@
                         text: 'Twitter URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
@@ -415,6 +485,9 @@
             data: {
                 google: google,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -424,6 +497,8 @@
                         text: 'Google URL {{trans('messages.was_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
     });
