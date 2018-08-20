@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Mews\Purifier\Facades\Purifier;
 use Modules\Dashboard\Emails\MailModuleTemplate;
 use Modules\Dashboard\Entities\MailEntity;
 use Modules\Dashboard\Entities\MailPhoto;
@@ -207,6 +208,9 @@ class MailController extends Controller
         $strError = "";
         $result = "success";
 
+        //-- Prevent XSS JS injection
+        //-- Removing not allowed <script> tags
+        $mailTemplateContent = Purifier::clean($mailTemplateContent, array('Attr.EnableID' => true));
 
         $template = MailTemplate::where('user_id',Auth::id())->where('active','Y')->where('id', $template_id)->first();
         if ($template) {
