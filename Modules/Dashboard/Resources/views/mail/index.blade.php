@@ -7,7 +7,7 @@
 
     <div class="insp_buttons">
         <a href="{{route("create_mail",Auth::id())}}" class="btn btn-success">@lang('messages.create_new_email')</a>
-        <a href="{{route("customize_mail_template",['id'=>Auth::id(),'template_id'=>1])}}" class="btn btn-info">@lang('dashboard::messages.customize_mail_template')</a>
+        <a href="{{route("mail_template_list",['id'=>Auth::id()])}}" class="btn btn-info">@lang('dashboard::messages.mail_templates_list')</a>
     </div>
 
     @if(count($mails)>0)

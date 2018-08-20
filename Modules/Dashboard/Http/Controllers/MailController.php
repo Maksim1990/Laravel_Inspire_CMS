@@ -25,9 +25,9 @@ class MailController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $mails=MailEntity::where('user_id',$id)->orderBy('id')->paginate(10);
+        $mails = MailEntity::where('user_id', $id)->orderBy('id')->paginate(10);
 
-        return view('dashboard::mail.index', compact('arrTabs', 'active','mails'));
+        return view('dashboard::mail.index', compact('arrTabs', 'active', 'mails'));
     }
 
 
@@ -43,9 +43,6 @@ class MailController extends Controller
     }
 
 
-
-
-
     /**
      * Store a newly created resource in storage.
      * @param  CreateMailRequest $request
@@ -57,36 +54,40 @@ class MailController extends Controller
         $input = $request->all();
 
         $user_id = Auth::id();
-        $input['user_id']=$user_id;
+        $input['user_id'] = $user_id;
         $mail = new MailEntity;
         $mail->fill($input);
         $mail->save();
+        $template = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->first();
+        if ($template) {
+            //-- Sent email with mailable template
+            Mail::to($input['to'])->send(new MailModuleTemplate($input));
 
-
-        //-- Sent email with mailable template
-        Mail::to($input['to'])->send(new MailModuleTemplate($input));
-
-        //-- Check if there are no email failures
-        if (!Mail::failures()) {
-            //-- Check if necessary to add some images to email as attachment
-            $attachments = MailPhoto::where('user_id', Auth::id())->get();
-            if (!empty($attachments)) {
-                foreach ($attachments as $attachment) {
-                    unlink(storage_path('/app/public/' .$attachment->path));
-                    $attachment->delete();
+            //-- Check if there are no email failures
+            if (!Mail::failures()) {
+                //-- Check if necessary to add some images to email as attachment
+                $attachments = MailPhoto::where('user_id', Auth::id())->get();
+                if (!empty($attachments)) {
+                    foreach ($attachments as $attachment) {
+                        unlink(storage_path('/app/public/' . $attachment->path));
+                        $attachment->delete();
+                    }
                 }
-            }
 
-            //-- Update 'Sent' status of the current email
-            $mail->sent="Y";
-            $mail->update();
-        }else{
-            Session::flash('mail_change','Mail was failed!');
+                //-- Update 'Sent' status of the current email
+                $mail->sent = "Y";
+                $mail->update();
+            } else {
+                Session::flash('mail_change', trans('dashboard::messages.mail_sending_failed'));
+                return redirect()->back();
+            }
+        } else {
+            Session::flash('mail_change', trans('dashboard::messages.mail_template_not_found'));
             return redirect()->back();
         }
 
 
-        Session::flash('mail_change','Mail was successfully sent!');
+        Session::flash('mail_change', 'Mail was successfully sent!');
         return \Redirect::route('mail', $user_id);
     }
 
@@ -106,7 +107,7 @@ class MailController extends Controller
 
         if (in_array($extension, $arrAllowedExtension)) {
             if (!($file->getClientSize() > 2100000)) {
-                $name = time() ."_".$file->getClientOriginalName();
+                $name = time() . "_" . $file->getClientOriginalName();
 
                 request()->file('file')->storeAs(
                     'public/upload/' . Auth::id() . '/emails/images/', $name
@@ -138,9 +139,9 @@ class MailController extends Controller
         $result = "success";
 
 
-        $mail=MailEntity::find($mailId);
-        if(!$mail){
-            $mail="";
+        $mail = MailEntity::find($mailId);
+        if (!$mail) {
+            $mail = "";
             $strError = "Mail was not found";
             $result = "";
         }
@@ -174,31 +175,53 @@ class MailController extends Controller
 
     }
 
-    public function customizeMailTemplate($id,$template_id)
+    public function customizeMailTemplate($id, $template_id)
     {
         $arrTabs = ['General'];
         $active = "active";
-        $template=MailTemplate::where('user_id',Auth::id())->where('active','Y')->first();
+        $template = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->where('id',$template_id)->first();
 
+        $templates= MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->orderBy('id',"ASC")->first();
+        if($templates){
+            $lastTemplateId=++$templates->id;
+        }else{
+            $lastTemplateId=1;
+        }
+        return view('dashboard::mail.customize_template', compact('arrTabs', 'template_id', 'active', 'template','lastTemplateId'));
+    }
 
-        return view('dashboard::mail.customize_template', compact('arrTabs','template_id', 'active','template'));
+    public function mailTemplatesList($id)
+    {
+        $arrTabs = ['General'];
+        $active = "active";
+        $templates = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->get();
+
+        return view('dashboard::mail.template_list', compact('arrTabs', 'templates', 'active'));
     }
 
     public function ajaxMailTemplateUpdate(Request $request)
     {
 
         $template_id = $request['template_id'];
-        $mailTemplateContent= $request['mailTemplateContent'];
+        $mailTemplateContent = $request['mailTemplateContent'];
         $strError = "";
         $result = "success";
 
-        $template=MailTemplate::where('user_id',Auth::id())->where('active','Y')->where('id',$template_id)->first();
-        if($template){
-            $template->content=$mailTemplateContent;
-            if(!$template->update()){
+
+        $template = MailTemplate::where('user_id',Auth::id())->where('active','Y')->where('id', $template_id)->first();
+        if ($template) {
+            $template->content = $mailTemplateContent;
+            if (!$template->update()) {
                 $strError = trans('dashboard::messages.mail_template_can_not_update');
                 $result = "";
             }
+        }else{
+            MailTemplate::create([
+                'user_id'=>Auth::id(),
+                'active'=>'Y',
+                'title'=>'',
+                'content'=>$mailTemplateContent
+            ]);
         }
 
         header('Content-Type: application/json');

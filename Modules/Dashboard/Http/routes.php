@@ -64,7 +64,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::resource('/{id}/mail', 'MailController');
         Route::get('/{id}/mail', 'MailController@index')->name('mail');
         Route::get('/{id}/mail/create', 'MailController@createEmail')->name('create_mail');
-        Route::get('/{id}/mail/{template_id}/customize', 'MailController@customizeMailTemplate')->name('customize_mail_template');
+        Route::get('/{id}/mail/customize/{template_id?}', 'MailController@customizeMailTemplate')->name('customize_mail_template');
+        Route::get('/{id}/mail/templates/list', 'MailController@mailTemplatesList')->name('mail_template_list');
         Route::post('/{id}/add_mail_image_attachment', 'MailController@attachImages')->name('mail_image_attachments');
         Route::post('/ajax_mail_template_update', 'MailController@ajaxMailTemplateUpdate')->name('ajax_mail_template_update');
 

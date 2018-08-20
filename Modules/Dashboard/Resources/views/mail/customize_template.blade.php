@@ -30,7 +30,7 @@
                 <article>
 
                     <form>
-                        <textarea id="codeCSS" name="codeCSS" rows="10">{{$template->content}}</textarea>
+                        <textarea id="codeCSS" name="codeCSS" rows="10">{{isset($template)?$template->content:""}}</textarea>
                     </form>
                     <script>
                         var editor = CodeMirror.fromTextArea(document.getElementById("codeCSS"), {
@@ -49,7 +49,9 @@
                     </script>
                     <br>
                 </article>
+                <a href="{{route("mail",Auth::id())}}" class="btn btn-success">@lang('messages.back_to_mail_module')</a>
                 <a href="{{route("codeeditor_setting",Auth::id())}}" class="btn btn-info">Editor settings</a>
+                <a href="{{route("mail_template_list",['id'=>Auth::id()])}}" class="btn btn-warning">@lang('dashboard::messages.mail_templates_list')</a>
                 <button id="submit" class="btn btn-success">Save</button>
             </div>
             <div class="col-sm-4 col-xs-10">
