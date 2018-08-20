@@ -36,7 +36,7 @@
             <tbody id="mail_body">
             @foreach($mails as $mail)
 
-                <tr class="mail_item" id="mail_{{$mail->id}}" data-id="{{$mail->id}}">
+                <tr class="mail_item mail_{{$mail->id}}" data-id="{{$mail->id}}">
                     <td class="mail_click">{{$mail->from}}</td>
                     <td class="mail_click">{{$mail->to}}</td>
                     <td class="mail_click">{{$mail->title}}</td>
@@ -145,14 +145,15 @@
 
 
         //-- Show mail content
-        $('.mail_item .mail_click').click(function () {
-            ShowMailInfo();
+        $('.mail_item >.mail_click').click(function () {
+            var mailId = $(this).parent().data('id');
+            ShowMailInfo(mailId);
         });
 
-        function ShowMailInfo(){
-            var mailId = $('.mail_item').data('id');
+        function ShowMailInfo(mailId){
 
             var url = '{{ route('ajax_get_mail_data') }}';
+
             $.ajax({
                 method: 'POST',
                 url: url,
@@ -205,7 +206,8 @@
                     if (data['result'] === "success") {
 
                         //-- Hide mail line from table
-                        $('#mail_' + id).hide();
+
+                        $('.mail_' + id).hide();
                         //-- Hide loading image
                         $("div#divLoading").removeClass('show');
 
@@ -262,10 +264,10 @@
                                 var strTo = '<td class="mail_click">' + data['arrData'][i]['to'] + '</td>';
                                 var strTitle = '<td class="mail_click">' + data['arrData'][i]['title'] + '</td>';
                                 var strDate = '<td class="mail_click">' + data['arrData'][i]['created_at'] + '</td>';
-                                var strDeleteButton = '<td><a href="#" id="delete_' + data['arrData'][i]['id'] + '"><span class="delete w3-text-red"><i class="fas fa-minus-circle"></i></span></a></td>';
+                                var strDeleteButton = '<td><a href="#" id="modal_delete_' + data['arrData'][i]['id'] + '"><span class="delete w3-text-red"><i class="fas fa-minus-circle"></i></span></a></td>';
                                 var strContent = strFrom + strTo + strTitle + strDate + strDeleteButton;
 
-                                $(' <tr class="mail_item" id="mail_' + newMenuCount + '" data-id="' + newMenuCount + '">').html(strContent + "</tr>").appendTo('#mail_body_search');
+                                $(' <tr class="mail_item mail_' + newMenuCount + '" data-id="' + newMenuCount + '">').html(strContent + "</tr>").appendTo('#mail_body_search');
 
                             }
                         } else {
@@ -279,9 +281,9 @@
                         ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
                     });
 
-                    //-- Show mail content
-                    $('.mail_item .mail_click').click(function () {
-                        ShowMailInfo();
+                    $('.mail_item >.mail_click').click(function () {
+                        var mailId = $(this).parent().data('id');
+                        ShowMailInfo(mailId);
                     });
                 }
             });
