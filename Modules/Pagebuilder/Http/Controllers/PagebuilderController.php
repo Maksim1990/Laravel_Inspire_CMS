@@ -38,6 +38,20 @@ class PagebuilderController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function blockOrderAndNew($id)
+    {
+
+        $arrTabs = ['General'];
+        $active = "active";
+        $hideScript=true;
+
+        return view('pagebuilder::block_order', compact('arrTabs', 'active','hideScript'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      * @return Response
      */

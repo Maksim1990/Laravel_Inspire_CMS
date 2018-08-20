@@ -78,14 +78,7 @@
 </div>
 
 
-<script>
-    function emojiDir(emoji) {
-        var emojiPathImage = "<img width='30' src=" + emoji + "  alt='' />";
-        $('#postInput').val(function (_, val) {
-            return val + emojiPathImage;
-        });
-    }
-</script>
+
 <script>
     $(document).ready(function () {
         var statusImageBorder = true;
@@ -231,7 +224,9 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
+@if(!isset($hideScript))
 <script src="{{custom_asset('js/app.js')}}"></script>
+@endif
 <script src="{{custom_asset('js/app_custom.js')}}"></script>
 @yield('scripts')
 

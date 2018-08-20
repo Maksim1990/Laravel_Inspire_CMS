@@ -189,6 +189,8 @@
                                class="btn btn-warning w3-margin-bottom">Customize website footer</a><br>
                             <a href="{{route("background",['id'=>'google_contact_form'])}}"
                                class="btn btn-warning w3-margin-bottom">Customize Google & Contact form block</a><br>
+                            <a href="{{route("pagebuilder_order",['id'=>Auth::id()])}}"
+                               class="btn btn-warning w3-margin-bottom">Change block orders</a><br>
                         </div>
                     </div>
                     <div id="menu1" class="tab-pane">
