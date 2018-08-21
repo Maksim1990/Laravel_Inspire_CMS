@@ -51,7 +51,8 @@ class MenuComposer
                          });
                      });
                  })
-                ->orderBy('id')->get()->keyBy('id');
+                ->join('user_menus', 'user_menus.menu_id', '=', 'menus.id')
+                ->orderBy('user_menus.sortorder')->get()->keyBy('id');
 
         } else {
             $this->strCache = "Cached menu";

@@ -184,6 +184,26 @@ class DefaultMenuLangs
             'parent' => 2,
             'sortorder' => 35
         ],
+        18 => [
+            'languages' => [
+                "EN" => "Import module",
+                "FR" => "Import module",
+                "RU" => "Import module",
+                "TH" => "Import module"
+            ],
+            'parent' => 1,
+            'sortorder' => 50
+        ],
+        19 => [
+            'languages' => [
+                "EN" => "Tasks module",
+                "FR" => "Tasks module",
+                "RU" => "Tasks module",
+                "TH" => "Tasks module"
+            ],
+            'parent' => 1,
+            'sortorder' => 45
+        ],
     ];
 
 
