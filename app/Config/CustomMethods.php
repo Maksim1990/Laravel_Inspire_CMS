@@ -61,7 +61,7 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
 {
     if (count($collectionMenu->getMenu()->where('parent', $intParentNo)) > 0) {
 
-        $strMenu .= "<ul class='dropdown-menu'>";
+        $strMenu .= "<ul class='dropdown-menu header_menu'>";
         foreach ($collectionMenu->getMenu()->where('parent', $intParentNo) as $menuItem) {
             $strMenu .= "<li>";
 
@@ -73,12 +73,12 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
 
             if (count($collectionMenu->getMenu()->where('parent', $menuItem->id)) > 0) {
                 $strMenu .= "  <li class=\"dropdown dropdown-submenu\">
-                                <a href='" . $strPath . "' class=\"dropdown-toggle\" data-toggle=\"dropdown\">".$collectionMenu->getMenu()->where('id', $menuItem->id)->first()->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
+                                <a href='" . $strPath . "' class=\"dropdown-toggle\" data-toggle=\"dropdown\">".$menuItem->icon." ".$collectionMenu->getMenu()->where('id', $menuItem->id)->first()->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
 
                 BuildMenuHTML($collectionMenu, $menuItem->id, $strMenu,$subMenu=true);
                 $strMenu .= "</li>";
             }else{
-                $strMenu .="<a href='" . $strPath . "'>".$menuItem->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
+                $strMenu .="<a href='" . $strPath . "'>".$menuItem->icon." ".$menuItem->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
             }
             $strMenu .= "</li>";
         }

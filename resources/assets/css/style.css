@@ -123,6 +123,22 @@ a .link{
     width: 90%;
 }
 
+
+.image_gallery img{
+    width:100%;
+}
+
+.header_menu{
+    background-color: #0d2d31;
+}
+.header_menu li>a{
+    display: block;
+    color:white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 40px;
+    border-bottom: 1px solid #676767;
+}
 @media (min-width: 768px) {
 
 }
