@@ -47,63 +47,98 @@ class ExcelController extends Controller
         return view('dashboard::import.import', compact('arrTabs', 'active', 'type'));
     }
 
-    public function importFileUpload($id, $type,Request $request)
+    public function importFileUpload($id, $type, Request $request)
     {
 
 
+        $errMessage = "";
 
-        $input = $request->all();
         $importType = $request->type;
         if ($file = $request->file('file')) {
             if (!($file->getClientSize() > 2100000)) {
 
 
-
                 $name = time() . $file->getClientOriginalName();
-                //$file->move('images', $name);
+                //-- Temporarily save uploaded file
                 request()->file('file')->storeAs(
                     'public/upload/' . Auth::id() . '/import/', $name
                 );
 
+                $arrImport = (new FastExcel)->import(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name), function ($line) use ($importType,$errMessage) {
 
-                        //$arrImport = (new FastExcel)->import(public_path('files/templates/import_'.$type.'.xlsx'), function ($line) {
-                        $arrImport = (new FastExcel)->import(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name), function ($line) use($importType) {
-           // dd($line);
-            //dd($importType);
-//            return User::create([
-//                'name' => $line['Name'],
-//                'email' => $line['Email']
-//            ]);
-        });
-//        dd($type);
+                    //-- Performing uploading Languages with relevant validation
+                    if ($importType == 'langs') {
+                        if (!empty($line['id']) && !empty($line['user_id']) && $line['user_id'] == Auth::id() && !empty($line['name'])) {
+                            $checkLang = Language::where('user_id', $line['user_id'])->where('name', $line['name'])->first();
+                            if (!$checkLang) {
+                                $arrImported[] = $line['id'];
+                                return Language::create([
+                                    'user_id' => $line['user_id'],
+                                    'name' => $line['name'],
+                                    'native' => $line['native'],
+                                    'native_en' => $line['native_en'],
+                                    'active' => $line['active'],
+                                    'created_at' => $line['created_at'],
+                                    'updated_at' => $line['updated_at']
+                                ]);
+
+                            } else {
+                                return $line['id'];
+                            }
+                        } else {
+                            return $line['id'];
+                        }
+
+                    }
+
+                });
+
 
 
                 //-- Remove file after successful import
-                if(file_exists(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name))){
+                if (file_exists(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name))) {
                     unlink(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name));
                 }
 
-                //-- Build notification array
-                $arrOptions=[
-                    'message'=>trans('dashboard::messages.import_completed'),
-                    'type'=>'success',
-                    'position'=>'topRight'
-                ];
+                $blnStatus=true;
+                $arrNotImported=[];
+                //-- Check if there is some not imported file
+                foreach ($arrImport as $item){
+                    if(is_int($item)){
+                        $blnStatus=false;
+                        $arrNotImported[]=$item;
+                    }
+
+                }
+
+                if ($blnStatus) {
+                    //-- Build notification array
+                    $arrOptions = [
+                        'message' => trans('dashboard::messages.import_completed'),
+                        'type' => 'success',
+                        'position' => 'topRight'
+                    ];
+                } else {
+                    $arrOptions = [
+                        'message' => trans('dashboard::messages.lines_not_imported',['lines'=>implode(",",$arrNotImported)]),
+                        'type' => 'error',
+                        'position' => 'bottomLeft'
+                    ];
+                }
+
                 Session::flash('import_change', $arrOptions);
-                return redirect()->route('import_page',['id'=>Auth::id(),'type'=>$importType]);
+                return redirect()->route('import_page', ['id' => Auth::id(), 'type' => $importType]);
 
             } else {
-                $arrOptions=[
-                    'message'=>trans('dashboard::messages.import_failed'),
-                    'type'=>'error',
-                    'position'=>'bottomLeft'
+                $arrOptions = [
+                    'message' => trans('dashboard::messages.import_failed'),
+                    'type' => 'error',
+                    'position' => 'bottomLeft'
                 ];
                 Session::flash('import_change', $arrOptions);
-                return redirect()->route('import_page',['id'=>Auth::id(),'type'=>$importType]);
+                return redirect()->route('import_page', ['id' => Auth::id(), 'type' => $importType]);
             }
         }
-
-
 
 
     }

@@ -90,4 +90,11 @@ return [
     'import_failed' => 'Import failed',
     'mail_template_customize_info' => 'Please leave/insert <span class="w3-text-red">:mailVariable</span> variable that position where you want content from mail form be placed in the email.<br><b>Example:</b><div style="background-color:rgba(255,127,80,0.47);padding: 15px;15px;border-radius:20px;"><br><h1>Hello World</h1><p>:mailVariable</p></div>You can write any valid html code.',
     'tasks_module' => 'Tasks module',
+    'lines_not_imported' => 'Lines with following IDs were not imported: :lines',
+    'columns_required_for_import' => 'Following columns are required for import: <b>:columns</b>',
+    'for_correct_import' => 'For correct import use provided example template.',
+    'download_template' => 'Download template',
+    'import_file' => 'Import File',
+    'file_format_not_correct' => 'File format is not correct! Please try again.',
+    'valid_import_format' => 'Valid format for import is <b>xls</b>. Please for your convenience download template and insert your data before import.',
 ];
