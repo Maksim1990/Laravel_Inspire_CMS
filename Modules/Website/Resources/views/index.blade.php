@@ -6,6 +6,11 @@
     @endif
     @include('website::partials.header_menu')
 
+    @php
+    $arrAllowedCustomBlocks=[
+    'custom_div'
+    ];
+    @endphp
     @foreach($websiteBlocks as $blockMain)
         @foreach($blockMain->content as $block)
             @php
@@ -15,6 +20,9 @@
                 $objBackground=$blockMain->background;
 
                 $template="website::blocks.".$arrBlockName[0];
+                if(in_array($block->block_template,$arrAllowedCustomBlocks)){
+                $template="website::blocks.custom";
+                }
 
 
              if($adminSettings->use_remote_server=="Y" && !empty($adminSettings->remote_server)){

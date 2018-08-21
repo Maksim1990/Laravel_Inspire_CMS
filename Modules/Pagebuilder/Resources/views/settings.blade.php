@@ -162,6 +162,3 @@
 @section('Social')
     @include('dashboard::website_settings.social_icons')
 @stop
-@section('scripts')
-    @include('dashboard::website_settings.scripts')
-@stop

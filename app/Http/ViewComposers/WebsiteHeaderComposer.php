@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\ViewComposers;
+use App\Setting;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -31,6 +32,7 @@ class WebsiteHeaderComposer
 
         $this->arrBlocks=Block::where('user_id',Auth::id())->get();
         $arrSocialIcons=SocialIcon::where('user_id',Auth::id())->first();
+        $customSetting = Setting::where('user_id', Auth::id())->first();
 
 
 
@@ -39,6 +41,7 @@ class WebsiteHeaderComposer
             "arrBlocks" => $this->arrBlocks,
             "arrWebsiteSettings" => Auth::user()->website_setting,
             "arrSocialIcons" => $arrSocialIcons,
+            "customSettings" => $customSetting,
         ];
 
         $this->arrData = collect($this->arrData);
@@ -53,6 +56,10 @@ class WebsiteHeaderComposer
 
         Collection::macro('getSocialIcons', function () {
             return $this["arrSocialIcons"];
+        });
+
+        Collection::macro('getCustomSettings', function () {
+            return $this["customSettings"];
         });
     }
 

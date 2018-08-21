@@ -16,6 +16,7 @@ use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
 use Modules\Pagebuilder\Entities\BlockDefault;
+use Modules\Pagebuilder\Entities\UserBlockPivot;
 
 class PagebuilderController extends Controller
 {
@@ -31,7 +32,7 @@ class PagebuilderController extends Controller
         $arrTabs = ['General', 'Settings', 'Social'];
         $active = "active";
         $websiteBlocks = Block::where('user_id', $user->id)->where('active', 'Y')->orderBy('sortorder', 'ASC')->get();
-
+//dd($websiteBlocks);
         $admin = User::where('admin', 1)->first();
         $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
         $customSetting = Setting::where('user_id', $id)->first();
@@ -101,10 +102,15 @@ class PagebuilderController extends Controller
                        'sortorder'=>$intSortOrder,
                     ]);
 
-                    BlockContent::create([
+                    $blockContent=BlockContent::create([
                         'id'=>$newBlock->id,
                         'content'=>$blockDefault->content,
                         'block_template'=>$blockDefault->block_template
+                    ]);
+
+                    UserBlockPivot::create([
+                        'block_id' => $newBlock->id,
+                        'block_content_id' => $blockContent->id
                     ]);
                 }
 

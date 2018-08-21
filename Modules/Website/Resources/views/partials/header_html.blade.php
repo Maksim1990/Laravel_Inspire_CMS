@@ -112,3 +112,9 @@
         width:100%;
     }
 </style>
+{{--Custom CSS from DB--}}
+@if(!empty($dataWebsite->getCustomSettings()->custom_css))
+    <style>
+        {{$dataWebsite->getCustomSettings()->custom_css}}
+    </style>
+@endif

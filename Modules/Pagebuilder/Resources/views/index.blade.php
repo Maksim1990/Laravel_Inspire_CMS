@@ -143,6 +143,10 @@
         .tooltip_link {
             margin-bottom: 15px;
         }
+        .pagebuilder_block{
+            border:2px solid black;
+            min-height: 50px;
+        }
     </style>
     <div class="col-sm-12 col-xs-12">
         @if(count($websiteBlocks)>0)
@@ -158,7 +162,7 @@
                             $strContent=str_replace('../../public/storage','../../../public/storage',$arrBlocks[$idx]['content']);
                             $strContent=str_replace('../../storage','/public/storage',$arrBlocks[$idx]['content']);
                             }
-                            echo "<li class=\"tooltip_menu\" data-itemid='" . $arrBlocks[$idx]['id'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
+                            echo "<li class=\"tooltip_menu pagebuilder_block\" data-itemid='" . $arrBlocks[$idx]['id'] . "' id='block_".$arrBlocks[$idx]['id']."' data-blocktextid='".$arrBlocks[$idx]['block_id']."'>";
                             echo "<div class='editable' id='".$arrBlocks[$idx]['block_id']."'>" . $strContent . "<hr></div>";
                             echo "<span class=\"tooltiptext\">";
                             //-- Code editor button
@@ -238,7 +242,6 @@
                     _token: token
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data['result'] === "success") {
                         new Noty({
                             type: 'success',
@@ -253,8 +256,9 @@
     <script>
         var token = '{{\Illuminate\Support\Facades\Session::token()}}';
         var url = '{{ route('ajax_content_editor_update') }}';
-
+      
         $('button[id^="pagebuilder_menu_save_"]').click(function () {
+
             var intBlockId = $(this).data('blockid');
             var codeEditorContent = tinyMCE.get(intBlockId).getContent();
             $.ajax({
@@ -281,5 +285,5 @@
 
     </script>
 
-
+    @include('dashboard::website_settings.scripts')
 @stop
