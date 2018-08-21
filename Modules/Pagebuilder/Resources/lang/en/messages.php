@@ -22,4 +22,7 @@ return [
     'background_want_delete' => 'Do you really want to delete background image?',
     'background_image_size_error' => 'Background image size should not exceed 2 MB!',
     'back_to_pagebuilder' => 'Go back to page builder',
+    'block_settings' => 'Block settings',
+    'block_deleted' => 'Block was successfully deleted',
+    'block_created' => 'Block was successfully created',
 ];

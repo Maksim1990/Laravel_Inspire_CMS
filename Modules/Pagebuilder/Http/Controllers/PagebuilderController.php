@@ -51,9 +51,9 @@ class PagebuilderController extends Controller
         $active = "active";
 
         $hideScript = true;
-        $websiteBlocksActive = Block::where('user_id', $user->id)->where('active','Y')->orderBy('sortorder', 'ASC')->get();
-        $websiteBlocksDeactivated = Block::where('user_id', $user->id)->where('active','N')->orderBy('sortorder', 'ASC')->get();
-        $lastBlockId = Block::where('user_id', $user->id)->orderBy('sortorder', 'DESC')->first()->block_id;
+        $websiteBlocksActive = Block::where('user_id', $user->id)->where('active', 'Y')->orderBy('sortorder', 'ASC')->get();
+        $websiteBlocksDeactivated = Block::where('user_id', $user->id)->where('active', 'N')->orderBy('sortorder', 'ASC')->get();
+        $lastBlockId = Block::where('user_id', $user->id)->orderBy('id', 'DESC')->first()->block_id;
         if ($lastBlockId) {
             $lastBlockId = str_replace('block', '', $lastBlockId);
             $arrLastBlockId = explode("_", $lastBlockId);
@@ -62,7 +62,7 @@ class PagebuilderController extends Controller
             $lastBlockId = 0;
         }
 
-        return view('pagebuilder::block_order', compact('arrTabs', 'active', 'hideScript', 'websiteBlocksActive','websiteBlocksDeactivated', 'lastBlockId'));
+        return view('pagebuilder::block_order', compact('arrTabs', 'active', 'hideScript', 'websiteBlocksActive', 'websiteBlocksDeactivated', 'lastBlockId'));
     }
 
 
@@ -73,11 +73,11 @@ class PagebuilderController extends Controller
         $result = "success";
 
         //-- Deactivate all user blocks
-        $allUserBlocks=Block::where('user_id',Auth::id())->get();
-        if(!empty($allUserBlocks)){
-            foreach ($allUserBlocks as $block){
-                $block->active='N';
-                $block->sortorder=0;
+        $allUserBlocks = Block::where('user_id', Auth::id())->get();
+        if (!empty($allUserBlocks)) {
+            foreach ($allUserBlocks as $block) {
+                $block->active = 'N';
+                $block->sortorder = 0;
                 $block->update();
             }
         }
@@ -85,27 +85,27 @@ class PagebuilderController extends Controller
 
         if (count($arrBlocks) > 0) {
             $intSortOrder = 1;
-            foreach ($arrBlocks as $intKey=>$id) {
-                $block = Block::where('user_id',Auth::id())->where('block_id',$id)->first();
-                if($block){
+            foreach ($arrBlocks as $intKey => $id) {
+                $block = Block::where('user_id', Auth::id())->where('block_id', $id)->first();
+                if ($block) {
                     $block->sortorder = $intSortOrder;
                     $block->active = 'Y';
                     if (!$block->update()) {
                         $result = "";
                     }
-                }else{
-                    $blockDefault = BlockDefault::where('block_template','custom_div')->first();
-                    $newBlock=Block::create([
-                       'user_id'=>Auth::id(),
-                       'block_id'=>$id,
-                       'block_custom_id'=>$arrIDCustom[$intKey],
-                       'sortorder'=>$intSortOrder,
+                } else {
+                    $blockDefault = BlockDefault::where('block_template', 'custom_div')->first();
+                    $newBlock = Block::create([
+                        'user_id' => Auth::id(),
+                        'block_id' => $id,
+                        'block_custom_id' => $arrIDCustom[$intKey],
+                        'sortorder' => $intSortOrder,
                     ]);
 
-                    $blockContent=BlockContent::create([
-                        'id'=>$newBlock->id,
-                        'content'=>$blockDefault->content,
-                        'block_template'=>$blockDefault->block_template
+                    $blockContent = BlockContent::create([
+                        'id' => $newBlock->id,
+                        'content' => $blockDefault->content,
+                        'block_template' => $blockDefault->block_template
                     ]);
 
                     UserBlockPivot::create([
@@ -122,6 +122,73 @@ class PagebuilderController extends Controller
         header('Content-Type: application/json');
         echo json_encode(array(
             'result' => $result
+        ));
+    }
+
+
+    public function createBlock(Request $request)
+    {
+        $block_id = $request['block_id'];
+        $block_custom_id = $request['custom_id'];
+        $result = "success";
+        $strError = "";
+        try {
+            $blockDefault = BlockDefault::where('block_template', 'custom_div')->first();
+            $newBlock = Block::create([
+                'user_id' => Auth::id(),
+                'block_id' => $block_id,
+                'active' => 'N',
+                'block_custom_id' => $block_custom_id,
+                'sortorder' => 0,
+            ]);
+
+            $blockContent = BlockContent::create([
+                'id' => $newBlock->id,
+                'content' => $blockDefault->content,
+                'block_template' => $blockDefault->block_template
+            ]);
+
+            UserBlockPivot::create([
+                'block_id' => $newBlock->id,
+                'block_content_id' => $blockContent->id
+            ]);
+        } catch (\Exception $e) {
+            $result = "";
+            $strError = "Oop,unfortunately block can't be created! Please try again.";
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+    public function deleteBlock(Request $request)
+    {
+        $block_id = $request['block_id'];
+        $result = "success";
+        $strError = "";
+
+        $block = Block::where('block_id', $block_id)->where('user_id', Auth::id())->first();
+        if (!empty($block->content)) {
+            if ($block->content->first()->block_template !== 'default') {
+                $blockContent = BlockContent::where('id', $block->id)->first();
+                UserBlockPivot::where('block_id', $block->id)->where('block_content_id', $blockContent->id)->delete();
+                $blockContent->delete();
+                $block->delete();
+            } else {
+                $result = "";
+                $strError = "Default block can't be deleted. Please drag block to 'Not active blocks' in order deactivate it";
+            }
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
         ));
     }
 

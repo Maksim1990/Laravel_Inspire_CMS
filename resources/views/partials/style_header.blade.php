@@ -179,4 +179,54 @@
         }
     }
 
+
+
+    .tooltip_block_item {
+        position: relative;
+        display: block;
+    }
+
+    .tooltip_block_item .tooltiptext {
+        visibility: hidden;
+        width: 100px;
+        font-size: 15px;
+        background-color: #061114;
+        color: black;
+        text-align: center;
+        border-radius: 6px;
+        border: 1px solid darkgray;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 2;
+        top:-10px;
+        left: 300px;
+    }
+    .tooltip_block_item:hover .tooltiptext {
+        visibility: visible;
+    }
+    .tooltip_block_item .tooltiptext::after {
+        content: " ";
+        position: absolute;
+        top: 20%;
+        right: 90%; /* To the left of the tooltip */
+        margin-top: -5px;
+        border-width: 15px;
+        border-style: solid;
+        border-color: transparent #061114 transparent transparent;
+    }
+    .tooltip_block_item .tooltiptext span{
+        color:white;
+    }
+    .tooltip_block_item .tooltiptext span:hover{
+        color:wheat;
+
+    }
+    /*.tooltip_block_item .tooltiptext a:hover{*/
+        /*background-color: rgba(50, 166, 54, 0.55);*/
+    /*}*/
+
+
+
 </style>

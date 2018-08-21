@@ -26,6 +26,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         Route::post('/blocks_sortorder_update', 'PagebuilderController@blocksSortOrderUpdate')->name("ajax_blocks_sortorder_update");
         Route::post('/ajax_save_blocks_sortorder', 'PagebuilderController@saveBlocksSortOrder')->name("ajax_save_blocks_sortorder");
+        Route::post('/ajax_delete_block', 'PagebuilderController@deleteBlock')->name("ajax_delete_block");
+        Route::post('/ajax_create_block', 'PagebuilderController@createBlock')->name("ajax_create_block");
 
     });
 });
