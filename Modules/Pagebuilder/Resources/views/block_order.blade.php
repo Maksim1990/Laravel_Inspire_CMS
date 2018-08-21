@@ -25,9 +25,11 @@
             background-color: darkseagreen;
             border: 1px solid #6b8a6b;
         }
+
         .ui-state-highlight .title_block {
             color: white;
         }
+
         .edit_title {
             width: 100%;
         }
@@ -66,11 +68,14 @@
                             @foreach($websiteBlocksDeactivated as $block)
                                 <li class="ui-state-default tooltip_block_item" id="block_{{$block->block_id}}"
                                     data-sortorder="1">
-                                    <p id="title_{{$block->block_id}}">{{$block->block_custom_id}}</p>
-                                    <input type="text" id="edit_{{$block->block_id}}" class="edit_title" style="display: none;"
+                                    <p id="title_{{$block->block_id}}" class="title_block">{{$block->block_custom_id}}</p>
+                                    <input type="text" id="edit_{{$block->block_id}}" class="edit_title"
+                                           style="display: none;"
                                            value="{{$block->block_custom_id}}">
                                     <span class="tooltiptext">
-                                    <span   id="delete_button_{{$block->block_id}}" onclick="DeleteBlockItem('{{$block->block_id}}')" class="delete_block">@lang('messages.delete')</span>
+                                    <span id="delete_button_{{$block->block_id}}"
+                                          onclick="DeleteBlockItem('{{$block->block_id}}')"
+                                          class="delete_block">@lang('messages.delete')</span>
                             </span>
                                 </li>
                             @endforeach
@@ -86,10 +91,13 @@
                                     data-sortorder="1">
                                     <p id="title_{{$block->block_id}}"
                                        class="title_block">{{$block->block_custom_id}}</p>
-                                    <input type="text" id="edit_{{$block->block_id}}" class="edit_title" style="display: none;"
+                                    <input type="text" id="edit_{{$block->block_id}}" class="edit_title"
+                                           style="display: none;"
                                            value="{{$block->block_custom_id}}">
                                     <span class="tooltiptext">
-                                    <span  id="delete_button_{{$block->block_id}}" onclick="DeleteBlockItem('{{$block->block_id}}')" class="delete_block">@lang('messages.delete')</span>
+                                    <span id="delete_button_{{$block->block_id}}"
+                                          onclick="DeleteBlockItem('{{$block->block_id}}')"
+                                          class="delete_block">@lang('messages.delete')</span>
                             </span>
                                 </li>
                             @endforeach
@@ -124,27 +132,27 @@
             var strBloсkID = "block" + lastBlockId + "_{{Auth::id()}}";
             var strBloсkCustomId = "block" + lastBlockId;
 
-            var newBlock = "  <li class=\"ui-state-highlight tooltip_block_item\" onclick=\"ClickBlock(event,'"+strBloсkID+"')\" id=\"block_"+strBloсkID+"\"\n" +
+            var newBlock = "  <li class=\"ui-state-highlight tooltip_block_item\" onclick=\"ClickBlock(event,'" + strBloсkID + "')\" id=\"block_" + strBloсkID + "\"\n" +
                 "                                    data-sortorder=\"1\">\n" +
-                "                                    <p id=\"title_"+strBloсkID+"\"\n" +
-                "                                       class=\"title_block\">"+strBloсkCustomId+"</p>\n" +
-                "                                    <input type=\"text\" id=\"edit_"+strBloсkID+"\" class=\"edit_title\" style=\"display: none;\"\n" +
-                "                                           value=\""+strBloсkCustomId+"\">\n" +
+                "                                    <p id=\"title_" + strBloсkID + "\"\n" +
+                "                                       class=\"title_block\">" + strBloсkCustomId + "</p>\n" +
+                "                                    <input type=\"text\" id=\"edit_" + strBloсkID + "\" class=\"edit_title\" style=\"display: none;\"\n" +
+                "                                           value=\"" + strBloсkCustomId + "\">\n" +
                 "                                    <span class=\"tooltiptext\">\n" +
-                "                                    <span  id=\"delete_button_"+strBloсkID+"\" onclick=\"DeleteBlockItem('"+strBloсkID+"')\" class=\"delete_block\">{{trans('messages.delete')}}</span>\n" +
+                "                                    <span  id=\"delete_button_" + strBloсkID + "\" onclick=\"DeleteBlockItem('" + strBloсkID + "')\" class=\"delete_block\">{{trans('messages.delete')}}</span>\n" +
                 "                            </span>\n" +
                 "                                </li>";
 
 
             $("#sortableDeactivated").append(newBlock);
             //-- Create new block
-            CreateBlock(strBloсkID,strBloсkCustomId);
+            CreateBlock(strBloсkID, strBloсkCustomId);
 
 
         });
 
         //-- Functionality to create new block
-        function CreateBlock(id,custom_id) {
+        function CreateBlock(id, custom_id) {
             var url = '{{ route('ajax_create_block') }}';
 
             $.ajax({
@@ -167,7 +175,7 @@
                             text: '{{trans('pagebuilder::messages.block_created')}}'
                         }).show();
 
-                    }else{
+                    } else {
                         new Noty({
                             type: 'error',
                             layout: 'bottomLeft',
@@ -182,52 +190,116 @@
 
         //-- Functionality when click on block item
         $('.tooltip_block_item').click(function (e) {
-            if(!$(e.target).hasClass('delete_block') )
-            {
+            if (!$(e.target).hasClass('delete_block')) {
+
+
                 var blockId = $(this).attr('id').replace("block_", "");
                 $('[id^="edit_"]').each(function () {
                     var blockId = $(this).attr('id').replace("edit_", "");
                     var blockValue = $(this).val();
-                    $('#title_'+blockId).text(blockValue);
+                    $('#title_' + blockId).text(blockValue);
                 });
-                if(!$('#edit_'+blockId).is(":visible")){
+                if (!$('#edit_' + blockId).is(":visible")) {
                     ShowBlockInput(blockId);
-                }else{
+                } else {
+
                     HideBlockInput(blockId);
+                }
+                SaveAllBlocks();
+            }
+        });
+        //-- Functionality when click on block item
+        $('html').click(function (e) {
+            if(!$(e.target).hasClass('tooltip_block_item') && !$(e.target).hasClass('title_block') )
+            {
+                if($('[id^="edit_"]').is(":visible")) {
+                    $('[id^="title_"]').show();
+                    $('[id^="edit_"]').hide();
+                    SaveAllBlocks();
                 }
             }
         });
 
+        //-- Dynamically update <p> tag text of the block when update input value
+        $('[id^="edit_"]').keyup(function (e) {
+            var blockId = $(this).attr('id').replace("edit_", "");
+            var blockValue = $('#edit_' + blockId).val();
+            $('#title_' + blockId).text(blockValue);
+        });
+
+
         function ClickBlock(event, blockId) {
 
-            if(!$(event.target).hasClass('delete_block') )
-            {
+            if (!$(event.target).hasClass('delete_block')) {
+
                 $('[id^="edit_"]').each(function () {
                     var blockId = $(this).attr('id').replace("edit_", "");
                     var blockValue = $(this).val();
-                    $('#title_'+blockId).text(blockValue);
+                    $('#title_' + blockId).text(blockValue);
                 });
-                if(!$('#edit_'+blockId).is(":visible")){
+                if (!$('#edit_' + blockId).is(":visible")) {
                     ShowBlockInput(blockId);
-                }else{
+                } else {
                     HideBlockInput(blockId);
-                    //TODO Complete functionality for saving all blocks
-                    // made possible to validate whether such custom block ID already exist
-                    SaveAllBlocks();
                 }
+                SaveAllBlocks();
             }
         }
+
+        //-- Functionality to save all custom ID from active inputs
         function SaveAllBlocks() {
+            var arrBlocks = [];
+            var arrIDCustom = [];
+            $('[id^="block_"]').each(function () {
+                if ($(this).attr('id')) {
+                    var arrId = $(this).attr('id').replace("block_", "");
+                    arrBlocks.push(arrId);
+                }
+            });
+            $('[id^="title_"]').each(function () {
+                var strIdCustom = $(this).text();
+                if (strIdCustom !== "") {
+                    arrIDCustom.push(strIdCustom);
+                }
+            });
+
+            var url = '{{ route('ajax_save_all_blocks_custom_ids') }}';
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                dataType: "json",
+                data: {
+                    arrBlocks: arrBlocks,
+                    arrIDCustom: arrIDCustom,
+                    _token: token
+                }, beforeSend: function () {
+                    //-- Show loading image while execution of ajax request
+                    $("div#divLoading").addClass('show');
+                },
+                success: function (data) {
+                    if (data['result'] !== "success") {
+                        new Noty({
+                            type: 'error',
+                            layout: 'bottomLeft',
+                            text: data['error']
+                        }).show();
+                    }
+                    //-- Hide loading image
+                    $("div#divLoading").removeClass('show');
+                }
+            });
+
 
         }
+
         function ShowBlockInput(id) {
             //-- Initially deactivate all inputs
             $('[id^="title_"]').show();
             $('[id^="edit_"]').hide();
 
-
-            $('#title_'+id).hide();
-            $('#edit_'+id).show().focus();
+            $('#title_' + id).hide();
+            $('#edit_' + id).show().focus();
         }
 
         function HideBlockInput(id) {
@@ -264,8 +336,8 @@
                             text: '{{trans('pagebuilder::messages.block_deleted')}}'
                         }).show();
 
-                        $('#block_'+id).remove();
-                    }else{
+                        $('#block_' + id).remove();
+                    } else {
                         new Noty({
                             type: 'error',
                             layout: 'bottomLeft',

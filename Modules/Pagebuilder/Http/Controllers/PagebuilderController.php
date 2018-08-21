@@ -125,6 +125,46 @@ class PagebuilderController extends Controller
         ));
     }
 
+    public function saveBlockCustomIds(Request $request)
+    {
+        $arrBlocks = $request['arrBlocks'];
+        $arrIDCustom = $request['arrIDCustom'];
+        $result = "success";
+        $strError = "";
+
+        $arrIllegalCustomId=[];
+
+        if (count($arrBlocks) > 0) {
+
+            foreach ($arrBlocks as $intKey => $id) {
+                $block = Block::where('user_id', Auth::id())->where('block_id', $id)->first();
+                if ($block) {
+                    $blockCheck = Block::where('user_id', Auth::id())->where('block_custom_id', $arrIDCustom[$intKey])->where('block_id','!=', $id)->first();
+                    if(!$blockCheck){
+                        $block->block_custom_id = $arrIDCustom[$intKey];
+                        if (!$block->update()) {
+                            $result = "";
+                        }
+                    }else{
+                        $arrIllegalCustomId[]= $arrIDCustom[$intKey];
+                    }
+
+                }
+            }
+        }
+
+
+        if(!empty($arrIllegalCustomId)){
+            $result = "";
+            $strError = "Blocks with following IDs already exist: <br>". implode(", ",$arrIllegalCustomId);
+        }
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
 
     public function createBlock(Request $request)
     {
