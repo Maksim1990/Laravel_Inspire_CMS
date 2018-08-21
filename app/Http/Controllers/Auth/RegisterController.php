@@ -146,7 +146,7 @@ class RegisterController extends Controller
 
 
         //-- Create PAGEBUILDER BLOCKS default details for new user
-        $blockDefaults=BlockDefault::all();
+        $blockDefaults=BlockDefault::where('block_template','default')->get();
         if(!empty($blockDefaults)){
             foreach ($blockDefaults as $defaultBlock){
                 $block=Block::create([

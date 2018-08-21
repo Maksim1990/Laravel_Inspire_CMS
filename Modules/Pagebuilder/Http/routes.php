@@ -25,6 +25,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::patch('/{id}/upload_background_image', 'PagebuilderController@storeBackgroundImage')->name("upload_background_image");
 
         Route::post('/blocks_sortorder_update', 'PagebuilderController@blocksSortOrderUpdate')->name("ajax_blocks_sortorder_update");
+        Route::post('/ajax_save_blocks_sortorder', 'PagebuilderController@saveBlocksSortOrder')->name("ajax_save_blocks_sortorder");
 
     });
 });

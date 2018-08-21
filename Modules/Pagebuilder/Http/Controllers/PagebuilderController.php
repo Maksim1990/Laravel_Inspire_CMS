@@ -14,6 +14,8 @@ use Mews\Purifier\Facades\Purifier;
 use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
+use Modules\Pagebuilder\Entities\BlockContent;
+use Modules\Pagebuilder\Entities\BlockDefault;
 
 class PagebuilderController extends Controller
 {
@@ -26,15 +28,15 @@ class PagebuilderController extends Controller
     {
 
         $user = User::findOrFail($id);
-        $arrTabs = ['General','Settings','Social'];
+        $arrTabs = ['General', 'Settings', 'Social'];
         $active = "active";
-        $websiteBlocks = Block::where('user_id', $user->id)->where('active','Y')->orderBy('sortorder', 'ASC')->get();
+        $websiteBlocks = Block::where('user_id', $user->id)->where('active', 'Y')->orderBy('sortorder', 'ASC')->get();
 
-        $admin=User::where('admin',1)->first();
-        $adminSettings=AdminSettings::where('user_id',$admin->id)->first();
+        $admin = User::where('admin', 1)->first();
+        $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
         $customSetting = Setting::where('user_id', $id)->first();
 
-        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks','adminSettings','customSetting'));
+        return view('pagebuilder::index', compact('arrTabs', 'active', 'websiteBlocks', 'adminSettings', 'customSetting'));
     }
 
     /**
@@ -43,12 +45,78 @@ class PagebuilderController extends Controller
      */
     public function blockOrderAndNew($id)
     {
-
+        $user = User::findOrFail($id);
         $arrTabs = ['General'];
         $active = "active";
-        $hideScript=true;
 
-        return view('pagebuilder::block_order', compact('arrTabs', 'active','hideScript'));
+        $hideScript = true;
+        $websiteBlocksActive = Block::where('user_id', $user->id)->where('active','Y')->orderBy('sortorder', 'ASC')->get();
+        $websiteBlocksDeactivated = Block::where('user_id', $user->id)->where('active','N')->orderBy('sortorder', 'ASC')->get();
+        $lastBlockId = Block::where('user_id', $user->id)->orderBy('sortorder', 'DESC')->first()->block_id;
+        if ($lastBlockId) {
+            $lastBlockId = str_replace('block', '', $lastBlockId);
+            $arrLastBlockId = explode("_", $lastBlockId);
+            $lastBlockId = $arrLastBlockId[0];
+        } else {
+            $lastBlockId = 0;
+        }
+
+        return view('pagebuilder::block_order', compact('arrTabs', 'active', 'hideScript', 'websiteBlocksActive','websiteBlocksDeactivated', 'lastBlockId'));
+    }
+
+
+    public function saveBlocksSortOrder(Request $request)
+    {
+        $arrBlocks = $request['arrBlocks'];
+        $arrIDCustom = $request['arrIDCustom'];
+        $result = "success";
+
+        //-- Deactivate all user blocks
+        $allUserBlocks=Block::where('user_id',Auth::id())->get();
+        if(!empty($allUserBlocks)){
+            foreach ($allUserBlocks as $block){
+                $block->active='N';
+                $block->sortorder=0;
+                $block->update();
+            }
+        }
+
+
+        if (count($arrBlocks) > 0) {
+            $intSortOrder = 1;
+            foreach ($arrBlocks as $intKey=>$id) {
+                $block = Block::where('user_id',Auth::id())->where('block_id',$id)->first();
+                if($block){
+                    $block->sortorder = $intSortOrder;
+                    $block->active = 'Y';
+                    if (!$block->update()) {
+                        $result = "";
+                    }
+                }else{
+                    $blockDefault = BlockDefault::where('block_template','custom_div')->first();
+                    $newBlock=Block::create([
+                       'user_id'=>Auth::id(),
+                       'block_id'=>$id,
+                       'block_custom_id'=>$arrIDCustom[$intKey],
+                       'sortorder'=>$intSortOrder,
+                    ]);
+
+                    BlockContent::create([
+                        'id'=>$newBlock->id,
+                        'content'=>$blockDefault->content,
+                        'block_template'=>$blockDefault->block_template
+                    ]);
+                }
+
+                $intSortOrder++;
+            }
+        }
+
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result
+        ));
     }
 
     /**
@@ -162,11 +230,11 @@ class PagebuilderController extends Controller
     public function codeEditorThemeUpdate(Request $request)
     {
         $result = "";
-        $codeEditorTheme=$request->codeEditorTheme;
+        $codeEditorTheme = $request->codeEditorTheme;
 
 
-        $settings=Auth::user()->setting;
-        $settings->codeeditor_theme=$codeEditorTheme;
+        $settings = Auth::user()->setting;
+        $settings->codeeditor_theme = $codeEditorTheme;
         if ($settings->save()) {
             $result = "success";
         }
@@ -243,11 +311,11 @@ class PagebuilderController extends Controller
         $arrTabs = ['General'];
         $active = "active";
 
-        $block_id=$id;
-        $blockBackground = Background::where('user_id', Auth::id())->where('block_id',$id)->first();
+        $block_id = $id;
+        $blockBackground = Background::where('user_id', Auth::id())->where('block_id', $id)->first();
         $userImages = Auth::user()->photos;
 
-        return view('pagebuilder::css.background', compact('arrTabs', 'active','block_id','blockBackground','userImages'));
+        return view('pagebuilder::css.background', compact('arrTabs', 'active', 'block_id', 'blockBackground', 'userImages'));
     }
 
     /**
@@ -263,7 +331,7 @@ class PagebuilderController extends Controller
         $result = "";
 
 
-        $background = Background::firstOrNew(array('user_id' => Auth::id(),'block_id'=>$block_id));
+        $background = Background::firstOrNew(array('user_id' => Auth::id(), 'block_id' => $block_id));
         $background->background_type = $background_type;
         $background->color = $bg_color;
         $background->user_id = Auth::id();
@@ -289,7 +357,7 @@ class PagebuilderController extends Controller
         $result = "";
 
 
-        $background = Background::firstOrNew(array('user_id' => Auth::id(),'block_id'=>$block_id));
+        $background = Background::firstOrNew(array('user_id' => Auth::id(), 'block_id' => $block_id));
         $background->background_type = $background_type;
         $background->user_id = Auth::id();
 
@@ -315,12 +383,12 @@ class PagebuilderController extends Controller
         $result = "";
 
 
-        $background = Background::firstOrNew(array('user_id' => Auth::id(),'block_id'=>$block_id));
-        if(!empty( $background->image_name)){
+        $background = Background::firstOrNew(array('user_id' => Auth::id(), 'block_id' => $block_id));
+        if (!empty($background->image_name)) {
             $background->image_name = null;
             $background->image_size = null;
             $background->image_extension = null;
-            if(file_exists(storage_path('/app/public/' . $background->image_path))){
+            if (file_exists(storage_path('/app/public/' . $background->image_path))) {
                 unlink(storage_path('/app/public/' . $background->image_path));
             }
         }
@@ -347,13 +415,13 @@ class PagebuilderController extends Controller
     {
         $user_id = $request->user_id;
         $block_id = $request->block_id;
-        $background = Background::where('user_id',$user_id)->where('block_id',$block_id)->first();
-        if($background){
-            if(!empty( $background->image_name)){
+        $background = Background::where('user_id', $user_id)->where('block_id', $block_id)->first();
+        if ($background) {
+            if (!empty($background->image_name)) {
                 $background->image_name = null;
                 $background->image_size = null;
                 $background->image_extension = null;
-                if(file_exists(storage_path('/app/public/' . $background->image_path))){
+                if (file_exists(storage_path('/app/public/' . $background->image_path))) {
                     unlink(storage_path('/app/public/' . $background->image_path));
                 }
             }
@@ -362,13 +430,13 @@ class PagebuilderController extends Controller
         }
 
         //-- Build notification array
-        $arrOptions=[
-            'message'=>trans('pagebuilder::messages.background_image_deleted'),
-            'type'=>'success',
-            'position'=>'topRight'
+        $arrOptions = [
+            'message' => trans('pagebuilder::messages.background_image_deleted'),
+            'type' => 'success',
+            'position' => 'topRight'
         ];
         Session::flash('background_change', $arrOptions);
-        return redirect()->route('background',['id'=>$block_id]);
+        return redirect()->route('background', ['id' => $block_id]);
     }
 
     /**
@@ -382,19 +450,19 @@ class PagebuilderController extends Controller
         $user_id = $request->user_id;
         $block_id = $request->block_id;
 
-        $background = Background::where('user_id',$user_id)->where('block_id',$block_id)->first();
+        $background = Background::where('user_id', $user_id)->where('block_id', $block_id)->first();
 
         if ($file = $request->file('photo_id')) {
             $extension = $file->getClientOriginalExtension();
             if (!($file->getClientSize() > 2100000)) {
                 if (!empty($background->image_path)) {
-                    if(file_exists(storage_path('/app/public/' . $background->image_path))){
+                    if (file_exists(storage_path('/app/public/' . $background->image_path))) {
                         unlink(storage_path('/app/public/' . $background->image_path));
                     }
                     $background->image_name = null;
                     $background->image_size = null;
                     $background->image_extension = null;
-                    $background->image_path=null;
+                    $background->image_path = null;
                     $background->update();
                 }
 
@@ -403,13 +471,13 @@ class PagebuilderController extends Controller
                     'public/upload/' . Auth::id() . '/background/', $name
                 );
 
-                if($background){
+                if ($background) {
                     $background->image_name = $name;
                     $background->image_size = $file->getClientSize();
                     $background->image_extension = $extension;
-                    $background->image_path='upload/' . Auth::id() . '/background/'. $name;
+                    $background->image_path = 'upload/' . Auth::id() . '/background/' . $name;
                     $background->update();
-                }else{
+                } else {
                     Background::create([
                         'user_id' => $user_id,
                         'block_id' => $block_id,
@@ -417,29 +485,29 @@ class PagebuilderController extends Controller
                         'image_name' => $name,
                         'image_size' => $file->getClientSize(),
                         'image_extension' => $extension,
-                        'image_path' => 'upload/' . Auth::id() . '/background/'. $name
+                        'image_path' => 'upload/' . Auth::id() . '/background/' . $name
                     ]);
                 }
 
 
                 //-- Build notification array
-                $arrOptions=[
-                    'message'=>trans('pagebuilder::messages.background_image_updated'),
-                    'type'=>'success',
-                    'position'=>'topRight'
+                $arrOptions = [
+                    'message' => trans('pagebuilder::messages.background_image_updated'),
+                    'type' => 'success',
+                    'position' => 'topRight'
                 ];
 
                 Session::flash('background_change', $arrOptions);
-                return redirect()->route('background',['id'=>$block_id]);
+                return redirect()->route('background', ['id' => $block_id]);
             } else {
                 //-- Build notification array
-                $arrOptions=[
-                    'message'=>trans('pagebuilder::messages.background_image_size_error'),
-                    'type'=>'error',
-                    'position'=>'bottomLeft'
+                $arrOptions = [
+                    'message' => trans('pagebuilder::messages.background_image_size_error'),
+                    'type' => 'error',
+                    'position' => 'bottomLeft'
                 ];
                 Session::flash('background_change', $arrOptions);
-                return redirect()->route('background',['id'=>$block_id]);
+                return redirect()->route('background', ['id' => $block_id]);
             }
         }
     }
@@ -454,12 +522,11 @@ class PagebuilderController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $user_id=Auth::id();
+        $user_id = Auth::id();
 
 
         return view('pagebuilder::css.info', compact('arrTabs', 'active'));
     }
-
 
 
     public function customCssUpdate(Request $request)
@@ -489,12 +556,12 @@ class PagebuilderController extends Controller
         $arrIDs = $request['arrIDs'];
         $result = "success";
 
-        if(count($arrIDs)>0){
-            $intSortOrder=1;
-            foreach ($arrIDs as $id){
-                $block=Block::findOrFail($id);
-                $block->sortorder=$intSortOrder;
-                if(!$block->update()){
+        if (count($arrIDs) > 0) {
+            $intSortOrder = 1;
+            foreach ($arrIDs as $id) {
+                $block = Block::findOrFail($id);
+                $block->sortorder = $intSortOrder;
+                if (!$block->update()) {
                     $result = "";
                 }
                 $intSortOrder++;
@@ -513,16 +580,16 @@ class PagebuilderController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        $arrThemes=[];
-        $arrThemesFull=glob(public_path('/plugins/vendor/codemirror/theme/*.{css}'), GLOB_BRACE);
-        if(!empty($arrThemesFull)){
-            foreach ($arrThemesFull as $strTheme){
-                $arrThemes[]= basename($strTheme,'.css');
+        $arrThemes = [];
+        $arrThemesFull = glob(public_path('/plugins/vendor/codemirror/theme/*.{css}'), GLOB_BRACE);
+        if (!empty($arrThemesFull)) {
+            foreach ($arrThemesFull as $strTheme) {
+                $arrThemes[] = basename($strTheme, '.css');
             }
         }
-       // dd($arrThemes);
+        // dd($arrThemes);
 
-        return view('pagebuilder::codeeditor.settings', compact('arrTabs', 'active','arrThemes'));
+        return view('pagebuilder::codeeditor.settings', compact('arrTabs', 'active', 'arrThemes'));
     }
 
 
