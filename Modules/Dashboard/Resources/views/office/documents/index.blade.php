@@ -11,56 +11,60 @@
             <div class="insp_buttons">
                 <a href="{{route("office",['id'=>Auth::id()])}}"
                    class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')</a>
-                <a href="{{route("upload_document",Auth::id())}}" class="btn btn-success">@lang('dashboard::messages.upload_new_document')</a>
+                <a href="{{route("upload_document",Auth::id())}}"
+                   class="btn btn-success">@lang('dashboard::messages.upload_new_document')</a>
             </div>
 
-                @if(count($documents)>0)
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-8 col-xs-12">
-                            <span id="found_items"></span>
-                        </div>
-                        <div class="col-sm-12 col-lg-4 col-xs-12">
-                            <input type="text" class="form-control" style="display: inline;" id="search_bar"
-                                   placeholder="@lang('messages.search')">
-
-                        </div>
-                        <hr>
+            @if(count($documents)>0)
+                <div class="row">
+                    <div class="col-sm-12 col-lg-8 col-xs-12">
+                        <span id="found_items"></span>
                     </div>
+                    <div class="col-sm-12 col-lg-4 col-xs-12">
+                        <input type="text" class="form-control" style="display: inline;" id="search_bar"
+                               placeholder="@lang('messages.search')">
 
-                    <table class="w3-table-all w3-hoverable">
-                        <thead>
-                        <tr class="w3-light-grey">
-                            <th>@lang('messages.name')</th>
-                            <th>@lang('messages.extension')</th>
-                            <th>@lang('messages.size')</th>
-                            <th>@lang('messages.date')</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody id="file_body">
-                        @foreach($documents as $doc)
+                    </div>
+                    <hr>
+                </div>
 
-                            <tr class="file_item" id="file_{{$doc->id}}" data-id="{{$doc->id}}">
-                                <td class="file_click">{{$doc->name}}</td>
-                                <td class="file_click">{{$doc->extension}}</td>
-                                <td class="file_click">{{$doc->size}} bytes</td>
-                                <td class="file_click">{{$doc->created_at}}</td>
-                                <td>
-                                    @if($doc->user_id==Auth::id())
-                                        <a href="#" id="modal_delete_{{$doc->id}}">
+                <table class="w3-table-all w3-hoverable">
+                    <thead>
+                    <tr class="w3-light-grey">
+                        <th>@lang('messages.name')</th>
+                        <th>@lang('messages.extension')</th>
+                        <th>@lang('messages.size')</th>
+                        <th>@lang('messages.date')</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="file_body">
+                    @foreach($documents as $doc)
+
+                        <tr class="file_item" id="file_{{$doc->id}}" data-id="{{$doc->id}}">
+                            <td class="file_click">{{$doc->name}}</td>
+                            <td class="file_click">
+                                <img height="30" data-toggle="tooltip" data-placement="top" title="{{$doc->extension}}"
+                                     src="{{GetImageByFileExtension($doc->extension)}}" alt="">
+                            </td>
+                            <td class="file_click">{{$doc->size}} bytes</td>
+                            <td class="file_click">{{$doc->created_at}}</td>
+                            <td>
+                                @if($doc->user_id==Auth::id())
+                                    <a href="#" id="modal_delete_{{$doc->id}}">
                                 <span class="delete w3-text-red">
                                     <i class="fas fa-minus-circle"></i>
                                 </span>
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
+                                    </a>
+                                @endif
+                            </td>
+                        </tr>
 
-                        @endforeach
-                        </tbody>
-                        <tbody id="file_body_search"></tbody>
-                    </table>
-                @endif
+                    @endforeach
+                    </tbody>
+                    <tbody id="file_body_search"></tbody>
+                </table>
+            @endif
         </div>
         <div class="col-sm-12 col-lg-8 col-xs-12 w3-center" id="links">
             {!! $documents->links() !!}
@@ -167,7 +171,7 @@
             var url = '{{ route('ajax_search_bar') }}';
             var strValue = $(this).val();
 
-            if(strValue!=""){
+            if (strValue != "") {
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -192,18 +196,19 @@
                             if (data['arrData'].length > 0) {
 
                                 //-- Set number of found items
-                                $("#found_items").html('{{trans('messages.number_of_found_items')}}:<b>'+data['arrData'].length+'</b>');
+                                $("#found_items").html('{{trans('messages.number_of_found_items')}}:<b>' + data['arrData'].length + '</b>');
 
                                 for (var i = 0; i < data['arrData'].length; i++) {
 
                                     var newMenuCount = data['arrData'][i]['id'];
 
                                     var strName = '<td class="file_click">' + data['arrData'][i]['name'] + '</td>';
-                                    var strExtension = '<td class="file_click">' + data['arrData'][i]['extension'] + '</td>';
+                                    //var strExtension = '<td class="file_click">' + data['arrData'][i]['extension'] + '</td>';
+                                    var extensionImage = GetImageByFileExtension(data['arrData'][i]['extension']);
+                                    var strExtension = '<td class="file_click"> <img data-toggle="tooltip" data-placement="top" title="'+data['arrData'][i]['extension']+'" height="30" src="' + extensionImage + '" alt=""></td>';
                                     var strSize = '<td class="file_click">' + data['arrData'][i]['size'] + ' bytes</td>';
                                     var strDate = '<td class="file_click">' + data['arrData'][i]['created_at'] + '</td>';
                                     var strDeleteButton = '<td><a href="#" id="modal_delete_' + data['arrData'][i]['id'] + '"><span class="delete w3-text-red"><i class="fas fa-minus-circle"></i></span></a></td>';
-
 
 
                                     var strContent = strName + strExtension + strSize + strDate + strDeleteButton;
@@ -221,10 +226,10 @@
                         $('[id^="modal_delete_"]').click(function () {
                             ShowDeleteModal($(this).attr('id').replace('modal_delete_', ""));
                         });
-
+                        $('[data-toggle="tooltip"]').tooltip();
                     }
                 });
-            }else{
+            } else {
                 $("#file_body_search,#found_items").html('');
                 $("#file_body,#links").show();
             }
@@ -232,6 +237,34 @@
 
         });
 
+        function GetImageByFileExtension(strFileExtension) {
+            if (strFileExtension != "") {
+                switch (strFileExtension) {
+                    case "docx":
+                    case "doc":
+                        return '{{custom_asset('images/includes/ms_word.png')}}';
+                        break;
+                    case "pdf":
+                        return '{{custom_asset('images/includes/pdf.png')}}';
+                        break;
+                    case "csv":
+                        return '{{custom_asset('images/includes/csv.png')}}';
+                        break;
+                    case "txt":
+                        return '{{custom_asset('images/includes/txt.png')}}';
+                        break;
+                    case "xls":
+                    case "xlsx":
+                        return '{{custom_asset('images/includes/xlsx.png')}}';
+                        break;
+                    default:
+                        return '{{custom_asset('images/includes/file.png')}}';
+                        break;
+                }
+            } else {
+                return '{{custom_asset('images/includes/file.png')}}';
+            }
 
+        }
     </script>
 @endsection

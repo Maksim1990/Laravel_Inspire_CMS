@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Cache;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
-function custom_asset($path, $secure = null){
-    return asset('public/'.$path);
+function custom_asset($path, $secure = null)
+{
+    return asset('public/' . $path);
 }
 
 //-- Functionality for programmatically replace variables in env file
@@ -44,20 +45,20 @@ function BuildMenu($intParentNo, $collectionMenu)
     $strMenu = "";
 
     //-- Trying to get menu from Redis cache depending on current user
-    $userMenu = Cache::tags(['menu_'.Auth::id()])->get('menu_'.$intParentNo."_".LaravelLocalization::getCurrentLocale());
+    $userMenu = Cache::tags(['menu_' . Auth::id()])->get('menu_' . $intParentNo . "_" . LaravelLocalization::getCurrentLocale());
 
-    if(!$userMenu){
+    if (!$userMenu) {
         $strMenu = BuildMenuHTML($collectionMenu, $intParentNo, $strMenu);
-        Cache::tags(['menu_'.Auth::id()])->put('menu_'.$intParentNo."_".LaravelLocalization::getCurrentLocale(), $strMenu, 22 * 60);
-    }else{
+        Cache::tags(['menu_' . Auth::id()])->put('menu_' . $intParentNo . "_" . LaravelLocalization::getCurrentLocale(), $strMenu, 22 * 60);
+    } else {
         //dd('FROM CACHE');
-        $strMenu=$userMenu;
+        $strMenu = $userMenu;
     }
 
     return $strMenu;
 }
 
-function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
+function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu = false)
 {
     if (count($collectionMenu->getMenu()->where('parent', $intParentNo)) > 0) {
 
@@ -65,20 +66,20 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
         foreach ($collectionMenu->getMenu()->where('parent', $intParentNo) as $menuItem) {
             $strMenu .= "<li>";
 
-            if($menuItem->route_id_parameter=="Y"){
-                $strPath = route($menuItem->route,['id' => \Auth::id()]);
-            }else{
+            if ($menuItem->route_id_parameter == "Y") {
+                $strPath = route($menuItem->route, ['id' => \Auth::id()]);
+            } else {
                 $strPath = route($menuItem->route);
             }
 
             if (count($collectionMenu->getMenu()->where('parent', $menuItem->id)) > 0) {
                 $strMenu .= "  <li class=\"dropdown dropdown-submenu\">
-                                <a href='" . $strPath . "' class=\"dropdown-toggle\" data-toggle=\"dropdown\">".$menuItem->icon." ".$collectionMenu->getMenu()->where('id', $menuItem->id)->first()->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
+                                <a href='" . $strPath . "' class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . $menuItem->icon . " " . $collectionMenu->getMenu()->where('id', $menuItem->id)->first()->langs->where('lang', strtoupper(App::getLocale()))->first()->name . "</a>";
 
-                BuildMenuHTML($collectionMenu, $menuItem->id, $strMenu,$subMenu=true);
+                BuildMenuHTML($collectionMenu, $menuItem->id, $strMenu, $subMenu = true);
                 $strMenu .= "</li>";
-            }else{
-                $strMenu .="<a href='" . $strPath . "'>".$menuItem->icon." ".$menuItem->langs->where('lang',strtoupper(App::getLocale()))->first()->name."</a>";
+            } else {
+                $strMenu .= "<a href='" . $strPath . "'>" . $menuItem->icon . " " . $menuItem->langs->where('lang', strtoupper(App::getLocale()))->first()->name . "</a>";
             }
             $strMenu .= "</li>";
         }
@@ -86,4 +87,42 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu=false)
 
         return $strMenu;
     }
+}
+
+
+/**
+ * Generate application file image path depending on file extension
+ *
+ * @param $strFileExtension
+ * @return string
+ */
+function GetImageByFileExtension($strFileExtension)
+{
+    if (!empty($strFileExtension)) {
+        switch ($strFileExtension) {
+            case "docx":
+            case "doc":
+                return custom_asset('images/includes/ms_word.png');
+                break;
+            case "pdf":
+                return custom_asset('images/includes/pdf.png');
+                break;
+            case "csv":
+                return custom_asset('images/includes/csv.png');
+                break;
+            case "txt":
+                return custom_asset('images/includes/txt.png');
+                break;
+            case "xls":
+            case "xlsx":
+                return custom_asset('images/includes/xlsx.png');
+                break;
+            default:
+                return custom_asset('images/includes/file.png');
+                break;
+        }
+    } else {
+        return custom_asset('images/includes/file.png');
+    }
+
 }
