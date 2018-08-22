@@ -8,6 +8,13 @@
         HideRemoteServerInput();
     }
 
+    if ($('#use_elasticsearch').is(":checked"))
+    {
+        ShowElasticSearchInput();
+    }else{
+        HideElasticSearchInput();
+    }
+
 
     //-- RESET CACHE
     $('#save_reset_cache').click(function () {
@@ -130,6 +137,51 @@
 
     function HideRemoteServerInput() {
         $('#remote_server_block').hide();
+    }
+
+    //-- Functionality for trigger Google maps visibility
+    $('#use_elasticsearch').click(function () {
+        var url = '{{ route('ajax_use_elasticsearch_update') }}';
+        var use_elasticsearch = "N";
+
+        if ($(this).is(":checked"))
+        {
+            use_elasticsearch="Y";
+            ShowElasticSearchInput();
+        }else{
+            HideElasticSearchInput();
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                use_elasticsearch: use_elasticsearch,
+                _token: token
+            },
+            success: function (data) {
+                var srtNotification='{{trans('dashboard::messages.elasticsearch_activated')}}';
+                if(use_remote_server=="N"){
+                    srtNotification='{{trans('dashboard::messages.elasticsearch_deactivated')}}';
+                }
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: srtNotification
+                    }).show();
+                }
+            }
+        });
+    });
+
+    function ShowElasticSearchInput() {
+        $('#elasticsearch_block').show();
+    }
+
+    function HideElasticSearchInput() {
+        $('#elasticsearch_block').hide();
     }
 
 

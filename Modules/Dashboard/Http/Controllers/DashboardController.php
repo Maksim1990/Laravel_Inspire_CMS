@@ -11,6 +11,7 @@ use App\Menu\Menu;
 use App\Menu\MenuLang;
 use App\Menu\UserMenu;
 use App\Setting;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Dashboard\Entities\Language;
 use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
@@ -172,7 +174,7 @@ class DashboardController extends Controller
 
         if (count($arrMenuIds) > 0) {
             foreach ($arrMenuIds as $intId) {
-               if (Auth::user()->admin) {
+                if (Auth::user()->admin) {
                     try {
                         $menu = Menu::findOrFail($intId);
                         $menu->admin = $arrMenuKeys[$intId . "_menu_active_admin"];
@@ -183,15 +185,15 @@ class DashboardController extends Controller
                             'admin' => $arrMenuKeys[$intId . "_menu_active_admin"]
                         ]);
                     }
-                }else{
-                   try {
-                       Menu::findOrFail($intId);
-                   } catch (\Exception $e) {
-                       Menu::create([
-                           'id' => $intId
-                       ]);
-                   }
-               }
+                } else {
+                    try {
+                        Menu::findOrFail($intId);
+                    } catch (\Exception $e) {
+                        Menu::create([
+                            'id' => $intId
+                        ]);
+                    }
+                }
 
 
                 foreach ($arrOfActiveLanguages as $strKey => $strLang) {
@@ -210,14 +212,20 @@ class DashboardController extends Controller
                             ]);
 
 
-//                            //-- Add new menu to elastic search
-//                            $elastic = app(Elastic::class);
-//                            $elastic->index([
-//                                'index' => 'inspirecms_menus_' . Auth::id(),
-//                                'type' => 'menu',
-//                                'id' => $menuLang->id."_".Auth::id()."_".strtoupper($strKey),
-//                                'body' => $menuLang->toArray()
-//                            ]);
+                            //-- Check if Elasticsearch is activated
+                            $admin = User::where('admin', 1)->first();
+                            $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
+                            if ($adminSettings->use_elasticsearch == "Y") {
+                                //-- Add new menu to elastic search
+                                $elastic = app(Elastic::class);
+                                $elastic->index([
+                                    'index' => 'inspirecms_menus_' . Auth::id(),
+                                    'type' => 'menu',
+                                    'id' => $menuLang->id . "_" . Auth::id() . "_" . strtoupper($strKey),
+                                    'body' => $menuLang->toArray()
+                                ]);
+                            }
+
                         }
                     }
                 }
@@ -275,17 +283,21 @@ class DashboardController extends Controller
 
         $deleteMenu = Menu::find($intId);
 
-//        //-- Delete menu from Elastic search index
-//        $elastic = app(Elastic::class);
-//        $arrOfActiveLanguages = Helper::GetActiveLanguages();
-//        foreach ($arrOfActiveLanguages as $strKey => $strLang) {
-//            $elastic->delete([
-//                'index' => 'inspirecms_menus_' . Auth::id(),
-//                'type' => 'menu',
-//                'id' => $deleteMenu->id . "_" . Auth::id() . "_".strtoupper($strKey),
-//            ]);
-//        }
-
+        //-- Check if Elasticsearch is activated
+        $admin = User::where('admin', 1)->first();
+        $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
+        if ($adminSettings->use_elasticsearch == "Y") {
+            //-- Delete menu from Elastic search index
+            $elastic = app(Elastic::class);
+            $arrOfActiveLanguages = Helper::GetActiveLanguages();
+            foreach ($arrOfActiveLanguages as $strKey => $strLang) {
+                $elastic->delete([
+                    'index' => 'inspirecms_menus_' . Auth::id(),
+                    'type' => 'menu',
+                    'id' => $deleteMenu->id . "_" . Auth::id() . "_" . strtoupper($strKey),
+                ]);
+            }
+        }
         if ($deleteMenu->admin == "Y") {
             if ($user->admin) {
                 $deleteMenu->delete();

@@ -22,6 +22,7 @@ class CreateAdminSettingsTable extends Migration
             $table->enum('use_admin_ftp_credentials', ['Y', 'N'])->default("N");
             $table->enum('use_remote_server', ['Y', 'N'])->default("N");
             $table->text('remote_server')->nullable();
+            $table->enum('use_elasticsearch', ['Y', 'N'])->default("N");
             $table->timestamps();
         });
     }

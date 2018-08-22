@@ -15,6 +15,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::post('/ajax_admin_settings_app_version', 'AdminSettingsController@ajaxUpdateAppVersion')->name('ajax_admin_settings_app_version');
         Route::post('/ajax_admin_settings_remote_server', 'AdminSettingsController@ajaxUpdateRemoteServer')->name('ajax_admin_settings_remote_server');
         Route::post('/ajax_use_remote_server_update', 'AdminSettingsController@ajaxUpdateUseRemoteServer')->name('ajax_use_remote_server_update');
+        Route::post('/ajax_use_elasticsearch_update', 'AdminSettingsController@ajaxUpdateUseElasticSearch')->name('ajax_use_elasticsearch_update');
         Route::post('/ajax_admin_elasticsearch_update', 'AdminSettingsController@ajaxUpdateElasticSearch')->name('ajax_admin_elasticsearch_update');
         Route::post('/ajax_admin_elasticsearch_truncate', 'AdminSettingsController@ajaxTruncateElasticSearch')->name('ajax_admin_elasticsearch_truncate');
 

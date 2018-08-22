@@ -320,6 +320,26 @@ class AdminSettingsController extends Controller
         ));
     }
 
+    public function ajaxUpdateUseElasticSearch(Request $request)
+    {
+        $strError = "";
+        $result = "success";
+
+        $use_elasticsearch = $request->use_elasticsearch;
+
+
+        $admin = User::where('admin', 1)->first();
+        $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
+        $adminSettings->use_elasticsearch = $use_elasticsearch;
+        $adminSettings->update();
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
     public function ajaxUpdateRemoteServer(Request $request)
     {
         $strError = "";

@@ -98,6 +98,9 @@ return [
     'for_correct_import' => 'For correct import use provided example template.',
     'download_template' => 'Download template',
     'import_file' => 'Import File',
+    'use_elasticsearch' => 'Use Elasticsearch functionality (for Menu settings)',
+    'elasticsearch_activated' => 'Elasticsearch activated',
+    'elasticsearch_deactivated' => 'Elasticsearch deactivated',
     'file_format_not_correct' => 'File format is not correct! Please try again.',
     'valid_import_format' => 'Valid format for import is <b>xls</b>. Please for your convenience download template and insert your data before import. Please be aware that <b>\'id\'</b> column mast be unique',
 ];
