@@ -38,11 +38,12 @@
                             @endif
                         </li>
                         <li>
-                            <a href="{{route("website",['id'=>Auth::id(),'sitename'=>Auth::user()->website_setting->website_name])}}"
-                               target="_blank">@lang('messages.visit_website')</a></li>
+                            <a href="{{route("website",['id'=>Auth::id(),'sitename'=>Auth::user()->website_setting->website_name])}}" data-toggle="tooltip" data-placement="bottom" title="@lang('messages.visit_website')"
+                               target="_blank"><i style="font-size:30px;" class="fab fa-osi"></i></a></li>
                         @if(Auth::user()->admin==1)
                             <li>
-                                <a href="{{route("admin_settings",['id'=>Auth::id()])}}">@lang('messages.admin_settings')</a></li>
+                                <a href="{{route("admin_settings",['id'=>Auth::id()])}}" data-toggle="tooltip" data-placement="bottom" title="@lang('messages.admin_settings')">
+                                    <i style="font-size:30px;" class="fas fa-users-cog"></i></a></li>
                         @endif
                     </ul>
 

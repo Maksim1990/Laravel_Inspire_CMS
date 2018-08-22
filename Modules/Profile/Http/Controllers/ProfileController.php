@@ -131,7 +131,9 @@ class ProfileController extends Controller
             if (!($file->getClientSize() > 2100000)) {
                 //dd('storage/upload/' . Auth::id() . '/profile/' . $user->image->path);
                 if ($user->image) {
-                    unlink(storage_path('/app/public/upload/' . Auth::id() . '/profile/' . $user->image->path));
+                    if(file_exists(storage_path('/app/public/upload/' . Auth::id() . '/profile/' . $user->image->path))){
+                        unlink(storage_path('/app/public/upload/' . Auth::id() . '/profile/' . $user->image->path));
+                    }
                     $photo_user = Image::findOrFail($user->image->id);
                     if ($photo_user) {
                         $photo_user->delete();

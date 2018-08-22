@@ -4,22 +4,22 @@
     <div class="w3-row ">
         <div class="w3-col s6 m6  w3-center">
             <ul class="w3-ul">
-                <li class="w3-hover-green"><a href="#">About</a></li>
-                <li class="w3-hover-green">Future updates</li>
-                <li class="w3-hover-green">Adam</li>
+                <li class="w3-hover-green"><a href="{{route('about_us')}}">@lang('messages.about_us')</a></li>
+                <li class="w3-hover-green"><a href="{{route('office',['id'=>Auth::id()])}}">@lang('messages.inspire_cms_office')</a></li>
+                <li class="w3-hover-green"><a href="{{route("website",['id'=>Auth::id(),'sitename'=>Auth::user()->website_setting->website_name])}}"  target="_blank">@lang('messages.visit_website')</a></li>
             </ul>
         </div>
         <div class="w3-col s6 m6  w3-center">
             <ul class="w3-ul">
-                <li class="w3-hover-green"><a href="#">Contact Us</a></li>
-                <li class="w3-hover-green">Eve</li>
-                <li class="w3-hover-green" data-toggle="modal" data-target="#modal_languages">Languages</li>
+                <li class="w3-hover-green"><a href="{{route('contacts')}}">@lang('messages.contact_us')</a></li>
+                <li class="w3-hover-green"><a href="{{route('mail',['id'=>Auth::id()])}}">@lang('messages.mail_box')</a></li>
+                <li class="w3-hover-green" data-toggle="modal" data-target="#modal_languages">@lang('messages.languages')</li>
             </ul>
         </div>
     </div>
     <div class="w3-row">
         <div class="w3-col s1 m1"><p></p></div>
-        <div class="w3-col s10 m10  w3-center"><p>2018 &#169; Developed by <a href="#">
+        <div class="w3-col s10 m10  w3-center"><p>2018 &#169; Developed by <a href="https://www.linkedin.com/in/maksim-narushevich-b99783106/" target="_blank">
                     Maksim Narushevich</a></p></div>
     </div>
     <div class="w3-col s1 m1"><p></p></div>

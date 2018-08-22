@@ -25,6 +25,8 @@
         </a>
     </div>
 
+    {{--TODO temporarily deactivated FTP module --}}
+    @if(false)
     <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
         <a href="{{route('office_ftp_manager',['id'=>Auth::id()])}}">
             <p class="font_icon">
@@ -34,6 +36,7 @@
             <span> @lang('dashboard::messages.ftp_manager')</span>
         </a>
     </div>
+    @endif
 
     <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
         <a href="{{route('export',['id'=>Auth::id()])}}">
@@ -59,6 +62,15 @@
                 <i class="fas fa-file-export"></i>
             </p>
             <span> @lang('dashboard::messages.tasks_module')</span>
+        </a>
+    </div>
+
+    <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
+        <a href="{{route('mail',['id'=>Auth::id()])}}">
+            <p class="font_icon">
+                <i class="fas fa-at"></i>
+            </p>
+            <span> @lang('messages.mail_box')</span>
         </a>
     </div>
 
