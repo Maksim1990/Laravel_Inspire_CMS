@@ -84,9 +84,11 @@ return [
     'mail_templates_list' => 'List of mail templates',
     'mail_template_activated' => 'Mail template activated',
     'template_title' => 'Template title',
+    'back_to_import_module' => 'Back to Import module',
     'import_module' => 'Import module',
     'import_languages' => 'Import languages',
     'import_labels' => 'Import labels',
+    'import_posts' => 'Import posts',
     'import_completed' => 'Import was successfully completed',
     'import_failed' => 'Import failed',
     'mail_template_customize_info' => 'Please leave/insert <span class="w3-text-red">:mailVariable</span> variable that position where you want content from mail form be placed in the email.<br><b>Example:</b><div style="background-color:rgba(255,127,80,0.47);padding: 15px;15px;border-radius:20px;"><br><h1>Hello World</h1><p>:mailVariable</p></div>You can write any valid html code.',
@@ -97,5 +99,5 @@ return [
     'download_template' => 'Download template',
     'import_file' => 'Import File',
     'file_format_not_correct' => 'File format is not correct! Please try again.',
-    'valid_import_format' => 'Valid format for import is <b>xls</b>. Please for your convenience download template and insert your data before import.',
+    'valid_import_format' => 'Valid format for import is <b>xls</b>. Please for your convenience download template and insert your data before import. Please be aware that <b>\'id\'</b> column mast be unique',
 ];

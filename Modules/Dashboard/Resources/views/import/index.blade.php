@@ -17,15 +17,22 @@
                 </div>
                 <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
                     <a href="{{route('import_page',['id'=>Auth::id(),'type'=>'langs'])}}" >
-                        <p class="font_icon"><i class="fas fa-file-alt"></i></p>
+                        <p class="font_icon"><i class="fas fa-language"></i></p>
                         <span>@lang('dashboard::messages.import_languages')</span>
                     </a>
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
                     <a href="{{route('import_page',['id'=>Auth::id(),'type'=>'labels'])}}" >
-                        <p class="font_icon"><i class="fas fa-file-alt"></i></p>
+                        <p class="font_icon"><i class="fas fa-tags"></i></p>
                         <span>@lang('dashboard::messages.import_labels')</span>
+                    </a>
+                </div>
+
+                <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
+                    <a href="{{route('import_page',['id'=>Auth::id(),'type'=>'posts'])}}" >
+                        <p class="font_icon"><i class="fas fa-clipboard"></i></p>
+                        <span>@lang('dashboard::messages.import_posts')</span>
                     </a>
                 </div>
 

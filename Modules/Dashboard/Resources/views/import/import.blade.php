@@ -4,10 +4,16 @@
 @endsection
 @section('General')
     @php
-        if(Session::has('import_change')){
-        // dd(Session::has('import_change'));
+        if($type=='langs'){
+        $arrImplode=['id','user_id','name'];
+        $title=trans('dashboard::messages.import_langs');
+        }elseif ($type=='labels'){
+        $arrImplode=['id','user_id','group','key'];
+        $title=trans('dashboard::messages.import_labels');
+        }elseif ($type=='posts'){
+        $arrImplode=['id','user_id','title','content'];
+        $title=trans('dashboard::messages.import_posts');
         }
-
     @endphp
     <div class="row">
         <div class="col-sm-12 col-md-10  col-xs-12">
@@ -20,9 +26,17 @@
                 <div class="insp_buttons">
                     <a href="{{route("office",['id'=>Auth::id()])}}"
                        class="btn btn-warning">@lang('dashboard::messages.back_to_office_menu')</a>
+                    <a href="{{route("import",['id'=>Auth::id()])}}"
+                       class="btn btn-info">@lang('dashboard::messages.back_to_import_module')</a>
                 </div>
 
+
+                <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
+                    <h3 class="title">{{$title}}</h3>
+
+                </div>
                 <div style="padding-top: 100px;" class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
+
                     <div class="alert alert-success" role="alert" style="height: 65px;">
                         <span style="float:left;"><strong>@lang('messages.attention')!</strong>@lang('dashboard::messages.for_correct_import')</span>
 
@@ -35,14 +49,7 @@
                         <span style="float:left;"><strong>@lang('messages.attention')!</strong>
                             @lang('dashboard::messages.valid_import_format')
                            </span><br>
-                      @php
-                      if($type=='langs'){
-                      $arrImplode=['id','user_id','name'];
-                      }elseif ($type=='labels'){
-                      $arrImplode=['id','user_id','group','key'];
-                      }
 
-                      @endphp
                         <span>@lang('dashboard::messages.columns_required_for_import',['columns'=>implode(",",$arrImplode)])</span>
 
                     </div>

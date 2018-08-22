@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Mews\Purifier\Facades\Purifier;
 use Modules\Dashboard\Entities\Language;
 use Modules\Post\Entities\Post;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -92,8 +93,8 @@ class ExcelController extends Controller
                     } elseif ($importType == 'labels') {
                         if (!empty($line['id']) && !empty($line['user_id']) && $line['user_id'] == Auth::id() && !empty($line['group']) && !empty($line['key'])) {
 
-                            $checkLang = LanguageLine::where('user_id', $line['user_id'])->where('group', $line['group'])->where('key', $line['key'])->first();
-                            if (!$checkLang) {
+                            $checkLabel = LanguageLine::where('user_id', $line['user_id'])->where('group', $line['group'])->where('key', $line['key'])->first();
+                            if (!$checkLabel) {
                                 $arrNewTranslation = array();
                                 $arrNewTranslation['en'] = !empty($line['English']) ? $line['English'] : "";
                                 $arrNewTranslation['fr'] = !empty($line['French']) ? $line['French'] : "";
@@ -109,6 +110,21 @@ class ExcelController extends Controller
                             } else {
                                 return $line['id'];
                             }
+                        } else {
+                            return $line['id'];
+                        }
+                    }elseif ($importType == 'posts') {
+                        if (!empty($line['id']) && !empty($line['user_id']) && $line['user_id'] == Auth::id() && !empty($line['title']) && !empty($line['content'])) {
+
+                            //-- Prevent XSS JS injection
+                            //-- Removing not allowed <script> tags
+                            $postContent = Purifier::clean($line['content'], array('Attr.EnableID' => true));
+                                Post::create([
+                                    'user_id' => $line['user_id'],
+                                    'title' => $line['title'],
+                                    'content' => $postContent
+                                ]);
+
                         } else {
                             return $line['id'];
                         }
