@@ -132,7 +132,7 @@
             var strBloсkID = "block" + lastBlockId + "_{{Auth::id()}}";
             var strBloсkCustomId = "block" + lastBlockId;
 
-            var newBlock = "  <li class=\"ui-state-highlight tooltip_block_item\" onclick=\"ClickBlock(event,'" + strBloсkID + "')\" id=\"block_" + strBloсkID + "\"\n" +
+            var newBlock = "  <li class=\"ui-state-default tooltip_block_item\" onclick=\"ClickBlock(event,'" + strBloсkID + "')\" id=\"block_" + strBloсkID + "\"\n" +
                 "                                    data-sortorder=\"1\">\n" +
                 "                                    <p id=\"title_" + strBloсkID + "\"\n" +
                 "                                       class=\"title_block\">" + strBloсkCustomId + "</p>\n" +
