@@ -1,5 +1,6 @@
 </div>
-<footer id="footer">
+
+<footer id="footer" class="col-xs-12">
     <div class="w3-row ">
         <div class="w3-col s6 m6  w3-center">
             <ul class="w3-ul">
@@ -24,6 +25,7 @@
     <div class="w3-col s1 m1"><p></p></div>
 </footer>
 </div>
+
 
 {{--Right sidebar button--}}
 <a id="openNavRight" onclick="ShowRightSidebar()"><img src="{{custom_asset("images/includes/rightSideBarArrow.png")}}"

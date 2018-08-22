@@ -139,6 +139,7 @@ a .link{
     height: 40px;
     border-bottom: 1px solid #676767;
 }
+
 @media (min-width: 768px) {
 
 }
@@ -161,6 +162,12 @@ a .link{
     #pagebuilder_menu{
         position: initial;
         top:10%;
+    }
+
+}
+@media (max-width: 692px) {
+    #footer{
+        width: 150%;
     }
 
 }

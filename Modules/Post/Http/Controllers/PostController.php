@@ -2,6 +2,7 @@
 
 namespace Modules\Post\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Mews\Purifier\Facades\Purifier;
 use Modules\Post\Entities\Post;
+use Modules\Post\Entities\PostImage;
+use Modules\Post\Http\Requests\UploadPostImageRequest;
 
 class PostController extends Controller
 {
@@ -111,6 +114,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
+    }
+
+    public function updatePost(Request $request, $id)
+    {
         $input = $request->all();
         $user_id = Auth::id();
 
@@ -135,8 +144,23 @@ class PostController extends Controller
      */
     public function destroy( $id)
     {
+
+
+    }
+    public function destroyPost( $id)
+    {
         $user_id = Auth::id();
         $post = Post::findOrFail($id);
+        if ($post->image) {
+            if(file_exists(storage_path('/app/public/' . $post->image->path))){
+                unlink(storage_path('/app/public/' . $post->image->path));
+            }
+
+            $photo_image = PostImage::where('post_id',$id)->first();
+            if ($photo_image) {
+                $photo_image->delete();
+            }
+        }
         $post->delete();
 
         Session::flash('post_change','Post was successfully deleted!');
@@ -144,4 +168,78 @@ class PostController extends Controller
 
 
     }
+
+
+    public function updatePostImage(UploadPostImageRequest $request, $id)
+    {
+
+
+       $user = User::findOrFail(Auth::id());
+       $post=Post::find($id);
+
+        $file = $request->file('image');
+        $arrAllowedExtension = ['png', 'jpg', 'jpeg'];
+        $extension = $file->getClientOriginalExtension();
+
+        if (in_array($extension, $arrAllowedExtension)) {
+            if (!($file->getClientSize() > 2100000)) {
+
+                if ($post->image) {
+                    if(file_exists(storage_path('/app/public/' . $post->image->path))){
+                        unlink(storage_path('/app/public/' . $post->image->path));
+                    }
+
+                    $photo_image = PostImage::where('post_id',$id)->first();
+                    if ($photo_image) {
+                        $photo_image->delete();
+                    }
+                }
+
+                $name = time()."_".$post->id."_" . $file->getClientOriginalName();
+                //$file->move('images', $name);
+                request()->file('image')->storeAs(
+                    'public/upload/' . Auth::id() . '/post/images/', $name
+                );
+                PostImage::create([
+                    'user_id' => Auth::id(),
+                    'post_id' =>$id,
+                    'name' => $name,
+                    'size' => $file->getClientSize(),
+                    'extension' => $extension,
+                    'path' => 'upload/' . Auth::id() .'/post/images/' . $name
+                ]);
+
+
+                $arrOptions = [
+                    'message' => 'Post has been successfully edited!',
+                    'type' => 'success',
+                    'position' => 'topRight'
+                ];
+                Session::flash('post_change', $arrOptions);
+                return \Redirect::route('posts.show',['userId'=>$user->id,'id'=>$id]);
+
+            } else {
+                $arrOptions = [
+                    'message' => 'Image size should not exceed 2 MB',
+                    'type' => 'error',
+                    'position' => 'bottomLeft'
+                ];
+                Session::flash('post_change', $arrOptions);
+                return \Redirect::route('posts.show',['userId'=>$user->id,'id'=>$id]);
+            }
+        }else {
+            $arrOptions = [
+                'message' => trans('images::messages.image_format_error',['formats'=>implode(",", $arrAllowedExtension)]),
+                'type' => 'error',
+                'position' => 'bottomLeft'
+            ];
+            Session::flash('post_change', $arrOptions);
+            return \Redirect::route('posts.show',['userId'=>$user->id,'id'=>$id]);
+        }
+
+
+
+    }
+
+
 }

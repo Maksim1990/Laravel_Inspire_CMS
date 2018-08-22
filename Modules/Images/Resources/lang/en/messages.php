@@ -10,4 +10,5 @@ return [
     'image_not_found' => 'Image was not found!',
     'no_images_found' => 'No images found',
     'go_to_images_module' => 'Go to Images module',
+    'image_format_error' => 'Image file can be only one od following formats :formats',
 ];

@@ -18,7 +18,7 @@
             <h3 class="title">Edit Post</h3>
             <div id="title_shape"></div>
 
-            {!! Form::model($post,['method'=>'PATCH','action'=>['\Modules\Post\Http\Controllers\PostController@update','id'=>$post->id], 'files'=>true])!!}
+            {!! Form::model($post,['method'=>'PATCH','action'=>['\Modules\Post\Http\Controllers\PostController@updatePost','id'=>$post->id], 'files'=>true])!!}
             <div class="group-form">
                 {!! Form::label('title','Title:') !!}
                 {!! Form::text('title', null, ['class'=>'form-control']) !!}

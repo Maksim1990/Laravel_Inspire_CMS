@@ -1,8 +1,8 @@
-<div class="mainside col-xs-7 col-sm-11" id="mainside" >
+<div class="mainside col-xs-12 col-sm-11" id="mainside" >
 
     <div class="container-fluid maintabs">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-lg-12">
                 <ul class="nav nav-tabs" role="tablist" id="main_tab">
                     @foreach($arrTabs as $title)
                         <li role="presentation" class="{{$title=="General" || $title=="Dashboard" ? $active : ""}}" ><a href="#{{$title}}" aria-controls="{{$title}}" role="tab" data-toggle="tab" class="tab_link">{{str_replace("_"," ",$title)}}</a></li>

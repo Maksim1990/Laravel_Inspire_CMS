@@ -70,7 +70,7 @@ class ImagesController extends Controller
                 $result = trans('images::messages.image_limit')." 2 MB!";
             }
         } else {
-            $result = trans('messages.document_can_not_be_bigger_than').": " . implode(",", $arrAllowedExtension);
+            $result = trans('images::messages.image_format_error',['formats'=>implode(",", $arrAllowedExtension)]);
         }
 
         echo $result;

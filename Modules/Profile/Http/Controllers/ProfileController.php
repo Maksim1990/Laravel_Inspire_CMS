@@ -29,6 +29,7 @@ use Modules\Pagebuilder\Entities\Block;
 use Modules\Pagebuilder\Entities\BlockContent;
 use Modules\Pagebuilder\Entities\UserBlockPivot;
 use Modules\Post\Entities\Post;
+use Modules\Post\Entities\PostImage;
 use Modules\Website\Entities\WebsiteSetting;
 use Spatie\TranslationLoader\LanguageLine;
 
@@ -178,7 +179,25 @@ class ProfileController extends Controller
         UserMenu::where('user_id', $user_id)->delete();
         LanguageLine::where('user_id', $user_id)->delete();
         Language::where('user_id', $user_id)->delete();
-        Post::where('user_id', $user_id)->delete();
+
+        //-- Deleting POSTS and POST IMAGES related to this user
+        $posts=Post::where('user_id', $user_id)->get();
+        if(!empty($posts)){
+            foreach ($posts as $post){
+                if ($post->image) {
+                    if(file_exists(storage_path('/app/public/' . $post->image->path))){
+                        unlink(storage_path('/app/public/' . $post->image->path));
+                    }
+
+                    $photo_image = PostImage::where('post_id',$post->id)->first();
+                    if ($photo_image) {
+                        $photo_image->delete();
+                    }
+                }
+                $post->delete();
+            }
+        }
+
         MailEntity::where('user_id', $user_id)->delete();
         MailTemplate::where('user_id', $user_id)->delete();
         SocialIcon::where('user_id', $user_id)->delete();
