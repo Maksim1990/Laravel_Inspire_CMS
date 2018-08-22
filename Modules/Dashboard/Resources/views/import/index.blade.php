@@ -22,6 +22,13 @@
                     </a>
                 </div>
 
+                <div class="col-sm-12 col-md-3 col-md-offset-1  col-xs-12 text-center icon_module">
+                    <a href="{{route('import_page',['id'=>Auth::id(),'type'=>'labels'])}}" >
+                        <p class="font_icon"><i class="fas fa-file-alt"></i></p>
+                        <span>@lang('dashboard::messages.import_labels')</span>
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>

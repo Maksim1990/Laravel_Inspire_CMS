@@ -25,16 +25,26 @@
                 <div style="padding-top: 100px;" class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
                     <div class="alert alert-success" role="alert" style="height: 65px;">
                         <span style="float:left;"><strong>@lang('messages.attention')!</strong>@lang('dashboard::messages.for_correct_import')</span>
+
                         <a class="btn btn-success btn-small" style="float:right;"
-                           href="{{custom_asset('/files/templates/import_'.$type.'.xlsx')}}"
+                           href="{{custom_asset('files/templates/import_'.$type.'.xlsx')}}"
                            download="import_{{$type}}">@lang('dashboard::messages.download_template')
                         </a>
                     </div>
-                    <div class="alert alert-danger" role="alert" style="height: 65px;">
+                    <div class="alert alert-danger" role="alert" style="min-height: 65px;">
                         <span style="float:left;"><strong>@lang('messages.attention')!</strong>
                             @lang('dashboard::messages.valid_import_format')
                            </span><br>
-                        <span>@lang('dashboard::messages.columns_required_for_import',['columns'=>implode(",",['id','user_id','name'])])</span>
+                      @php
+                      if($type=='langs'){
+                      $arrImplode=['id','user_id','name'];
+                      }elseif ($type=='labels'){
+                      $arrImplode=['id','user_id','group','key'];
+                      }
+
+                      @endphp
+                        <span>@lang('dashboard::messages.columns_required_for_import',['columns'=>implode(",",$arrImplode)])</span>
+
                     </div>
                     <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;"
                           action="{{ route("import_file",['id'=>Auth::id(),'type'=>$type]) }}" class="form-horizontal"

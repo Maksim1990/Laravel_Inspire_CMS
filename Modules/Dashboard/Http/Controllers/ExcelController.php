@@ -64,7 +64,7 @@ class ExcelController extends Controller
                     'public/upload/' . Auth::id() . '/import/', $name
                 );
 
-                $arrImport = (new FastExcel)->import(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name), function ($line) use ($importType,$errMessage) {
+                $arrImport = (new FastExcel)->import(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name), function ($line) use ($importType, $errMessage) {
 
                     //-- Performing uploading Languages with relevant validation
                     if ($importType == 'langs') {
@@ -89,10 +89,32 @@ class ExcelController extends Controller
                             return $line['id'];
                         }
 
+                    } elseif ($importType == 'labels') {
+                        if (!empty($line['id']) && !empty($line['user_id']) && $line['user_id'] == Auth::id() && !empty($line['group']) && !empty($line['key'])) {
+
+                            $checkLang = LanguageLine::where('user_id', $line['user_id'])->where('group', $line['group'])->where('key', $line['key'])->first();
+                            if (!$checkLang) {
+                                $arrNewTranslation = array();
+                                $arrNewTranslation['en'] = !empty($line['English']) ? $line['English'] : "";
+                                $arrNewTranslation['fr'] = !empty($line['French']) ? $line['French'] : "";
+                                $arrNewTranslation['ru'] = !empty($line['Russian']) ? $line['Russian'] : "";
+                                $arrNewTranslation['th'] = !empty($line['Thai']) ? $line['Thai'] : "";
+
+                                LanguageLine::create([
+                                    'user_id' => $line['user_id'],
+                                    'group' => $line['group'],
+                                    'key' => $line['key'],
+                                    'text' => $arrNewTranslation
+                                ]);
+                            } else {
+                                return $line['id'];
+                            }
+                        } else {
+                            return $line['id'];
+                        }
                     }
 
                 });
-
 
 
                 //-- Remove file after successful import
@@ -100,13 +122,13 @@ class ExcelController extends Controller
                     unlink(storage_path('/app/public/upload/' . Auth::id() . '/import/' . $name));
                 }
 
-                $blnStatus=true;
-                $arrNotImported=[];
+                $blnStatus = true;
+                $arrNotImported = [];
                 //-- Check if there is some not imported file
-                foreach ($arrImport as $item){
-                    if(is_int($item)){
-                        $blnStatus=false;
-                        $arrNotImported[]=$item;
+                foreach ($arrImport as $item) {
+                    if (is_int($item)) {
+                        $blnStatus = false;
+                        $arrNotImported[] = $item;
                     }
 
                 }
@@ -120,7 +142,7 @@ class ExcelController extends Controller
                     ];
                 } else {
                     $arrOptions = [
-                        'message' => trans('dashboard::messages.lines_not_imported',['lines'=>implode(",",$arrNotImported)]),
+                        'message' => trans('dashboard::messages.lines_not_imported', ['lines' => implode(",", $arrNotImported)]),
                         'type' => 'error',
                         'position' => 'bottomLeft'
                     ];
