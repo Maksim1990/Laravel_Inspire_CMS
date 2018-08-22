@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Illuminate\Support\Facades\Auth;
 
 class ResetPasswordController extends Controller
 {
@@ -25,7 +27,13 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    /**
+     * @return string
+     */
+    public function redirectTo()
+    {
+        return '/'.LaravelLocalization::getCurrentLocale().'/admin/'.Auth::id().'/dashboard';
+    }
 
     /**
      * Create a new controller instance.
