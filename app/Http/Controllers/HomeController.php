@@ -34,4 +34,10 @@ class HomeController extends Controller
         return "Error reported to Bugsnag!";
     }
 
+    public function redirectWelcomePage()
+    {
+
+        return "Redirect!";
+    }
+
 }

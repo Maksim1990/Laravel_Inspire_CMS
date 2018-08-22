@@ -59,5 +59,14 @@ return [
     'active' => 'Active',
     'activate' => 'Activate',
     'attention' => 'Attention',
+    'login' => 'Login',
+    'register' => 'Register',
+    'home' => 'Home',
+    'want_website' => 'Do you want website?',
+    'just_build_it' => 'Just build it!',
+    'email' => 'Email',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm password',
+    'reset_password' => 'Reset password',
 
 ];

@@ -5,24 +5,21 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{env('APP_NAME')}}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+        <link href="https://fonts.googleapis.com/css?family=Knewave" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
+                background-image: url('{{custom_asset('images/app/inspire.jpg')}}');
+
             }
 
             .full-height {
-                height: 100vh;
+                height: 50vh;
             }
 
             .flex-center {
@@ -43,17 +40,47 @@
 
             .content {
                 text-align: center;
+
             }
+            .title_block{
+
+                position: fixed;
+                background:rgba(0,0,0,0.4);
+                border-radius: 20px;
+                padding: 60px 60px;
+                color: white;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                margin: 0;
+            }
+            .title_block span{
+
+            }
+            .info_block{
+                font-family: 'Raleway', sans-serif;
+                top: 70%;
+                right: 10%;
+                text-align: center;
+                position: fixed;
+                font-size: 45px;
+                color:whitesmoke;
+            }
+            .info_block a{
+                color:white;
+                font-weight: bold;
+                font-family: 'Knewave', cursive;
+            }
+
 
             .title {
                 font-size: 84px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #686868;
                 padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
+                font-size: 20px;
+                font-weight: 300;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
@@ -69,27 +96,27 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{route('admin',['id'=>Auth::id()]) }}">Home</a>
+                        <a href="{{URL::to('/'.LaravelLocalization::getCurrentLocale().'/admin/'.Auth::id().'/dashboard') }}">@lang('messages.home')</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        <a href="{{ URL::to('/'.LaravelLocalization::getCurrentLocale().'/login') }}">@lang('messages.login')</a>
+                        <a href="{{ URL::to('/'.LaravelLocalization::getCurrentLocale().'/register') }}">@lang('messages.register')</a>
                     @endauth
                 </div>
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="title_block">
+                    <div class="title m-b-md ">
+                        Inspire <span>CMS</span>
+                    </div>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+
             </div>
+                <div class="info_block">
+                        @lang('messages.want_website') <a href="{{ URL::to('/'.LaravelLocalization::getCurrentLocale().'/login') }}"><span>@lang('messages.just_build_it')</span></a>
+
+                </div>
         </div>
         <!--Start of Tawk.to Script-->
         <script type="text/javascript">

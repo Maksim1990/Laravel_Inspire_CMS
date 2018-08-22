@@ -7,7 +7,7 @@
 @if(isset($title))
     <title>{{$title}}</title>
 @else
-    <title>Inspire CMS</title>
+    <title>{{env('APP_NAME')}}</title>
 @endif
 
 

@@ -24,9 +24,8 @@ class CheckLoggedIn
             return $next($request);
         }
 
-//        $strLocale=App::getLocale();
-//        return redirect('/'.$strLocale.'/login');
-        return redirect('/login');
+        $strLocale=App::getLocale();
+        return redirect('/'.$strLocale.'/login');
 
     }
 }
