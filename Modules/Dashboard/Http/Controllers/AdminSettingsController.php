@@ -23,7 +23,7 @@ class AdminSettingsController extends Controller
      */
     public function index()
     {
-        $arrTabs = ['General'];
+        $arrTabs = ['General','Menu_icons'];
         $active = "active";
 
         $admin = User::where('admin', 1)->first();
@@ -34,8 +34,10 @@ class AdminSettingsController extends Controller
         ];
 
         $users=User::pluck('name','id')->all();
+        $appMenus=Menu::where('id','>',2)->get();
 
-        return view('dashboard::admin_settings.index', compact('arrTabs', 'active', 'adminSettings', 'arrElasticSearch','users'));
+
+        return view('dashboard::admin_settings.index', compact('arrTabs', 'active', 'adminSettings', 'arrElasticSearch','users','appMenus'));
     }
 
     public function search()
@@ -312,6 +314,32 @@ class AdminSettingsController extends Controller
         $adminSettings = AdminSettings::where('user_id', $admin->id)->first();
         $adminSettings->use_remote_server = $use_remote_server;
         $adminSettings->update();
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
+    public function ajaxUpdateMenuIcon(Request $request)
+    {
+        $strError = "";
+        $result = "success";
+
+        $menuId = $request->menuId;
+        $strMenuIcon = $request->strMenuIcon;
+
+
+        $menu=Menu::where('id',$menuId)->first();
+        if($menu){
+            $menu->icon=$strMenuIcon;
+            $menu->update();
+        }else{
+            $strError = trans('dashboard::messages.no_menu_items');
+            $result = "";
+        }
+
 
         header('Content-Type: application/json');
         echo json_encode(array(

@@ -254,6 +254,9 @@
         </div>
     </div>
 @stop
+@section('Menu_icons')
+    @include('dashboard::admin_settings.menu_icons')
+@stop
 
 @section('scripts')
     @include('dashboard::admin_settings.scripts')

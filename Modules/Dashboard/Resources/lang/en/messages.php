@@ -103,4 +103,7 @@ return [
     'elasticsearch_deactivated' => 'Elasticsearch deactivated',
     'file_format_not_correct' => 'File format is not correct! Please try again.',
     'valid_import_format' => 'Valid format for import is <b>xls</b>. Please for your convenience download template and insert your data before import. Please be aware that <b>\'id\'</b> column mast be unique',
+    'menu_icons_settings' => 'Menu icons settings',
+    'no_menu_items' => 'No menu items found',
+    'menu_icon_was_updated' => 'Menu icon was successfully updated',
 ];

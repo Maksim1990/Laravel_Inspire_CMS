@@ -379,6 +379,9 @@
             data: {
                 admin_frp_credentials: admin_frp_credentials,
                 _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
             },
             success: function (data) {
                 if (data['result'] === "success") {
@@ -388,8 +391,52 @@
                         text: '{{trans('dashboard::messages.admin_settings_option_updated')}}!'
                     }).show();
                 }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
             }
         });
+    });
+
+
+    //-- Functionality to update FTP connection type
+    $('[id^="save_icon_"]').click(function () {
+        var url = '{{ route('ajax_admin_update_menu_icon') }}';
+
+        var menuId = $(this).attr('id').replace("save_icon_", "");
+        var strMenuIcon=$('#menu_icon_'+menuId).val();
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                menuId: menuId,
+                strMenuIcon: strMenuIcon,
+                _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('dashboard::messages.menu_icon_was_updated')}}!'
+                    }).show();
+                }else{
+                    new Noty({
+                        type: 'error',
+                        layout: 'bpttomLeft',
+                        text: data['error']
+                    }).show();
+                }
+
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
+            }
+        });
+
     });
 
 </script>
