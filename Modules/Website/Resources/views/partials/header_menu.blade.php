@@ -12,6 +12,31 @@
         @if($dataWebsite->getWebsiteSettings()->posts_page=="Y")
         <a href="{{$dataWebsite->getWebsiteSettings()->website_name}}/posts" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> POSTS</a>
             @endif
+        @if($dataWebsite->getWebsiteSettings()->use_active_languages=="Y")
+        <span style="float: right;margin-top: 5px;margin-right: 5%;">
+                    @if(!empty($appFooter->getActiveLanguages()))
+                       @foreach($appFooter->getActiveLanguages() as $strLand=>$strFullLang)
+                           @if(strtolower($strLand)=='th')
+                               @php $strImage='th'; @endphp
+                           @elseif(strtolower($strLand)=='fr')
+                               @php $strImage='fr'; @endphp
+                           @elseif(strtolower($strLand)=='ru')
+                               @php $strImage='ru'; @endphp
+                           @else
+                               @php $strImage='en'; @endphp
+                           @endif
+                                <a class="website_lang"
+                                   href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
+                                    {{--<img style="border-radius: 30px;" width="25" height="25"--}}
+                                         {{--src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}"--}}
+                                         {{--alt="">--}}
+                                    {{$strFullLang}}
+                                </a>
+                       @endforeach
+                   @endif
+
+        </span>
+            @endif
     </div>
 
     <!-- Navbar on small screens -->
@@ -23,4 +48,6 @@
         <a href="#{{$dataWebsite->getBlocks()->find(6)->block_custom_id}}" class="w3-bar-item w3-button" onclick="toggleFunction()">POSTS</a>
             @endif
     </div>
+
+
 </div>

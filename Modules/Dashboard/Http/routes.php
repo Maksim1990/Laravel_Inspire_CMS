@@ -27,6 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('/{id}/website/settings', 'WebsiteSettingsController@index')->name('website_settings');
         Route::post('/ajax_website_name_update', 'WebsiteSettingsController@updateWebsiteName')->name('ajax_website_name_update');
         Route::post('/ajax_website_email_form', 'WebsiteSettingsController@updateWebsiteEmailForm')->name('ajax_website_email_form');
+        Route::post('/ajax_use_active_languages', 'WebsiteSettingsController@updateWebsiteUseActiveLanguages')->name('ajax_use_active_languages');
         Route::post('/ajax_website_go_to_the_top', 'WebsiteSettingsController@updateWebsiteGoToTheTopButton')->name('ajax_website_go_to_the_top');
         Route::post('/ajax_website_posts_page', 'WebsiteSettingsController@updateWebsitePostsPage')->name('ajax_website_posts_page');
         Route::post('/ajax_website_google_map', 'WebsiteSettingsController@updateWebsiteGoogleMap')->name('ajax_website_google_map');

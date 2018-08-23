@@ -14,7 +14,10 @@ class FooterServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            'partials.footer',
+            [
+                'partials.footer',
+                'website::partials.header_menu'
+                ],
             'App\Http\ViewComposers\FooterComposer'
         );
     }

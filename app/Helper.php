@@ -55,14 +55,19 @@ class Helper
 
             $trans = LanguageLine::where("user_id", Auth::id())->where("group", $arrModuleLabel[0])->where("key", $arrModuleLabel[1])->first();
 
-            $arrReplacements[$intKey]['from'] = $strLabel;
-            //-- If appropriate translation was not found than display text itself
-            $arrReplacements[$intKey]['to'] = isset($trans->text) ? $trans->text[App::getLocale()] : $match[1];
+            if (App::getLocale() && isset($trans->text[App::getLocale()])) {
+                $arrReplacements[$intKey]['from'] = $strLabel;
+                //-- If appropriate translation was not found than display text itself
+                $arrReplacements[$intKey]['to'] = isset($trans->text) ? $trans->text[App::getLocale()] : $match[1];
+            }
+
 
         }
 
         foreach ($arrReplacements as $arrItemReplace) {
-            $blockContent = str_replace($arrItemReplace["from"], $arrItemReplace["to"], $blockContent);
+            if (isset($arrItemReplace["from"]) && isset($arrItemReplace["to"])) {
+                $blockContent = str_replace($arrItemReplace["from"], $arrItemReplace["to"], $blockContent);
+            }
         }
 
         return $blockContent;
@@ -99,11 +104,11 @@ class Helper
     public static function GetActiveLanguages()
     {
 
-        $activeLangs = Language::where('user_id', Auth::id())->where('active','Y')->get()->toArray();
+        $activeLangs = Language::where('user_id', Auth::id())->where('active', 'Y')->get()->toArray();
 
         if (!empty($activeLangs)) {
-            foreach ($activeLangs as $langItem){
-                $arrOfActiveLanguages[strtoupper($langItem['name'])]=$langItem['native_en'];
+            foreach ($activeLangs as $langItem) {
+                $arrOfActiveLanguages[strtoupper($langItem['name'])] = $langItem['native_en'];
             }
 
         } else {
@@ -127,12 +132,12 @@ class Helper
      */
     public static function GetDefaultLanguages()
     {
-            $arrOfDefaultLanguages = [
-                "EN" => "English",
-                "FR" => "French",
-                "RU" => "Russian",
-                "TH" => "Thai"
-            ];
+        $arrOfDefaultLanguages = [
+            "EN" => "English",
+            "FR" => "French",
+            "RU" => "Russian",
+            "TH" => "Thai"
+        ];
 
         return $arrOfDefaultLanguages;
     }
@@ -147,20 +152,20 @@ class Helper
     {
         $arrOfDefaultLanguages = [
             "EN" => [
-                'native_en'=>"English",
-                'native'=>"English",
+                'native_en' => "English",
+                'native' => "English",
             ],
             "FR" => [
-                'native_en'=>"French",
-                'native'=>"Français",
+                'native_en' => "French",
+                'native' => "Français",
             ],
             "RU" => [
-                'native_en'=>"Russian",
-                'native'=>"Русский",
+                'native_en' => "Russian",
+                'native' => "Русский",
             ],
             "TH" => [
-                'native_en'=>"Thai",
-                'native'=>"ไทย",
+                'native_en' => "Thai",
+                'native' => "ไทย",
             ]
         ];
 

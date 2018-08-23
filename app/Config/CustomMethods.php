@@ -2,6 +2,7 @@
 
 
 //-- Custom function that overwrite default asset() method
+use App\Helper;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -60,6 +61,7 @@ function BuildMenu($intParentNo, $collectionMenu)
 
 function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu = false)
 {
+
     if (count($collectionMenu->getMenu()->where('parent', $intParentNo)) > 0) {
 
         $strMenu .= "<ul class='dropdown-menu header_menu'>";
@@ -79,7 +81,15 @@ function BuildMenuHTML($collectionMenu, $intParentNo, &$strMenu, $subMenu = fals
                 BuildMenuHTML($collectionMenu, $menuItem->id, $strMenu, $subMenu = true);
                 $strMenu .= "</li>";
             } else {
-                $strMenu .= "<a href='" . $strPath . "'>" . $menuItem->icon . " " . $menuItem->langs->where('lang', strtoupper(App::getLocale()))->first()->name . "</a>";
+                $arrDefaultLanguages = Helper::GetDefaultLanguages();
+                $arrDefaultLanguagesKeys=array_keys($arrDefaultLanguages);
+                if(in_array(strtoupper(App::getLocale()),$arrDefaultLanguagesKeys)){
+                    $strLang=strtoupper(App::getLocale());
+                }else{
+                    $strLang='EN';
+                }
+
+                $strMenu .= "<a href='" . $strPath . "'>" . $menuItem->icon . " " . $menuItem->langs->where('lang', $strLang)->first()->name . "</a>";
             }
             $strMenu .= "</li>";
         }

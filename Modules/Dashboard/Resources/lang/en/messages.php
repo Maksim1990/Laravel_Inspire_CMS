@@ -106,4 +106,5 @@ return [
     'menu_icons_settings' => 'Menu icons settings',
     'no_menu_items' => 'No menu items found',
     'menu_icon_was_updated' => 'Menu icon was successfully updated',
+    'use_active_languages' => 'Display active languages icons on the website',
 ];

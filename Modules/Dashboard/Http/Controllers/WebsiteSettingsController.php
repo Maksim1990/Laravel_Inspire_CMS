@@ -125,6 +125,27 @@ class WebsiteSettingsController extends Controller
         ));
     }
 
+    public function updateWebsiteUseActiveLanguages(Request $request)
+    {
+        $use_active_languages = $request->use_active_languages;
+        $strError = "";
+        $result = "success";
+
+        $websiteSetting=WebsiteSetting::findOrFail(Auth::id());
+        $websiteSetting->use_active_languages=$use_active_languages;
+
+        if(!$websiteSetting->update()){
+            $result = "";
+            $strError = trans('dashboard::messages.option_was_not_updated');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(array(
+            'result' => $result,
+            'error' => $strError
+        ));
+    }
+
     public function updateWebsiteGoToTheTopButton(Request $request)
     {
         $strWebsiteGoToTheTopButton = $request->website_go_to_the_top;

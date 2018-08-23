@@ -87,6 +87,40 @@
         });
     });
 
+    $('#use_active_languages').click(function () {
+        var url = '{{ route('ajax_use_active_languages') }}';
+        var use_active_languages = "N";
+
+        if ($(this).is(":checked"))
+        {
+            use_active_languages="Y";
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            dataType: "json",
+            data: {
+                use_active_languages: use_active_languages,
+                _token: token
+            }, beforeSend: function () {
+                //-- Show loading image while execution of ajax request
+                $("div#divLoading").addClass('show');
+            },
+            success: function (data) {
+                if (data['result'] === "success") {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: '{{trans('messages.website_settings_option_updated')}}!'
+                    }).show();
+                }
+                //-- Hide loading image
+                $("div#divLoading").removeClass('show');
+            }
+        });
+    });
+
     //-- Functionality for trigger go to the top button visibility
     $('#website_go_to_the_top').click(function () {
         var url = '{{ route('ajax_website_go_to_the_top') }}';

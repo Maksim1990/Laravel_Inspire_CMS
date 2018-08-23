@@ -21,15 +21,21 @@ class FooterComposer
     {
 
         $this->appLanguages=Helper::GetDefaultLanguages();
+        $arrActiveLanguages=Helper::GetActiveLanguages();
         //-- Store default languages collection and additional debugging information into array
         $this->arrData = [
-            "appLanguages" => $this->appLanguages
+            "appLanguages" => $this->appLanguages,
+            "arrActiveLanguages" => $arrActiveLanguages,
         ];
 
         $this->arrData = collect($this->arrData);
         //-- Add additional collection methods for easily retrieve collection's data
         Collection::macro('getAppLanguages', function () {
             return $this["appLanguages"];
+        });
+
+        Collection::macro('getActiveLanguages', function () {
+            return $this["arrActiveLanguages"];
         });
     }
 

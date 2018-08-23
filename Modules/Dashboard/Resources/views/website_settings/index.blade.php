@@ -28,6 +28,33 @@
             </div>
 
 
+            {{-- Use active languages --}}
+            <div class="col-sm-12 col-lg-12 col-xs-12">
+                <div class="col-sm-5 col-xs-12">
+                    <p class="text">@lang('dashboard::messages.use_active_languages')</p>
+
+                </div>
+                <div class="col-sm-5 hidden-lg hidden-sm col-xs-12">
+                </div>
+                <div class="col-sm-1 col-xs-12">
+                    <div class="form-group" style="margin-top: 15px;">
+                        @php
+                            $strChecked="";
+                            if(Auth::user()->website_setting->use_active_languages=='Y'){
+                             $strChecked="checked";
+                            }
+                        @endphp
+                        <div class="material-switch pull-right" >
+                            <input id="use_active_languages" name="use_active_languages" type="checkbox" {{$strChecked}}/>
+                            <label for="use_active_languages" class="label-success"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <hr>
+                </div>
+            </div>
+
             {{-- Email form--}}
             <div class="col-sm-12 col-lg-12 col-xs-12">
                 <div class="col-sm-5 col-xs-12">

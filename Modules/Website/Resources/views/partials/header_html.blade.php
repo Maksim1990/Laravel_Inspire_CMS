@@ -98,6 +98,13 @@
     .sticky + .content {
         padding-top: 60px;
     }
+    .website_lang{
+        text-decoration: none;margin-right: 5px;
+    }
+    .website_lang:hover{
+        text-decoration:underline;
+        color:darkslategrey;
+    }
 </style>
 @if(Auth::check())
     <style>
