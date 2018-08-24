@@ -1,5 +1,28 @@
 <?php
 
 return [
-
+    'no_data_found_for_pagebuilder' => 'Нет данных для строителя сайтов!',
+    'custom_css_updated' => 'Пользовательский CSS обновлён!',
+    'code_updated' => 'Код обновлён!',
+    'go_to_code_editor' => 'Перейти к редактору кода',
+    'change_background' => 'Изменить фон HTML блока',
+    'block_info' => 'Инв',
+    'background_color' => 'Цвет фона',
+    'background_updated' => 'Цвет фона обновлён!',
+    'background_type_updated' => 'Тип фона обновлён!',
+    'use_image_background' => 'Ислользовать фон-изображение',
+    'background_image_updated' => 'Фон-изображение было успешно обновлено!',
+    'background_image_delete' => 'Удалить фон-изображение',
+    'background_image_deleted' => 'Фон-изображение удалено!',
+    'change_image' => 'Изменить изображение',
+    'insert_image' => 'Вставить изображение',
+    'upload_image' => 'Загрузить изображение',
+    'select_image' => 'Выбрать изображение',
+    'background' => 'Фон',
+    'background_want_delete' => 'Вы действительно хотите удалить фон-изображение?',
+    'background_image_size_error' => 'Размер изображения фона не должен бфть больше 2 MB!',
+    'back_to_pagebuilder' => 'Назад к строителю сайтов',
+    'block_settings' => 'Настройки блока',
+    'block_deleted' => 'Блок был успешно удалён',
+    'block_created' => 'Блок был успешно создан',
 ];

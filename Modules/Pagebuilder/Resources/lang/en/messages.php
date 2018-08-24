@@ -15,7 +15,7 @@ return [
     'background_image_delete' => 'Delete image background',
     'background_image_deleted' => 'Background image was deleted!',
     'change_image' => 'Change image',
-    'insert_image' => 'Change image',
+    'insert_image' => 'Insert image',
     'upload_image' => 'Upload image',
     'select_image' => 'Select image',
     'background' => 'Background',
