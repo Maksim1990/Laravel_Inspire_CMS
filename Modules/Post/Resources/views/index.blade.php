@@ -1,41 +1,5 @@
 @extends('post::layouts.master')
-@section('styles')
-    <style>
-        .post_block {
-            margin-left: 20px;
-        }
 
-        .post_item {
-            background-color: rgba(34, 114, 38, 0.29);
-
-        }
-
-        .post_item_image {
-            min-height: 200px;
-        }
-
-        .post_item img {
-            width: 90%;
-            border-radius: 15px;
-        }
-
-        .post_info {
-            padding-top: 15px;
-        }
-
-        .post_info a {
-            font-size: 23px;
-        }
-
-        .post_icons .fa-edit {
-            font-size: 30px;
-        }
-
-        .post_tech_info {
-            font-size: 10px;
-        }
-    </style>
-@stop
 @section('General')
     <div class="row">
         <div class="col-sm-12 col-xs-12">

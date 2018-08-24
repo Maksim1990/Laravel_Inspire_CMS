@@ -10,7 +10,7 @@
         <a href="#{{$dataWebsite->getBlocks()->find(4)->block_custom_id}}" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
         <a href="#{{$dataWebsite->getBlocks()->find(6)->block_custom_id}}" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
         @if($dataWebsite->getWebsiteSettings()->posts_page=="Y")
-        <a href="{{$dataWebsite->getWebsiteSettings()->website_name}}/posts" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> POSTS</a>
+        <a href="{{route('website_posts',['id'=>Auth::id(),'sitename'=>Auth::user()->website_setting->website_name])}}" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> POSTS</a>
             @endif
         @if($dataWebsite->getWebsiteSettings()->use_active_languages=="Y")
         <span style="float: right;margin-top: 5px;margin-right: 5%;">
@@ -51,3 +51,4 @@
 
 
 </div>
+<div id="top"></div>

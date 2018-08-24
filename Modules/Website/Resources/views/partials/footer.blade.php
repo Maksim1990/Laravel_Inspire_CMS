@@ -1,19 +1,46 @@
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
     @if($dataWebsite->getWebsiteSettings()->go_top_button=="Y")
-    <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+        <a href="#top" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
     @endif
-    <div class="w3-xlarge w3-section">
-        <a href="{{$dataWebsite->getSocialIcons()->facebook}}" target="_blank"><i class="fab fa-facebook-square w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->google}}" target="_blank"><i class="fab fa-google-plus-g w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->instagram}}" target="_blank"><i class="fab fa-instagram w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->line}}" target="_blank"><i class="fab fa-line w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->pinterest}}" target="_blank"><i class="fab fa-pinterest-square w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->twitter}}" target="_blank"><i class="fab fa-twitter-square w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->linkedin}}" target="_blank"><i class="fab fa-linkedin w3-hover-opacity"></i></a>
-        <a href="{{$dataWebsite->getSocialIcons()->vk}}" target="_blank"><i class="fab fa-vk w3-hover-opacity"></i></a>
+    <div class="w3-xlarge w3-section icons">
+        @if(!empty($dataWebsite->getSocialIcons()->facebook))
+            <a href="{{$dataWebsite->getSocialIcons()->facebook}}" target="_blank"><i
+                    class="fab fa-facebook-square w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->google))
+            <a href="{{$dataWebsite->getSocialIcons()->google}}" target="_blank"><i
+                    class="fab fa-google-plus-g w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->github))
+            <a href="{{$dataWebsite->getSocialIcons()->github}}" target="_blank"><i
+                    class="fab fa-github w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->instagram))
+            <a href="{{$dataWebsite->getSocialIcons()->instagram}}" target="_blank"><i
+                    class="fab fa-instagram w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->line))
+            <a href="{{$dataWebsite->getSocialIcons()->line}}" target="_blank"><i
+                    class="fab fa-line w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->pinterest))
+            <a href="{{$dataWebsite->getSocialIcons()->pinterest}}" target="_blank"><i
+                    class="fab fa-pinterest-square w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->twitter))
+            <a href="{{$dataWebsite->getSocialIcons()->twitter}}" target="_blank"><i
+                    class="fab fa-twitter-square w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->linkedin))
+            <a href="{{$dataWebsite->getSocialIcons()->linkedin}}" target="_blank"><i
+                    class="fab fa-linkedin w3-hover-opacity"></i></a>
+        @endif
+        @if(!empty($dataWebsite->getSocialIcons()->vk))
+            <a href="{{$dataWebsite->getSocialIcons()->vk}}" target="_blank"><i class="fab fa-vk w3-hover-opacity"></i></a>
+        @endif
     </div>
-    <p>Powered by <a href="{{route('admin',['id'=>Auth::id()])}}" title="W3.CSS" target="_blank"
+    <p>Powered by <a href="{{URL::to('/en/')}}" title="Inspire CMS"
                      class="w3-hover-text-green">Inspire CMS</a></p>
 </footer>
 
@@ -50,7 +77,7 @@
     function myFunction() {
         var navbar = document.getElementById("myNavbar");
 
-                @if(Auth::check())
+            @if(Auth::check())
         var navbar_dev = document.getElementById("navbar");
         var sticky = navbar_dev.offsetTop;
 
@@ -88,6 +115,6 @@
     $('.image_gallery img').attr('onclick', 'onClick(this)');
 </script>
 @if($dataWebsite->getWebsiteSettings()->google_map=="Y")
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{$dataWebsite->getWebsiteSettings()->google_map_key}}"></script>
-    @endif
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{$dataWebsite->getWebsiteSettings()->google_map_key}}"></script>
+@endif

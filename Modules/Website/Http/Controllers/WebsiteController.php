@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Mews\Purifier\Facades\Purifier;
 use Modules\Dashboard\Entities\AdminSettings;
 use Modules\Pagebuilder\Entities\Block;
+use Modules\Post\Entities\Post;
 
 class WebsiteController extends Controller
 {
@@ -26,6 +27,24 @@ class WebsiteController extends Controller
 
 
         return view('website::index',compact('websiteBlocks','adminSettings'));
+    }
+
+    public function posts($id)
+    {
+
+        $blnShowContactForm=false;
+        $posts=Post::where('user_id',$id)->orderBy('created_at','DESC')->paginate(10);
+
+        return view('website::posts',compact('blnShowContactForm','posts'));
+    }
+
+    public function showPost($id,$sitename,$post_id)
+    {
+
+        $blnShowContactForm=false;
+        $post=Post::where('id',$post_id)->first();
+
+        return view('website::post',compact('blnShowContactForm','post'));
     }
 
     /**

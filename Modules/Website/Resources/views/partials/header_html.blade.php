@@ -1,6 +1,7 @@
 <title>{{$dataWebsite->getWebsiteSettings()->website_name}}</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
@@ -105,6 +106,10 @@
         text-decoration:underline;
         color:darkslategrey;
     }
+    .icons a{
+        margin-right: 15px;
+        font-size: 45px;
+    }
 </style>
 @if(Auth::check())
     <style>
@@ -125,3 +130,4 @@
         {{$dataWebsite->getCustomSettings()->custom_css}}
     </style>
 @endif
+@yield('styles')
