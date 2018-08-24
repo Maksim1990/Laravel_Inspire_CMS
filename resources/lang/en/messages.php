@@ -68,5 +68,8 @@ return [
     'password' => 'Password',
     'confirm_password' => 'Confirm password',
     'reset_password' => 'Reset password',
+    'send_password_reset_link' => 'Send Password Reset Link',
+    'remember_me' => 'Remember Me',
+    'forgot_password' => 'Forgot Your Password?',
 
 ];

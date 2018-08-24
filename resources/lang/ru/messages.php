@@ -68,5 +68,8 @@ return [
     'password' => 'Пароль',
     'confirm_password' => 'Подтвердить пароль',
     'reset_password' => 'Сбросить пароль',
+    'send_password_reset_link' => 'Отправить ссылку на востановление пароля',
+    'remember_me' => 'Запомнить',
+    'forgot_password' => 'Забыли Ваш пароль?',
 
 ];

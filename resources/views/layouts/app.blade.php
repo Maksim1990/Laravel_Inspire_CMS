@@ -15,10 +15,25 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Styles -->
     <link href="{{ custom_asset('css/app_custom.css') }}" rel="stylesheet">
+    <style>
+        html, body {
+
+            background: url('{{custom_asset('images/app/back2.jpg')}}') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .card{
+            background:rgba(255,255,255,0.2);
+            border-radius: 20px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

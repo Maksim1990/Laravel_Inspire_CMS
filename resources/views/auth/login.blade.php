@@ -2,7 +2,32 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="top-left" style="display:inline;left: 5%;position: fixed;">
+        @if(!empty($appFooter->getAppLanguages()))
+            @foreach($appFooter->getAppLanguages() as $strLand=>$strFullLang)
+                @if(strtolower($strLand)=='th')
+                    @php $strImage='th'; @endphp
+                @elseif(strtolower($strLand)=='fr')
+                    @php $strImage='fr'; @endphp
+                @elseif(strtolower($strLand)=='ru')
+                    @php $strImage='ru'; @endphp
+                @else
+                    @php $strImage='en'; @endphp
+                @endif
+                <a rel="alternate" style="text-decoration: none;"
+                   href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
+                    <img style="border-radius: 30px;" width="25" height="25"
+                         src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}"
+                         alt="">
+                </a>
+            @endforeach
+        @endif
+            <a class="navbar-brand" href="{{URL::to('/'.LaravelLocalization::getCurrentLocale())}}">
+                <img style="margin-top: -15px;" height="50"
+                     src="{{custom_asset('images/includes/logo_white.png')}}" alt="">
+            </a>
+    </div>
+    <div class="row justify-content-center" style="padding-top: 15%;">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">@lang('messages.login')</div>
@@ -51,7 +76,7 @@
                             <div class="col-md-6 offset-md-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> @lang('messages.remember_me')
                                     </label>
                                 </div>
                             </div>
@@ -59,22 +84,19 @@
                         <div>
                             <ul>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">@lang('messages.login')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">@lang('messages.register')</a>
+                                    <a class="nav-link w3-text-white w3-large" href="{{ route('register') }}">@lang('messages.register')</a>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" id="button" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                <button type="submit" id="button" class="btn btn-success">
+                               @lang('messages.login')
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
+                                <a class="btn btn-link w3-text-white" href="{{ route('password.request') }}">
+                                  @lang('messages.forgot_password')
                                 </a>
                             </div>
                         </div>

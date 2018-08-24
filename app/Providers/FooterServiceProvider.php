@@ -16,6 +16,12 @@ class FooterServiceProvider extends ServiceProvider
         view()->composer(
             [
                 'partials.footer',
+                'welcome',
+                'welcome',
+                'auth.login',
+                'auth.register',
+                'auth.passwords.reset',
+                'auth.passwords.email',
                 'website::partials.header_menu'
                 ],
             'App\Http\ViewComposers\FooterComposer'

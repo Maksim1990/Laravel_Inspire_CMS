@@ -14,8 +14,12 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-image: url('{{custom_asset('images/app/inspire.jpg')}}');
 
+                background: url('{{custom_asset('images/app/inspire.jpg')}}') no-repeat center center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
             }
 
             .full-height {
@@ -93,8 +97,34 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+
             @if (Route::has('login'))
                 <div class="top-right links">
+                    <div class="top-left" style="display:inline;left: 5%;position: fixed;">
+                        @if(!empty($appFooter->getAppLanguages()))
+                            @foreach($appFooter->getAppLanguages() as $strLand=>$strFullLang)
+                                @if(strtolower($strLand)=='th')
+                                    @php $strImage='th'; @endphp
+                                @elseif(strtolower($strLand)=='fr')
+                                    @php $strImage='fr'; @endphp
+                                @elseif(strtolower($strLand)=='ru')
+                                    @php $strImage='ru'; @endphp
+                                @else
+                                    @php $strImage='en'; @endphp
+                                @endif
+                                <a rel="alternate" style="text-decoration: none;"
+                                   href="{{ LaravelLocalization::getLocalizedURL(strtolower($strLand), null, [], true) }}">
+                                    <img style="border-radius: 30px;" width="25" height="25"
+                                         src="{{custom_asset('images/includes/flags/'.$strImage.'.png')}}"
+                                         alt="">
+                                </a>
+                            @endforeach
+                        @endif
+                            <a class="navbar-brand" href="{{URL::to('/'.LaravelLocalization::getCurrentLocale())}}">
+                                <img style="margin-top: -15px;" height="50"
+                                     src="{{custom_asset('images/includes/logo_white.png')}}" alt="">
+                            </a>
+                    </div>
                     @auth
                         <a href="{{URL::to('/'.LaravelLocalization::getCurrentLocale().'/admin/'.Auth::id().'/dashboard') }}">@lang('messages.home')</a>
                     @else
@@ -113,6 +143,8 @@
 
 
             </div>
+
+
                 <div class="info_block">
                         @lang('messages.want_website') <a href="{{ URL::to('/'.LaravelLocalization::getCurrentLocale().'/login') }}"><span>@lang('messages.just_build_it')</span></a>
 
