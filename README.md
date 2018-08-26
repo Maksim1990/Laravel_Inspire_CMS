@@ -23,12 +23,10 @@ Current version of this application support English, Russian, French & Thai lang
 -  Elasticsearch
 -  HTML5
 -  CSS3/ W3 CSS
--  JavaScript
--  Ajax
--  JQuery / JQuery Barrating
+-  JavaScript/JQuery/Ajax
 -  Noty (JS library)
 -  WebSockets
--  APIs (Google API, Stripe API)
+-  APIs (Google Maps API)
 -  Photoshop
 
 ## Additional packages that were used for improving Inspire CMS functionality: ##
