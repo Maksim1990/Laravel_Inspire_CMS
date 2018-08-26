@@ -12,7 +12,7 @@ Inspire CMS comes out of the box with powerful and useful functionality for each
 
 Current version of this application support English, Russian, French & Thai languages.
 
-#### For using Continuos integration while development it was acitivated [CirlceCI](https://circleci.com) functionality that allows to build, run test and deploy updates on production server after successful build
+#### For using Continuos integration while development it was acitivated [CirlceCI](https://circleci.com) functionality that allows to build, run test and deploy updates on production server after successful build ####
 
 ## Techniques that were used for creation of this application: ##
 -  PHP 7.1
@@ -37,6 +37,12 @@ Current version of this application support English, Russian, French & Thai lang
 - [elasticsearch/elasticsearch](https://github.com/elastic/elasticsearch-php) (For implementation whole functionality of Elasticsearch) 
 - [bugsnag/bugsnag-laravel](https://github.com/bugsnag/bugsnag-laravel) (For implementation Bugsnag notifier for monitoring and tracking Laravel application errors)
 - [laravelcollective/html](https://github.com/LaravelCollective/html) (For implementation of HTML and Form Builders in Laravel application)
+
+## Additional third party appllications and libraries: ##
+- [Codemirror](https://codemirror.net) (For implementation of versatile text and code editor in Laravel application)
+- [JQueryUI](https://jqueryui.com) (For implementation drag & drop functionality in website pagebuilder)
+- [Tinymce](https://www.tiny.cloud) (For implementation of HTML editor)
+- [jsTree](https://www.jstree.com) (For implementation of interactive folder trees in Laravel application)
 
 ## Check this project online: [Inspire CMS](http://185.177.59.147/inspirecms)
 
