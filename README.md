@@ -22,8 +22,8 @@ Current version of this application support English, Russian, French & Thai lang
 -  Redis
 -  Elasticsearch
 -  HTML5
--  CSS3/ W3 CSS
--  JavaScript/JQuery/Ajax
+-  CSS3/ Bootstrap/ W3 CSS
+-  JavaScript/ JQuery/ Ajax
 -  Noty (JS library)
 -  WebSockets
 -  APIs (Google Maps API)
