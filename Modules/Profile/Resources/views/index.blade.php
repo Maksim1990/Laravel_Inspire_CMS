@@ -11,7 +11,7 @@
 @section('General')
     <div class="row">
         <div class="col-sm-10 col-xs-10">
-            <h3 class="title">My Profile</h3>
+            <h3 class="title">@lang('messages.my_profile')</h3>
             <div id="title_shape"></div>
 
             <div class="col-sm-12 col-xs-12 profile">
@@ -20,22 +20,22 @@
                          src="{{Auth::user()->image ? Auth::user()->image->full_path : custom_asset("images/includes/noimage.png")}}"
                          alt="">
                     <div class="buttons">
-                        <a href="{{route('profile_settings',['id'=>Auth::id()])}}" class="btn btn-warning">Edit profile</a><br>
-                        <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-info">Change password</a><br>
-                        <a href="{{route('delete_profile',['id'=>Auth::id()])}}" class="btn btn-danger">Delete password</a><br>
+                        <a href="{{route('profile_settings',['id'=>Auth::id()])}}" class="btn btn-warning">@lang('profile::messages.edit_profile')</a><br>
+                        <a href="{{route('change_password',['id'=>Auth::id()])}}" class="btn btn-info">@lang('profile::messages.change_password')</a><br>
+                        <a href="{{route('delete_profile',['id'=>Auth::id()])}}" class="btn btn-danger">@lang('profile::messages.delete_profile')</a><br>
                     </div>
                 </div>
                 <div class="col-sm-8 col-xs-12 profile_info">
-                    <div class="col-sm-6"><b>Name</b></div>
+                    <div class="col-sm-6"><b>@lang('messages.name')</b></div>
                     <div class="col-sm-6">{{$user->name}}</div>
 
-                    <div class="col-sm-6"><b>Email</b></div>
+                    <div class="col-sm-6"><b>@lang('messages.email')</b></div>
                     <div class="col-sm-6">{{$user->email}}</div>
 
-                    <div class="col-sm-6"><b>Registered</b></div>
+                    <div class="col-sm-6"><b>@lang('profile::messages.registered')</b></div>
                     <div class="col-sm-6">{{$user->created_at->diffForHumans()}}</div>
 
-                    <div class="col-sm-6"><b>Profile last modified</b></div>
+                    <div class="col-sm-6"><b>@lang('profile::messages.profile_last_modified')</b></div>
                     <div class="col-sm-6">{{$user->updated_at->diffForHumans()}}</div>
 
                 </div>

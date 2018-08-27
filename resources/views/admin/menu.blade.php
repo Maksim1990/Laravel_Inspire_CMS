@@ -10,7 +10,7 @@
         'N'=>'N'
         ];
     @endphp
-    <h3 class="title">Menu settings</h3>
+    <h3 class="title">@lang('messages.menu_settings')</h3>
     <div id="title_shape"></div>
     <div class="row">
         <div class="col-sm-12 col-lg-8 col-xs-12">
@@ -158,8 +158,8 @@
             </table>
             <div class="border-top mt-4 pt-2 text-right">
                 <br>
-                <input id="add" value="Add new menu item" class="btn btn-warning">
-                <input type="submit" id="submit" value="Save" class="btn btn-success">
+                <input id="add" value="@lang('messages.add_new_label')" class="btn btn-warning">
+                <input type="submit" id="submit" value="@lang('messages.save')" class="btn btn-success">
             </div>
 
             </form>

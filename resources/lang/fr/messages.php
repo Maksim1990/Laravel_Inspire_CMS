@@ -72,5 +72,12 @@ return [
     'send_password_reset_link' => 'Envoyer le lien de réinitialisation du mot de passe',
     'remember_me' => 'Souviens-toi de moi',
     'forgot_password' => 'Mot de passe oublié?',
-
+    'menu_settings' => 'Paramètres du menu',
+    'try' => 'Essayer',
+    'try_other' => 'ESSAYEZ NOS AUTRES APPPS',
+    'want_change_language' => 'Voulez-vous changer de langue?',
+    'developed_by' => 'Développé par',
+    'add_new_label' => 'Ajouter un nouvel label',
+    'logout' => 'Déconnexion',
+    'no_notifications' => 'Aucune notification',
 ];

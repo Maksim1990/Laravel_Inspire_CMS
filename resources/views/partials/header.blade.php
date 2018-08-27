@@ -62,7 +62,7 @@
                                  <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                       @lang('messages.logout')
                                     </a>
                             </span>
                             </p>
@@ -72,7 +72,8 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="margin:-10px 40px 0 0;">
-                        <li><a href="#">
+                        <li data-toggle="tooltip" data-placement="bottom" title="@lang('messages.no_notifications')">
+                            <a href="#">
                                 <i class="fa fa-bell w3-xxlarge w3-text-yellow" aria-hidden="true"></i>
                                 <span class="w3-badge w3-large  w3-white" id="notification_number">0</span>
                             </a>

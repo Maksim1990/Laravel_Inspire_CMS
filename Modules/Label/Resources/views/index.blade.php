@@ -75,8 +75,8 @@
             </table>
             <div class="border-top mt-4 pt-2 text-right">
                 <br>
-                <input id="add" value="Add new label" class="btn btn-warning">
-                <input type="submit" id="submit" value="Save" class="btn btn-success">
+                <input id="add" value="@lang('messages.add_new_label')" class="btn btn-warning">
+                <input type="submit" id="submit" value="@lang('messages.save')" class="btn btn-success">
             </div>
 
             </form>

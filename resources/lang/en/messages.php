@@ -72,5 +72,12 @@ return [
     'send_password_reset_link' => 'Send Password Reset Link',
     'remember_me' => 'Remember Me',
     'forgot_password' => 'Forgot Your Password?',
-
+    'menu_settings' => 'Menu settings',
+    'try' => 'Try',
+    'try_other' => 'TRY OUR OTHER APPS',
+    'want_change_language' => 'Do you want to change language?',
+    'developed_by' => 'Developed by',
+    'add_new_label' => 'Add new label',
+    'logout' => 'Sign out',
+    'no_notifications' => 'No notifications',
 ];

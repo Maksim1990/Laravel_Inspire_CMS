@@ -25,7 +25,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    @lang('messages.logout')
                                     </a>
                                 </li>
                             </ul>
@@ -36,7 +36,7 @@
                     <div class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-bookmark"></i> Modules<span class="fa arrow"></span>
+                                <i class="fa fa-bookmark"></i> @lang('messages.modules')<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="panel-heading" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-list"></i>Main settings<span class="fa arrow"></span>
+                                <i class="fa fa-list"></i>  @lang('messages.settings')<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>
@@ -95,7 +95,7 @@
                     <div class="panel-heading" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" >
-                                <i class="fa fa-picture-o"></i>@lang('messages.website_settings')<span class="fa arrow"></span>
+                                <i class="fa fa-picture-o"></i> @lang('messages.website_settings')<span class="fa arrow"></span>
                             </a>
                         </h4>
                     </div>

@@ -72,5 +72,12 @@ return [
     'send_password_reset_link' => 'ส่งลิงก์รีเซ็ตรหัสผ่าน',
     'remember_me' => 'จดจำฉัน',
     'forgot_password' => 'ลืมรหัสผ่านหรือไม่',
-
+    'menu_settings' => 'การตั้งค่าเมนู',
+    'try' => 'ลอง',
+    'try_other' => 'ลองแอพพลิเคชันอื่น ๆ ของเรา',
+    'want_change_language' => 'คุณต้องการเปลี่ยนภาษาหรือไม่',
+    'developed_by' => 'พัฒนาโดย',
+    'add_new_label' => 'เพิ่มป้ายกำกับใหม่',
+    'logout' => 'ออกจากระบบ',
+    'no_notifications' => 'ไม่มีการแจ้งเตือน',
 ];

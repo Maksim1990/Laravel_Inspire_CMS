@@ -19,7 +19,7 @@
     </div>
     <div class="w3-row">
         <div class="w3-col s1 m1"><p></p></div>
-        <div class="w3-col s10 m10  w3-center"><p>2018 &#169; Developed by <a href="https://www.linkedin.com/in/maksim-narushevich-b99783106/" target="_blank">
+        <div class="w3-col s10 m10  w3-center"><p>2018 &#169; @lang('messages.developed_by') <a href="https://www.linkedin.com/in/maksim-narushevich-b99783106/" target="_blank">
                     Maksim Narushevich</a></p></div>
     </div>
     <div class="w3-col s1 m1"><p></p></div>
@@ -42,7 +42,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Do you want to change language?</h4>
+                <h4 class="modal-title">@lang('messages.want_change_language')</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
