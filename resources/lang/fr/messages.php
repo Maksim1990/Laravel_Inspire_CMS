@@ -6,6 +6,7 @@ return [
     'profile' => 'Profil',
     'my_profile' => 'Mon profil',
     'settings' => 'Paramètres',
+    'modules' => 'Modules',
     'about_us' => 'À propos de nous',
     'posts' => 'Des postes',
     'images' => 'Images',

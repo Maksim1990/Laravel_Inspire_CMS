@@ -22,6 +22,7 @@ use Modules\Pagebuilder\Entities\BlockContent;
 use Modules\Pagebuilder\Entities\BlockDefault;
 use Modules\Pagebuilder\Entities\UserBlockPivot;
 use Modules\Website\Entities\WebsiteSetting;
+use Spatie\TranslationLoader\LanguageLine;
 
 class RegisterController extends Controller
 {
@@ -44,7 +45,7 @@ class RegisterController extends Controller
      */
     public function redirectTo()
     {
-        return '/'.LaravelLocalization::getCurrentLocale().'/admin/'.Auth::id().'/dashboard';
+        return '/' . LaravelLocalization::getCurrentLocale() . '/admin/' . Auth::id() . '/dashboard';
     }
 
     /**
@@ -60,7 +61,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -75,12 +76,12 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
-        $user=User::create([
+        $user = User::create([
             'name' => $data['name'],
             'admin' => 0,
             'email' => $data['email'],
@@ -99,7 +100,7 @@ class RegisterController extends Controller
         //-- Create WEBSITE SETTINGS details for new user
         WebsiteSetting::create([
             'user_id' => $user->id,
-            'website_name' => date("Y_m_d_h_i_s")."_".$user->id."_website",
+            'website_name' => date("Y_m_d_h_i_s") . "_" . $user->id . "_website",
         ]);
         //****** END WEBSITE SETTINGS ******//
 
@@ -135,7 +136,7 @@ class RegisterController extends Controller
                 UserMenu::create([
                     'menu_id' => $menuID,
                     'user_id' => $user->id,
-                    'active'=>'Y',
+                    'active' => 'Y',
                     'parent' => $strMenuDetails['parent'],
                     'sortorder' => $strMenuDetails['sortorder']
                 ]);
@@ -143,20 +144,32 @@ class RegisterController extends Controller
         }
         //****** END MENU ******//
 
+        //****** START DEFAULT LABEL ******//
+        $arrTranslations = [];
+        foreach ($arrOfDefaultLanguages as $strKey => $strLang) {
+            $arrTranslations[strtolower($strKey)] = 'Inspire CMS' . " " . strtoupper($strKey);
+        }
+        LanguageLine::create([
+            'user_id' => $user->id,
+            'group' => 'website',
+            'key' => 'title',
+            'text' => $arrTranslations
+        ]);
+        //****** END DEFAULT LABEL ******//
 
 
         //-- Create PAGEBUILDER BLOCKS default details for new user
-        $blockDefaults=BlockDefault::where('block_template','default')->get();
-        if(!empty($blockDefaults)){
-            foreach ($blockDefaults as $defaultBlock){
-                $block=Block::create([
+        $blockDefaults = BlockDefault::where('block_template', 'default')->get();
+        if (!empty($blockDefaults)) {
+            foreach ($blockDefaults as $defaultBlock) {
+                $block = Block::create([
                     'user_id' => $user->id,
-                    'block_id' => $defaultBlock->block_id."_".$user->id,
+                    'block_id' => $defaultBlock->block_id . "_" . $user->id,
                     'block_custom_id' => $defaultBlock->block_custom_id,
                     'sortorder' => $defaultBlock->id
                 ]);
 
-                $blockContent=BlockContent::create([
+                $blockContent = BlockContent::create([
                     'id' => $block->id,
                     'content' => $defaultBlock->content,
                     'block_template' => $defaultBlock->block_template
@@ -171,16 +184,14 @@ class RegisterController extends Controller
         //****** END PAGEBUILDER BLOCKS ******//
 
 
-
-
         //-- Create DEFAULT LANGUAGES default details for new user
         //-- Get all active languages
         $arrOfDefaultLanguages = Helper::GetDefaultLanguagesWithNativeNames();
-        if(!empty($arrOfDefaultLanguages)){
-            foreach ($arrOfDefaultLanguages as $strKey=>$arrLangDetails){
+        if (!empty($arrOfDefaultLanguages)) {
+            foreach ($arrOfDefaultLanguages as $strKey => $arrLangDetails) {
                 Language::create([
                     'user_id' => $user->id,
-                    'name'=>strtolower($strKey),
+                    'name' => strtolower($strKey),
                     'native' => $arrLangDetails['native'],
                     'native_en' => $arrLangDetails['native_en'],
                     'active' => 'Y'

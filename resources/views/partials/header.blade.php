@@ -17,8 +17,8 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="{{route('admin',['id'=>Auth::id()])}}">
-                        <img style="margin-top: -15px;" height="50"
-                             src="{{custom_asset('images/includes/logo_white.png')}}" alt="">
+                        <img style="margin-top: -15px;" height="70"
+                             src="{{custom_asset('images/includes/inspire.png')}}" alt="">
                     </a>
                 </div>
 
@@ -26,13 +26,13 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav ">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('messages.modules')</a>
                             @if(count($menuCollection->getMenu()->where('parent',1))>0)
                                 {!! BuildMenu(1, $menuCollection) !!}
                             @endif
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lang('messages.settings')</a>
                             @if(count($menuCollection->getMenu()->where('parent',1))>0)
                                 {!! BuildMenu(2, $menuCollection) !!}
                             @endif

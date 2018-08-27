@@ -121,8 +121,8 @@
                             @endforeach
                         @endif
                             <a class="navbar-brand" href="{{URL::to('/'.LaravelLocalization::getCurrentLocale())}}">
-                                <img style="margin-top: -15px;" height="50"
-                                     src="{{custom_asset('images/includes/logo_white.png')}}" alt="">
+                                <img style="margin-top: -35px;" height="100"
+                                     src="{{custom_asset('images/includes/inspire_2.png')}}" alt="">
                             </a>
                     </div>
                     @auth
