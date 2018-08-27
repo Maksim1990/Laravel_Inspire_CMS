@@ -1,5 +1,28 @@
 <?php
 
 return [
-
+    'no_data_found_for_pagebuilder' => 'Aucune donnée trouvée pour le générateur de page!',
+    'custom_css_updated' => 'Le CSS personnalisé a été mis à jour!',
+    'code_updated' => 'Code mis à jour!',
+    'go_to_code_editor' => 'Aller à l\'éditeur de code',
+    'change_background' => 'Changer de fond de bloc',
+    'block_info' => 'L\'information du bloc',
+    'background_color' => 'Couleur de fond',
+    'background_updated' => 'Couleur de fond mise à jour!',
+    'background_type_updated' => 'Type d\'arrière-plan mis à jour avec succès!',
+    'use_image_background' => 'Utiliser le fond d\'image',
+    'background_image_updated' => 'L\'image de fond a été mise à jour avec succès!',
+    'background_image_delete' => 'Supprimer le fond d\'image',
+    'background_image_deleted' => 'L\'image d\'arrière-plan a été supprimée!',
+    'change_image' => 'Changer l\'image',
+    'insert_image' => 'Insérer une image',
+    'upload_image' => 'Télécharger l\'image',
+    'select_image' => 'Sélectionner une image',
+    'background' => 'Le fond',
+    'background_want_delete' => 'Voulez-vous vraiment supprimer l\'image de fond?',
+    'background_image_size_error' => 'La taille de l\'image d\'arrière-plan ne doit pas dépasser 2 Mo!',
+    'back_to_pagebuilder' => 'Revenir au générateur de page',
+    'block_settings' => 'Paramètres de bloc',
+    'block_deleted' => 'Bloc a été supprimé avec succès',
+    'block_created' => 'Bloc a été créé avec succès',
 ];

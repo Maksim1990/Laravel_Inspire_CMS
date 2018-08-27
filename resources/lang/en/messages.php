@@ -29,7 +29,7 @@ return [
     'contact_us' => 'Contact Us',
     'inspire_cms_office' => 'Inspire CMS office',
     'language_settings' => 'Languages settings',
-    'language_updated' => 'Languages updated',
+    'language_updated' => 'Languages were updated',
     'create_mail' => 'Create mail',
     'back_to_mail_module' => 'Back to Mail module',
     'send_mail' => 'Send mail',

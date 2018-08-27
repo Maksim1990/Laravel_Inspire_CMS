@@ -1,5 +1,28 @@
 <?php
 
 return [
-
+    'no_data_found_for_pagebuilder' => 'ไม่พบข้อมูลสำหรับเครื่องมือสร้างหน้า',
+    'custom_css_updated' => 'CSS แบบกำหนดเองได้รับการอัปเดตแล้ว',
+    'code_updated' => 'อัพเดตโค้ดแล้ว',
+    'go_to_code_editor' => 'ไปที่โปรแกรมแก้ไขโค้ด',
+    'change_background' => 'เปลี่ยนพื้นหลังของบล็อก',
+    'block_info' => 'บล็อกข้อมูล',
+    'background_color' => 'สีพื้นหลัง',
+    'background_updated' => 'ปรับปรุงสีพื้นหลังแล้ว',
+    'background_type_updated' => 'ปรับปรุงชนิดของพื้นหลังแล้ว',
+    'use_image_background' => 'ใช้ภาพพื้นหลัง',
+    'background_image_updated' => 'อัปเดตภาพพื้นหลังแล้ว',
+    'background_image_delete' => 'ลบภาพพื้นหลัง',
+    'background_image_deleted' => 'ลบภาพพื้นหลังแล้ว',
+    'change_image' => 'เปลี่ยนรูปภาพ',
+    'insert_image' => 'แทรกรูปภาพ',
+    'upload_image' => 'อัปโหลดภาพ',
+    'select_image' => 'เลือกรูปภาพ',
+    'background' => 'พื้นหลัง',
+    'background_want_delete' => 'คุณต้องการลบภาพพื้นหลังหรือไม่',
+    'background_image_size_error' => 'ขนาดภาพพื้นหลังไม่ควรเกิน 2 MB',
+    'back_to_pagebuilder' => 'กลับไปที่เครื่องมือสร้างหน้าเว็บ',
+    'block_settings' => 'บล็อกการตั้งค่า',
+    'block_deleted' => 'บล็อกถูกลบเรียบร้อยแล้ว',
+    'block_created' => 'บล็อกสำเร็จแล้ว',
 ];
