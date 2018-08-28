@@ -32,7 +32,10 @@ return [
     'info_2' => 'Pour changer l\'ordre des blocs, passez le curseur sur le bloc et faites-le glisser vers la nouvelle position',
     'editor_settings' => 'Paramètres de l\'éditeur',
     'custom_css' => 'CSS personnel',
-    'block_created' => 'Faites glisser des blocs pour modifier l\'ordre des blocs.<br>
+    'customize_footer' => 'Personnaliser le pied de page du site',
+    'customize_google_and_form' => 'Personnaliser le bloc de formulaire Google et Contact',
+    'change_blocks_order' => 'Modifier les ordres de blocage',
+    'block_info_order' => 'Faites glisser des blocs pour modifier l\'ordre des blocs.<br>
                 Pour modifier l’identifiant de bloc, cliquez une fois sur le bloc.<br>
                 Pour désactiver le bloc, faites-le glisser vers la gauche vers <b> \'Blocs non actifs\' </b>.<br>',
 ];

@@ -32,7 +32,10 @@ return [
     'info_2' => 'In order to change block order hover on block and drag it to new position',
     'editor_settings' => 'Editor settings',
     'custom_css' => 'Custom CSS',
-    'block_created' => 'Please, drag blocks in order to change blocks order.<br>
+    'customize_footer' => 'Customize website footer',
+    'customize_google_and_form' => 'Customize Google & Contact form block',
+    'change_blocks_order' => 'Change block orders',
+    'block_info_order' => 'Please, drag blocks in order to change blocks order.<br>
                 In order to edit block ID click one time on block.<br>
                 In order to deactivate block drag it to the left side to <b>\'Not active blocks\'</b>.<br>',
 ];

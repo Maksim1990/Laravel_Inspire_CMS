@@ -129,7 +129,7 @@
 
             </div>
             <div class="col-sm-12 col-lg-4 col-xs-12 body_about">
-                <p>@lang('pagebuilder::messages.block_created')</p>
+                <p>@lang('pagebuilder::messages.block_info_order')</p>
             </div>
         </div>
     </div>

@@ -193,11 +193,11 @@
                         </div>
                         <div>
                             <a href="{{route("background",['id'=>'footer'])}}"
-                               class="btn btn-success w3-margin-bottom">Customize website footer</a><br>
+                               class="btn btn-success w3-margin-bottom">@lang('pagebuilder::messages.customize_footer')</a><br>
                             <a href="{{route("background",['id'=>'google_contact_form'])}}"
-                               class="btn btn-warning w3-margin-bottom">Customize Google & Contact form block</a><br>
+                               class="btn btn-warning w3-margin-bottom">@lang('pagebuilder::messages.customize_google_and_form')</a><br>
                             <a href="{{route("pagebuilder_order",['id'=>Auth::id()])}}"
-                               class="btn btn-info w3-margin-bottom">Change block orders</a><br>
+                               class="btn btn-info w3-margin-bottom">@lang('pagebuilder::messages.change_blocks_order')</a><br>
                         </div>
                     </div>
                     <div id="menu1" class="tab-pane">
