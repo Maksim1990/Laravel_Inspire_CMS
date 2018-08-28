@@ -1,7 +1,13 @@
 @extends('dashboard::layouts.master')
-
+@section('styles')
+    <style>
+        form {
+            display: inline;
+        }
+    </style>
+@stop
 @section('General')
-    <h3 class="title">Dashboard</h3>
+    <h3 class="title">@lang('messages.dashboard')</h3>
     <div id="title_shape"></div>
     <div class="w3-row">
         <!-- Page Container -->
@@ -13,58 +19,34 @@
                     <!-- Profile -->
                     <div class="w3-card w3-round w3-white">
                         <div class="w3-container">
-                            <h4 class="w3-center">My Profile</h4>
+                            <h4 class="w3-center">@lang('messages.my_profile')</h4>
                             <p class="w3-center">
                                 <img height="150"
                                      src="{{Auth::user()->image ? Auth::user()->image->full_path : custom_asset("images/includes/noimage.png")}}"
                                      alt="">
                             </p>
                             <hr>
-                            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-                            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-                            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+                            <p><a href="{{route('profile',['id'=>Auth::id()])}}"><i
+                                            class="fas fa-user w3-margin-right w3-text-theme"></i> {{Auth::user()->name}}
+                                </a></p>
+                            <p><i class="fas fa-at w3-margin-right w3-text-theme"></i> {{Auth::user()->email}}</p>
+                            <p>@lang('profile::messages.registered')<br> {{Auth::user()->created_at->diffForHumans()}}</p>
                         </div>
                     </div>
                     <br>
 
                     <!-- Accordion -->
                     <div class="w3-card w3-round">
-                        <div class="w3-white">
-                            <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
-                            <div id="Demo1" class="w3-hide w3-container">
-                                <p>Some text..</p>
-                            </div>
-                            <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
-                            <div id="Demo2" class="w3-hide w3-container">
-                                <p>Some other text..</p>
-                            </div>
-                            <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
-                            <div id="Demo3" class="w3-hide w3-container">
-                                <div class="w3-row-padding">
-                                    <br>
-                                    <div class="w3-half">
-                                        <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
-                                    </div>
-                                    <div class="w3-half">
-                                        <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-                                    </div>
-                                    <div class="w3-half">
-                                        <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-                                    </div>
-                                    <div class="w3-half">
-                                        <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-                                    </div>
-                                    <div class="w3-half">
-                                        <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-                                    </div>
-                                    <div class="w3-half">
-                                        <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="w3-white" style="padding-bottom: 20px;padding-left: 40px;">
+                            <a href="{{route('profile_settings',['id'=>Auth::id()])}}">
+                                <i class="fas fa-user-edit fa-fw w3-margin-right w3-margin-top"></i> @lang('profile::messages.edit_profile')
+                            </a><br>
+                            <a href="{{route('change_password',['id'=>Auth::id()])}}">
+                                <i class="fas fa-key fa-fw w3-margin-right w3-margin-top"></i> @lang('profile::messages.change_password')
+                            </a><br>
                         </div>
                     </div>
-                    <br>>
+                    <br>
                 </div>
 
                 <!-- Middle Column -->
@@ -74,9 +56,11 @@
                         <div class="w3-col m12">
                             <div class="w3-card w3-round w3-white">
                                 <div class="w3-container w3-padding">
-                                    <h6 class="w3-opacity">Change name of your new website</h6>
-                                    <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
-                                    <button type="button" class="w3-button btn-success">@lang('messages.save')</button>
+                                    <h6 class="w3-opacity">@lang('messages.change_name_of_site')</h6>
+                                    <input type="text" style="width: 80%;" class="form-control" id="website_name"
+                                           value="{{Auth::user()->website_setting->website_name}}">
+                                    <button type="button" class="w3-button btn-success"
+                                            id="save_website_name">@lang('messages.save')</button>
                                 </div>
                             </div>
                         </div>
@@ -86,19 +70,15 @@
                         <div class="w3-col m12">
                             <div class="w3-card w3-round w3-white">
                                 <div class="w3-container">
-                                    <p><a href="#">Available website blocks</a></p>
+                                    <p><a href="{{route('pagebuilder_order',['id'=>Auth::id()])}}">@lang('messages.active_website_blocks')</a></p>
                                     <p>
-                                        <span class="w3-tag w3-small w3-theme-d5">News</span>
-                                        <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-                                        <span class="w3-tag w3-small w3-theme-d3">Labels</span>
-                                        <span class="w3-tag w3-small w3-theme-d2">Games</span>
-                                        <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-                                        <span class="w3-tag w3-small w3-theme">Games</span>
-                                        <span class="w3-tag w3-small w3-theme-l1">Friends</span>
-                                        <span class="w3-tag w3-small w3-theme-l2">Food</span>
-                                        <span class="w3-tag w3-small w3-theme-l3">Design</span>
-                                        <span class="w3-tag w3-small w3-theme-l4">Art</span>
-                                        <span class="w3-tag w3-small w3-theme-l5">Photos</span>
+                                        @if(!empty($allUserBlocks))
+                                            @foreach($allUserBlocks as $block)
+                                                <span class="w3-tag w3-small w3-theme-d5">{{$block->block_custom_id}}</span>
+                                            @endforeach
+                                        @else
+                                            No blocks found!
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -109,23 +89,25 @@
                         <div class="w3-col m6 w3-margin-bottom">
                             <div class="w3-card w3-round w3-white w3-center w3-margin-bottom">
                                 <div class="w3-container">
-                                    <p>Change profile</p>
+                                    <p>@lang('profile::messages.edit_profile')</p>
                                     <div class="w3-row w3-opacity">
                                         <div class="w3-half">
-                                            <button class="w3-button w3-block w3-green w3-section" title="Accept">Update</button>
+                                            <a href="{{route('profile_settings',['id'=>Auth::id()])}}"
+                                               class="w3-button w3-block w3-green w3-section">Update</a>
                                         </div>
                                         <div class="w3-half">
-                                            <button class="w3-button w3-block w3-red w3-section" title="Decline">@lang('messages.delete')</button>
+                                            <a href="#" class="w3-button w3-block w3-red w3-section" data-toggle="modal"
+                                               data-target="#delete_profile">@lang('messages.delete')</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
                                 <a href="{{route('mail',['id'=>Auth::id()])}}">
-                                <p style="font-size:45px;">
-                                    <img width="100" src="{{custom_asset("images/includes/mail.png")}}" alt="">
-                                </p>
-                                <p class="w3-xxlarge">Mail box</p>
+                                    <p style="font-size:45px;">
+                                        <img width="100" src="{{custom_asset("images/includes/mail.png")}}" alt="">
+                                    </p>
+                                    <p class="w3-xxlarge">@lang('messages.mail_box')</p>
                                 </a>
                             </div>
                         </div>
@@ -133,25 +115,26 @@
                         <div class="w3-col m6 w3-margin-bottom">
                             <div class="w3-card w3-round w3-white w3-margin-bottom">
                                 <div class="w3-container">
-                                    <p>Interests</p>
+                                    <a href="{{route('label',['id'=>Auth::id()])}}">
+                                    <p>@lang('messages.labels_management')</p>
                                     <p>
-                                        <span class="w3-tag w3-small w3-theme-d5">News</span>
-                                        <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-                                        <span class="w3-tag w3-small w3-theme-d3">Labels</span>
-                                        <span class="w3-tag w3-small w3-theme-d2">Games</span>
-                                        <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-                                        <span class="w3-tag w3-small w3-theme">Games</span>
-                                        <span class="w3-tag w3-small w3-theme-l1">Friends</span>
-                                        <span class="w3-tag w3-small w3-theme-l2">Food</span>
-                                        <span class="w3-tag w3-small w3-theme-l3">Design</span>
-                                        <span class="w3-tag w3-small w3-theme-l4">Art</span>
-                                        <span class="w3-tag w3-small w3-theme-l5">Photos</span>
+                                        @if(!empty($translations))
+                                            @foreach($translations as $label)
+                                                <span class="w3-tag w3-small w3-theme-d5">{{$label->key}}</span>
+                                            @endforeach
+                                        @endif
                                     </p>
+                                    </a>
                                 </div>
                             </div>
 
-                            <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
-                                <p>ADS</p>
+                            <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                                <a href="{{route('office',['id'=>Auth::id()])}}">
+                                    <p style="font-size:45px;">
+                                        <img width="100" src="{{custom_asset("images/includes/office.png")}}" alt="">
+                                    </p>
+                                    <p class="w3-xxlarge">@lang('messages.office')</p>
+                                </a>
                             </div>
                             <br>
                         </div>
@@ -161,30 +144,26 @@
 
                 <!-- Right Column -->
                 <div class="w3-col m2">
-                    <div class="w3-card w3-round w3-white w3-center">
+                    <div class="w3-card w3-round w3-white w3-center w3-padding-32">
                         <div class="w3-container">
-                            <p>Upcoming Events:</p>
-                            <img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
-                            <p><strong>Holiday</strong></p>
-                            <p>Friday 15:00</p>
-                            <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
+                            <a href="{{route('pagebuilder_index',['id'=>Auth::id()])}}">
+                                <p style="font-size:45px;">
+                                    <img width="100" src="{{custom_asset("images/includes/page.png")}}" alt="">
+                                </p>
+                                <p class="w3-large">@lang('messages.pagebuilder')</p>
+                            </a>
                         </div>
                     </div>
                     <br>
 
                     <div class="w3-card w3-round w3-white w3-center">
                         <div class="w3-container">
-                            <p>Friend Request</p>
-                            <img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>
-                            <span>Jane Doe</span>
-                            <div class="w3-row w3-opacity">
-                                <div class="w3-half">
-                                    <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
-                                </div>
-                                <div class="w3-half">
-                                    <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
-                                </div>
-                            </div>
+                            <a href="{{URL::to('/'.LaravelLocalization::getCurrentLocale())}}">
+                                <p style="font-size:45px;">
+                                    <img width="100" src="{{custom_asset("images/includes/inspire_grey.png")}}" alt="">
+                                </p>
+                                <p class="w3-large">INSPIRE CMS</p>
+                            </a>
                         </div>
                     </div>
                     <br>
@@ -192,19 +171,11 @@
                     <div class="w3-card w3-round w3-white w3-hide-small">
                         <div class="w3-container">
                             <p>
-                                <a href="{{route('languages',['id'=>Auth::id()])}}">Active languages</a></p>
+                                <a href="{{route('languages',['id'=>Auth::id()])}}">@lang('messages.active_languages')</a></p>
                             <p>
-                                <span class="w3-tag w3-small w3-theme-d5">News</span>
-                                <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-                                <span class="w3-tag w3-small w3-theme-d3">Labels</span>
-                                <span class="w3-tag w3-small w3-theme-d2">Games</span>
-                                <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-                                <span class="w3-tag w3-small w3-theme">Games</span>
-                                <span class="w3-tag w3-small w3-theme-l1">Friends</span>
-                                <span class="w3-tag w3-small w3-theme-l2">Food</span>
-                                <span class="w3-tag w3-small w3-theme-l3">Design</span>
-                                <span class="w3-tag w3-small w3-theme-l4">Art</span>
-                                <span class="w3-tag w3-small w3-theme-l5">Photos</span>
+                                @foreach($arrOfActiveLanguages as $strKey=>$strLang)
+                                    <span class="w3-tag w3-small w3-theme-d5">{{$strLang}}</span>
+                                @endforeach
                             </p>
                         </div>
                     </div>
@@ -216,5 +187,75 @@
             </div>
 
             <!-- End Page Container -->
-    </div>
+        </div>
+
+
+        {{--Delete profile modal--}}
+        <div class="modal" id="delete_profile">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">@lang('profile::messages.want_delete_profile')</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p class="confirm_info">
+                            @lang('profile::messages.all_relevant_data_will_be_deleted')
+                        </p>
+                        <button type="button" class="btn btn-success"
+                                data-dismiss="modal"> @lang('messages.cancel')</button>
+                        @if(Auth::id()==$user->id)
+                            {!! Form::close() !!}
+                            {{ Form::open(['method' =>'DELETE' ,'class'=>'deleteProfile', 'action' => ['\Modules\Profile\Http\Controllers\ProfileController@deleteProfile',$user->id]])}}
+                            <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                            {!! Form::submit( trans('profile::messages.delete_profile'),['class'=>'btn btn-danger delete_profile']) !!}
+
+                            {!! Form::close() !!}
+                        @endif
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
+        @stop
+        @section('scripts')
+            <script>
+                var token = '{{\Illuminate\Support\Facades\Session::token()}}';
+
+                $('#save_website_name').click(function () {
+                    var url = '{{ route('ajax_website_name_update') }}';
+                    var website_name = $('#website_name').val();
+                    $.ajax({
+                        method: 'POST',
+                        url: url,
+                        dataType: "json",
+                        data: {
+                            website_name: website_name,
+                            _token: token
+                        }, beforeSend: function () {
+                            //-- Show loading image while execution of ajax request
+                            $("div#divLoading").addClass('show');
+                        },
+                        success: function (data) {
+                            if (data['result'] === "success") {
+                                new Noty({
+                                    type: 'success',
+                                    layout: 'topRight',
+                                    text: '{{trans('dashboard::messages.website_name_updated')}}!'
+                                }).show();
+                            }
+                            //-- Hide loading image
+                            $("div#divLoading").removeClass('show');
+                        }
+                    });
+                });
+
+
+            </script>
 @stop

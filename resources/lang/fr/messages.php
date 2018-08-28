@@ -80,4 +80,9 @@ return [
     'add_new_label' => 'Ajouter un nouvel label',
     'logout' => 'Déconnexion',
     'no_notifications' => 'Aucune notification',
+    'change_name_of_site' => 'Changer le nom de votre site web',
+    'dashboard' => 'Tableau de bord',
+    'active_languages' => 'Langues actives',
+    'pagebuilder' => 'Générateur de page',
+    'active_website_blocks' => 'Blocs de site disponibles',
 ];

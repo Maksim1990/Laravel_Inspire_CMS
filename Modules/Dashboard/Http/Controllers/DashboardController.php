@@ -40,7 +40,11 @@ class DashboardController extends Controller
     {
         $arrTabs = ['General'];
         $active = "active";
-        return view('dashboard::index', compact('arrTabs', 'active'));
+        $user = User::findOrFail($id);
+        $arrOfActiveLanguages = Helper::GetActiveLanguages();
+        $allUserBlocks = Block::where('user_id', $id)->get();
+        $translations = LanguageLine::where('user_id', $id)->orderBy('id',"DESC")->limit(5)->get();
+        return view('dashboard::index', compact('arrTabs', 'active','user','arrOfActiveLanguages','allUserBlocks','translations'));
     }
 
     /**

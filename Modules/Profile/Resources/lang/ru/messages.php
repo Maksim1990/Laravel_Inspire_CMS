@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'registered' => 'Зарагестрировался',
+    'registered' => 'Зарагестрировал(-ась)ся',
     'profile_last_modified' => 'Последний раз профиль изменялся',
     'edit_profile' => 'Изменить профиль',
     'change_password' => 'Изменить пароль',

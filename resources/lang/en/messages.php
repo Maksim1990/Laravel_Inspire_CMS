@@ -80,4 +80,9 @@ return [
     'add_new_label' => 'Add new label',
     'logout' => 'Sign out',
     'no_notifications' => 'No notifications',
+    'change_name_of_site' => 'Change name of your website',
+    'dashboard' => 'Dashboard',
+    'active_languages' => 'Active languages',
+    'pagebuilder' => 'Page builder',
+    'active_website_blocks' => 'Available website blocks',
 ];

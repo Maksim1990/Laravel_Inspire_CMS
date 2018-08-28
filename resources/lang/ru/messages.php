@@ -80,4 +80,9 @@ return [
     'add_new_label' => 'Добавить новый перевод',
     'logout' => 'Выйти из системы',
     'no_notifications' => 'Нет сообщений',
+    'change_name_of_site' => 'Измените имя Вашего сайта',
+    'dashboard' => 'Консоль',
+    'active_languages' => 'Активные языки',
+    'pagebuilder' => 'Строитель сайтов',
+    'active_website_blocks' => 'Активные компоненты сайта',
 ];
