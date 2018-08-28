@@ -46,23 +46,41 @@
     </script>
 
 @stop
+@section('styles')
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <style>
+        .body_about{
+
+            color: black;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 300;
+            text-align: center;
+
+
+        }
+        .body_about p{
+            padding-top: 10%;
+            font-size: 19px;
+            line-height: 25px;
+        }
+    </style>
+@stop
 @section('General')
     <div class="row maintab">
         <div class="col-sm-12 col-lg-12 col-xs-12">
+            <div>
+                <h3 class="title">@lang('pagebuilder::messages.block_settings')</h3>
+                <div id="title_shape"></div>
+            </div>
+            <div class="insp_buttons">
+                <a href="{{route("pagebuilder_index",['id'=>Auth::id()])}}"
+                   class="btn btn-warning">@lang('pagebuilder::messages.back_to_pagebuilder')
+                </a> <a href="#"
+                        class="btn btn-info" id="create_block">@lang('pagebuilder::messages.create_block')</a>
+            </div>
             <div class="col-sm-8 col-lg-8 col-xs-12">
-                <div>
-                    <h3 class="title">@lang('pagebuilder::messages.block_settings')</h3>
-                    <div id="title_shape"></div>
-                </div>
-                <div class="insp_buttons">
-                    <a href="{{route("pagebuilder_index",['id'=>Auth::id()])}}"
-                       class="btn btn-warning">@lang('pagebuilder::messages.back_to_pagebuilder')
-                    </a> <a href="#"
-                            class="btn btn-info" id="create_block">Create block</a>
-                </div>
-
-                <div class="col-sm-5 col-lg-5 col-xs-12">
-                    <div class="w3-center text w3-xlarge">Not active blocks</div>
+                <div class="col-sm-4 col-lg-5 col-xs-12">
+                    <div class="w3-center text w3-xlarge">@lang('pagebuilder::messages.not_active_blocks')</div>
                     <ul id="sortableDeactivated" class="connectedSortable">
                         @if(!empty($websiteBlocksDeactivated))
                             @foreach($websiteBlocksDeactivated as $block)
@@ -82,8 +100,8 @@
                         @endif
                     </ul>
                 </div>
-                <div class="col-sm-5 col-sm-offset-2 col-lg-5 col-xs-12">
-                    <div class="w3-center text w3-xlarge">Active blocks</div>
+                <div class="col-sm-4 col-sm-offset-2 col-lg-5 col-xs-12">
+                    <div class="w3-center text w3-xlarge">@lang('pagebuilder::messages.active_blocks')</div>
                     <ul id="sortableActive" class="connectedSortable">
                         @if(!empty($websiteBlocksActive))
                             @foreach($websiteBlocksActive as $block)
@@ -108,6 +126,10 @@
                 </div>
 
 
+
+            </div>
+            <div class="col-sm-12 col-lg-4 col-xs-12 body_about">
+                <p>@lang('pagebuilder::messages.block_created')</p>
             </div>
         </div>
     </div>

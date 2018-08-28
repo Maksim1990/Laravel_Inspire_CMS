@@ -25,4 +25,14 @@ return [
     'block_settings' => 'Paramètres de bloc',
     'block_deleted' => 'Bloc a été supprimé avec succès',
     'block_created' => 'Bloc a été créé avec succès',
+    'create_block' => 'Créer un bloc',
+    'not_active_blocks' => 'Blocs non actifs',
+    'active_blocks' => 'Blocs actifs',
+    'info_1' => 'Pour changer le contenu du bloc, passez le curseur sur le bloc et cliquez avec le bouton droit de la souris',
+    'info_2' => 'Pour changer l\'ordre des blocs, passez le curseur sur le bloc et faites-le glisser vers la nouvelle position',
+    'editor_settings' => 'Paramètres de l\'éditeur',
+    'custom_css' => 'CSS personnel',
+    'block_created' => 'Faites glisser des blocs pour modifier l\'ordre des blocs.<br>
+                Pour modifier l’identifiant de bloc, cliquez une fois sur le bloc.<br>
+                Pour désactiver le bloc, faites-le glisser vers la gauche vers <b> \'Blocs non actifs\' </b>.<br>',
 ];

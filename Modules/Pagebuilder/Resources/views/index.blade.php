@@ -180,22 +180,24 @@
             </div>
             <div id="pagebuilder_menu" class="col-sm-6 col-xs-12">
                 <ul class="nav nav-tabs" id="pagebuilder_settings">
-                    <li class="active"><a data-toggle="tab" href="#home" class="tab_link">Editor settings</a></li>
-                    <li><a data-toggle="tab" href="#menu1" class="tab_link">Custom CSS</a></li>
+                    <li class="active"><a data-toggle="tab" href="#home" class="tab_link">@lang('pagebuilder::messages.editor_settings')</a></li>
+                    <li><a data-toggle="tab" href="#menu1" class="tab_link">@lang('pagebuilder::messages.custom_css')</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
-                        <h3>HOME</h3>
-                        <p>1. Pagebuilder background color</p>
-                        <p>2. How to display labels in text</p>
+                        <div class="alert alert-warning" style="width: 80%;">
+                            <p class="w3-text-red"><strong>@lang('messages.attention')!</strong></p>
+                            <p class="w3-text-red">1. @lang('pagebuilder::messages.info_1')</p>
+                            <p class="w3-text-red">2. @lang('pagebuilder::messages.info_2')</p>
+                        </div>
                         <div>
                             <a href="{{route("background",['id'=>'footer'])}}"
-                               class="btn btn-warning w3-margin-bottom">Customize website footer</a><br>
+                               class="btn btn-success w3-margin-bottom">Customize website footer</a><br>
                             <a href="{{route("background",['id'=>'google_contact_form'])}}"
                                class="btn btn-warning w3-margin-bottom">Customize Google & Contact form block</a><br>
                             <a href="{{route("pagebuilder_order",['id'=>Auth::id()])}}"
-                               class="btn btn-warning w3-margin-bottom">Change block orders</a><br>
+                               class="btn btn-info w3-margin-bottom">Change block orders</a><br>
                         </div>
                     </div>
                     <div id="menu1" class="tab-pane">
