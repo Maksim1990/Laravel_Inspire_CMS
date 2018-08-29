@@ -3,14 +3,15 @@
 ## Check this project online: [Inspire CMS](http://185.177.59.147/inspirecms)
 
 
-**Inspire CMS** is an application that allows easily to build your own dynamic website. Absolutely all blocks are easily customizable and extendable. 
-You can add custom CSS blocks or write any valid HTML code to all default existing blocks or to all new custom website blocks.
-Inspire CMS also provides useful and powerful Label management system that allows you to use your own custom translation labels on any language that you want to use on your website. The only thing you need to do in order to add any (even exotic) language is to activate it in Languages setting section in Inspire CMS admin panel.
-Also one of powerful application functionality is Inspire Office that provides you powerful instruments for uploading and handling images and files, for import and export your custom data.
-Import and Export functionality is also fully customizable with ability to choose type of file, number of lines to import/export and also order of exporting data.
-Inspire CMS comes out of the box with powerful and useful functionality for each user to customize header menu in application. Change order or translation for each menu items in application. Activate/deactivate specific items or group some items in menu dropdowns.
+**Inspire CMS** is an application that allows easily to build your own dynamic website. Absolutely all blocks are easily customizable and extendable. You can add custom CSS blocks or write any valid HTML code to all default existing blocks or to all new custom website blocks. Inspire CMS also provides useful and powerful **Label management** system that allows you to use your own custom translation labels on any language that you want to use on your website.
 
-Current version of this application support English, Russian, French & Thai languages.
+  The only thing you need to do in order to add any (even exotic) language is to activate it in Languages setting section in Inspire CMS admin panel. Also one of the powerful application functionality is **Inspire Office** that provides you powerful instruments for uploading and handling images and files, for import and export your custom data.
+
+  **Import and Export** functionality is also fully customizable with ability to choose type of file, number of lines to import/export and also order of exporting data. Inspire CMS comes out of the box with powerful and useful functionality for each user to customize header menu in application. Change order or translation for each menu items in application. Activate/deactivate specific items or group some items in menu dropdowns.
+
+Inspire CMS also comes out of the box with useful and convenient **Mail box module**. This module provides functionality to create multiple email templates, customize it, activate/deactivate templates and use this templates when sending emails to any valid addresses.
+
+Current version of this application support **English, Russian, French & Thai languages**.
 
 #### For using Continuos integration while development it was acitivated [CirlceCI](https://circleci.com) functionality that allows to build, run test and deploy updates on production server after successful build ####
 
