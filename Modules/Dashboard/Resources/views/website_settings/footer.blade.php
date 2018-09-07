@@ -24,7 +24,7 @@
                 <div class="col-sm-5 col-xs-12">
                     <div class="form-group">
                         <p>
-                            <input type="hidden" id="block_id_footer" value="{{$block_footer}}">
+                            <input type="hidden" id="block_id" value="{{$block_id}}">
                             <input type="hidden" id="background_type"
                                    value="{{(!empty($blockBackgroundFooter) && $blockBackgroundFooter->background_type=='image')?'image':'color'}}">
                             @php
@@ -123,7 +123,7 @@
                 <div class="col-sm-7 col-xs-12">
                     {{ Form::model(Auth::user(), ['method' =>'PATCH' , 'action' => ['\Modules\Pagebuilder\Http\Controllers\PagebuilderController@storeBackgroundImage',Auth::id()],'files'=>true])}}
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                    <input type="hidden" name="block_id" value="{{$block_footer}}">
+                    <input type="hidden" name="block_id" value="{{$block_id}}">
                     <div class="group-form">
                         {!! Form::label('photo_id',trans('messages.image').':') !!}
                         {!! Form::file('photo_id') !!}
@@ -202,7 +202,7 @@
                     {!! Form::close() !!}
                     {{ Form::open(['method' =>'DELETE' ,'class'=>'deleteProfile', 'style'=>'display:inline;', 'action' => ['\Modules\Pagebuilder\Http\Controllers\PagebuilderController@deleteBackgroundImage',Auth::id()]])}}
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                    <input type="hidden" name="block_id" value="{{$block_footer}}">
+                    <input type="hidden" name="block_id" value="{{$block_id}}">
                     {!! Form::submit(trans('pagebuilder::messages.background_image_delete'),['class'=>'btn btn-danger delete_image']) !!}
 
                     {!! Form::close() !!}

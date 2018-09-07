@@ -1,5 +1,25 @@
 <!-- Footer -->
-<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+
+@php
+    $background=$dataWebsite->getBackgroundColor();
+        if(!empty($background) && $background->background_type=='color'){
+        $strBackground="background-color:".$background->color.";";
+        }elseif(!empty($background) && $background->background_type=='image'){
+        if(!empty($background->image_path)){
+        $strBackground="background: url('".custom_asset("storage/".$background->image_path)."') no-repeat center center fixed;
+            min-height: 100%;
+            background-size: cover;
+            ";
+            }else{
+        $strBackground="";
+        }
+        }else{
+        $strBackground="";
+        }
+
+@endphp
+
+<footer class="w3-center w3-padding-64 w3-opacity w3-hover-opacity-off" style="{{$strBackground}}">
     @if($dataWebsite->getWebsiteSettings()->go_top_button=="Y")
         <a href="#top" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
     @endif

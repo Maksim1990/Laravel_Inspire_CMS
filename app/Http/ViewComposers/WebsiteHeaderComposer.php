@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Modules\Dashboard\Entities\SocialIcon;
+use Modules\Pagebuilder\Entities\Background;
 use Modules\Pagebuilder\Entities\Block;
 
 class WebsiteHeaderComposer
@@ -35,13 +36,14 @@ class WebsiteHeaderComposer
         $customSetting = Setting::where('user_id', Auth::id())->first();
 
 
-
+        $background=Background::where('user_id', Auth::id())->where('block_id','footer')->first();
         //-- Store user blocks collection and additional debugging information into array
         $this->arrData = [
             "arrBlocks" => $this->arrBlocks,
             "arrWebsiteSettings" => Auth::user()->website_setting,
             "arrSocialIcons" => $arrSocialIcons,
             "customSettings" => $customSetting,
+            "background" => $background,
         ];
 
         $this->arrData = collect($this->arrData);
@@ -60,6 +62,10 @@ class WebsiteHeaderComposer
 
         Collection::macro('getCustomSettings', function () {
             return $this["customSettings"];
+        });
+
+        Collection::macro('getBackgroundColor', function () {
+            return $this["background"];
         });
     }
 

@@ -21,12 +21,12 @@ class WebsiteSettingsController extends Controller
         $arrTabs = ['General','Social','Footer'];
         $active = "active";
 
-        $block_footer='footer';
+        $block_id='footer';
 
-        $blockBackgroundFooter = Background::where('user_id', Auth::id())->where('block_id',$block_footer)->first();
+        $blockBackgroundFooter = Background::where('user_id', Auth::id())->where('block_id',$block_id)->first();
         $userImages = Auth::user()->photos;
 
-        return view('dashboard::website_settings.index', compact('arrTabs', 'active','block_footer','blockBackgroundFooter','userImages'));
+        return view('dashboard::website_settings.index', compact('arrTabs', 'active','block_id','blockBackgroundFooter','userImages'));
     }
 
     /**
