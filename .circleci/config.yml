@@ -3,6 +3,7 @@ jobs:
    build:
      docker:
        - image: circleci/php:7.1-jessie-node
+     working_directory: /var/www/html/vps/public_html/inspirecms/
      steps:
        #https://askubuntu.com/questions/594656/how-to-install-the-latest-versions-of-nodejs-and-npm
        #We are using Node JS 6 because that's the current version on our local vagrant/homestead machines
@@ -17,53 +18,7 @@ jobs:
 
        - run:
           name: Update composer to latest version
-          command: cd /var/www/html/vps/public_html/inspirecms/ && composer self-update
-
-       - restore_cache:
-           keys:
-             - composer-v1-{{ checksum "composer.json" }}
-             - composer-v1-
-       - run: cd /var/www/html/vps/public_html/inspirecms/ && composer install -n --prefer-dist --ignore-platform-reqs
-       - save_cache:
-           key: composer-v1-{{ checksum "composer.json" }}
-           paths:
-             - vendor
-
-       - restore_cache:
-           key: dependency-cache-{{ checksum "package.json" }}
-       - run:
-           name: Install NodeJS Packages
-           command: cd /var/www/html/vps/public_html/inspirecms/ && npm install
-       - save_cache:
-           key: dependency-cache-{{ checksum "package.json" }}
-           paths:
-             - ./node_modules
-
-       - run:
-           name: Create SQLite Database
-           command: cd /var/www/html/vps/public_html/inspirecms/ && touch database/database.sqlite
-
-       - run:
-           name: Migrate Laravel Database
-           command: cd /var/www/html/vps/public_html/inspirecms/ && php artisan migrate --env=testing --force
-
-       - run:
-           name: Compile Javascript & CSS for Browser Testing
-           command: cd /var/www/html/vps/public_html/inspirecms/ && npm run production
-
-       - run:
-           name: Start Chrome Driver
-           command: cd /var/www/html/vps/public_html/inspirecms/ && ./vendor/laravel/dusk/bin/chromedriver-linux
-           background: true
-
-       - run:
-           name: Run Laravel Server
-           command: cd /var/www/html/vps/public_html/inspirecms/ && php artisan serve
-           background: true
-
-       - run:
-           name: Test 1 - Run Phpunit for Server-Side HTTP Requests & PHP Unit Testing
-           command: cd /var/www/html/vps/public_html/inspirecms/ && vendor/bin/phpunit
+          command: composer self-update
    deploy:
        machine:
          enabled: true
