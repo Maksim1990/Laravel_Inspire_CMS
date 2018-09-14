@@ -67,8 +67,41 @@ jobs:
       #- run: ./vendor/bin/codecept run --xml result.xml
 
       - run: mkdir ./tests/_output
-      - run: php artisan dusk
+      #- run: php artisan dusk
       - store_test_results:
-          path: tests/_output
+          path: ./tests/_output
       - store_artifacts:
-          path: tests/_output
+          path: ./tests/_output
+  deploy:
+         machine:
+           enabled: true
+         steps:
+            - add_ssh_keys:
+                       fingerprints:
+                         - "5a:3e:5f:7f:35:1c:26:8b:71:57:92:bf:f4:9b:3e:b9"
+            - run:
+               name: Deploy Over SSH
+               command: |
+                 ssh -t $SSH_USER@$SSH_HOST "cd public_html/inspirecms && git pull origin master"
+            - add_ssh_keys:
+                       fingerprints:
+                         - "0c:33:a8:8c:40:06:fa:ae:13:c8:63:a6:e7:52:a1:b0"
+            - run:
+               name: Deploy Over SSH to VPS server
+               command: |
+                 ssh -t $SSH_USER_VPS@$SSH_HOST_VPS "cd /var/www/html/vps/public_html/inspirecms/ && git pull origin master && composer install && php artisan module:migrate && php artisan migrate && npm install && npm run dev"
+workflows:
+  version: 2
+    build-and-deploy:
+      jobs:
+        - build:
+                  filters:
+                    branches:
+                      only: master
+        - deploy:
+
+            requires:
+              - build
+            filters:
+              branches:
+                only: master
