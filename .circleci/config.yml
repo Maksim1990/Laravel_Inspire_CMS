@@ -3,7 +3,7 @@ jobs:
    build:
      docker:
        - image: circleci/php:7.1-jessie-node
-     working_directory: ~/laravel
+     working_directory: cd /var/www/html/vps/public_html/inspirecms/
      steps:
        #https://askubuntu.com/questions/594656/how-to-install-the-latest-versions-of-nodejs-and-npm
        #We are using Node JS 6 because that's the current version on our local vagrant/homestead machines

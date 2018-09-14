@@ -29,4 +29,24 @@ class ExampleTest extends DuskTestCase
                 ->assertSee('Dashboard');
         });
     }
+
+
+    public function testCreatePost()
+    {
+        $user=User::where('email','like','test@%')->where('admin',0)->first();
+        $password="testtest";
+
+        $this->browse(function ($first) use($user,$password) {
+            $first->visit('/en/login')
+                ->assertSee('Login')
+                ->type('email',$user->email)
+                ->type('password',$password)
+                ->click('#button')
+                ->assertSee('Dashboard')
+                ->visit('/admin/posts/all/'.$user->id)
+                ->assertSee('Posts')
+            ;
+        });
+
+    }
 }
