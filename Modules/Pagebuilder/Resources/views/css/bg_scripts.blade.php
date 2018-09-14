@@ -18,9 +18,6 @@
 
         var background_type = $('#background_type').val();
 
-        console.log(bg_color);
-        console.log(block_id);
-        console.log(background_type);
         $.ajax({
             method: 'POST',
             url: url,
