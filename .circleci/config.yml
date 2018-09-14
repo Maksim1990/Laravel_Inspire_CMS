@@ -54,7 +54,7 @@ jobs:
       - run: touch storage/testing.sqlite
 
       # Add encryption key for testing environment
-      - run: php artisan key:generate --env=testing
+      #- run: php artisan key:generate --env=testing
 
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
 
