@@ -74,13 +74,14 @@ jobs:
        machine:
          enabled: true
        steps:
-          - add_ssh_keys:
-                     fingerprints:
-                       - "5a:3e:5f:7f:35:1c:26:8b:71:57:92:bf:f4:9b:3e:b9"
-          - run:
-             name: Deploy Over SSH
-             command: |
-               ssh -t $SSH_USER@$SSH_HOST "cd public_html/inspirecms && git pull origin master"
+          # DEACTIVATED DEPLOY TO DEDICATED SHARED HOSTING
+          #- add_ssh_keys:
+          #           fingerprints:
+          #             - "5a:3e:5f:7f:35:1c:26:8b:71:57:92:bf:f4:9b:3e:b9"
+          #- run:
+          #   name: Deploy Over SSH
+          #   command: |
+           #    ssh -t $SSH_USER@$SSH_HOST "cd public_html/inspirecms && git pull origin master"
           - add_ssh_keys:
                      fingerprints:
                        - "0c:33:a8:8c:40:06:fa:ae:13:c8:63:a6:e7:52:a1:b0"
