@@ -53,11 +53,10 @@ jobs:
       # prepare the database
       - run: touch storage/testing.sqlite
 
-      # Add encryption key for testing environment
-      #- run: php artisan key:generate --env=testing
-
       - run: php artisan migrate --env=testing --database=sqlite_testing --force
 
+      # Add encryption key for testing environment
+      - run: php artisan key:generate --env=testing
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit
       #- run: ./vendor/bin/codecept build
