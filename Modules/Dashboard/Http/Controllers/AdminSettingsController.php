@@ -76,7 +76,7 @@ class AdminSettingsController extends Controller
 //                'content' => 'My first indexed post!'
 //    ]
 //]);
-//
+
 //        $posts=MenuLang::where('user_id',Auth::id())->get();
 //            foreach ($posts as $post) {
 //                $elastic->index([
@@ -98,33 +98,33 @@ class AdminSettingsController extends Controller
 //        ];
 
         //====== Search by specific field ==============//
-        $query = [
-            'match' => [
-                'user_id' => '3'
-            ],
-        ];
+//        $query = [
+//            'match' => [
+//                'user_id' => '3'
+//            ],
+//        ];
         //====== Search by wildcard (beginning of each word according to template) ==============//
 //        $query = [
 //            'wildcard' => [
-//                'content' => 'aspernatu*'
+//                'name' => 'ma*'
 //            ],
 //        ];
 
         //====== Search by regex ==============//
 //        $query = [
 //            'regexp' => [
-//                'content' => '[a-z]'
+//                'name' => "L[a-c]+"
 //            ],
 //        ];
         //====== Search by phrase ==============//
-//        $query = [
-//            'multi_match' => [
-//                "query" => "Images module",
-//                "fields" => ["name", "lang"],
-//                "type" => "phrase",
-//                "slop" => 3 //Specify range between searching words
-//            ],
-//        ];
+        $query = [
+            'multi_match' => [
+                "query" => "Images module",
+                "fields" => ["name", "lang"],
+                "type" => "phrase",
+                "slop" => 3 //Specify range between searching words
+            ],
+        ];
 
 
         $parameters = [
