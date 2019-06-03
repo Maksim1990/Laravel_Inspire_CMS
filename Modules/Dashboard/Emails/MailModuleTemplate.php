@@ -49,9 +49,10 @@ class MailModuleTemplate extends Mailable
 
         //-- Check if necessary to add some images to email as attachment
         $attachments = MailPhoto::where('user_id', Auth::id())->get();
+
         if (!empty($attachments)) {
             foreach ($attachments as $attachment) {
-                $email->attach(custom_asset('storage/' . $attachment->path));
+                $email->attach(public_path('storage/'.$attachment->path));
             }
         }
 

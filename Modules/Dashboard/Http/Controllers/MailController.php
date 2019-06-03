@@ -59,15 +59,19 @@ class MailController extends Controller
         $mail = new MailEntity;
         $mail->fill($input);
         $mail->save();
+
         $template = MailTemplate::where('user_id', Auth::id())->where('active', 'Y')->first();
+
         if ($template) {
+
             //-- Sent email with mailable template
             Mail::to($input['to'])->send(new MailModuleTemplate($input));
-
             //-- Check if there are no email failures
             if (!Mail::failures()) {
                 //-- Check if necessary to add some images to email as attachment
+
                 $attachments = MailPhoto::where('user_id', Auth::id())->get();
+
                 if (!empty($attachments)) {
                     foreach ($attachments as $attachment) {
                         unlink(storage_path('/app/public/' . $attachment->path));
