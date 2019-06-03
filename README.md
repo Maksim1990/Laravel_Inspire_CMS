@@ -2,6 +2,8 @@
 
 ## Check this project online: [Inspire CMS](http://185.177.59.147/inspirecms)
 
+### INSTALLATION INSTRUCTIONS
+[HOW TO INSTALL](https://github.com/Maksim1990/Laravel_Inspire_CMS/blob/master/public/docs/INSTALL.md)
 
 **Inspire CMS** is an application that allows easily to build your own dynamic website. Absolutely all blocks are easily customizable and extendable. You can add custom CSS blocks or write any valid HTML code to all default existing blocks or to all new custom website blocks. Inspire CMS also provides useful and powerful **Label management** system that allows you to use your own custom translation labels on any language that you want to use on your website.
 
