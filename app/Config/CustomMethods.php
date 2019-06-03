@@ -12,7 +12,8 @@ use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 function custom_asset($path, $secure = null)
 {
-    return asset('public/' . $path);
+    //return asset('public/' . $path);
+    return asset($path);
 }
 
 //-- Functionality for programmatically replace variables in env file
