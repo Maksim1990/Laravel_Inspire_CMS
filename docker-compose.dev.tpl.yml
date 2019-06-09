@@ -20,6 +20,7 @@ services:
         volumes:
             - hosts-volume:/etc/nginx/conf.d
             - data-volume:/var/www
+            - ./.env:/var/www/.env
             - ./logs/nginx/:/var/log/nginx:cached
         depends_on:
             - php
