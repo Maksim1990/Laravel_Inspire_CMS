@@ -20,6 +20,7 @@ services:
         volumes:
             - hosts-volume:/etc/nginx/conf.d
             - data-volume:/var/www
+            - ./.env:/var/www/.env
             - ./logs/nginx/:/var/log/nginx:cached
         depends_on:
             - php
@@ -29,7 +30,6 @@ services:
           - "${APP_REDIS_PORT}:6379"
     mysql:
         image: mysql:5.7.21
-        command: --init-file /data/app/init.sql
         environment:
             MYSQL_ROOT_PASSWORD: ${APP_MYSQL_PASSWORD}
             MYSQL_DATABASE: ${APP_MYSQL_DATABASE}
