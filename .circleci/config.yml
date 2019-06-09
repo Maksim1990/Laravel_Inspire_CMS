@@ -72,6 +72,7 @@ jobs:
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php cp ./deploy/.env.dist ./.env"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan key:generate"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan migrate"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan storage:link"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php npm install"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php npm run dev"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php chmod +x ./services/docker/set_storage_read_write_permissions.sh"
