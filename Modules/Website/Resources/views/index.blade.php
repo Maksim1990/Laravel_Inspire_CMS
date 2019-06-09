@@ -26,11 +26,11 @@
 
 
              if($adminSettings->use_remote_server=="Y" && !empty($adminSettings->remote_server)){
-             $strContent=str_replace('../../public/storage',$adminSettings->remote_server.'/public/storage',$blockMain->filteredContent($block->content));
-              $strContent=str_replace('../../storage',$adminSettings->remote_server.'/public/storage',$blockMain->filteredContent($block->content));
+             $strContent=str_replace('../../public/storage',$adminSettings->remote_server.'/storage',$blockMain->filteredContent($block->content));
+             $strContent=str_replace('../../storage',$adminSettings->remote_server.'/storage',$blockMain->filteredContent($block->content));
              }else{
-             $strContent=str_replace('../../public/storage','../../../public/storage',$blockMain->filteredContent($block->content));
-              $strContent=str_replace('../../storage','/public/storage',$blockMain->filteredContent($block->content));
+             $strContent=str_replace('../../public/storage','../../../storage',$blockMain->filteredContent($block->content));
+             $strContent=str_replace('../../storage','/storage',$blockMain->filteredContent($block->content));
              }
 
             @endphp
