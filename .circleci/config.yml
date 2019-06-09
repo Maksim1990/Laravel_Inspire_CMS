@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/php:7.3-stretch-node-browsers
         environment:
-          DOCKER_IMAGE_NAME: maksim1990/laravel_inspirecms
+          DOCKER_IMAGE_NAME: maksim1990/laravel_base_api
     steps:
       - checkout
       - setup_remote_docker:
@@ -24,57 +24,106 @@ jobs:
             docker build -t   $DOCKER_IMAGE_NAME:$TAG -f ./docker/php/Dockerfile .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push $DOCKER_IMAGE_NAME:$TAG
+  test:
+    docker:
+      - image: circleci/php:7.3-stretch-node-browsers
+        environment:
+          DB_HOST: 127.0.0.1
+      - image: circleci/mysql:5.7.26
+        environment:
+          MYSQL_ROOT_PASSWORD: laraapi
+          MYSQL_DATABASE: laravel_api_db_test
+    steps:
+      - checkout
+      - run:
+          name: Install required PHP extensions
+          command: sudo docker-php-ext-install -j$(nproc) pdo_mysql zip mysqli
+      - run:
+          name: Install Composer dependencies
+          command: |
+            sudo composer self-update
+            sudo composer install -n --prefer-dist --ignore-platform-reqs
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+          name: Set up Laravel environment for Behat tests
+          command: |
+            cp behat.dist.remote behat.yml
+            cp .env.behat.circleci .env
+            php artisan key:generate
+            php artisan migrate
+            php artisan passport:install
+      - run:
+          name: Run web server
+          command: php artisan serve --port=8087
+          background: true
+      - run:
+          name: Start Behat tests
+          command: vendor/bin/behat --tags @api_circleci
   deploy:
     machine:
       enabled: true
-      working_directory: ~/inspirecms
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - "0c:33:a8:8c:40:06:fa:ae:13:c8:63:a6:e7:52:a1:b0"
-        - checkout
-        - run:
-            name: Perform ports mapping
-            command: sed -e "s/\${APP_HTTP_PORT}/${DEV_HTTP_PORT}/g; s/\${APP_HTTPS_PORT}/${DEV_HTTPS_PORT}/g; s/\${APP_REDIS_PORT}/${DEV_REDIS_PORT}/g; s/\${APP_MYSQL_PORT}/${DEV_MYSQL_PORT}/g; s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g; s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  docker-compose.dev.tpl.yml > docker-compose.yml
-        - run:
-            name: Copy docker folder & compose file to the server
-            command: |
-              scp -r ./docker-compose.yml $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
-              scp -r ./docker $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
-        - run:
-            name: Login into Docker Hub account
-            command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker login -u $DOCKER_USER -p $DOCKER_PASS"
-        - run:
-            name: Recreate docker containers
-            command: |
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose pull"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose down"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker volume rm inspirecms_data-volume"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose up -d --no-deps --force-recreate"
-        - run:
-            name: Install Composer dependencies
-            command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php composer install"
-        - run:
-            name: Set up Laravel environment
-            command: |
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php cp .env.dist .env"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan key:generate"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan migrate"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php chmod +x ./services/docker/set_storage_read_write_permissions.sh"
-              ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php ./services/docker/set_storage_read_write_permissions.sh"
-        - run:
-            name: Clean not used docker files
-            command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker image prune -a -f"
+    working_directory: ~/laravel_base_api
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "0c:33:a8:8c:40:06:fa:ae:13:c8:63:a6:e7:52:a1:b0"
+      - checkout
+      - run:
+          name: Perform ports mapping
+          command: sed -e "s/\${APP_HTTP_PORT}/${DEV_HTTP_PORT}/g; s/\${APP_HTTPS_PORT}/${DEV_HTTPS_PORT}/g; s/\${APP_REDIS_PORT}/${DEV_REDIS_PORT}/g; s/\${APP_MYSQL_PORT}/${DEV_MYSQL_PORT}/g; s/\${APP_MAIL_PORT}/${DEV_MAIL_PORT}/g;"  docker-compose.dev.tpl.yml > docker-compose.yml
+      - run:
+          name: Copy docker folder & compose file to the server
+          command: |
+            scp -r ./docker-compose.yml $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
+            scp -r ./docker $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
+      - run:
+          name: Login into Docker Hub account
+          command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker login -u $DOCKER_USER -p $DOCKER_PASS"
+      - run:
+          name: Recreate docker containers
+          command: |
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose pull"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose down"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker volume rm laravelbaseapi_data-volume"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose up -d --no-deps --force-recreate"
+      - run:
+          name: Install Composer dependencies
+          command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api composer install"
+      - run:
+          name: Set up Laravel environment
+          command: |
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api cp .env.dist .env"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api php artisan key:generate"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api php artisan migrate"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api php artisan passport:oauth:clients"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api chmod +x ./services/docker/set_storage_read_write_permissions.sh"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec laravel_api ./services/docker/set_storage_read_write_permissions.sh"
+      - run:
+          name: Clean not used docker files
+          command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker image prune -a -f"
+
 
 workflows:
   version: 2
-  build-and-deploy:
+  build-test-and-deploy:
     jobs:
       - build:
           filters:
             branches:
-              only: develop
-      - deploy:
+              only:
+                - develop
+      - test:
           filters:
             branches:
-              only: master
+              only:
+                - develop
+      - deploy:
+          #requires:
+          #- build
+          filters:
+            branches:
+              only:
+                - master
