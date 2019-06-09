@@ -62,6 +62,7 @@ jobs:
           command: |
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose pull"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose down"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker volume rm inspirecms_data-volume"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose up -d --no-deps --force-recreate"
       - run:
           name: Install Composer dependencies
@@ -71,10 +72,17 @@ jobs:
           command: |
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php cp ./deploy/.env.dist ./.env"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan key:generate"
+            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan cache:clear"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan migrate"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan storage:link"
+      - run:
+          name: Install Node JS dependencies
+          command: |
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php npm install"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php npm run dev"
+      - run:
+          name: Change storage folder permissions
+          command: |
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php chmod +x ./services/docker/set_storage_read_write_permissions.sh"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php ./services/docker/set_storage_read_write_permissions.sh"
       - run:
