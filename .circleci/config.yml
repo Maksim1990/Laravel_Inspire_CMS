@@ -24,44 +24,6 @@ jobs:
             docker build -t   $DOCKER_IMAGE_NAME:$TAG -f ./docker/php/Dockerfile .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push $DOCKER_IMAGE_NAME:$TAG
-  test:
-    docker:
-      - image: circleci/php:7.3-stretch-node-browsers
-        environment:
-          DB_HOST: 127.0.0.1
-      - image: circleci/mysql:5.7.26
-        environment:
-          MYSQL_ROOT_PASSWORD: laraapi
-          MYSQL_DATABASE: laravel_api_db_test
-    steps:
-      - checkout
-      - run:
-          name: Install required PHP extensions
-          command: sudo docker-php-ext-install -j$(nproc) pdo_mysql zip mysqli
-      - run:
-          name: Install Composer dependencies
-          command: |
-            sudo composer self-update
-            sudo composer install -n --prefer-dist --ignore-platform-reqs
-      - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
-          paths:
-            - vendor
-      - run:
-          name: Set up Laravel environment for Behat tests
-          command: |
-            cp behat.dist.remote behat.yml
-            cp .env.behat.circleci .env
-            php artisan key:generate
-            php artisan migrate
-            php artisan passport:install
-      - run:
-          name: Run web server
-          command: php artisan serve --port=8087
-          background: true
-      - run:
-          name: Start Behat tests
-          command: vendor/bin/behat --tags @api_circleci
   deploy:
     machine:
       enabled: true
@@ -108,14 +70,9 @@ jobs:
 
 workflows:
   version: 2
-  build-test-and-deploy:
+  build-and-deploy:
     jobs:
       - build:
-          filters:
-            branches:
-              only:
-                - develop
-      - test:
           filters:
             branches:
               only:
