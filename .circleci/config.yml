@@ -36,14 +36,18 @@ jobs:
       - run:
           name: Perform ports mapping
           command: |
-            sed -e "s/\${APP_HTTP_PORT}/${DEV_HTTP_PORT}/g; s/\${APP_HTTPS_PORT}/${DEV_HTTPS_PORT}/g; s/\${APP_REDIS_PORT}/${DEV_REDIS_PORT}/g; s/\${APP_MYSQL_PORT}/${DEV_MYSQL_PORT}/g; s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g; s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  ./deploy/docker-compose.dev.tpl.yml > ./docker-compose.yml
-            sed -e "s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g; s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  ./deploy/.env.dist.deploy > ./deploy/.env.dist
+            sed -e "s/\${APP_HTTP_PORT}/${DEV_HTTP_PORT}/g; s/\${APP_HTTPS_PORT}/${DEV_HTTPS_PORT}/g;
+             s/\${APP_REDIS_PORT}/${DEV_REDIS_PORT}/g;
+             s/\${APP_MYSQL_PORT}/${DEV_MYSQL_PORT}/g;
+             s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g;
+             s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  ./deploy/docker-compose.dev.tpl.yml > ./docker-compose.yml
+            sed -e "s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g;
+             s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  ./deploy/.env.dist.deploy > ./deploy/.env.dist
       - run:
           name: Copy docker folder & compose file to the server
           command: |
             scp -r ./docker-compose.yml $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
             scp -r ./docker $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
-            scp -r ./.env $SSH_USER_VPS@$SSH_HOST_VPS:$PROJECT_DIR
       - run:
           name: Login into Docker Hub account
           command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker login -u $DOCKER_USER -p $DOCKER_PASS"
