@@ -49,7 +49,7 @@ jobs:
           command: |
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose pull"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose down"
-            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker volume rm inspirecms_data-volume"
+
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker-compose up -d --no-deps --force-recreate"
       - run:
           name: Install Composer dependencies
