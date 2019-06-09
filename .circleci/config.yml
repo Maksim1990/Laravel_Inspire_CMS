@@ -36,15 +36,18 @@ jobs:
       - run:
           name: Perform ports mapping
           command: |
-            cat ./deploy/.env.dist.deploy
             sed -e "s/\${APP_HTTP_PORT}/${DEV_HTTP_PORT}/g; s/\${APP_HTTPS_PORT}/${DEV_HTTPS_PORT}/g;
              s/\${APP_REDIS_PORT}/${DEV_REDIS_PORT}/g;
              s/\${APP_MYSQL_PORT}/${DEV_MYSQL_PORT}/g;
              s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g;
              s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  ./deploy/docker-compose.dev.tpl.yml > ./docker-compose.yml
             sed -e "s/\${APP_MYSQL_PASSWORD}/${DEV_MYSQL_PASSWORD}/g;
-             s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;"  ./deploy/.env.dist.deploy > ./deploy/.env.dist
-      - run: cat ./deploy/.env.dist
+             s/\${APP_MYSQL_DATABASE}/${DEV_MYSQL_DATABASE}/g;
+             s/\${APP_MAILGUN_DOMAIN}/${DEV_MAILGUN_DOMAIN}/g;
+             s/\${APP_MAILGUN_SECRET}/${DEV_MAILGUN_SECRET}/g;
+             s/\${APP_BUGSNAG_API_KEY}/${DEV_BUGSNAG_API_KEY}/g;
+             s/\${APP_CAPTCHA_SITE_KEY}/${DEV_CAPTCHA_SITE_KEY}/g;
+             s/\${APP_CAPTCHA_SECRET_KEY}/${DEV_CAPTCHA_SECRET_KEY}/g;"  ./deploy/.env.dist.deploy > ./deploy/.env.dist
       - run:
           name: Copy docker folder & compose file to the server
           command: |
@@ -66,7 +69,6 @@ jobs:
       - run:
           name: Set up Laravel environment
           command: |
-            ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php cat ./deploy/.env.dist"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php cp ./deploy/.env.dist ./.env"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan key:generate"
             ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker exec inspirecms_php php artisan migrate"
@@ -77,7 +79,6 @@ jobs:
       - run:
           name: Clean not used docker files
           command: ssh $SSH_USER_VPS@$SSH_HOST_VPS "cd $PROJECT_DIR && docker image prune -a -f"
-
 
 workflows:
   version: 2
