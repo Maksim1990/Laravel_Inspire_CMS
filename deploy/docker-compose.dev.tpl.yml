@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-    php:
+    php_inspirecms:
         image: maksim1990/laravel_inspirecms:latest
         container_name: inspirecms_php
         user: "${UID}"
@@ -12,9 +12,9 @@ services:
             - ./logs/laravel:/var/www/var/logs:cached
             - hosts-volume:/etc/nginx/conf.d
         depends_on:
-            - mysql
-            - redis
-    nginx:
+            - mysql_inspirecms
+            - redis_inspirecms
+    nginx_inspirecms:
         image: nginx:latest
         ports:
             - "${APP_HTTP_PORT}:80"
@@ -25,12 +25,12 @@ services:
             - data-volume:/var/www
             - ./logs/nginx/:/var/log/nginx:cached
         depends_on:
-            - php
-    redis:
+            - php_inspirecms
+    redis_inspirecms:
         image: redis:latest
         ports:
           - "${APP_REDIS_PORT}:6379"
-    mysql:
+    mysql_inspirecms:
         image: mysql:5.7.21
         environment:
             MYSQL_ROOT_PASSWORD: ${APP_MYSQL_PASSWORD}
