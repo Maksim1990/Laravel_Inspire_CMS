@@ -3,6 +3,8 @@ services:
   php_inspirecms:
     image: maksim1990/laravel_inspirecms:latest
     container_name: inspirecms_php
+    networks:
+      - docker-shared-services
     user: "${UID}"
     volumes:
       - ./deploy:/var/www/deploy
@@ -14,6 +16,8 @@ services:
     depends_on:
       - redis_inspirecms
   nginx_inspirecms:
+    networks:
+      - docker-shared-services
     image: nginx:latest
     ports:
       - "${APP_HTTP_PORT}:80"
@@ -27,6 +31,8 @@ services:
       - php_inspirecms
   redis_inspirecms:
     image: redis:latest
+    networks:
+      - docker-shared-services
     ports:
       - "${APP_REDIS_PORT}:6379"
 volumes:
