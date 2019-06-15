@@ -35,6 +35,11 @@ services:
       - docker-shared-services
     ports:
       - "${APP_REDIS_PORT}:6379"
+
+networks:
+  docker-shared-services:
+    external: true
+
 volumes:
   data-volume:
   hosts-volume:
