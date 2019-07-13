@@ -47,6 +47,6 @@ Current version of GUI in this application supports **English, Russian, French &
 - [Tinymce](https://www.tiny.cloud) (For implementation of HTML editor)
 - [jsTree](https://www.jstree.com) (For implementation of interactive folder trees in Laravel application)
 
-## Check this project online: [Inspire CMS](http://185.177.59.147/inspirecms)
+## Check this project online: [Inspire CMS](http://185.177.59.147:8305)
 
 
