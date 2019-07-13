@@ -1,6 +1,6 @@
 # INSPIRE CMS - Website builder
 
-## Check this project online: [Inspire CMS](http://185.177.59.147/inspirecms)
+## Check this project online: [Inspire CMS](http://185.177.59.147:8305)
 
 ### INSTALLATION INSTRUCTIONS
 [HOW TO INSTALL](https://github.com/Maksim1990/Laravel_Inspire_CMS/blob/master/public/docs/INSTALL.md)
